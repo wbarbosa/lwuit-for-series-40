@@ -3162,5 +3162,12 @@ public abstract class LWUITImplementation {
     public boolean isTablet() {
         return false;
     }
-    
+    /**
+     * Request a native texteditor from the implementation. 
+     * Base implementation returns null.
+     * @return TextEditor class
+     */
+     public TextEditor requestNewNativeTextEditor() {
+         return null;
+     }
 }
