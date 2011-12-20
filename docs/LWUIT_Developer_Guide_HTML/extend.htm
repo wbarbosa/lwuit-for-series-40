@@ -1,0 +1,479 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Authoring Components</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.3" />
+<meta name="date" content="2011-08-01T18:5:0Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="Authoring Components" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E23376-01" />
+<link rel="copyright" href="dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+<link rel="contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="index" href="index.htm" title="Index" type="text/html" />
+<link rel="prev" href="transitions.htm" title="Previous" type="text/html" />
+<link rel="next" href="portability.htm" title="Next" type="text/html" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Developer's Guide</b><br />
+<b>Release 1.5</b><br />
+E23376-01</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td align="center"><a href="transitions.htm"><img src="dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="portability.htm"><img src="dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header --><a id="CHECEECE" name="CHECEECE"></a>
+<h1 class="chapter"><span class="secnum">14</span> Authoring Components</h1>
+<p>LWUIT is designed to be as extensible and modular as possible. A developer can replace or extend almost every component within LWUIT (as of this writing none of the LWUIT components are defined as final). In the spirit of Swing, a third-party developer can write an LWUIT component from scratch by implementing painting and event handling.</p>
+<p>Furthermore, thanks to the composite pattern used by LWUIT (and Swing with AWT), small custom and preexisting components can be combined to form a single component.</p>
+<p>The composite approach is mentioned in <a href="widgets.htm#CEHGAEFC">Chapter 2</a>. This chapter focuses on writing a component from scratch and plugging it into the LWUIT features such as the theme engine, painters, etcetera. This chapter discusses direct derivation from the Component, but you can derive from any existing LWUIT component to produce similar results. For example, ComboBox derives from List, Button from Label, CheckBox from Button, Dialog from Form, and so forth.</p>
+<a id="Z40008961293261" name="Z40008961293261"></a>
+<div class="sect1">
+<h2 class="sect1">Painting</h2>
+<p><a id="sthref247" name="sthref247"></a>Writing a custom component should be immediately familiar to Swing/AWT developers. The following example derives from <a id="sthref248" name="sthref248"></a>Component and overrides paint in order to draw on the screen:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+public class MyComponent extends Component {
+   public void paint(Graphics g) {
+         g.setColor(0xffffff);
+         g.fillRect(getX(), getY(), getWidth(), getHeight());
+         g.setColor(0);
+         g.drawString("Hello World", getX(), getY());
+   }
+}
+</pre>
+<p>This component writes <code>Hello World</code> in black text on a white background. To show it we can use the following code, resulting in <a href="#Z40000ad1293483">Figure 14-1</a>. As mentioned earlier, you can also derive from an appropriate subclass of Component; overriding <code>paint</code> is optional.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Form testForm = new Form();
+testForm.setLayout(new BorderLayout());
+testForm.addComponent(BorderLayout.CENTER, new MyComponent());
+testForm.show();
+</pre>
+<div class="figure"><a id="Z40000ad1293483" name="Z40000ad1293483"></a>
+<p class="titleinfigure">Figure 14-1 Hello World</p>
+<img src="img/hello_world.jpg" alt="Description of Figure 14-1 follows" title="Description of Figure 14-1 follows" longdesc="img_text/hello_world.htm" /><br />
+<a id="sthref249" name="sthref249" href="img_text/hello_world.htm">Description of "Figure 14-1 Hello World"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>Notice several interesting things that might not be obvious in the example:</p>
+<ul>
+<li>
+<p>Setting the <a id="sthref250" name="sthref250"></a>color ignores the alpha component of the color. All colors are presumed to be opaque RGB colors.</p>
+</li>
+<li>
+<p>The rectangle is filled and the text is drawn in the X coordinate of the component. Unlike Swing, which &ldquo;translates&rdquo; for every component coordinate, LWUIT only translates to the parent container's coordinates, so it is necessary to draw in the right X/Y position (rather than 0,0) because the component position might not be the same as the parent's. For example, to draw a point a the top left of the component, you must draw it from <code>getX()</code> and <code>getY()</code>.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008961293276" name="Z40008961293276"></a>
+<div class="sect1">
+<h2 class="sect1">Sizing In Layout</h2>
+<p>In most cases the example above won't work properly because the layout manager doesn't &ldquo;know&rdquo; how much space to allocate. To fix this you must define a preferred size.</p>
+<p>A <a id="sthref251" name="sthref251"></a>preferred size is the <a id="sthref252" name="sthref252"></a>size which the component requests from the layout manager. It might take more (or less) but the size should be sufficient to support rendering. The preferred size is calculated based on images used and font sizes used. The component developer (or look and feel author) is responsible for calculating the proper size.</p>
+<p>The <a id="sthref253" name="sthref253"></a><code>calcPreferredSize()</code> method is invoked when laying out the component initially (and later when changing themes). It allows you to determine the size you want for the component as follows:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+protected Dimension calcPreferredSize() {
+   Font fnt = Font.getDefaultFont();
+   int width = fnt.stringWidth(&ldquo;99999-9999&rdquo;)
+    int height = fnt.getHeight();
+    return new Dimension(width, height); 
+}
+</pre>
+<p>Unlike Swing/AWT, LWUIT doesn't have minimum or maximum size methods, thus your job as a component developer is simpler. Components grow based on the layout manager choices rather than component developer choices</p>
+<p>This example uses a hardcoded text for sizing rather than the input string, so the component won't constantly resize itself in the layout as the user inputs characters.</p>
+<p>After making these changes you no longer need to use the border layout to place the component and it now occupies the correct size, so you can show the component using the following code (default layout if FlowLayout):</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Form testForm = new Form();
+testForm.addComponent(new MyComponent());
+testForm.show();
+</pre></div>
+<!-- class="sect1" -->
+<a id="Z40008961293286" name="Z40008961293286"></a>
+<div class="sect1">
+<h2 class="sect1">Event Handling</h2>
+<p>So <a id="sthref254" name="sthref254"></a>far the component doesn't have any interactivity or react to user events. To improve the component, we can build a simple input area that accepts only numeric values (for simplicity's sake we do not support cursor navigation).</p>
+<p>Event handling in LWUIT is very similar to MIDP event handling (which is designed for small devices) in which we receive the calls from the platform in methods of the subclass. To accept user key presses, override the appropriate key released method as follows:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+public void keyReleased(int keyCode) {
+   if(keyCode &gt;= '0' &amp;&amp; keyCode &lt;= '9') {
+       char c = (char)keyCode;
+ inputString += c;
+ repaint();
+ }
+}
+</pre>
+<p>Note, it is an LWUIT convention to place actions in the key released event rather than the key press event (except for special cases). This is important from a UI perspective, because navigation triggered by a key press event might send the key release event to a new form, causing odd behavior.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008961293292" name="Z40008961293292"></a>
+<div class="sect1">
+<h2 class="sect1">Focus</h2>
+<p>If you run the event handing code above, you can see the event never <a id="sthref255" name="sthref255"></a>actually occurs. This is because the component must accept focus in order to handle events. By default, components are not focusable and you must activate <a id="sthref256" name="sthref256"></a>focus support as follows:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+setFocusable(true);
+</pre>
+<p>Once activated, focus works as you would expect and the behavior is correct. It makes sense to detect focus within the <code>paint(Graphics)</code> method (or <code>paintBorder</code>) and draw the component differently in order to visually indicate to the user that focus has reached the given component.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008961293303" name="Z40008961293303"></a>
+<div class="sect1">
+<h2 class="sect1">The Painting Pipeline</h2>
+<p>This section discuss <a id="sthref257" name="sthref257"></a>painting the component with regard to styles and focus. To understand styling and proper painting process it's necessary to understand the basics of how painting occurs in LWUIT.</p>
+<p>Painting operations are performed in order by the rendering pipeline, and all painting is performed in order on the event dispatch thread (<a id="sthref258" name="sthref258"></a>EDT):</p>
+<ol>
+<li>
+<p>First the background is painted using the appropriate painter (see the background painters section). This makes sure the background is properly &ldquo;cleared&rdquo; to draw.</p>
+</li>
+<li>
+<p>The <code>paint</code> method is invoked with the coordinates translated to its parent container.</p>
+</li>
+<li>
+<p>The <code>paintBorder</code> method is invoked with the same translation.</p>
+</li>
+<li>
+<p>Both <code>paint</code> and <code>paintBorder</code> delegate their work to the <code>LookAndFeel</code> and <code>Border</code> classes respectively to decouple the drawing code. For example, Button's paint method looks something like this:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+public void paint(Graphics g) {
+ UIManager.getInstance().getLookAndFeel().drawButton(g, this);
+}
+</pre></li>
+</ol>
+<p>Paint border from component defaults to a reasonable value as well:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Border b = getBorder();
+if(b != null){
+  g.setColor(getStyle().getFgColor());
+  b.paint(g, this);
+}
+</pre></div>
+<!-- class="sect1" -->
+<a id="Z40008961293320" name="Z40008961293320"></a>
+<div class="sect1">
+<h2 class="sect1">Styling</h2>
+<p>In the beginning we painted the component using simple drawing methods, completely disregarding the style. While this is perfectly legal it fails to take advantage of LWUIT's theming functionality.</p>
+<p>The &ldquo;right way&rdquo; to paint in LWUIT regards the Style object and ideally delegates work to the <a id="sthref259" name="sthref259"></a><code>LookAndFeel</code> class. Notice that you can subclass <code>DefaultLookAndFeel</code> and add any method you want, such as <code>paintMyComponent()</code>. This allows you to implement component painting &ldquo;correctly&rdquo; within the look and feel. However, for custom-made components this might not be the best approach since it blocks other third parties from using your components if they have already created a look and feel of their own.</p>
+<p>For simplicity, this example does all the painting within the component itself.</p>
+<p>To paint the input component correctly, implement the <code>paint</code> method as follows:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+public void paint(Graphics g) {
+   UIManager.getInstance().getLookAndFeel().setFG(g, this);
+   Style style = getStyle();
+   g.drawString(inputString, 
+     getX() + style.getPadding(LEFT), 
+     getY() + style.getPadding(TOP));
+}
+</pre>
+<p>There are several things of interest in the code above:</p>
+<ul>
+<li>
+<p><a id="sthref260" name="sthref260"></a><code>setFG</code> sets the foreground color and font based on the state of the component (enabled, hasFocus).</p>
+</li>
+<li>
+<p>Style padding positions the text. Notice it ignores the margins, which are already in the translated coordinates of the paint (margins work without any change in the code).</p>
+</li>
+<li>
+<p>There's no need to paint the background, draw a border or check for focus. These things are all handled implicitly by LWUIT!</p>
+</li>
+</ul>
+<p>This isn't enough though, the implementation of <code>calcPreferredSize</code> must take all of these things into account, including the possibility of user installed fonts.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+protected Dimension calcPreferredSize() {
+   Style style = getStyle();
+   Font fnt = style.getFont();
+   int width = fnt.stringWidth(inputString);
+   int height = fnt.getHeight();
+   height += style.getPadding(Component.TOP) +              style.getPadding(Component.BOTTOM);
+   width += style.getPadding(Component.LEFT) +                style.getPadding(Component.RIGHT);
+   return new Dimension(width, height);
+}
+</pre>
+<p>With these two things in order our component is functional and works with the existing theme!</p>
+<div class="figure"><a id="Z40000ad1294022" name="Z40000ad1294022"></a>
+<p class="titleinfigure">Figure 14-2 Original Component Theme</p>
+<img src="img/corner_675789.jpg" alt="Description of Figure 14-2 follows" title="Description of Figure 14-2 follows" longdesc="img_text/corner_675789.htm" /><br />
+<a id="sthref261" name="sthref261" href="img_text/corner_675789.htm">Description of "Figure 14-2 Original Component Theme"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>If we change the theme to the Java theme from the UI demo, the same code produces <a href="#Z40000ad1294069">Figure 14-3</a>.</p>
+<div class="figure"><a id="Z40000ad1294069" name="Z40000ad1294069"></a>
+<p class="titleinfigure">Figure 14-3 New Theme</p>
+<img src="img/corner_2434.jpg" alt="Description of Figure 14-3 follows" title="Description of Figure 14-3 follows" longdesc="img_text/corner_2434.htm" /><br />
+<a id="sthref262" name="sthref262" href="img_text/corner_2434.htm">Description of "Figure 14-3 New Theme"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>However, there is one last thing for styles to work correctly. Currently the component uses the default color scheme and font and doesn't allow the designer to specify a style specific to this component. To allow this functionality you must allow the component to be identified in the theme editor, even in obfuscated code and in case of subclasses. To do this, override <a id="sthref263" name="sthref263"></a><code>getUIID()</code> and return the name you want for the component:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+public String getUIID() {
+ return &ldquo;NumericInput&rdquo;;
+}
+</pre>
+<p>This allows a designer to specify <code>NumericInput</code> within the Resource Editor's theme builder (in the Component combo box) in order to customize this component. Note, currently the Resource Editor doesn't support previews for custom-built components.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008961293342" name="Z40008961293342"></a>
+<div class="sect1">
+<h2 class="sect1">Background</h2>
+<p>Up until now we've assumed that LWUIT takes care of the background handling for us. However, it is important to understand how this works, otherwise performance might be impacted.</p>
+<p>The background of a component is managed by a Painter (see the API documentation for <code>Painter</code> for further details). A Painter can draw any arbitrary graphics in the background and can be translucent or opaque. LWUIT creates painters implicitly based on background image or color in the style. Furthermore you can customize them either by creating your own special painter or by manipulating the style.</p>
+<p>Since a painter can be translucent or transparent LWUIT recurses to the top-most component, starts drawing its painter, then recurses down the paint hierarchy until the background is properly drawn. If your component is completely opaque (a square that draws all of its data) this extra work is redundant. To improve performance, define background transparency (in the style) to be 255 (0xff). This indicates your background is opaque.</p>
+<p>Painters are designed for general pluggability. They work with your customized component without any effort on your part.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008961293348" name="Z40008961293348"></a>
+<div class="sect1">
+<h2 class="sect1">Animating The Component</h2>
+<p>We briefly discussed the animation framework in <a href="transitions.htm#CEHCJHCC">Animation</a>. However, with a custom component the features are far more powerful.</p>
+<p>First you must register the component as interested in animation. You cannot perform this registration during construction since there is no parent form at this stage. The component has an <code>initComponent</code> method that is guaranteed to invoke before the component is visible to the user and after the parent form is available.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+protected void initComponent() {
+   getComponentForm().registerAnimated(this);
+}
+</pre>
+<p>The code above registers the animation, essentially triggering the animate method. The animate method can change the state of the component and optionally trigger a repaint when it returns true.</p>
+<p>It is relatively easily to implement a &ldquo;blinking cursor&ldquo; using the animate method:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+private boolean drawCursor = true;
+private long time = System.currentTimeMillis();
+public boolean animate() {
+   boolean ani = super.animate();
+   long currentTime = System.currentTimeMillis();
+   if(drawCursor) {
+      if((currentTime - time) &gt; 800) {
+         time = currentTime;
+         drawCursor = false;
+         return true;
+     }
+   } else {
+      if((currentTime - time) &gt; 200) {
+         time = currentTime;
+         drawCursor = true;
+         return true;
+      }
+   }
+   return ani;
+}
+</pre>
+<p>Notice that all this code really does is change the <code>drawCursor</code> state in which case it returns true, indicating the need for a repaint. Now implementing a cursor within our paint method requires only the following lines:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+public void paint(Graphics g) {
+   UIManager.getInstance().getLookAndFeel().setFG(g, this);
+   Style style = getStyle();
+   g.drawString(inputString, getX() + style.getPadding(LEFT), 
+                               getY() + style.getPadding(TOP));
+   if(drawCursor) {      int w = style.getFont().stringWidth(inputString);
+      int cursorX = getX() + style.getPadding(LEFT) + w;
+      int cursorY = getY() + style.getPadding(TOP);
+      int cursorY = getY() + style.getPadding(TOP);
+   }
+}
+ 
+ 
+</pre></div>
+<!-- class="sect1" -->
+<a id="Z40008961293358" name="Z40008961293358"></a>
+<div class="sect1">
+<h2 class="sect1">The Custom Component</h2>
+<p><a href="#Z40000ad1291247">Example 14-1</a> shows the MIDlet Code with a theme.</p>
+<p><a href="#Z40000ad1295637">Example 14-2</a> shows the <a id="sthref264" name="sthref264"></a>component code.</p>
+<div class="example"><a id="Z40000ad1291247" name="Z40000ad1291247"></a>
+<p class="titleinexample">Example 14-1 &nbsp;&nbsp;&nbsp;"Col 1", "Col 2", "Col 3"}, new Object[][] {</p>
+<pre xml:space="preserve" class="oac_no_warn">
+import java.io.IOException;
+import javax.microedition.midlet.MIDlet;
+import com.sun.lwuit.Display;
+import com.sun.lwuit.Form;
+import com.sun.lwuit.plaf.UIManager;
+import com.sun.lwuit.util.Resources;
+ 
+public class LWUITMIDlet extends MIDlet {
+ 
+    private boolean started;
+    protected void startApp() {
+        try {
+            Display.init(this);
+            Resources r1 = Resources.open("/javaTheme.res");
+            UIManager.getInstance().setThemeProps(r1.getTheme("javaTheme"));
+ 
+            // distinguish between start and resume from pause
+ 
+            if (!started) {
+                started = true;
+                Form testForm = new Form();
+                testForm.addComponent(new MyComponent());
+                testForm.show();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    protected void pauseApp() {
+    }
+    protected void destroyApp(boolean arg0) {
+    }
+}
+ 
+</pre></div>
+<!-- class="example" -->
+<div class="example"><a id="Z40000ad1295637" name="Z40000ad1295637"></a>
+<p class="titleinexample">Example 14-2 Component Code</p>
+<pre xml:space="preserve" class="oac_no_warn">
+import com.sun.lwuit.Component;
+import com.sun.lwuit.Font;
+import com.sun.lwuit.Graphics;
+import com.sun.lwuit.geom.Dimension;
+import com.sun.lwuit.plaf.Style;
+import com.sun.lwuit.plaf.UIManager;
+ 
+public class MyComponent extends Component {
+ 
+    private boolean drawCursor = true;
+    private long time = System.currentTimeMillis();
+    private String inputString = "";
+ 
+    public MyComponent() {
+        setFocusable(true);
+    }
+ 
+    public void paint(Graphics g) {
+ 
+        UIManager.getInstance().getLookAndFeel().setFG(g, this);
+        Style style = getStyle();
+        g.drawString(inputString, getX() + style.getPadding(LEFT), getY() +
+           style.getPadding(TOP));
+        if (drawCursor) {
+            int w = style.getFont().stringWidth(inputString);
+            int cursorX = getX() + style.getPadding(LEFT) + w;
+            int cursorY = getY() + style.getPadding(TOP);
+            g.drawLine(cursorX, cursorY, cursorX, cursorY +
+               style.getFont().getHeight());
+}}
+ 
+    protected Dimension calcPreferredSize() {
+        Style style = getStyle();
+        Font fnt = style.getFont();
+        int width = fnt.stringWidth("99999-9999");
+        int height = fnt.getHeight();
+        height += style.getPadding(Component.TOP) +
+           style.getPadding(Component.BOTTOM);
+width += style.getPadding(Component.LEFT) +return new Dimension(width, height);
+           style.getPadding(Component.RIGHT);}
+ 
+    public String getUIID() {
+        return "NumericInput";
+    }
+ 
+    public void keyReleased(int keyCode) {
+ 
+        if (keyCode &gt;= '0' &amp;&amp; keyCode &lt;= '9') {
+            char c = (char) keyCode;
+            inputString += c;
+            repaint();
+        }
+    }
+ 
+    protected void initComponent() {
+        getComponentForm().registerAnimated(this);
+    }
+ 
+    public boolean animate() {
+ 
+        boolean ani = super.animate();
+        long currentTime = System.currentTimeMillis();
+        if (drawCursor) {
+            if ((currentTime - time) &gt; 800) {
+                time = currentTime;
+                drawCursor = false;
+                return true;
+            }
+        } else {
+            if ((currentTime - time) &gt; 200) {
+                time = currentTime;
+                drawCursor = true;
+                return true;
+            }
+        }
+        return ani;
+    }
+}
+ 
+ 
+ 
+ 
+ 
+ 
+</pre></div>
+<!-- class="example" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+<td align="center"><a href="transitions.htm"><img src="dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="portability.htm"><img src="dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

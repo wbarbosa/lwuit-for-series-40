@@ -1,0 +1,735 @@
+<html>
+<head>
+<title>LWUIT Gallery</title>
+
+<!-- ==========   DO NOT TOUCH ANYTHING BETWEEN HERE AND THE START OF THE BODY TAG =========  -->
+<script type="text/javascript" src="swapfade.js"></script>
+<!-- this section for the carousel -->
+<script type="text/javascript" src="lib/jquery-1.2.3.pack.js"></script>
+<script type="text/javascript" src="lib/jquery.jcarousel.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/jquery.jcarousel.css" />
+<link rel="stylesheet" type="text/css" href="skins/tango/skin.css" />
+
+<script language="JavaScript"><!--
+
+var doneLoading = false;
+var mycarousel_itemList = [];
+var allApps = new Array();
+var preloadedImages = new Array();
+
+function imageLoad() {  // called with onLoad()
+	// first load all the thumbnails
+	for (i=0; i<allApps.length; i++) {
+		anApp = allApps[i];
+		
+		for (j=1; j<anApp.length; j++) {
+			image = new Image();
+			image.src = anApp[j][0];
+			preloadedImages.push(image);
+		}
+	}
+	
+	// now load the images we use as background for the large images...
+	image = new Image();
+	image.src = "images/Shape-regular.png";
+	preloadedImages.push(image);
+	image = new Image();
+	image.src = "images/Shape-medium-large.png";
+	preloadedImages.push(image);
+	image = new Image();
+	image.src = "images/Shape-large.png";
+	preloadedImages.push(image);
+	image = new Image();
+	image.src = "images/Shape-small.png";
+	preloadedImages.push(image);
+
+	
+	// now load all the larger images
+	for (i=0; i<allApps.length; i++) {
+		anApp = allApps[i];
+		for (j=1; j<anApp.length; j++) {
+			image = new Image();
+			image.src = anApp[j][1];
+			preloadedImages.push(image);
+		}
+	}
+}
+
+
+function makeMenu(imageArray, target, imageSize) {
+  // using a table here so that they all stay on one line 
+ 
+  strOut = "<table border=0 style=\"width:800px\"><tr><td style=\"padding-top:5px;\"><table border=0 cellpadding=0 cellspacing=0>";
+  strOut = strOut + "<tr height=95>";
+  
+  for (i=1; i<imageArray.length; i++) {
+     strOut = strOut + "<td valign=top style=\"width:100px;background-image:url('images/thumbnail_BG_" + imageSize + ".png');background-repeat:no-repeat;padding-left:10px;padding-top:5px\" ><img height=80 src=" + imageArray[i][0] + 
+	 " onMouseOver=\"swapfade('" + target + "', '" + imageArray[i][1] + "', '1');return true\"></td>";
+	
+  }
+  strOut = strOut + "</tr></table></td><td></td></tr></table>";
+  return strOut;
+}
+
+
+function mycarousel_itemVisibleInCallback(carousel, item, i, state, evt)
+{
+    // The index() method calculates the index from a
+    // given index who is out of the actual item range.
+    var idx = carousel.index(i, mycarousel_itemList.length);
+    carousel.add(i, mycarousel_getItemHTML(mycarousel_itemList[idx - 1]));
+};
+
+function mycarousel_itemVisibleOutCallback(carousel, item, i, state, evt)
+{
+    carousel.remove(i);
+};
+
+/**
+ * Item html creation helper.
+ */
+function mycarousel_getItemHTML(item)
+{
+    return '<a href=\"javascript:swapFeatured(\'' + item.title + '\'); void 0;\"><img border=0 src="' + item.url + '" width="75" height="75" alt="' + item.title + '" /></a>';
+};
+
+jQuery(document).ready(function() {
+    jQuery('#mycarousel').jcarousel({
+        wrap: 'circular',
+		visible: 6,
+        itemVisibleInCallback: {onBeforeAnimation: mycarousel_itemVisibleInCallback},
+        itemVisibleOutCallback: {onAfterAnimation: mycarousel_itemVisibleOutCallback}
+    });
+});
+// 		auto: 2,
+
+
+var aerith1 = new Array(
+"A LWUIT port of the famous Swing demo sporting a unique interactive UI",
+new Array("images/aerith1s.png", "images/aerith1.png", "regular"), 
+new Array("images/aerith2s.png", "images/aerith2.png", "regular")
+);
+allApps.push(aerith1);
+mycarousel_itemList.push( {url: 'images/aerith1s.png', title: 'aerith1'} );
+
+var majiplayer4 = new Array(
+"MajiPlayer from majimob<br>\<a target=blank href=\"http://majimob.com/majimo/applications/player.html\">MajiPlayer</a>.",
+new Array("images/majiplayer4s.png", "images/majiplayer4.png", "regular"), 
+new Array("images/majiplayer5s.png", "images/majiplayer5.png", "regular"),
+new Array("images/majiplayer6s.png", "images/majiplayer6.png", "regular"),
+new Array("images/majiplayer7s.png", "images/majiplayer7.png", "regular"),
+new Array("images/majiplayer8s.png", "images/majiplayer8.png", "regular")
+);
+allApps.push(majiplayer4);
+mycarousel_itemList.push( {url: 'images/majiplayer4s.png', title: 'majiplayer4'} );
+
+var MajiPic1 = new Array(
+"<a  target=blank href=\"http://www.majimob.com/majimo/applications/pics.html\">MajiPic</a></a> is a photo application that allows you to organize & browse photos on your cell phones.",
+new Array("images/MajiPic1s.png", "images/MajiPic1.PNG", "regular"), 
+new Array("images/MajiPic2s.png", "images/MajiPic2.PNG", "regular"),
+new Array("images/MajiPic3s.png", "images/MajiPic3.PNG", "regular"),
+new Array("images/MajiPic4s.png", "images/MajiPic4.PNG", "regular"),
+new Array("images/MajiPic5s.png", "images/MajiPic5.PNG", "regular"),
+new Array("images/MajiPic6s.png", "images/MajiPic6.PNG", "regular")
+);
+allApps.push(MajiPic1);
+mycarousel_itemList.push( {url: 'images/MajiPic4s.png', title: 'MajiPic1'} );
+
+var odp1 = new Array(
+"Java On Device Portal<a  target=blank href=\"http://java.sun.com/products/java-odp/index.jsp\">(ODP)</a></a> provides a rich and personalized user experience, targeted to the mass market mobile phones",
+new Array("images/odp1s.png", "images/odp1.png", "regular"), 
+new Array("images/odp2s.png", "images/odp2.png", "regular"),
+new Array("images/odp3s.png", "images/odp3.png", "regular")
+);
+allApps.push(odp1);
+mycarousel_itemList.push( {url: 'images/odp1s.png', title: 'odp1'} );
+
+var comv1 = new Array(
+"VVM - Comverse Visual Voice Mail",
+new Array("images/comv1s.png", "images/comv1.png", "regular"), 
+new Array("images/comv2s.png", "images/comv2.png", "regular"),
+new Array("images/comv3s.png", "images/comv3.png", "regular")
+);
+allApps.push(comv1);
+mycarousel_itemList.push( {url: 'images/comv1s.png', title: 'comv1'} );
+
+var emoze1 = new Array(
+"<a  target=blank href=\"http://emoze.com\">Emoze</a></a> E-mail client",
+new Array("images/emoze1s.png", "images/emoze1.png", "regular"), 
+new Array("images/emoze2s.png", "images/emoze2.png", "regular"),
+new Array("images/emoze3s.png", "images/emoze3.png", "regular")
+);
+allApps.push(emoze1);
+mycarousel_itemList.push(  {url: 'images/emoze1s.png', title: 'emoze1'} );
+
+var bookmarks = new Array(
+"<a  target=blank href=\"http://pader-sync.com/products.html?mobile_ssh_client/\">PaderSyncFM</a> is a SSH client for mobiles that features VT100 terminal emulation and SFTP support.It runs on Java ME, Android™ and BlackBerry® platforms. ",
+new Array("images/bookmarkss.png", "images/bookmarks.png", "large"), 
+new Array("images/connecteddebians.png", "images/connecteddebian.png", "large"),
+new Array("images/helpbrowsers.png", "images/helpbrowser.png", "large"),
+new Array("images/PaderSyncSSH1s.png", "images/PaderSyncSSH1.png", "large"), 
+new Array("images/PaderSyncSSH2s.png", "images/PaderSyncSSH2.png", "large"),
+new Array("images/PaderSyncSSH3s.png", "images/PaderSyncSSH3.png", "large"),
+new Array("images/PaderSyncSSH4s.png", "images/PaderSyncSSH4.png", "large"), 
+new Array("images/PaderSyncSSH5s.png", "images/PaderSyncSSH5.png", "large")
+);
+allApps.push(bookmarks);
+mycarousel_itemList.push(  {url: 'images/PaderSyncSSH2s.png', title: 'bookmarks'} );
+
+var nuux1 = new Array(
+"<a  target=blank href=\"http://www.nuux.net/\">Nuux</a> is an event guide and social radar. \
+You can check out events and locations in almost all cities of europe, add comments, \
+post ratings,search for the currently most trendy location and events - rated by your trusted group and more.",
+new Array("images/nuux1s.PNG", "images/nuux1.PNG", "regular"),
+new Array("images/nuux5s.PNG", "images/nuux5.PNG", "regular"),
+new Array("images/nuux8s.PNG", "images/nuux8.PNG", "regular"),
+new Array("images/nuux10s.PNG", "images/nuux10.PNG", "regular")
+);
+allApps.push(nuux1);
+mycarousel_itemList.push( {url: 'images/nuux1s.PNG', title: 'nuux1'});
+
+var TELMAP1 = new Array(
+"<a  target=blank href=\"http://global.telmap.com/\">Telmap</a> is the #1 choice of location solution and its technology has been chosen by leading industry players Orange FT Group, \
+Vodafone, Vodacom, SFR, O2, AOL, Pelephone, Carphone Warehouse and more.",
+new Array("images/TELMAP1s.PNG", "images/TELMAP1.PNG", "regular"),
+new Array("images/TELMAP4s.PNG", "images/TELMAP4.PNG", "regular"),
+new Array("images/TELMAP3s.PNG", "images/TELMAP3.PNG", "regular")
+);
+allApps.push(TELMAP1);
+mycarousel_itemList.push( {url: 'images/TELMAP1s.PNG', title: 'TELMAP1'});
+
+var weightwatch1 = new Array(
+"<a  target=blank href=\"http://www.cachapa.net/?page_id=117\">WeightWatch</a> is an open-source application \
+<br>that allows you to track your body weight over a period of time.",
+new Array("images/weightwatch1s.png", "images/weightwatch1.png" , "medium-large"), 
+new Array("images/weightwatch2s.png", "images/weightwatch2.png", "medium-large"),
+new Array("images/weightwatch3s.png", "images/weightwatch3.png", "medium-large")
+);
+allApps.push(weightwatch1);
+mycarousel_itemList.push({url: 'images/weightwatch1s.png', title: 'weightwatch1'});
+
+var ctia = new Array(
+"CTIA conference app",
+new Array("images/ctias.png", "images/ctia.jpg", "medium")
+);
+allApps.push(ctia);
+mycarousel_itemList.push({url: 'images/ctias.png', title: 'ctia'});
+
+var myinstinctBible = new Array(
+"myInstinct Bible is avaliable from the <a  target=blank href=\"http://instinct-software.com\">http://instinct-software.com site</a>",
+new Array("images/myinstinct-bible-1s.png", "images/myinstinct-bible-1.png", "small"), 
+new Array("images/myinstinct-bible-2s.png", "images/myinstinct-bible-2.png", "small")
+);
+allApps.push(myinstinctBible);
+mycarousel_itemList.push({url: 'images/myinstinct-bible-1s.png', title: 'myinstinctBible'});
+
+var tic_tac_toe_1 = new Array(
+"myInstinct Tic-Tac-Toe is avaliable from the <a  target=blank href=\"http://instinct-software.com\">http://instinct-software.com site</a>",
+new Array("images/tic-tac-toe-1s.png", "images/tic-tac-toe-1.png", "small"), 
+new Array("images/tic-tac-toe-2s.png", "images/tic-tac-toe-2.png", "small"),
+new Array("images/tic-tac-toe-3s.png", "images/tic-tac-toe-3.png","small")
+);
+allApps.push(tic_tac_toe_1);
+mycarousel_itemList.push( {url: 'images/tic-tac-toe-1s.png', title: 'tic_tac_toe_1'});
+
+var isdc1 = new Array(
+"myInstinct-Software App is avaliable from the <a  target=blank href=\"http://instinct-software.com\">http://instinct-software.com site</a>",
+new Array("images/isdc1s.png", "images/isdc1.png", "small"), 
+new Array("images/isdc2s.png", "images/isdc2.png", "small")
+);
+allApps.push(isdc1);
+mycarousel_itemList.push({url: 'images/isdc1s.png', title: 'isdc1'});
+
+var lottery_1 = new Array(
+"myInstinct Lottery App is avaliable from the <a  target=blank href=\"http://instinct-software.com\">http://instinct-software.com site</a>",
+new Array("images/lottery-1s.png", "images/lottery-1.png", "small")
+);
+allApps.push(lottery_1);
+mycarousel_itemList.push({url: 'images/lottery-1s.png', title: 'lottery_1'});
+
+var Wunderkammer1 = new Array(
+"<a  target=blank href=\"http://www.pfed.info/wksite\">Wunderkammer</a> is a Java ME application for accessing multimedia electronic dictionaries that are stored locally on mobile phones. \
+<br>It comes with tools for bundling existing electronic dictionaries for use on mobile phones. It is free and open source.",
+new Array("images/Wunderkammer1s.png", "images/Wunderkammer1.png", "regular"),
+new Array("images/Wunderkammer2s.png", "images/Wunderkammer2.png", "regular")
+);
+allApps.push(Wunderkammer1);
+mycarousel_itemList.push( {url: 'images/Wunderkammer1s.png', title: 'Wunderkammer1'});
+
+var FootyMad1 = new Array(
+"<a  target=blank href=\"http://www.msportsltd.com/footymad/index.php\">FootyMad mobile</a> is a brand new football information service brought to you by Mobile Sports Limited.\
+<br>FootyMad mobile gives you the most comprehensive coverage of football available on your mobile phone, \
+<br>allowing you to stay in touch with the beautiful game whenever and wherever you are.\
+watch the <a href=\"http://www.youtube.com/watch?v=cMcwX2OJ7Ew\">video</a>",
+new Array("images/FootyMad1s.png", "images/FootyMad1.png", "regular"),
+new Array("images/FootyMads.png", "images/FootyMad.png", "regular")
+);
+allApps.push(FootyMad1);
+mycarousel_itemList.push( {url: 'images/FootyMad1s.png', title: 'FootyMad1'});
+
+var Genaker1 = new Array(
+"<a  target=blank href=\"http://www.genaker.net/\">Genaker</a> RCS client implements a complete \
+IMS RCS client within J2ME allowing the use of RCS services to almost \
+all Java mobile phones on the market.",
+new Array("images/Genaker1s.PNG", "images/Genaker1.PNG", "regular"),
+new Array("images/Genaker2s.PNG", "images/Genaker2.PNG", "regular")
+);
+allApps.push(Genaker1);
+mycarousel_itemList.push({url: 'images/Genaker1s.PNG', title: 'Genaker1'});
+
+var KeePassMobile1 = new Array(
+"<a  target=blank href=\"http://www.keepassmobile.com/\">KeePassMobile</a> With KeePassMobile you can store your passwords in a highly-encrypted database on your mobile phone and view them on the go.",
+new Array("images/KeePassMobile1s.PNG", "images/KeePassMobile1.PNG" ,"medium-large"),
+new Array("images/KeePassMobile2s.PNG", "images/KeePassMobile2.PNG","medium-large"),
+new Array("images/KeePassMobile4s.PNG", "images/KeePassMobile4.PNG","medium-large"),
+new Array("images/KeePassMobile6s.PNG", "images/KeePassMobile6.PNG","medium-large")
+);
+allApps.push(KeePassMobile1);
+mycarousel_itemList.push( {url: 'images/KeePassMobile1s.PNG', title: 'KeePassMobile1'});
+
+var Cycloscope1 = new Array(
+"<a  target=blank href=\"http://www.cycloscopes.com/\">Cycloscope</a> Cycloscope is a novelty mobile application for the wireless real-time monitoring of heart activity (ECG) \
+and motion data in health, fitness and well-being. Cycloscope allows to improve the efficiency of sports activities, raise awareness for your body's reaction to the environment,\
+record untypical episodes or collect physiological data for research. Visualisations are powered by Sunics technology (www.sunics.com), an innovative approach to image-based signal processing.",
+new Array("images/Cycloscope1s.PNG", "images/Cycloscope1.PNG", "regular"),
+new Array("images/Cycloscope2s.PNG", "images/Cycloscope2.PNG", "regular"),
+new Array("images/Cycloscope3s.PNG", "images/Cycloscope3.PNG", "regular")
+);
+allApps.push(Cycloscope1);
+mycarousel_itemList.push( {url: 'images/Cycloscope1s.PNG', title: 'Cycloscope1'});
+
+var Turning1 = new Array(
+"<a  target=blank href=\"http://www.turningtechnologies.com/\">Turning </a> Turning Technologies is a leader in the Audience/Group Response industry, \
+providing solutions to corporations, schools, and other institutions.The LWUIT based app is part of our ResponseWare product family - allowing anyone to participate \
+in interactive polling from their Blackberry device.",
+new Array("images/Turning1s.PNG", "images/Turning1.PNG", "large"),
+new Array("images/Turning3s.PNG", "images/Turning3.PNG", "large"),
+new Array("images/Turning4s.PNG", "images/Turning4.PNG","large")
+);
+allApps.push(Turning1);
+mycarousel_itemList.push({url: 'images/Turning1s.PNG', title: 'Turning1'});
+var bibeepScreenshot = new Array(
+"<a  target=blank href=\"http://www.bibeep.com/\">Bibeep</a> - chat based XMPP/JABBER application",
+new Array("images/bibeepScreenshot0s.png", "images/bibeepScreenshot0.png", "regular"),
+new Array("images/bibeepScreenshot1s.png", "images/bibeepScreenshot1.png", "regular"),
+new Array("images/bibeepScreenshot2s.png", "images/bibeepScreenshot2.png", "regular")
+);
+allApps.push(bibeepScreenshot);
+mycarousel_itemList.push({url: 'images/bibeepScreenshot0s.png', title: 'bibeepScreenshot'});
+
+var POSTERITA1 = new Array(
+"Posterita - an easy-to-use, customizable, and comprehensive web-based, \
+open-source Retail Management System (RMS) for multi-site retailers of all sizes.",
+new Array("images/POSTERITA1s.PNG", "images/POSTERITA1.PNG", "regular"),
+new Array("images/POSTERITA3s.PNG", "images/POSTERITA3.PNG", "regular"),
+new Array("images/POSTERITA4s.PNG", "images/POSTERITA4.PNG", "regular")
+);
+allApps.push(POSTERITA1);
+mycarousel_itemList.push(  {url: 'images/POSTERITA1s.PNG', title: 'POSTERITA1'});
+
+var Mobits1 = new Array(
+"<a  target=blank href=\"http://www.mobits.com.br\">Mobits</a> is a company located in Brazil that develops applications for mobile devices. \
+It was founded in 2008 and today develops for iPhone and Java me platforms.\
+watch the <a href=\"http://www.vimeo.com/4318209\">video</a>",
+new Array("images/Mobits1s.png", "images/Mobits1.png", "regular"),
+new Array("images/Mobits2s.png", "images/Mobits2.png", "regular"),
+new Array("images/Mobits3s.png", "images/Mobits3.png", "regular"),
+new Array("images/Mobits4s.png", "images/Mobits4.png", "regular")
+);
+allApps.push(Mobits1);
+mycarousel_itemList.push({url: 'images/Mobits4s.png', title: 'Mobits1'});
+
+var SMSBalcony1 = new Array(
+"<a  target=blank href=\"http://www.smsbalcony.com/\">SMSBalcony</a> is a mobile application powered by <a  target=blank href=\"http://www.infoceantech.com/\">Experion Technologies</a> that allows you to book movie tickets via Text Messages. You can also check the availability of tickets and view a list of movies running in town.",
+new Array("images/SMSBalcony1s.png", "images/SMSBalcony1.png", "regular"),
+new Array("images/SMSBalcony2s.png", "images/SMSBalcony2.png", "regular"),
+new Array("images/SMSBalcony3s.png", "images/SMSBalcony3.png", "regular")
+);
+allApps.push(SMSBalcony1);
+mycarousel_itemList.push( {url: 'images/SMSBalcony1s.png', title: 'SMSBalcony1'});
+
+var U_S_Weather1 = new Array(
+"<a  target=blank href=\"http://instinct-software.com/2009/07/u-s-weather/\">U.S. Weather</a> A weather client app for the Instinct that includes the abiltiy to track multiple locations and get Current Conditions, 7 day forecasts, current RADAR and animated RADAR.",
+new Array("images/U.S.Weather1s.png", "images/U.S.Weather1.png", "small"),
+new Array("images/U.S.Weather2s.png", "images/U.S.Weather2.png", "small"),
+new Array("images/U.S.Weather3s.png", "images/U.S.Weather3.png", "small"),
+new Array("images/U.S.Weather4s.png", "images/U.S.Weather4.png", "small"),
+new Array("images/U.S.Weather5s.png", "images/U.S.Weather5.png", "small"),
+new Array("images/U.S.Weather6s.png", "images/U.S.Weather6.png", "small")
+);
+allApps.push(U_S_Weather1);
+mycarousel_itemList.push( {url: 'images/U.S.Weather4s.png', title: 'U_S_Weather1'});
+
+var uQuran1  = new Array(
+"<a  target=blank href=\"http://www.guidedways.com/mobile/uquran/mobile_quran_reciter.php\"> uQuran</a> offers the Full Quran in the beautiful Uthmani Font along with verse by verse translation and recitation.",
+new Array("images/uQuran1s.png", "images/uQuran1.png", "small"),
+new Array("images/uQuran2s.png", "images/uQuran2.png", "small")
+);
+allApps.push(uQuran1 );
+mycarousel_itemList.push( {url: 'images/uQuran2s.png', title: 'uQuran1 '});
+
+var AynaCorporation1 = new Array(
+"<a  target=blank href=\"http://www.ayna.com/\">Ayna corporation</a> is an Arabic search engine one of our service is a mapping service available for our users on web and on mobile as Java Me application.",
+new Array("images/AynaCorporation1s.png", "images/AynaCorporation1.png", "regular"),
+new Array("images/AynaCorporation2s.png", "images/AynaCorporation2.png", "regular"),
+new Array("images/AynaCorporation3s.png", "images/AynaCorporation3.png", "regular"),
+new Array("images/AynaCorporation4s.png", "images/AynaCorporation4.png", "regular"),
+new Array("images/AynaCorporation5s.png", "images/AynaCorporation5.png", "regular"),
+new Array("images/AynaCorporation6s.png", "images/AynaCorporation6.png", "regular"),
+new Array("images/AynaCorporation7s.png", "images/AynaCorporation7.png", "regular"),
+new Array("images/AynaCorporation8s.png", "images/AynaCorporation8.png", "regular")
+
+);
+allApps.push(AynaCorporation1);
+mycarousel_itemList.push( {url: 'images/AynaCorporation5s.png', title: 'AynaCorporation1'});
+
+var easyTiVu1 = new Array(
+"<a  target=blank href=\"http://www.leobenelli.com/openproj-easytivu_it.shtml\">The EasyTiVu</a> is a Mobile Client Application that permits to extract from Internet Site the Scheduling on TiVu Channels and navigate them in the easy way.",
+new Array("images/easyTiVu1s.png", "images/easyTiVu1.png", "regular"),
+new Array("images/easyTiVu2s.png", "images/easyTiVu2.png", "regular"),
+new Array("images/easyTiVu3s.png", "images/easyTiVu3.png", "regular"),
+new Array("images/easyTiVu4s.png", "images/easyTiVu4.png", "regular")
+);
+allApps.push(easyTiVu1);
+mycarousel_itemList.push( {url: 'images/easyTiVu1s.png', title: 'easyTiVu1'});
+
+var SMSCrypt2 = new Array(
+"<a  target=blank href=\"http://sites.google.com/site/smscrypt/\">SMSCrypt</a> is a mobile phone application that allows you to send and receive encrypted text messages.",
+new Array("images/SMSCrypt1s.png", "images/SMSCrypt1.png", "regular"),
+new Array("images/SMSCrypt2s.png", "images/SMSCrypt2.png", "regular"),
+new Array("images/SMSCrypt3s.png", "images/SMSCrypt3.png", "regular"),
+new Array("images/SMSCrypt4s.png", "images/SMSCrypt4.png", "regular"),
+new Array("images/SMSCrypt5s.png", "images/SMSCrypt5.png", "regular"),
+new Array("images/SMSCrypt6s.png", "images/SMSCrypt6.png", "regular"),
+new Array("images/SMSCrypt7s.png", "images/SMSCrypt7.png", "regular"),
+new Array("images/SMSCrypt8s.png", "images/SMSCrypt8.png", "regular"),
+new Array("images/SMSCrypt9s.png", "images/SMSCrypt9.png", "regular"),
+new Array("images/SMSCrypt10s.png", "images/SMSCrypt10.png", "regular"),
+new Array("images/SMSCrypt11s.png", "images/SMSCrypt11.png", "regular")
+);
+allApps.push(SMSCrypt2);
+mycarousel_itemList.push( {url: 'images/SMSCrypt2s.png', title: 'SMSCrypt2'});
+
+var OpenMRS1 = new Array(
+"<a  target=blank href=\"http://www.devicemagic.com/\">Device Magic</a> a mobile software company, This application connects to the fairly widely deployed OpenMRS (Open Medical Record System) server",
+new Array("images/OpenMRS1s.png", "images/OpenMRS1.png", "small"),
+new Array("images/OpenMRS2s.png", "images/OpenMRS2.png", "small"),
+new Array("images/OpenMRS3s.png", "images/OpenMRS3.png", "small"),
+new Array("images/OpenMRS4s.png", "images/OpenMRS4.png", "small"),
+new Array("images/OpenMRS5s.png", "images/OpenMRS5.png", "small")
+);
+allApps.push(OpenMRS1);
+mycarousel_itemList.push( {url: 'images/OpenMRS1.png', title: 'OpenMRS1'});
+
+var AlMuathen4 = new Array(
+"<a  target=blank href=\"http://www.islamicapp.com/\">The Islamic App</a> developed 3 applications using LWUIT and tested them in several Java ME enabled devices (touch screen or not) and on Blackberrys.                                                                                 <a  target=blank href=\"http://islamicapp.com/projects/mobile/almuathen.html\">AlMuathen</a> to give muslims prayer times.                      <a  target=blank href=\"http://islamicapp.com/projects/mobile/alhijri.html\">AlHijri </a> to convert Gregorian date to Hijri and vice versa.   <a  target=blank href=\"http://islamicapp.com/projects/mobile/almoumin.html\">AlMoumi </a>to display the islamic 100 names of god.",
+new Array("images/AlMuathen1s.png", "images/AlMuathen1.png", "regular"),
+new Array("images/AlMuathen2s.png", "images/AlMuathen2.png", "regular"),
+new Array("images/AlMuathen3s.png", "images/AlMuathen3.png", "regular"),
+new Array("images/AlMuathen4s.png", "images/AlMuathen4.png", "regular"),
+new Array("images/AlMuathen5s.png", "images/AlMuathen5.png", "regular"),
+new Array("images/AlHijri1s.png", "images/AlHijri1.png", "regular"),
+new Array("images/AlHijri2s.png", "images/AlHijri2.png", "regular"),
+new Array("images/AlMoumin1s.png", "images/AlMoumin1.png", "regular"),
+new Array("images/AlMoumin2s.png", "images/AlMoumin2.png", "regular"),
+new Array("images/AlMoumin3s.png", "images/AlMoumin3.png", "regular")
+);
+allApps.push(AlMuathen4);
+mycarousel_itemList.push( {url: 'images/AlMuathen4.png', title: 'AlMuathen4'});
+
+var bluetrail3 = new Array(
+"<a  target=blank href=\"http://bluetrail.co.uk/swift/\">The SwiftCapture</a> is a system that enables users to draft a set of questions on a server and then download them to a phone for data capture - including taking pictures! We support many different types of phones including Blackberry.  The system is used by a number of companies in the UK/Europe including Red Bull, Krispy Kreme and GFK.",
+new Array("images/bluetrail1s.png", "images/bluetrail1.png", "regular"),
+new Array("images/bluetrail2s.png", "images/bluetrail2.png", "regular"),
+new Array("images/bluetrail3s.png", "images/bluetrail3.png", "regular"),
+new Array("images/bluetrail4s.png", "images/bluetrail4.png", "regular"),
+new Array("images/bluetrail5s.png", "images/bluetrail5.png", "regular"),
+new Array("images/bluetrail6s.png", "images/bluetrail6.png", "regular"),
+new Array("images/bluetrail7s.png", "images/bluetrail7.png", "regular")
+);
+allApps.push(bluetrail3);
+mycarousel_itemList.push( {url: 'images/bluetrail3s.png', title: 'bluetrail3'});
+
+var itinerdemo1 = new Array(
+"<a  target=blank href=\"http://itiner.com/\">Itiner </a> is a free application providing users with traveller's information on mobile phones.Thanks to the effective data compression, the application displays public transportation timetables without the need for Internet connection (off-line).Cooperating with the bus or tram tracking system in a city, it can provide information about real waiting times for a given line (on-line).",
+new Array("images/itinerdemo1s.png", "images/itinerdemo1.png", "regular"),
+new Array("images/itinerdemo2s.png", "images/bluetrail2.png", "regular"),
+new Array("images/itinerdemo3s.png", "images/itinerdemo3.png", "regular"),
+new Array("images/itinerdemo4s.png", "images/itinerdemo4.png", "regular"),
+new Array("images/itinerdemo5s.png", "images/itinerdemo5.png", "regular"),
+new Array("images/itinedemo6s.png", "images/itinerdemo6.png", "regular"),
+new Array("images/itinerdemo7s.png", "images/itinerdemo7.png", "regular")
+);
+allApps.push(itinerdemo1);
+mycarousel_itemList.push( {url: 'images/itinerdemo1s.png', title: 'itinerdemo1'});
+
+var NearPeople1 = new Array(
+"Our application called <a  target=blank href=\"http://www.nearconn.com/\">NearPeople </a> ,it's gives you more details on people around you. it scans bluetooth devices and brings the data about their holders. our application is multilanguage,it support the following: English, Hebrew, Arabic, Chinese, Hindi and Italian",
+new Array("images/NearPeople1s.png", "images/NearPeople1.png", "regular"),
+new Array("images/NearPeople2s.png", "images/NearPeople2.png", "regular"),
+new Array("images/NearPeople3s.png", "images/NearPeople3.png", "regular"),
+new Array("images/NearPeople4s.png", "images/NearPeople4.png", "regular"),
+new Array("images/NearPeople5s.png", "images/NearPeople5.png", "regular"),
+new Array("images/NearPeople6s.png", "images/NearPeople6.png", "regular")
+);
+allApps.push(NearPeople1);
+mycarousel_itemList.push( {url: 'images/NearPeople1s.png', title: 'NearPeople1'});
+
+var ParkingTracker3 = new Array(
+"With the <a  target=blank href=\"http://creativeworkline.com/parkingtracker/pt_en.html\">Parking Tracker</a> you never forget where you parked your car. To save the parking position you simply press a button.Later when you want to find your car again you press another button. Then the location of the car is displayed on a map as well as your own location.With this you can find your car again - anytime, anywhere!Optionally you can also enter notes, the number of the parking lot and an alarm for the expiration of your parking tickets. The application will also help to avoid fines.The Parking Tracker: easy to use and on your smartphone wherever you go.",
+new Array("images/ParkingTracker3s.png", "images/ParkingTracker3.png", "regular"),
+new Array("images/ParkingTracker2s.png", "images/ParkingTracker2.png", "regular"),
+new Array("images/ParkingTracker1s.png", "images/ParkingTracker1.png", "regular"),
+new Array("images/ParkingTracker4s.png", "images/ParkingTracker4.png", "regular"),
+new Array("images/ParkingTracker5s.png", "images/ParkingTracker5.png", "regular")
+);
+allApps.push(ParkingTracker3);
+mycarousel_itemList.push( {url: 'images/ParkingTracker3s.png', title: 'ParkingTracker3'});
+
+var HandySafe8 = new Array(
+"<a  target=blank href=\"http://www.penreader.com/java-software/Handy_Safe.html\">Handy Safe for mobile phones </a> is the perfect assistant for secure and convenient data management. Keep your mind free from countless numbers and letters. Have all of your important information in one place, safe, easy to access, and always with you with Handy Safe for mobile phones. Get instant access to all of your important information wherever you go!",
+new Array("images/HandySafe1s.png", "images/HandySafe1.png", "regular"),
+new Array("images/HandySafe2s.png", "images/HandySafe2.png", "regular"),
+new Array("images/HandySafe3s.png", "images/HandySafe3.png", "regular"),
+new Array("images/HandySafe4s.png", "images/HandySafe4.png", "regular"),
+new Array("images/HandySafe5s.png", "images/HandySafe5.png", "regular"),
+new Array("images/HandySafe6s.png", "images/HandySafe6.png", "regular"),
+new Array("images/HandySafe7s.png", "images/HandySafe7.png", "regular"),
+new Array("images/HandySafe8s.png", "images/HandySafe8.png", "regular")
+);
+allApps.push(HandySafe8);
+mycarousel_itemList.push( {url: 'images/HandySafe8s.png', title: 'HandySafe8'});
+
+var MinuteTraining3 = new Array(
+"Workout log for weight training and fitness. Setup your individual training schedule and track the workouts <a  target=blank href=\"http://www.minute-training.com/\">Minute Training </a> supports classic training with weight/reps and time-based training.",
+new Array("images/MinuteTraining1s.png", "images/MinuteTraining1.png", "regular"),
+new Array("images/MinuteTraining3s.png", "images/MinuteTraining3.png", "regular"),
+new Array("images/MinuteTraining5s.png", "images/MinuteTraining5.png", "regular"),
+new Array("images/MinuteTraining7s.png", "images/MinuteTraining7.png", "regular")
+);
+allApps.push(MinuteTraining3);
+mycarousel_itemList.push( {url: 'images/MinuteTraining3s.png', title: 'MinuteTraining3'});
+
+var tvider1 = new Array(
+"<a  target=blank href=\"http://tvider.com/\">Tvider</a> makes tweeting delightful and addictive like never before! Exemplify expression; convey more than just wordsand tweet your world on Twitter! Tvider gives you the ability to tweet multimedia, on spur of the moment. Instantly capture a picture or record a video/audio, add some text and update your Twitter status using Tvider on your cell-phone. Twitter and multimedia merged in the most innovative way, to make every tweeting experience a memorable one!.",
+new Array("images/tvider1s.png", "images/tvider1.png", "regular"),
+new Array("images/tvider2s.png", "images/tvider2.png", "regular"),
+new Array("images/tvider3s.png", "images/tvider3.png", "regular")
+);
+allApps.push(tvider1);
+mycarousel_itemList.push( {url: 'images/tvider1s.png', title: 'tvider1'});
+
+var DrumBox4 = new Array(
+"<a  target=blank href=\"http://www.drumbox.co.uk/\">Drum Box </a> is a pattern based drum sequencer with over 40 drum instruments to choose from. Works on most recent Nokia and Sony Ericson handsets. Edit patterns, string them together into a song, and export it as a MIDI file to play as a ringtone, or to import into a desktop music package. ",
+new Array("images/DrumBox1s.png", "images/DrumBox1.png", "regular"),
+new Array("images/DrumBox2s.png", "images/DrumBox2.png", "regular"),
+new Array("images/DrumBox3s.png", "images/DrumBox3.png", "regular"),
+new Array("images/DrumBox4s.png", "images/DrumBox4.png", "regular")
+);
+allApps.push(DrumBox4);
+mycarousel_itemList.push( {url: 'images/DrumBox4s.png', title: 'DrumBox4'});
+
+var MobiTease1 = new Array(
+"Have fun with <a  target=blank href=\"http://sites.google.com/site/rainappsproject/\">MobiTease. </a> Tease people with funny, embarrassing, scary and surprising sounds. You can play a sound right away or even schedule it to be played at a specific time or time interval. You can also make a sound repeat itself every time a period you specify passes.",
+new Array("images/MobiTease1s.png", "images/MobiTease1.png", "regular"),
+new Array("images/MobiTease2s.png", "images/MobiTease2.png", "regular"),
+new Array("images/MobiTease3s.png", "images/MobiTease3.png", "regular")
+);
+allApps.push(MobiTease1);
+mycarousel_itemList.push( {url: 'images/MobiTease1s.png', title: 'MobiTease1'});
+
+var voiceRecorder1 = new Array(
+"The <a  target=blank href=\"http://instinct-software.com/2010/02/voice-recorder/\">Voice+ Recorder</a> app provides a recorder app for Instinct owners.Use it to record personal notes, to-do lists, lectures, guitar riffs, etc.Recording is limited only by available space on the memory card.",
+new Array("images/voiceRecorder1s.png", "images/voiceRecorder1.png", "small"),
+new Array("images/voiceRecorder2s.png", "images/voiceRecorder2.png", "small")
+);
+allApps.push(voiceRecorder1);
+mycarousel_itemList.push( {url: 'images/voiceRecorder1s.png', title: 'voiceRecorder1'});
+
+var VideoPoker1 = new Array(
+"<a  target=blank href=\"http://instinct-software.com/2010/02/video-poker/\">Video Poker</a> Has 4 variations - Jacks or Better, Double Double Bonus, Deuces Wild, and Loose Deuces ",
+new Array("images/VideoPoker1s.png", "images/VideoPoker1.png", "small"),
+new Array("images/VideoPoker2s.png", "images/VideoPoker2.png", "small")
+);
+allApps.push(VideoPoker1);
+mycarousel_itemList.push( {url: 'images/VideoPoker1s.png', title: 'VideoPoker1'});
+
+var majitranslate = new Array(
+"<a  target=blank href=\"http://store.ovi.com/content/28385/\">MajiTranslatator</a> is the ultimate translator app for your mobile.(powered by google translate) ",
+new Array("images/majitranslate.PNG", "images/majitranslate.PNG", "regular"),
+new Array("images/majitranslate1.PNG", "images/majitranslate1.PNG", "regular"),
+new Array("images/majitranslate2.PNG", "images/majitranslate2.PNG", "regular")
+);
+allApps.push(majitranslate);
+mycarousel_itemList.push( {url: 'images/majitranslate.PNG', title: 'majitranslate'});
+
+var majivoice = new Array(
+"<a  target=blank href=\"http://store.ovi.com/content/27531\">MajiVoice</a> Record your phone call and/or your voice with this fun & easy voice recorder application. ",
+new Array("images/majivoice.PNG", "images/majivoice.PNG", "regular"),
+new Array("images/majivoice1.PNG", "images/majivoice1.PNG", "regular"),
+new Array("images/majivoice2.PNG", "images/majivoice2.PNG", "regular")
+);
+allApps.push(majivoice);
+mycarousel_itemList.push( {url: 'images/majivoice.PNG', title: 'majivoice'});
+
+var Guidebee = new Array(
+" Guidebee Navigator is navigation software on mobile device. <br>  Company Details:<br>     Name: Guidebee Pty Ltd   <br>  Address: Perth ,Australia  <br>   Website: http://www.guidebee.biz   <br>  We provides GIS Engine API, Graphics 2D API etc on mobile platforms",
+new Array("images/Guidebee.png", "images/Guidebee.png", "regular"),
+new Array("images/Guidebee1.png", "images/Guidebee1.png", "regular"),
+new Array("images/Guidebee2.png", "images/Guidebee2.png", "regular"),
+new Array("images/Guidebee3.png", "images/Guidebee3.png", "regular")
+);
+allApps.push(Guidebee);
+mycarousel_itemList.push( {url: 'images/Guidebee.png', title: 'Guidebee'});
+
+var FIFA5 = new Array(
+"<a  target=blank href=\"https://hostj2me.com/a/8x3\">FIFA Time Table</a>as the name suggest, is a complete schedule of FIFA World Cup 2010. A very easy to use application with all the match details and information’s of all the teams.",
+new Array("images/FIFA1s.png", "images/FIFA1.png", "regular"),
+new Array("images/FIFA2s.png", "images/FIFA2.png", "regular"),
+new Array("images/FIFA3s.png", "images/FIFA3.png", "regular"),
+new Array("images/FIFA4s.png", "images/FIFA4.png", "regular"),
+new Array("images/FIFA5s.png", "images/FIFA5.png", "regular")
+);
+allApps.push(FIFA5);
+mycarousel_itemList.push( {url: 'images/FIFA5s.png', title: 'FIFA5'});
+
+var BitMind1 = new Array(
+"<a  target=blank href=\"http://www.bitmind.com.ar/blog/\">BitMind</a> proud of present the  World Cup Fixture Application which keeps up to date with the latest results of the World. ",
+new Array("images/BitMind1s.png", "images/BitMind1.png", "regular"),
+new Array("images/BitMind2s.png", "images/BitMind2.png", "regular"),
+new Array("images/BitMind3s.png", "images/BitMind3.png", "regular")
+);
+allApps.push(BitMind1);
+mycarousel_itemList.push( {url: 'images/BitMind2s.png', title: 'BitMind1'});
+
+var WordSteps3 = new Array(
+"This mobile application is a part of a project<a  target=blank href=\"http://wordsteps.com/\">wordsteps</a> and has a web service based integration with this resource. So this application can be freely distributed and allows to download small dictionaries (30-40 words each) and learn them through 5 available exercises.",
+new Array("images/WordSteps1s.png", "images/WordSteps1.png", "regular"),
+new Array("images/WordSteps2s.png", "images/WordSteps2.png", "regular"),
+new Array("images/WordSteps3s.png", "images/WordSteps3.png", "regular"),
+new Array("images/WordSteps4s.png", "images/WordSteps4.png", "regular"),
+new Array("images/WordSteps5s.png", "images/WordSteps5.png", "regular"),
+new Array("images/WordSteps6s.png", "images/WordSteps6.png", "regular"),
+new Array("images/WordSteps9s.png", "images/WordSteps9.png", "regular")
+);
+allApps.push(WordSteps3);
+mycarousel_itemList.push( {url: 'images/WordSteps3s.png', title: 'WordSteps3'});
+
+var ePoliceMobile = new Array(
+"ePoliceMobile is a J2ME based application that was developed by the Miami-Dade Police Department, using the LWUIT framework.  The application gives police instant access to live 911 calls, current BOLOs, and county-wide traffic incidents.Most importantly, it allows them to perform checks on people/vehicles by name, DL, Tag, and VIN.",
+new Array("images/ePoliceME0s.png", "images/ePoliceME0.png", "large"), 
+new Array("images/ePoliceME1s.png", "images/ePoliceME1.png", "large"),
+new Array("images/ePoliceME2s.png", "images/ePoliceME2.png", "large"),
+new Array("images/ePoliceME3s.png", "images/ePoliceME3.png", "large"), 
+new Array("images/ePoliceME4s.png", "images/ePoliceME4.png", "large"),
+new Array("images/ePoliceME5s.png", "images/ePoliceME5.png", "large"),
+new Array("images/ePoliceME6s.png", "images/ePoliceME6.png", "large"), 
+new Array("images/ePoliceME7s.png", "images/ePoliceME7.png", "large"),
+new Array("images/ePoliceME8s.png", "images/ePoliceME8.png", "large"),
+new Array("images/ePoliceME9s.png", "images/ePoliceME9.png", "large")
+);
+allApps.push(ePoliceMobile);
+mycarousel_itemList.push(  {url: 'images/ePoliceME0s.png', title: 'ePoliceMobile'} );
+    
+function swapFeatured( name ) 
+{
+// FIRST SWAP THE MAIN IMAGE
+	mainImageElement = document.getElementById('featuredLgImg');
+	eval("arrayName = " + name);
+	newLgImage = arrayName[1][1];
+	bkImage = document.getElementById('backImage');
+	imageSize = arrayName[1][2];
+	bkImage.style.backgroundImage = "url('images/Shape-" + imageSize + ".png')";
+	heightAlign = document.getElementById('heightAlign');
+	pdding = document.getElementById('padding');
+	padTop = "0px";
+	padLeft = "32px";
+	if (imageSize != "regular") {
+	   padTop = "10px";
+	   padLeft = "38px";
+	}
+	pdding.style.paddingTop = padTop;
+    pdding.style.paddingLeft = padLeft;
+//	eval("newLgImage = " + name + "[1][1]");
+	mainImageElement.innerHTML='<img height=350 src="' + newLgImage + '" id="'+name+'">';
+
+// NOW SWAP THE THUMBNAILS
+	thumbnailsElement = document.getElementById('featuredIcons');
+	thumbnailsElement.innerHTML = makeMenu(arrayName, name, imageSize);
+	
+// NOW SWAP THE TEXT
+	textElement = document.getElementById('featuredText');
+	textElement.innerHTML = arrayName[0];
+};
+
+
+
+// -->
+</script>
+<link rel="stylesheet" type="text/css" href="transitions.css" media="screen, projection" />
+
+
+<style type="text/css">
+
+/**
+ * Overwrite for having a carousel with dynamic width.
+ */
+.jcarousel-skin-tango .jcarousel-container-horizontal {
+    width: 85%;
+}
+
+.jcarousel-skin-tango .jcarousel-clip-horizontal {
+    width: 100%;
+}
+
+*{margin:0;padding:0}
+.titleText {color:#660000; font-family:Verdana,Helvetica,Georgia,sans-serif; font-size:20px; font-weight:bold}
+.smText {font-family:Verdana,Helvetica,Georgia,sans-serif; font-size:12px}
+</style>
+
+</head>
+
+<!--  =======  END OF SECTION NOT TO TOUCH... OK TO CUSTOMIZE THE BELOW ===========   -->
+
+<body bgcolor=#FFFFFF  border=0 onload="imageLoad();"  >
+
+<center>
+<table border=0 width="100%" cellpadding=0 cellspacing=0>
+<tr>
+<td width=78><img src="images/carou_bg_left.png" width=78 height=118 border=0></td>
+<td width="98%" style="background-image:url('images/carou_bg_middle.png');background-repeat:repeat-x;"></td>
+<td width=78><img src="images/carou_bg_right.png" width=78 height=118 border=0></td>
+</tr>
+</table>
+<div id="wrap" style="position:absolute;top:0;left:20px;width:95%;">
+  <ul id="mycarousel" class="jcarousel-skin-tango">
+  </ul>
+</div>
+
+<div style="background-image:url('images/BG.jpg');" id="mainPg">
+
+<table border=0 cellspacing=0><tr><td align=left valign=top width=800><table cellspacing=0 border=0 height=430 ><tr height=40><td></td></tr><tr>
+<td id="backImage" width=540 style="background-image:url('images/Shape-regular.png');background-repeat:no-repeat;" valign=top>
+<table border=0 cellpadding=0 cellspacing=0><tr height="15px"><td></td></tr><tr> 
+
+<td id="padding" style="padding-left:32px;padding-top:0px"><div id="featuredLgImg"><img height=350 src="images/aerith1.png"></div></td>
+
+</tr></table></td><td valign=middle class=smText color=660000 style="padding-left:20px">
+<br>
+
+<div id="featuredText">A LWUIT port of the famous Swing demo sporting a unique interactive UI</div>
+
+</td></tr></table></td></tr><tr height=18><td></td></tr>
+<tr>
+<td valign=top width=170 style="padding-left:20px"><div id="featuredIcons"><script>document.write(makeMenu(aerith1, 'aerith1', "regular"));</script></div></td>
+</tr><tr height=49><Td></td></tr></table>
+
+</div>
+</center>
+</body>
+</html>
+
+
+
+
+

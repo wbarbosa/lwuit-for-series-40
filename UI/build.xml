@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<project name="UI" default="jar" basedir=".">
+    <description>Builds, tests, and runs the project .</description>
+    <import file="nbproject/build-impl.xml"/>
+    <!--
+
+            There exist several targets which are by default empty and which can be
+            used for execution of your tasks. These targets are usually executed
+            before and after some main targets. They are:
+
+            pre-init:                 called before initialization of project properties
+            post-init:                called after initialization of project properties
+            pre-preprocess:           called before text preprocessing of sources
+            post-preprocess:          called after text preprocessing of sources
+            pre-compile:              called before source compilation
+            post-compile:             called after source compilation
+            pre-obfuscate:            called before obfuscation 
+            post-obfuscate:           called after obfuscation
+            pre-preverify:            called before preverification
+            post-preverify:           called after preverification
+            pre-jar:                  called before jar building
+            post-jar:                 called after jar building
+            pre-build:                called before final distribution building
+            post-build:               called after final distribution building
+            pre-clean:                called before cleaning build products
+            post-clean:               called after cleaning build products
+
+            Example of pluging a my-special-task after the compilation could look like
+
+            <target name="post-compile">
+            <my-special-task>
+            <fileset dir="${build.classes.dir}"/>
+            </my-special-task>
+            </target>
+
+            For list of available properties check the imported
+            nbproject/build-impl.xml file.
+
+            Other way how to customize the build is by overriding existing main targets.
+            The target of interest are:
+
+            preprocess:               preprocessing
+            extract-libs:             extraction of libraries and resources
+            compile:                  compilation
+            create-jad:               construction of jad and jar manifest source
+            obfuscate:                obfuscation
+            preverify:                preverification
+            jar:                      jar archive building
+            run:                      execution
+            debug:                    execution in debug mode
+            build:                    building of the final distribution
+            javadoc:                  javadoc generation
+
+            Example of overriding the target for project execution could look like
+
+            <target name="run" depends="init,jar">
+            <my-special-exec jadfile="${dist.dir}/${dist.jad}"/>
+            </target>
+
+            Be careful about correct dependencies when overriding original target. 
+            Again, for list of available properties which you can use check the target 
+            you are overriding in nbproject/build-impl.xml file.
+
+            A special target for-all-configs can be used to run some specific targets for
+            all project configurations in a sequence. File nbproject/build-impl.xml 
+            already contains some "for-all" targets:
+    
+            jar-all
+            javadoc-all
+            clean-all
+      
+            Example of definition of target iterating over all project configurations:
+    
+            <target name="jar-all">
+            <property name="target.to.call" value="jar"/>
+            <antcall target="for-all-configs"/>
+            </target>
+
+            -->
+    <target name="post-compile">
+        <delete dir="build/compiled" includes="**/Thumbs.db" />
+        <delete dir="build/compiled" includes="**/*.html" />
+    </target>
+     <target name="Netbeans-Library">
+        <taskdef classpath="../tools/Netbeans/beans2nbm.jar"
+            classname="beans2nbm.ant.GenNbmTask"
+            name="nbm"/>
+        <mkdir dir="dist/LWUIT_1_5/netbeans-modules" />
+        <nbm destFolder="dist/LWUIT_1_5/netbeans-modules"
+            destFileName="com-sun-lwuit-netbeans-midp-ui.nbm"
+            description="LWUIT MIDP"
+            version="1.5"
+            homepage="http://lwuit.java.net"
+            codeName="com.sun.lwuit.netbeans.midp.ui"
+            jarFileName="dist/LWUIT_1_5/lib/LWUIT_MIDP.jar"
+            author="Oracle"
+            displayName="LWUIT For MIDP"
+            license="GPL With Classpath Exception"
+            docsJar="dist/LWUIT_1_5/docs/javadocs.zip"
+            sourceJar="dist/LWUIT_1_5/lib/src.zip"
+            minJDK="1.4"/>       
+        <nbm destFolder="dist/LWUIT_1_5/netbeans-modules"
+            destFileName="com-sun-lwuit-netbeans-midp-io.nbm"
+            description="LWUIT4IO MIDP"
+            version="1.5"
+            homepage="http://lwuit.java.net"
+            codeName="com.sun.lwuit.netbeans.midp.io"
+            jarFileName="dist/LWUIT_1_5/lib/MIDP_IO.jar"
+            author="Oracle"
+            displayName="LWUIT4IO For MIDP"
+            license="GPL With Classpath Exception"
+            docsJar="dist/LWUIT_1_5/docs/javadocs_io.zip"
+            sourceJar="dist/LWUIT_1_5/lib/io_src.zip"
+            minJDK="1.4"/>
+        <nbm destFolder="dist/LWUIT_1_5/netbeans-modules"
+            destFileName="com-sun-lwuit-netbeans-se-ui.nbm"
+            description="LWUIT Desktop"
+            version="1.5"
+            homepage="http://lwuit.java.net"
+            codeName="com.sun.lwuit.netbeans.se.ui"
+            jarFileName="dist/LWUIT_1_5/lib/LWUIT_Desktop.jar"
+            author="Oracle"
+            displayName="LWUIT For JavaSE"
+            license="GPL With Classpath Exception"
+            docsJar="dist/LWUIT_1_5/docs/javadocs.zip"
+            sourceJar="dist/LWUIT_1_5/lib/src.zip"
+            minJDK="1.4"/>
+        <nbm destFolder="dist/LWUIT_1_5/netbeans-modules"
+            destFileName="com-sun-lwuit-netbeans-se-io.nbm"
+            description="LWUIT4IO Desktop"
+            version="1.5"
+            homepage="http://lwuit.java.net"
+            codeName="com.sun.lwuit.netbeans.se.io"
+            jarFileName="dist/LWUIT_1_5/lib/SE_IO.jar"
+            author="Oracle"
+            displayName="LWUIT4IO For JavaSE"
+            license="GPL With Classpath Exception"
+            docsJar="dist/LWUIT_1_5/docs/javadocs_io.zip"
+            sourceJar="dist/LWUIT_1_5/lib/io_src.zip"
+            minJDK="1.4"/>
+        <nbm destFolder="dist/LWUIT_1_5/netbeans-modules"
+            destFileName="com-sun-lwuit-netbeans-blackberry-signed-ui.nbm"
+            description="LWUIT Blackberry Signed"
+            version="1.5"
+            homepage="http://lwuit.java.net"
+            codeName="com.sun.lwuit.netbeans.blackberry.signed.ui"
+            jarFileName="dist/LWUIT_1_5/lib/LWUIT_Blackberry_4_7_OrNewerSigned.jar"
+            author="Oracle"
+            displayName="LWUIT For Blackberry Signing"
+            license="GPL With Classpath Exception"
+            docsJar="dist/LWUIT_1_5/docs/javadocs.zip"
+            sourceJar="dist/LWUIT_1_5/lib/src.zip"
+            minJDK="1.4"/>
+        <nbm destFolder="dist/LWUIT_1_5/netbeans-modules"
+            destFileName="com-sun-lwuit-netbeans-blackberry-io.nbm"
+            description="LWUIT4IO Blackberry"
+            version="1.5"
+            homepage="http://lwuit.java.net"
+            codeName="com.sun.lwuit.netbeans.blackberry.io"
+            jarFileName="dist/LWUIT_1_5/lib/RIM_IO.jar"
+            author="Oracle"
+            displayName="LWUIT4IO For Blackberry"
+            license="GPL With Classpath Exception"
+            docsJar="dist/LWUIT_1_5/docs/javadocs_io.zip"
+            sourceJar="dist/LWUIT_1_5/lib/io_src.zip"
+            minJDK="1.4"/>
+        <nbm destFolder="dist/LWUIT_1_5/netbeans-modules"
+            destFileName="com-sun-lwuit-netbeans-blackberry-unsigned-ui.nbm"
+            description="LWUIT Blackberry Unsigned"
+            version="1.5"
+            homepage="http://lwuit.java.net"
+            codeName="com.sun.lwuit.netbeans.blackberry.unsigned.ui"
+            jarFileName="dist/LWUIT_1_5/lib/LWUIT_Blackberry_4_7_OrNewer.jar"
+            author="Oracle"
+            displayName="LWUIT For Blackberry Unsigned"
+            license="GPL With Classpath Exception"
+            docsJar="dist/LWUIT_1_5/docs/javadocs.zip"
+            sourceJar="dist/LWUIT_1_5/lib/src.zip"
+            minJDK="1.4"/>
+        <nbm destFolder="dist/LWUIT_1_5/netbeans-modules"
+            destFileName="com-sun-lwuit-netbeans-blackberry-old-ui.nbm"
+            description="LWUIT Blackberry Old (Pre 4.7)"
+            version="1.5"
+            homepage="http://lwuit.java.net"
+            codeName="com.sun.lwuit.netbeans.blackberry.old.ui"
+            jarFileName="dist/LWUIT_1_5/lib/LWUIT_Blackberry_Legacy_Pre4_7.jar"
+            author="Oracle"
+            displayName="LWUIT For Blackberry Legacy (Pre 4.7)"
+            license="GPL With Classpath Exception"
+            docsJar="dist/LWUIT_1_5/docs/javadocs.zip"
+            sourceJar="dist/LWUIT_1_5/lib/src.zip"
+            minJDK="1.4"/>
+     </target>
+
+    <target name="pre-jar">
+        <delete file="${preverify.classes.dir}/com/sun/lwuit/impl/ImplementationFactory.class" />
+    </target>
+
+    <target depends="init" name="package_release" description="Builds The Full LWUIT Release ZIP/Folder">
+        <delete dir="dist/LWUIT_1_5" />
+        <fail unless="dist.javadoc.dir">Must set dist.javadoc.dir</fail>
+        <mkdir dir="dist/LWUIT_1_5" />
+        <mkdir dir="dist/LWUIT_1_5/lib" />
+        <mkdir dir="dist/LWUIT_1_5/docs" />
+        <mkdir dir="dist/LWUIT_1_5/docs/license" />
+        <mkdir dir="dist/LWUIT_1_5/resource_editor" />
+        <mkdir dir="dist/LWUIT_1_5/apps" />
+        <mkdir dir="dist/LWUIT_1_5/apps/LWUITDemo" />
+        <mkdir dir="dist/LWUIT_1_5/apps/Makeover" />
+        <mkdir dir="dist/LWUIT_1_5/apps/Browser" />
+        <mkdir dir="dist/LWUIT_1_5/apps/TimeZone" />
+        <mkdir dir="dist/LWUIT_1_5/apps/Tipster" />
+        <mkdir dir="${dist.javadoc.dir}"/>
+        <mkdir dir="../IO/dist/doc"/>
+
+        <copydir src="../docs/javadoc_images" dest="${dist.javadoc.dir}"  excludes=".svn"/>
+        <javadoc source="${javac.source}" destdir="${dist.javadoc.dir}"
+            bootclasspath="${platform.bootclasspath}" notree="${javadoc.notree}"
+            use="${javadoc.use}" nonavbar="${javadoc.nonavbar}" noindex="${javadoc.noindex}"
+            splitindex="${javadoc.splitindex}" author="${javadoc.author}" version="${javadoc.version}"
+            windowtitle="${javadoc.windowtitle}" private="${javadoc.private}"
+            encoding="${javac.encoding}" overview="overview.html"
+            excludepackagenames="com.sun.lwuit.impl"
+            bottom="Copyright 2011 Oracle Corporation. All rights reserved. Use is subject to license terms.">
+            <classpath>
+                <path path="${libs.classpath}"/>
+            </classpath>
+            <sourcepath>
+                <pathelement location="${src.dir}"/>
+            </sourcepath>
+        </javadoc>
+        <javadoc source="../IO/src" destdir="../IO/dist/doc"
+            bootclasspath="${platform.bootclasspath}" notree="${javadoc.notree}"
+            use="${javadoc.use}" nonavbar="${javadoc.nonavbar}" noindex="${javadoc.noindex}"
+            splitindex="${javadoc.splitindex}" author="${javadoc.author}" version="${javadoc.version}"
+            windowtitle="${javadoc.windowtitle}" private="${javadoc.private}"
+            encoding="${javac.encoding}" 
+            excludepackagenames="com.sun.lwuit.io.impl"
+            bottom="Copyright 2011 Oracle Corporation. All rights reserved. Use is subject to license terms.">
+            <classpath>
+                <path path="${libs.classpath}"/>
+            </classpath>
+            <sourcepath>
+                <pathelement location="../IO/src"/>
+                <pathelement location="src"/>
+            </sourcepath>
+        </javadoc>
+        
+        <zip basedir="${dist.javadoc.dir}" destfile="dist/LWUIT_1_5/docs/javadocs.zip" compress="false" />
+        <zip basedir="../IO/dist/doc" destfile="dist/LWUIT_1_5/docs/javadocs_io.zip" compress="false" />
+        <copy file="../docs/LWUIT_Developer_Guide.pdf" tofile="dist/LWUIT_1_5/docs/Developer_Guide.pdf" />
+        <copy file="../docs/BinaryResourceFileSpec.pdf" tofile="dist/LWUIT_1_5/docs/BinaryResourceFileSpec.pdf" />
+        <copy file="../docs/BlackBerry-ReadMe.txt" tofile="dist/LWUIT_1_5/docs/BlackBerry-ReadMe.txt" />
+        <copydir src="../docs/release_license" dest="dist/LWUIT_1_5/docs/license"   excludes=".svn"/>
+        <copydir src="../docs/shared" dest="dist/LWUIT_1_5/docs/shared"   excludes=".svn"/>
+                <!-- copy file="../docs/BinaryReleaseNotes.html" todir="dist/LWUIT_1_5" / -->
+        <copy file="../docs/copyright.html" todir="dist/LWUIT_1_5" />
+        <!-- copy file="../docs/WhatsNewInThisRelease.html" todir="dist/LWUIT_1_5" / -->
+        <copy file="../docs/ReleaseNotes.pdf" todir="dist/LWUIT_1_5" />
+        <copy file="../docs/document.css" todir="dist/LWUIT_1_5" />
+
+        <ant inheritall="false" antfile="../tools/ResourceEditor/build.xml" target="release" />
+
+        <copy file="../tools/ResourceEditor/dist/editor.jar" tofile="dist/LWUIT_1_5/resource_editor/ResourceEditor.jar" />
+        <!-- copy file="../tools/ResourceEditor/ResourceEdit.exe" todir="dist/LWUIT_1_5/resource_editor" / -->
+
+        <ant inheritall="false" antfile="../apps/LWUITDemo/build.xml" target="rebuild" />
+        <ant inheritall="false" antfile="../ports/MIDP/UI/build.xml" target="rebuild" />
+        <ant inheritall="false" antfile="../ports/SE/UI_SE/build.xml" target="clean" />
+        <ant inheritall="false" antfile="../ports/SE/UI_SE/build.xml" target="jar" />
+        <ant inheritall="false" antfile="../ports/RIM/UI_RIM/build.xml" target="rebuild">
+            <property name="config.active" value=""/>
+            <property name="config.active.name" value="DefaultConfiguration"/>
+        </ant>
+        <ant inheritall="false" antfile="../ports/RIM/UI_RIM/build.xml" target="rebuild">
+            <property name="config.active" value="NewOS"/>
+            <property name="config.active.name" value="NewOS"/>
+        </ant>
+        <ant inheritall="false" antfile="../ports/RIM/UI_RIM/build.xml" target="rebuild">
+            <property name="config.active" value="NewOSSigned"/>
+            <property name="config.active.name" value="NewOSSigned"/>
+        </ant>
+        <ant inheritall="false" antfile="../apps/LWUITDemo/build.xml" target="rebuild" />
+        <ant inheritall="false" antfile="../apps/LWUITDemo/LWUITDemoDesktop/build.xml" target="clean" />
+        <ant inheritall="false" antfile="../apps/LWUITDemo/LWUITDemoDesktop/build.xml" target="jar" />
+        <ant inheritall="false" antfile="../apps/LWUITDemo/LWUITDemoMIDP/build.xml" target="rebuild" />
+        <ant inheritall="false" antfile="../apps/LWUITDemo/LWUITDemoRIM/build.xml" target="rebuild">
+            <property name="config.active" value=""/>
+            <property name="config.active.name" value="DefaultConfiguration"/>
+        </ant>
+        <ant inheritall="false" antfile="../apps/LWUITDemo/LWUITDemoRIM/build.xml" target="rebuild">
+            <property name="config.active" value="Touch"/>
+            <property name="config.active.name" value="Touch"/>
+        </ant>
+
+        <ant inheritall="false" antfile="../apps/Makeover/build.xml" target="build-release" />
+        <ant inheritall="false" antfile="../apps/Browser/build.xml" target="build-release" />
+        <ant inheritall="false" antfile="../apps/TimeZone/build.xml" target="build-release" />
+        <ant inheritall="false" antfile="../apps/Tipster/build.xml" target="build-release" />
+
+        <ant inheritall="false" antfile="../ports/CDC_PBP/UI_CDC/build.xml" target="rebuild" />
+        <ant inheritall="false" antfile="../ports/MIDP/IO_MIDP/build.xml" target="rebuild" />
+        <ant inheritall="false" antfile="../ports/SE/IO_SE/build.xml" target="clean" />
+        <ant inheritall="false" antfile="../ports/SE/IO_SE/build.xml" target="jar" />
+        <ant inheritall="false" antfile="../ports/RIM/IO_RIM/build.xml" target="rebuild" />
+        <ant inheritall="false" antfile="../ports/Nokia/IO_Nokia/build.xml" target="rebuild" />
+
+        <copy file="../Ports/MIDP/UI/dist/UI.jar" tofile="dist/LWUIT_1_5/lib/LWUIT_MIDP.jar" />
+        <copy file="../Ports/SE/UI_SE/dist/UI_SE.jar" tofile="dist/LWUIT_1_5/lib/LWUIT_Desktop.jar" />
+        <copy file="../Ports/RIM/UI_RIM/dist/UI_RIM.jar" tofile="dist/LWUIT_1_5/lib/LWUIT_Blackberry_Legacy_Pre4_7.jar" />
+        <copy file="../Ports/RIM/UI_RIM/dist/NewOS/UI_RIM.jar" tofile="dist/LWUIT_1_5/lib/LWUIT_Blackberry_4_7_OrNewer.jar" />
+        <copy file="../Ports/RIM/UI_RIM/dist/NewOSSigned/UI_RIM.jar" tofile="dist/LWUIT_1_5/lib/LWUIT_Blackberry_4_7_OrNewerSigned.jar" />
+        <copy file="../Ports/MIDP/IO_MIDP/dist/IO.jar" tofile="dist/LWUIT_1_5/lib/MIDP_IO.jar" />
+        <copy file="../Ports/RIM/IO_RIM/dist/IO_RIM.jar" tofile="dist/LWUIT_1_5/lib/RIM_IO.jar" />
+        <copy file="../Ports/SE/IO_SE/dist/IO_SE.jar" tofile="dist/LWUIT_1_5/lib/SE_IO.jar" />
+        <copy file="../Ports/Nokia/IO_Nokia/dist/IO.jar" tofile="dist/LWUIT_1_5/lib/NOKIA_IO.jar" />
+        <copy file="../Ports/CDC_PBP/UI_CDC/dist/UI_CDC.jar" tofile="dist/LWUIT_1_5/lib/LWUIT_CDC_PBP_UI.jar" />
+        <copy file="../docs/readme_lib_dir.txt" tofile="dist/LWUIT_1_5/lib/readme.txt" />
+        <zip basedir="src" file="dist/LWUIT_1_5/lib/src.zip" />
+        <zip basedir="../IO/src" file="dist/LWUIT_1_5/lib/src_io.zip" />
+
+        <!-- ant inheritall="false" antfile="build.xml" target="Netbeans-Library" / -->
+
+        <tstamp>
+            <format property="tstamp" pattern="yyyyMMdd" />
+        </tstamp>
+        <copydir src="../Apps/LWUITDemo" dest="dist/LWUIT_1_5/apps/LWUITDemo"  excludes=".svn,**/build/**,**/Android/**,**/dist/**" />
+        <copydir src="../Apps/Makeover" dest="dist/LWUIT_1_5/apps/Makeover"  excludes=".svn,**/build/**,**/dist/**" />
+        <copydir src="../Apps/Browser" dest="dist/LWUIT_1_5/apps/Browser"  excludes=".svn,**/build/**,**/dist**" />
+        <copydir src="../Apps/TimeZone" dest="dist/LWUIT_1_5/apps/TimeZone"  excludes=".svn,**/build/**,**/Android/**,**/dist**" />
+        <copydir src="../Apps/Tipster" dest="dist/LWUIT_1_5/apps/Tipster"  excludes=".svn,**/build/**,**/Android/**,**/dist**" />
+        <copydir forceoverwrite="true" src="project_properties_for_release_build" dest="dist/LWUIT_1_5/apps"  excludes=".svn" />
+        <delete dir="dist/LWUIT_1_5" includes="**/*.db" />
+        <delete dir="dist/LWUIT_1_5/LWUITDemo/nbproject/private" />
+        <zip basedir="dist" file="dist/LWUIT_Release_${tstamp}.zip" includes="LWUIT_1_5/**"/>
+    </target>
+
+</project>

@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div element="book" href="toc.htm" number="" targetptr="">
+  <ttl>Lightweight UI Toolkit Developer's Guide</ttl>
+  <xreftext><cite>Lightweight UI Toolkit Developer's Guide</cite></xreftext>
+  <div element="preface" href="preface.htm" number="" targetptr="Z400086710059">
+    <ttl>Preface</ttl>
+    <xreftext>&#x201C;Preface&#x201D;</xreftext>
+    <div element="prefsect1" href="preface.htm" number="" targetptr="Z400086710000">
+      <ttl>Before You Read This Document</ttl>
+      <xreftext>&#x201C;Before You Read This Document&#x201D;</xreftext>
+    </div>
+    <div element="prefsect1" href="preface.htm" number="" targetptr="Z400086710007">
+      <ttl>How This Document Is Organized</ttl>
+      <xreftext>&#x201C;How This Document Is Organized&#x201D;</xreftext>
+    </div>
+    <div element="prefsect1" href="preface.htm" number="" targetptr="Z400086710028">
+      <ttl>Shell Prompts</ttl>
+      <xreftext>&#x201C;Shell Prompts&#x201D;</xreftext>
+    </div>
+    <div element="prefsect1" href="preface.htm" number="" targetptr="Z400086710032">
+      <ttl>Typographic Conventions</ttl>
+      <xreftext>&#x201C;Typographic Conventions&#x201D;</xreftext>
+    </div>
+    <div element="prefsect1" href="preface.htm" number="" targetptr="Z400086710050">
+      <ttl>Related Documentation</ttl>
+      <xreftext>&#x201C;Related Documentation&#x201D;</xreftext>
+    </div>
+    <div element="prefsect1" href="preface.htm" number="" targetptr="Z400086710055">
+      <ttl>We Welcome Your Comments</ttl>
+      <xreftext>&#x201C;We Welcome Your Comments&#x201D;</xreftext>
+    </div>
+  </div>
+  <div element="chapter" href="intro.htm" number="1" targetptr="CEFIEGJH">
+    <ttl>Introducing the Lightweight UI Toolkit Library</ttl>
+    <xreftext>&#x201C;Introducing the Lightweight UI Toolkit Library&#x201D;</xreftext>
+    <div element="sect1" href="intro.htm" number="1.1" targetptr="Z40008751289572">
+      <ttl>API Overview</ttl>
+      <xreftext>&#x201C;API Overview&#x201D;</xreftext>
+      <obj element="figure" href="intro.htm" number="1-1" targetptr="CEFCFICG">
+        <ttl>Simplified Widget Class Hierarchy</ttl>
+        <xreftext>&#x201C;Simplified Widget Class Hierarchy&#x201D;</xreftext>
+      </obj>
+      <div element="sect2" href="intro.htm" number="1.1.1" targetptr="Z40008751289547">
+        <ttl>Scope and Portability</ttl>
+        <xreftext>&#x201C;Scope and Portability&#x201D;</xreftext>
+        <obj element="example" href="intro.htm" number="1-1" targetptr="Z40008521289104">
+          <ttl>Hello World for MIDP</ttl>
+          <xreftext>&#x201C;Hello World for MIDP&#x201D;</xreftext>
+        </obj>
+        <obj element="figure" href="intro.htm" number="1-2" targetptr="Z40008521290439">
+          <ttl>Hello World</ttl>
+          <xreftext>&#x201C;Hello World&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="intro.htm" number="1.1.2" targetptr="Z40008751289561">
+        <ttl>Events and Threading</ttl>
+        <xreftext>&#x201C;Events and Threading&#x201D;</xreftext>
+      </div>
+    </div>
+  </div>
+  <div element="chapter" href="widgets.htm" number="2" targetptr="CEHGAEFC">
+    <ttl>Using Lightweight UI Toolkit Widgets</ttl>
+    <xreftext>&#x201C;Using Lightweight UI Toolkit Widgets&#x201D;</xreftext>
+    <div element="sect1" href="widgets.htm" number="2.1" targetptr="Z40008781292076">
+      <ttl>Component</ttl>
+      <xreftext>&#x201C;Component&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.2" targetptr="Z40008781292083">
+      <ttl>Container</ttl>
+      <xreftext>&#x201C;Container&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.3" targetptr="Z40008781292090">
+      <ttl>Form</ttl>
+      <xreftext>&#x201C;Form&#x201D;</xreftext>
+      <obj element="example" href="widgets.htm" number="2-1" targetptr="Z4000acc1292705">
+        <ttl>Form Setup and Creation;</ttl>
+        <xreftext>&#x201C;Form Setup and Creation;&#x201D;</xreftext>
+      </obj>
+      <obj element="figure" href="widgets.htm" number="2-1" targetptr="Z4000acc1292986">
+        <ttl>Form Element</ttl>
+        <xreftext>&#x201C;Form Element&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.4" targetptr="Z4000acc1292103">
+      <ttl>Create and Set Up a Form Label</ttl>
+      <xreftext>&#x201C;Create and Set Up a Form Label&#x201D;</xreftext>
+      <obj element="figure" href="widgets.htm" number="2-2" targetptr="Z4000acc1292040">
+        <ttl>Label With Text, Label With Icon, and Label with Text and Icon</ttl>
+        <xreftext>&#x201C;Label With Text, Label With Icon, and Label with Text and Icon&#x201D;</xreftext>
+      </obj>
+      <obj element="figure" href="widgets.htm" number="2-3" targetptr="Z4000acc1292044">
+        <ttl>Text to Icon Alignment Position of BOTTOM</ttl>
+        <xreftext>&#x201C;Text to Icon Alignment Position of BOTTOM&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.5" targetptr="Z4000acc1292115">
+      <ttl>Button</ttl>
+      <xreftext>&#x201C;Button&#x201D;</xreftext>
+      <obj element="figure" href="widgets.htm" number="2-4" targetptr="Z4000acc1293982">
+        <ttl>Button With Text, Button With Icon, and Button With Text and Icon</ttl>
+        <xreftext>&#x201C;Button With Text, Button With Icon, and Button With Text and Icon&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.6" targetptr="Z40008781292126">
+      <ttl>RadioButton</ttl>
+      <xreftext>&#x201C;RadioButton&#x201D;</xreftext>
+      <obj element="figure" href="widgets.htm" number="2-5" targetptr="Z4000acc1294049">
+        <ttl>Sample Radio Button</ttl>
+        <xreftext>&#x201C;Sample Radio Button&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.7" targetptr="Z40008781292134">
+      <ttl>ButtonGroup</ttl>
+      <xreftext>&#x201C;ButtonGroup&#x201D;</xreftext>
+      <obj element="figure" href="widgets.htm" number="2-6" targetptr="Z4000acc1294114">
+        <ttl>RadioButton Group</ttl>
+        <xreftext>&#x201C;RadioButton Group&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.8" targetptr="Z40008781292145">
+      <ttl>CheckBox</ttl>
+      <xreftext>&#x201C;CheckBox&#x201D;</xreftext>
+      <obj element="figure" href="widgets.htm" number="2-7" targetptr="Z4000acc1294188">
+        <ttl>CheckBox Sample</ttl>
+        <xreftext>&#x201C;CheckBox Sample&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.9" targetptr="Z40008781292153">
+      <ttl>ComboBox</ttl>
+      <xreftext>&#x201C;ComboBox&#x201D;</xreftext>
+      <obj element="figure" href="widgets.htm" number="2-8" targetptr="Z4000acc1294357">
+        <ttl>Combo Box</ttl>
+        <xreftext>&#x201C;Combo Box&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.10" targetptr="Z40008781292178">
+      <ttl>Tabs</ttl>
+      <xreftext>&#x201C;Tabs&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.11" targetptr="Z4000acc1292166">
+      <ttl>TextArea</ttl>
+      <xreftext>&#x201C;TextArea&#x201D;</xreftext>
+      <obj element="figure" href="widgets.htm" number="2-9" targetptr="Z4000acc1294489">
+        <ttl>Form With Text Area</ttl>
+        <xreftext>&#x201C;Form With Text Area&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.12" targetptr="Z40008781294906">
+      <ttl>TextField</ttl>
+      <xreftext>&#x201C;TextField&#x201D;</xreftext>
+      <obj element="figure" href="widgets.htm" number="2-10" targetptr="Z4000e651296845">
+        <ttl>Sample Text Field</ttl>
+        <xreftext>&#x201C;Sample Text Field&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.13" targetptr="Z40008781295033">
+      <ttl>Calendar</ttl>
+      <xreftext>&#x201C;Calendar&#x201D;</xreftext>
+      <obj element="figure" href="widgets.htm" number="2-11" targetptr="Z40020e51296643">
+        <ttl>Calendar Component</ttl>
+        <xreftext>&#x201C;Calendar Component&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.14" targetptr="Z4000f541295149">
+      <ttl>Tickering</ttl>
+      <xreftext>&#x201C;Tickering&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.15" targetptr="Z4000f541295175">
+      <ttl>Bidi</ttl>
+      <xreftext>&#x201C;Bidi&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.16" targetptr="Z400002a1297070">
+      <ttl>Virtual Keyboard</ttl>
+      <xreftext>&#x201C;Virtual Keyboard&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="widgets.htm" number="2.17" targetptr="Z40008781297419">
+      <ttl>Customizing the Virtual Keyboard</ttl>
+      <xreftext>&#x201C;Customizing the Virtual Keyboard&#x201D;</xreftext>
+      <div element="sect2" href="widgets.htm" number="2.17.1" targetptr="Z400002a1297491">
+        <ttl>Changing the Virtual Keyboard Look and Feel</ttl>
+        <xreftext>&#x201C;Changing the Virtual Keyboard Look and Feel&#x201D;</xreftext>
+        <obj element="table" href="widgets.htm" number="2-1" targetptr="">
+          <ttl>Virtual Keyboard User Interface IDs</ttl>
+          <xreftext>&#x201C;Virtual Keyboard User Interface IDs&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="widgets.htm" number="2.17.2" targetptr="Z400002a1297109">
+        <ttl>Adding a Language</ttl>
+        <xreftext>&#x201C;Adding a Language&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="widgets.htm" number="2.17.3" targetptr="Z400002a1297674">
+        <ttl>Adding an Input Mode for Hebrew</ttl>
+        <xreftext>&#x201C;Adding an Input Mode for Hebrew&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="widgets.htm" number="2.17.4" targetptr="Z400002a1297131">
+        <ttl>Binding a Virtual Keyboard to a TextField</ttl>
+        <xreftext>&#x201C;Binding a Virtual Keyboard to a TextField&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="widgets.htm" number="2.17.5" targetptr="Z400002a1297153">
+        <ttl>Adding Your Own Button to a TextField</ttl>
+        <xreftext>&#x201C;Adding Your Own Button to a TextField&#x201D;</xreftext>
+      </div>
+    </div>
+  </div>
+  <div element="chapter" href="lists.htm" number="3" targetptr="CJBIDAJA">
+    <ttl>Using Lists</ttl>
+    <xreftext>&#x201C;Using Lists&#x201D;</xreftext>
+    <div element="sect1" href="lists.htm" number="3.1" targetptr="Z400087a1291990">
+      <ttl>Initializing a List</ttl>
+      <xreftext>&#x201C;Initializing a List&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="lists.htm" number="3.2" targetptr="Z400087a1292000">
+      <ttl>Creating a Model</ttl>
+      <xreftext>&#x201C;Creating a Model&#x201D;</xreftext>
+      <div element="sect2" href="lists.htm" number="3.2.1" targetptr="Z400087a1291954">
+        <ttl>ListModel</ttl>
+        <xreftext>&#x201C;ListModel&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="lists.htm" number="3.2.2" targetptr="Z400087a1291959">
+        <ttl>DefaultListModel</ttl>
+        <xreftext>&#x201C;DefaultListModel&#x201D;</xreftext>
+      </div>
+    </div>
+    <div element="sect1" href="lists.htm" number="3.3" targetptr="CJBJCFGJ">
+      <ttl>List Cell Renderer</ttl>
+      <xreftext>&#x201C;List Cell Renderer&#x201D;</xreftext>
+      <div element="sect2" href="lists.htm" number="3.3.1" targetptr="CJBCDHDJ">
+        <ttl>ListCellRenderer</ttl>
+        <xreftext>&#x201C;ListCellRenderer&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="lists.htm" number="3.3.2" targetptr="CJBDFHCB">
+        <ttl>DefaultListCellRenderer</ttl>
+        <xreftext>&#x201C;DefaultListCellRenderer&#x201D;</xreftext>
+      </div>
+    </div>
+    <div element="sect1" href="lists.htm" number="3.4" targetptr="Z400087a1292020">
+      <ttl>Adding Items to and Removing Items From a List</ttl>
+      <xreftext>&#x201C;Adding Items to and Removing Items From a List&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="lists.htm" number="3.5" targetptr="Z400087a1292030">
+      <ttl>List Events</ttl>
+      <xreftext>&#x201C;List Events&#x201D;</xreftext>
+      <div element="sect2" href="lists.htm" number="3.5.1" targetptr="Z400087a1291982">
+        <ttl>Fixed Selection Feature</ttl>
+        <xreftext>&#x201C;Fixed Selection Feature&#x201D;</xreftext>
+      </div>
+    </div>
+    <div element="sect1" href="lists.htm" number="3.6" targetptr="Z4000dea1292260">
+      <ttl>Tickers in List</ttl>
+      <xreftext>&#x201C;Tickers in List&#x201D;</xreftext>
+      <obj element="example" href="lists.htm" number="3-1" targetptr="Z40022e81356127">
+        <ttl>Tickering a Renderer</ttl>
+        <xreftext>&#x201C;Tickering a Renderer&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="lists.htm" number="3.7" targetptr="">
+      <ttl>Generic List Cell Renderer</ttl>
+      <xreftext>&#x201C;Generic List Cell Renderer&#x201D;</xreftext>
+      <div element="sect2" href="lists.htm" number="3.7.1" targetptr="">
+        <ttl>Mapping Components to Hashtable Entries</ttl>
+        <xreftext>&#x201C;Mapping Components to Hashtable Entries&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="lists.htm" number="3.7.2" targetptr="">
+        <ttl>Focus for Tickering and Fisheye</ttl>
+        <xreftext>&#x201C;Focus for Tickering and Fisheye&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="lists.htm" number="3.7.3" targetptr="">
+        <ttl>Hashtable Sample</ttl>
+        <xreftext>&#x201C;Hashtable Sample&#x201D;</xreftext>
+        <obj element="example" href="lists.htm" number="3-2" targetptr="">
+          <ttl>List With Checkboxes</ttl>
+          <xreftext>&#x201C;List With Checkboxes&#x201D;</xreftext>
+        </obj>
+      </div>
+    </div>
+  </div>
+  <div element="chapter" href="tabletree.htm" number="4" targetptr="Z4002e6e1292041">
+    <ttl>Table and Tree</ttl>
+    <xreftext>&#x201C;Table and Tree&#x201D;</xreftext>
+    <div element="sect1" href="tabletree.htm" number="4.1" targetptr="Z40022e81356328">
+      <ttl>Table</ttl>
+      <xreftext>&#x201C;Table&#x201D;</xreftext>
+      <obj element="figure" href="tabletree.htm" number="4-1" targetptr="Z40022e81357668">
+        <ttl>Sample Table</ttl>
+        <xreftext>&#x201C;Sample Table&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="tabletree.htm" number="4.2" targetptr="Z400087c1357250">
+      <ttl>Tree</ttl>
+      <xreftext>&#x201C;Tree&#x201D;</xreftext>
+      <obj element="figure" href="tabletree.htm" number="4-2" targetptr="Z4000ca51357825">
+        <ttl>Tree Sample</ttl>
+        <xreftext>&#x201C;Tree Sample&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="tabletree.htm" number="4.3" targetptr="Z400087c1357370">
+      <ttl>Customizing the Tree</ttl>
+      <xreftext>&#x201C;Customizing the Tree&#x201D;</xreftext>
+    </div>
+  </div>
+  <div element="chapter" href="dialogs.htm" number="5" targetptr="CEHBCCIJ">
+    <ttl>Using Dialogs</ttl>
+    <xreftext>&#x201C;Using Dialogs&#x201D;</xreftext>
+    <div element="sect1" href="dialogs.htm" number="5.1" targetptr="Z400087f1290622">
+      <ttl>Dialog Types</ttl>
+      <xreftext>&#x201C;Dialog Types&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="dialogs.htm" number="5.2" targetptr="Z400087f1290630">
+      <ttl>Creating a Dialog</ttl>
+      <xreftext>&#x201C;Creating a Dialog&#x201D;</xreftext>
+      <div element="sect2" href="dialogs.htm" number="5.2.1" targetptr="Z400087f1290586">
+        <ttl>Return Types of Show Methods</ttl>
+        <xreftext>&#x201C;Return Types of Show Methods&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="dialogs.htm" number="5.2.2" targetptr="CEHHEJJH">
+        <ttl>Non-Static Show Methods</ttl>
+        <xreftext>&#x201C;Non-Static Show Methods&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="dialogs.htm" number="5.2.3" targetptr="Z400087f1290605">
+        <ttl>Using the dispose() Method</ttl>
+        <xreftext>&#x201C;Using the <code>dispose()</code> Method&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="dialogs.htm" number="5.2.4" targetptr="Z400087f1290616">
+        <ttl>Getting the User's Input from a Dialog</ttl>
+        <xreftext>&#x201C;Getting the User's Input from a Dialog&#x201D;</xreftext>
+        <obj element="figure" href="dialogs.htm" number="5-1" targetptr="Z40006f01291451">
+          <ttl>Typical Dialogs</ttl>
+          <xreftext>&#x201C;Typical Dialogs&#x201D;</xreftext>
+        </obj>
+      </div>
+    </div>
+  </div>
+  <div element="chapter" href="layout.htm" number="6" targetptr="BBJEHCEA">
+    <ttl>Using Layout Managers</ttl>
+    <xreftext>&#x201C;Using Layout Managers&#x201D;</xreftext>
+    <div element="sect1" href="layout.htm" number="6.1" targetptr="BBJDIDGG">
+      <ttl>BorderLayout</ttl>
+      <xreftext>&#x201C;BorderLayout&#x201D;</xreftext>
+      <obj element="figure" href="layout.htm" number="6-1" targetptr="Z40006f11290807">
+        <ttl>BorderLayoutLocations</ttl>
+        <xreftext>&#x201C;BorderLayoutLocations&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="layout.htm" number="6.2" targetptr="BBJFGBBH">
+      <ttl>BoxLayout</ttl>
+      <xreftext>&#x201C;BoxLayout&#x201D;</xreftext>
+      <div element="sect2" href="layout.htm" number="6.2.1" targetptr="Z40008821290575">
+        <ttl>X&#x005F;AXIS</ttl>
+        <xreftext>&#x201C;X&#x005F;AXIS&#x201D;</xreftext>
+        <obj element="figure" href="layout.htm" number="6-2" targetptr="Z40006f11290845">
+          <ttl>BoxLayout.X&#x005F;AXIS Components in a Row</ttl>
+          <xreftext>&#x201C;BoxLayout.X&#x005F;AXIS Components in a Row&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="layout.htm" number="6.2.2" targetptr="Z40008821290584">
+        <ttl>Y&#x005F;AXIS</ttl>
+        <xreftext>&#x201C;Y&#x005F;AXIS&#x201D;</xreftext>
+        <obj element="figure" href="layout.htm" number="6-3" targetptr="Z40006f11290895">
+          <ttl>BoxLayout&#x005F;Y&#x005F;Axis Components in a Row</ttl>
+          <xreftext>&#x201C;BoxLayout&#x005F;Y&#x005F;Axis Components in a Row&#x201D;</xreftext>
+        </obj>
+      </div>
+    </div>
+    <div element="sect1" href="layout.htm" number="6.3" targetptr="BBJHEIBE">
+      <ttl>FlowLayout</ttl>
+      <xreftext>&#x201C;FlowLayout&#x201D;</xreftext>
+      <obj element="figure" href="layout.htm" number="6-4" targetptr="Z40006f11290949">
+        <ttl>FlowLayout Default Alignment</ttl>
+        <xreftext>&#x201C;FlowLayout Default Alignment&#x201D;</xreftext>
+      </obj>
+      <obj element="figure" href="layout.htm" number="6-5" targetptr="Z40006f11290990">
+        <ttl>FlowLayout With Right Alignment</ttl>
+        <xreftext>&#x201C;FlowLayout With Right Alignment&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="layout.htm" number="6.4" targetptr="BBJHBJBI">
+      <ttl>GridLayout</ttl>
+      <xreftext>&#x201C;GridLayout&#x201D;</xreftext>
+      <obj element="figure" href="layout.htm" number="6-6" targetptr="Z40006f11291038">
+        <ttl>GridLayout With Two Columns</ttl>
+        <xreftext>&#x201C;GridLayout With Two Columns&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="layout.htm" number="6.5" targetptr="BBJEHJJG">
+      <ttl>GroupLayout</ttl>
+      <xreftext>&#x201C;GroupLayout&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="layout.htm" number="6.6" targetptr="BBJFEEFB">
+      <ttl>Coordinate Layout</ttl>
+      <xreftext>&#x201C;Coordinate Layout&#x201D;</xreftext>
+      <obj element="figure" href="layout.htm" number="6-7" targetptr="Z4000fd31292294">
+        <ttl>Coordinate Layout Sample</ttl>
+        <xreftext>&#x201C;Coordinate Layout Sample&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="layout.htm" number="6.7" targetptr="BBJBJCBD">
+      <ttl>Table Layout</ttl>
+      <xreftext>&#x201C;Table Layout&#x201D;</xreftext>
+      <obj element="figure" href="layout.htm" number="6-8" targetptr="Z40002551292121">
+        <ttl>Table Layout Sample</ttl>
+        <xreftext>&#x201C;Table Layout Sample&#x201D;</xreftext>
+      </obj>
+    </div>
+  </div>
+  <div element="chapter" href="style.htm" number="7" targetptr="BADGGABB">
+    <ttl>Using the Style Object</ttl>
+    <xreftext>&#x201C;Using the Style Object&#x201D;</xreftext>
+    <div element="sect1" href="style.htm" number="7.1" targetptr="Z40008861289540">
+      <ttl>Color</ttl>
+      <xreftext>&#x201C;Color&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="style.htm" number="7.2" targetptr="Z40008861289550">
+      <ttl>Font</ttl>
+      <xreftext>&#x201C;Font&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="style.htm" number="7.3" targetptr="Z40008861289558">
+      <ttl>Transparency</ttl>
+      <xreftext>&#x201C;Transparency&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="style.htm" number="7.4" targetptr="BADIFJEI">
+      <ttl>Margin and Padding</ttl>
+      <xreftext>&#x201C;Margin and Padding&#x201D;</xreftext>
+      <obj element="figure" href="style.htm" number="7-1" targetptr="Z4000f581290128">
+        <ttl>Padding and Margin Relationships</ttl>
+        <xreftext>&#x201C;Padding and Margin Relationships&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="style.htm" number="7.5" targetptr="Z40008861289572">
+      <ttl>Images</ttl>
+      <xreftext>&#x201C;Images&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="style.htm" number="7.6" targetptr="Z40008861289580">
+      <ttl>Borders</ttl>
+      <xreftext>&#x201C;Borders&#x201D;</xreftext>
+      <div element="sect2" href="style.htm" number="7.6.1" targetptr="">
+        <ttl>Bevel</ttl>
+        <xreftext>&#x201C;Bevel&#x201D;</xreftext>
+        <obj element="figure" href="style.htm" number="7-2" targetptr="">
+          <ttl>Bevel Lowered Border</ttl>
+          <xreftext>&#x201C;Bevel Lowered Border&#x201D;</xreftext>
+        </obj>
+        <obj element="figure" href="style.htm" number="7-3" targetptr="">
+          <ttl>Bevel Raised Border</ttl>
+          <xreftext>&#x201C;Bevel Raised Border&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="style.htm" number="7.6.2" targetptr="">
+        <ttl>Etched</ttl>
+        <xreftext>&#x201C;Etched&#x201D;</xreftext>
+        <obj element="figure" href="style.htm" number="7-4" targetptr="">
+          <ttl>Etched Lowered Border</ttl>
+          <xreftext>&#x201C;Etched Lowered Border&#x201D;</xreftext>
+        </obj>
+        <obj element="figure" href="style.htm" number="7-5" targetptr="">
+          <ttl>Etched Raised Border</ttl>
+          <xreftext>&#x201C;Etched Raised Border&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="style.htm" number="7.6.3" targetptr="">
+        <ttl>Line</ttl>
+        <xreftext>&#x201C;Line&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="style.htm" number="7.6.4" targetptr="">
+        <ttl>Round</ttl>
+        <xreftext>&#x201C;Round&#x201D;</xreftext>
+        <obj element="figure" href="style.htm" number="7-6" targetptr="">
+          <ttl>Round Border</ttl>
+          <xreftext>&#x201C;Round Border&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="style.htm" number="7.6.5" targetptr="">
+        <ttl>Image</ttl>
+        <xreftext>&#x201C;Image&#x201D;</xreftext>
+        <div element="sect3" href="style.htm" number="7.6.5.1" targetptr="">
+          <ttl>9 Part</ttl>
+          <xreftext>&#x201C;9 Part&#x201D;</xreftext>
+          <obj element="figure" href="style.htm" number="7-7" targetptr="BABHGJDC">
+            <ttl>9-Part Image Border</ttl>
+            <xreftext>&#x201C;9-Part Image Border&#x201D;</xreftext>
+          </obj>
+        </div>
+        <div element="sect3" href="style.htm" number="7.6.5.2" targetptr="">
+          <ttl>3 Part</ttl>
+          <xreftext>&#x201C;3 Part&#x201D;</xreftext>
+        </div>
+        <div element="sect3" href="style.htm" number="7.6.5.3" targetptr="">
+          <ttl>Horizontal/Vertical</ttl>
+          <xreftext>&#x201C;Horizontal/Vertical&#x201D;</xreftext>
+        </div>
+      </div>
+    </div>
+    <div element="sect1" href="style.htm" number="7.7" targetptr="Z40008861289584">
+      <ttl>Style Listener</ttl>
+      <xreftext>&#x201C;Style Listener&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="style.htm" number="7.8" targetptr="Z40008861289590">
+      <ttl>Painters</ttl>
+      <xreftext>&#x201C;Painters&#x201D;</xreftext>
+    </div>
+  </div>
+  <div element="chapter" href="theme.htm" number="8" targetptr="BADBCIEI">
+    <ttl>Theming</ttl>
+    <xreftext>&#x201C;Theming&#x201D;</xreftext>
+    <div element="sect1" href="theme.htm" number="8.1" targetptr="Z400088c1290505">
+      <ttl>Basic Theming</ttl>
+      <xreftext>&#x201C;Basic Theming&#x201D;</xreftext>
+      <obj element="table" href="theme.htm" number="8-1" targetptr="">
+        <ttl>Attributes</ttl>
+        <xreftext>&#x201C;Attributes&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="theme.htm" number="8.2" targetptr="Z400088c1290550">
+      <ttl>Look and Feel</ttl>
+      <xreftext>&#x201C;Look and Feel&#x201D;</xreftext>
+    </div>
+  </div>
+  <div element="chapter" href="resources.htm" number="9" targetptr="CJBCGCDD">
+    <ttl>Resources</ttl>
+    <xreftext>&#x201C;Resources&#x201D;</xreftext>
+    <div element="sect1" href="resources.htm" number="9.1" targetptr="Z40006f51296068">
+      <ttl>Resource Elements</ttl>
+      <xreftext>&#x201C;Resource Elements&#x201D;</xreftext>
+      <div element="sect2" href="resources.htm" number="9.1.1" targetptr="Z400088e1295938">
+        <ttl>Building a Bundle</ttl>
+        <xreftext>&#x201C;Building a Bundle&#x201D;</xreftext>
+        <div element="sect3" href="resources.htm" number="9.1.1.1" targetptr="Z40006f51295860">
+          <ttl>Creating a Resource</ttl>
+          <xreftext>&#x201C;Creating a Resource&#x201D;</xreftext>
+        </div>
+        <div element="sect3" href="resources.htm" number="9.1.1.2" targetptr="Z400088e1295866">
+          <ttl>Loading a Resource</ttl>
+          <xreftext>&#x201C;Loading a Resource&#x201D;</xreftext>
+        </div>
+      </div>
+      <div element="sect2" href="resources.htm" number="9.1.2" targetptr="CJBDAHDJ">
+        <ttl>Image Resources</ttl>
+        <xreftext>&#x201C;Image Resources&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="resources.htm" number="9.1.3" targetptr="Z400088e1295971">
+        <ttl>Fonts</ttl>
+        <xreftext>&#x201C;Fonts&#x201D;</xreftext>
+        <div element="sect3" href="resources.htm" number="9.1.3.1" targetptr="Z400088e1295872">
+          <ttl>System Font</ttl>
+          <xreftext>&#x201C;System Font&#x201D;</xreftext>
+        </div>
+        <div element="sect3" href="resources.htm" number="9.1.3.2" targetptr="CJBJCEBG">
+          <ttl>Dynamic Fonts</ttl>
+          <xreftext>&#x201C;Dynamic Fonts&#x201D;</xreftext>
+        </div>
+      </div>
+      <div element="sect2" href="resources.htm" number="9.1.4" targetptr="CJBHGHFJ">
+        <ttl>Localization (L10N)</ttl>
+        <xreftext>&#x201C;Localization (L10N)&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="resources.htm" number="9.1.5" targetptr="Z400088e1296003">
+        <ttl>Themes</ttl>
+        <xreftext>&#x201C;Themes&#x201D;</xreftext>
+      </div>
+    </div>
+    <div element="sect1" href="resources.htm" number="9.2" targetptr="CJBGJEIB">
+      <ttl>The LWUIT Resource Editor</ttl>
+      <xreftext>&#x201C;The LWUIT Resource Editor&#x201D;</xreftext>
+      <obj element="figure" href="resources.htm" number="9-1" targetptr="Z4000f5f1296762">
+        <ttl>Editing the Default LWUIT Look and Feel</ttl>
+        <xreftext>&#x201C;Editing the Default LWUIT Look and Feel&#x201D;</xreftext>
+      </obj>
+      <div element="sect2" href="resources.htm" number="9.2.1" targetptr="Z400088e1296012">
+        <ttl>Images and Animations</ttl>
+        <xreftext>&#x201C;Images and Animations&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="resources.htm" number="9.2.2" targetptr="Z400088e1296018">
+        <ttl>Fonts</ttl>
+        <xreftext>&#x201C;Fonts&#x201D;</xreftext>
+        <obj element="figure" href="resources.htm" number="9-2" targetptr="Z4000f5f1297433">
+          <ttl>Font Editing View</ttl>
+          <xreftext>&#x201C;Font Editing View&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="resources.htm" number="9.2.3" targetptr="Z400088e1296027">
+        <ttl>Localization</ttl>
+        <xreftext>&#x201C;Localization&#x201D;</xreftext>
+        <obj element="figure" href="resources.htm" number="9-3" targetptr="Z4000f5f1297489">
+          <ttl>Localization and Internationalization View</ttl>
+          <xreftext>&#x201C;Localization and Internationalization View&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="resources.htm" number="9.2.4" targetptr="CJBEAHFA">
+        <ttl>Themes</ttl>
+        <xreftext>&#x201C;Themes&#x201D;</xreftext>
+        <obj element="figure" href="resources.htm" number="9-4" targetptr="Z4000f5f1297591">
+          <ttl>Blank Theme View Without Any Styles</ttl>
+          <xreftext>&#x201C;Blank Theme View Without Any Styles&#x201D;</xreftext>
+        </obj>
+        <div element="sect3" href="resources.htm" number="9.2.4.1" targetptr="Z400088e1295897">
+          <ttl>Example: Adding a New Theme</ttl>
+          <xreftext>&#x201C;Example: Adding a New Theme&#x201D;</xreftext>
+          <obj element="figure" href="resources.htm" number="9-5" targetptr="Z4000f5f1298018">
+            <ttl>New Theme</ttl>
+            <xreftext>&#x201C;New Theme&#x201D;</xreftext>
+          </obj>
+          <obj element="figure" href="resources.htm" number="9-6" targetptr="">
+            <ttl>Wood Theme Default</ttl>
+            <xreftext>&#x201C;Wood Theme Default&#x201D;</xreftext>
+          </obj>
+        </div>
+        <div element="sect3" href="resources.htm" number="9.2.4.2" targetptr="Z400088e1295910">
+          <ttl>Modifying Theme Entries</ttl>
+          <xreftext>&#x201C;Modifying Theme Entries&#x201D;</xreftext>
+          <obj element="figure" href="resources.htm" number="9-7" targetptr="">
+            <ttl>Component UIIDs</ttl>
+            <xreftext>&#x201C;Component UIIDs&#x201D;</xreftext>
+          </obj>
+        </div>
+        <div element="sect3" href="resources.htm" number="9.2.4.3" targetptr="Z400088e1295919">
+          <ttl>Data</ttl>
+          <xreftext>&#x201C;Data&#x201D;</xreftext>
+        </div>
+        <div element="sect3" href="resources.htm" number="9.2.4.4" targetptr="Z400088e1295923">
+          <ttl>Customizing the Preview</ttl>
+          <xreftext>&#x201C;Customizing the Preview&#x201D;</xreftext>
+          <obj element="figure" href="resources.htm" number="9-8" targetptr="Z4000f5f1298351">
+            <ttl>LWUIT Browser Demo With</ttl>
+            <xreftext>&#x201C;LWUIT Browser Demo With&#x201D;</xreftext>
+          </obj>
+        </div>
+        <div element="sect3" href="resources.htm" number="9.2.4.5" targetptr="Z400088e1295934">
+          <ttl>Known Issues</ttl>
+          <xreftext>&#x201C;Known Issues&#x201D;</xreftext>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div element="chapter" href="painters.htm" number="10" targetptr="CGFDAHFE">
+    <ttl>Painters</ttl>
+    <xreftext>&#x201C;Painters&#x201D;</xreftext>
+    <div element="sect1" href="painters.htm" number="10.1" targetptr="Z40006f21289792">
+      <ttl>Using Painter</ttl>
+      <xreftext>&#x201C;Using Painter&#x201D;</xreftext>
+      <obj element="figure" href="painters.htm" number="10-1" targetptr="Z40006f21290163">
+        <ttl>Label, Button, and RadioButton With diagonalPainter in Background</ttl>
+        <xreftext>&#x201C;Label, Button, and RadioButton With diagonalPainter in Background&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="painters.htm" number="10.2" targetptr="Z40008841358354">
+      <ttl>Painter Chain</ttl>
+      <xreftext>&#x201C;Painter Chain&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="painters.htm" number="10.3" targetptr="Z40027511358817">
+      <ttl>Glass Pane</ttl>
+      <xreftext>&#x201C;Glass Pane&#x201D;</xreftext>
+    </div>
+  </div>
+  <div element="chapter" href="lwuitimpl.htm" number="11" targetptr="Z4002e6d1292041">
+    <ttl>LWUIT Implementation</ttl>
+    <xreftext>&#x201C;LWUIT Implementation&#x201D;</xreftext>
+    <div element="sect1" href="lwuitimpl.htm" number="11.1" targetptr="Z40008881357370">
+      <ttl>LWUIT Class</ttl>
+      <xreftext>&#x201C;LWUIT Class&#x201D;</xreftext>
+    </div>
+  </div>
+  <div element="chapter" href="htmlcomponent.htm" number="12" targetptr="BBJIDHGF">
+    <ttl>HTMLComponent</ttl>
+    <xreftext>&#x201C;HTMLComponent&#x201D;</xreftext>
+    <div element="sect1" href="htmlcomponent.htm" number="12.1" targetptr="Z40004c31296715">
+      <ttl>HTMLComponent Use Cases</ttl>
+      <xreftext>&#x201C;<code>HTMLComponent</code> Use Cases&#x201D;</xreftext>
+      <div element="sect2" href="htmlcomponent.htm" number="12.1.1" targetptr="Z40004c31296910">
+        <ttl>Rendering Rich Text</ttl>
+        <xreftext>&#x201C;Rendering Rich Text&#x201D;</xreftext>
+        <obj element="figure" href="htmlcomponent.htm" number="12-1" targetptr="Z4001ea41304232">
+          <ttl>Rich Text Rendered Using HTMLComponent</ttl>
+          <xreftext>&#x201C;Rich Text Rendered Using HTMLComponent&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.1.2" targetptr="Z40004c31296924">
+        <ttl>Reading HTML and Enabling External Resources</ttl>
+        <xreftext>&#x201C;Reading HTML and Enabling External Resources&#x201D;</xreftext>
+      </div>
+    </div>
+    <div element="sect1" href="htmlcomponent.htm" number="12.2" targetptr="Z40004c31298318">
+      <ttl>HTMLCallback</ttl>
+      <xreftext>&#x201C;<code>HTMLCallback</code>&#x201D;</xreftext>
+      <div element="sect2" href="htmlcomponent.htm" number="12.2.1" targetptr="Z40004c31298332">
+        <ttl>parsingError</ttl>
+        <xreftext>&#x201C;<code>parsingError</code>&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.2.2" targetptr="Z40004c31298346">
+        <ttl>pageStatusChanged</ttl>
+        <xreftext>&#x201C;<code>pageStatusChanged</code>&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.2.3" targetptr="Z40004c31298368">
+        <ttl>titleUpdated</ttl>
+        <xreftext>&#x201C;<code>titleUpdated</code>&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.2.4" targetptr="Z40004c31298386">
+        <ttl>linkClicked</ttl>
+        <xreftext>&#x201C;<code>linkClicked</code>&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.2.5" targetptr="Z40004c31298404">
+        <ttl>getLinkProperties</ttl>
+        <xreftext>&#x201C;<code>getLinkProperties</code>&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.2.6" targetptr="Z40004c31298518">
+        <ttl>Auto Complete</ttl>
+        <xreftext>&#x201C;Auto Complete&#x201D;</xreftext>
+      </div>
+    </div>
+    <div element="sect1" href="htmlcomponent.htm" number="12.3" targetptr="Z40004c31298585">
+      <ttl>Fonts</ttl>
+      <xreftext>&#x201C;Fonts&#x201D;</xreftext>
+      <div element="sect2" href="htmlcomponent.htm" number="12.3.1" targetptr="Z40004c31298599">
+        <ttl>Default Font</ttl>
+        <xreftext>&#x201C;Default Font&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.3.2" targetptr="Z40004c31298613">
+        <ttl>System Fonts in HTMLComponent</ttl>
+        <xreftext>&#x201C;System Fonts in HTMLComponent&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.3.3" targetptr="Z40004c31298658">
+        <ttl>Bitmap Fonts</ttl>
+        <xreftext>&#x201C;Bitmap Fonts&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.3.4" targetptr="Z40004c31298676">
+        <ttl>Font Tags</ttl>
+        <xreftext>&#x201C;Font Tags&#x201D;</xreftext>
+      </div>
+    </div>
+    <div element="sect1" href="htmlcomponent.htm" number="12.4" targetptr="Z40004c31299157">
+      <ttl>Styles in HTMLComponent</ttl>
+      <xreftext>&#x201C;Styles in HTMLComponent&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="htmlcomponent.htm" number="12.5" targetptr="Z40004c31299171">
+      <ttl>Character Entities</ttl>
+      <xreftext>&#x201C;Character Entities&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="htmlcomponent.htm" number="12.6" targetptr="Z40004c31299193">
+      <ttl>HTMLComponent Settings</ttl>
+      <xreftext>&#x201C;HTMLComponent Settings&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="htmlcomponent.htm" number="12.7" targetptr="Z40004c31299211">
+      <ttl>CSS Support</ttl>
+      <xreftext>&#x201C;CSS Support&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="htmlcomponent.htm" number="12.8" targetptr="Z40004c31299229">
+      <ttl>Implementing a DocumentRequestHandler</ttl>
+      <xreftext>&#x201C;Implementing a DocumentRequestHandler&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="htmlcomponent.htm" number="12.9" targetptr="Z40004c31299247">
+      <ttl>DocumentInfo</ttl>
+      <xreftext>&#x201C;DocumentInfo&#x201D;</xreftext>
+      <div element="sect2" href="htmlcomponent.htm" number="12.9.1" targetptr="Z4000b9f1301184">
+        <ttl>getUrl</ttl>
+        <xreftext>&#x201C;<code>getUrl</code>&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.9.2" targetptr="Z4000b9f1301148">
+        <ttl>getEncoding and setEncoding</ttl>
+        <xreftext>&#x201C;<code>getEncoding</code> and <code>setEncoding</code>&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.9.3" targetptr="Z4000b9f1301157">
+        <ttl>getParams</ttl>
+        <xreftext>&#x201C;<code>getParams</code>&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.9.4" targetptr="Z4000b9f1301166">
+        <ttl>getExpectedContentType and setExpectedContentType</ttl>
+        <xreftext>&#x201C;<code>getExpectedContentType</code> and <code>setExpectedContentType</code>&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="htmlcomponent.htm" number="12.9.5" targetptr="Z4000b9f1301175">
+        <ttl>getFullUrl or getBaseUrl</ttl>
+        <xreftext>&#x201C;<code>getFullUrl</code> or <code>getBaseUrl</code>&#x201D;</xreftext>
+      </div>
+    </div>
+  </div>
+  <div element="chapter" href="transitions.htm" number="13" targetptr="CEHFEDIH">
+    <ttl>Using Transitions and Animations</ttl>
+    <xreftext>&#x201C;Using Transitions and Animations&#x201D;</xreftext>
+    <div element="sect1" href="transitions.htm" number="13.1" targetptr="CEHCJHCC">
+      <ttl>Animation</ttl>
+      <xreftext>&#x201C;Animation&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="transitions.htm" number="13.2" targetptr="Z40006f61289428">
+      <ttl>Motion</ttl>
+      <xreftext>&#x201C;Motion&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="transitions.htm" number="13.3" targetptr="Z40006f61289435">
+      <ttl>Transition</ttl>
+      <xreftext>&#x201C;Transition&#x201D;</xreftext>
+      <div element="sect2" href="transitions.htm" number="13.3.1" targetptr="Z40006f61289405">
+        <ttl>Slide Transition</ttl>
+        <xreftext>&#x201C;Slide Transition&#x201D;</xreftext>
+        <obj element="figure" href="transitions.htm" number="13-1" targetptr="Z40006f61289516">
+          <ttl>Slide Transition from Form to Theme Menu</ttl>
+          <xreftext>&#x201C;Slide Transition from Form to Theme Menu&#x201D;</xreftext>
+        </obj>
+      </div>
+      <div element="sect2" href="transitions.htm" number="13.3.2" targetptr="Z40008901289414">
+        <ttl>Fade Transition</ttl>
+        <xreftext>&#x201C;Fade Transition&#x201D;</xreftext>
+        <obj element="figure" href="transitions.htm" number="13-2" targetptr="Z40006f61289592">
+          <ttl>Fade Transition From Form to Theme Menu</ttl>
+          <xreftext>&#x201C;Fade Transition From Form to Theme Menu&#x201D;</xreftext>
+        </obj>
+      </div>
+    </div>
+  </div>
+  <div element="chapter" href="extend.htm" number="14" targetptr="CHECEECE">
+    <ttl>Authoring Components</ttl>
+    <xreftext>&#x201C;Authoring Components&#x201D;</xreftext>
+    <div element="sect1" href="extend.htm" number="14.1" targetptr="Z40008961293261">
+      <ttl>Painting</ttl>
+      <xreftext>&#x201C;Painting&#x201D;</xreftext>
+      <obj element="figure" href="extend.htm" number="14-1" targetptr="Z40000ad1293483">
+        <ttl>Hello World</ttl>
+        <xreftext>&#x201C;Hello World&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="extend.htm" number="14.2" targetptr="Z40008961293276">
+      <ttl>Sizing In Layout</ttl>
+      <xreftext>&#x201C;Sizing In Layout&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="extend.htm" number="14.3" targetptr="Z40008961293286">
+      <ttl>Event Handling</ttl>
+      <xreftext>&#x201C;Event Handling&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="extend.htm" number="14.4" targetptr="Z40008961293292">
+      <ttl>Focus</ttl>
+      <xreftext>&#x201C;Focus&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="extend.htm" number="14.5" targetptr="Z40008961293303">
+      <ttl>The Painting Pipeline</ttl>
+      <xreftext>&#x201C;The Painting Pipeline&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="extend.htm" number="14.6" targetptr="Z40008961293320">
+      <ttl>Styling</ttl>
+      <xreftext>&#x201C;Styling&#x201D;</xreftext>
+      <obj element="figure" href="extend.htm" number="14-2" targetptr="Z40000ad1294022">
+        <ttl>Original Component Theme</ttl>
+        <xreftext>&#x201C;Original Component Theme&#x201D;</xreftext>
+      </obj>
+      <obj element="figure" href="extend.htm" number="14-3" targetptr="Z40000ad1294069">
+        <ttl>New Theme</ttl>
+        <xreftext>&#x201C;New Theme&#x201D;</xreftext>
+      </obj>
+    </div>
+    <div element="sect1" href="extend.htm" number="14.7" targetptr="Z40008961293342">
+      <ttl>Background</ttl>
+      <xreftext>&#x201C;Background&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="extend.htm" number="14.8" targetptr="Z40008961293348">
+      <ttl>Animating The Component</ttl>
+      <xreftext>&#x201C;Animating The Component&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="extend.htm" number="14.9" targetptr="Z40008961293358">
+      <ttl>The Custom Component</ttl>
+      <xreftext>&#x201C;The Custom Component&#x201D;</xreftext>
+      <obj element="example" href="extend.htm" number="14-1" targetptr="Z40000ad1291247">
+        <ttl>&#x00A0;&#x00A0;&#x00A0;&quot;Col 1&quot;, &quot;Col 2&quot;, &quot;Col 3&quot;&#x007D;, new Object&#x005B;&#x005D;&#x005B;&#x005D; &#x007B;</ttl>
+        <xreftext>&#x201C;&#x00A0;&#x00A0;&#x00A0;"Col 1", "Col 2", "Col 3"&#x007D;, new Object&#x005B;&#x005D;&#x005B;&#x005D; &#x007B;&#x201D;</xreftext>
+      </obj>
+      <obj element="example" href="extend.htm" number="14-2" targetptr="Z40000ad1295637">
+        <ttl>Component Code</ttl>
+        <xreftext>&#x201C;Component Code&#x201D;</xreftext>
+      </obj>
+    </div>
+  </div>
+  <div element="chapter" href="portability.htm" number="15" targetptr="CEHEFJDI">
+    <ttl>Portability and Performance</ttl>
+    <xreftext>&#x201C;Portability and Performance&#x201D;</xreftext>
+    <div element="sect1" href="portability.htm" number="15.1" targetptr="Z40008981293323">
+      <ttl>Introduction</ttl>
+      <xreftext>&#x201C;Introduction&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="portability.htm" number="15.2" targetptr="Z40008981293331">
+      <ttl>Performance</ttl>
+      <xreftext>&#x201C;Performance&#x201D;</xreftext>
+      <div element="sect2" href="portability.htm" number="15.2.1" targetptr="Z40008981293228">
+        <ttl>Memory</ttl>
+        <xreftext>&#x201C;Memory&#x201D;</xreftext>
+        <div element="sect3" href="portability.htm" number="15.2.1.1" targetptr="Z40008981293193">
+          <ttl>Encoded Images</ttl>
+          <xreftext>&#x201C;Encoded Images&#x201D;</xreftext>
+        </div>
+      </div>
+      <div element="sect2" href="portability.htm" number="15.2.2" targetptr="Z40008981293240">
+        <ttl>Speed</ttl>
+        <xreftext>&#x201C;Speed&#x201D;</xreftext>
+        <div element="sect3" href="portability.htm" number="15.2.2.1" targetptr="Z40008981293209">
+          <ttl>Event Dispatch Thread (EDT)</ttl>
+          <xreftext>&#x201C;Event Dispatch Thread (EDT)&#x201D;</xreftext>
+        </div>
+        <div element="sect3" href="portability.htm" number="15.2.2.2" targetptr="Z40008981293219">
+          <ttl>LWUIT Performance</ttl>
+          <xreftext>&#x201C;LWUIT Performance&#x201D;</xreftext>
+        </div>
+      </div>
+    </div>
+    <div element="sect1" href="portability.htm" number="15.3" targetptr="Z40008981293356">
+      <ttl>Device Bugs And Limitations</ttl>
+      <xreftext>&#x201C;Device Bugs And Limitations&#x201D;</xreftext>
+      <div element="sect2" href="portability.htm" number="15.3.1" targetptr="Z40008981293255">
+        <ttl>Bugs</ttl>
+        <xreftext>&#x201C;Bugs&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="portability.htm" number="15.3.2" targetptr="Z40008981293267">
+        <ttl>Limitations</ttl>
+        <xreftext>&#x201C;Limitations&#x201D;</xreftext>
+      </div>
+    </div>
+    <div element="sect1" href="portability.htm" number="15.4" targetptr="Z40008981293380">
+      <ttl>Resolution Independence</ttl>
+      <xreftext>&#x201C;Resolution Independence&#x201D;</xreftext>
+    </div>
+    <div element="sect1" href="portability.htm" number="15.5" targetptr="Z40008981293385">
+      <ttl>Input</ttl>
+      <xreftext>&#x201C;Input&#x201D;</xreftext>
+      <div element="sect2" href="portability.htm" number="15.5.1" targetptr="Z40008981293283">
+        <ttl>Soft Buttons</ttl>
+        <xreftext>&#x201C;Soft Buttons&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="portability.htm" number="15.5.2" targetptr="CEHFCGII">
+        <ttl>Back Button</ttl>
+        <xreftext>&#x201C;Back Button&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="portability.htm" number="15.5.3" targetptr="Z40008981293294">
+        <ttl>Touch Screen Devices</ttl>
+        <xreftext>&#x201C;Touch Screen Devices&#x201D;</xreftext>
+      </div>
+    </div>
+    <div element="sect1" href="portability.htm" number="15.6" targetptr="Z40008981293393">
+      <ttl>Specific Device Issues</ttl>
+      <xreftext>&#x201C;Specific Device Issues&#x201D;</xreftext>
+      <div element="sect2" href="portability.htm" number="15.6.1" targetptr="Z40008981293299">
+        <ttl>Motorola</ttl>
+        <xreftext>&#x201C;Motorola&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="portability.htm" number="15.6.2" targetptr="Z40008981293303">
+        <ttl>BlackBerry</ttl>
+        <xreftext>&#x201C;BlackBerry&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="portability.htm" number="15.6.3" targetptr="Z40008981293187">
+        <ttl>Create a .cod File</ttl>
+        <xreftext>&#x201C;Create a <code>.cod</code> File&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="portability.htm" number="15.6.4" targetptr="Z40008981293309">
+        <ttl>Nokia S40</ttl>
+        <xreftext>&#x201C;Nokia S40&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="portability.htm" number="15.6.5" targetptr="Z40008981293313">
+        <ttl>Sony Ericsson</ttl>
+        <xreftext>&#x201C;Sony Ericsson&#x201D;</xreftext>
+      </div>
+      <div element="sect2" href="portability.htm" number="15.6.6" targetptr="Z40008981293319">
+        <ttl>General Portability Tip</ttl>
+        <xreftext>&#x201C;General Portability Tip&#x201D;</xreftext>
+      </div>
+    </div>
+  </div>
+  <div element="appendix" href="minifaq.htm" number="A" targetptr="BBJGJGGH">
+    <ttl>LWUIT Mini FAQ</ttl>
+    <xreftext>&#x201C;LWUIT Mini FAQ&#x201D;</xreftext>
+  </div>
+</div>

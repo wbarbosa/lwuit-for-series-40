@@ -1,0 +1,11 @@
+com.sun.lwuit
+com.sun.lwuit.animations
+com.sun.lwuit.events
+com.sun.lwuit.geom
+com.sun.lwuit.impl
+com.sun.lwuit.impl.midp
+com.sun.lwuit.layouts
+com.sun.lwuit.list
+com.sun.lwuit.painter
+com.sun.lwuit.plaf
+com.sun.lwuit.util

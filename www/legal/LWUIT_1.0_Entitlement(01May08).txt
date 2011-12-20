@@ -1,0 +1,21 @@
+Sun Microsystems, Inc. ("Sun") ENTITLEMENT for SOFTWARE
+
+Licensee/Company: Entity receiving Software.
+
+Effective Date: Date of delivery of the Software to You.
+
+Software: Project Lightweight UI Toolkit 1.0.
+
+License Term: Perpetual (subject to termination under the SLA).
+
+Licensed Unit: Software Copy.
+
+Licensed unit Count: Unlimited.
+
+Permitted Uses: You may reproduce and use the Software for Your own Individual, Commercial, or Research and Instructional Use, subject to and conditioned on Your compliance with the Additional Terms below.
+
+Additional Terms:
+
+1. Software includes only the versions of the above products that are made initially available to You.
+
+2. Notwithstanding anything to the contrary in any Master Terms between the parties or in the SLA, Master Terms do not apply to Software under this Agreement.

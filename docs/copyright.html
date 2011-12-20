@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Copyright (c) 2008, 2010, Oracle and/or its affiliates. All rights reserved. Use is subject to license terms. -->
+<!-- %W% %E% -->
+<html lang="en-US">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Language" content="en-US">
+<title>Release Notes - LWUIT - Version 1.5</title>
+<link rel="stylesheet" href="document.css" type="text/css">
+</head>
+<body>
+<div class="MastheadPane">
+  <table class="MastheadTable" width="100%" summary="This table is for formatting purposes only.">
+    <thead>
+      <tr class="titlebar">
+        <th><h2 class="DocTitle">Copyright</h2></th>
+        <th class="smallLogo"><a href="http://www.oracle.com"><img src="shared/smallOracleLogo.gif" alt="Oracle logo"></a></th>
+      </tr>
+    </thead>
+  </table>
+</div>
+<hr class="red">
+<div class="MastheadDateBuild">
+  <table  width="100%" summary="This table is for formatting purposes only.">
+    <tr valign="top"><th id="c5"><h2 class="DocTitle">Lightweight UI Toolkit</h2>
+    <th id="c4" rowspan="3" class="smallLogo"><img src="shared/Java_clr_hori_interval.gif" alt="Java coffee cup logo"></th></tr>
+    <tr valign="top">
+      <th id="c3"><h3 class="SubTitle">Version 1.5</h3></th>
+    </tr>
+    <tr valign="top">
+      <td headers="c3" ><h4 class="TitleDate">August 2011</h4></td>
+    </tr>
+  </table>
+</div>
+<div class="BodyStyle"> <a name="top"></a>
+<p>This software and related documentation are provided under a license agreement containing restrictions on
+use and disclosure and are protected by intellectual property laws. Except as expressly
+permitted in your license agreement or allowed by law, you may not use,
+copy, reproduce, translate, broadcast, modify, license, transmit, distribute, exhibit, perform, publish, or display any
+part, in any form, or by any means. Reverse engineering, disassembly, or decompilation
+of this software, unless required by law for interoperability, is prohibited.</p>
+
+<p>The information contained
+herein is subject to change without notice and is not warranted to be
+error-free. If you find any errors, please report them to us in writing.</p>
+
+<p>If
+this is software or related software documentation that is delivered to the U.S.
+Government or anyone licensing it on behalf of the U.S. Government, the following
+notice is applicable:</p>
+
+<p>U.S. GOVERNMENT RIGHTS Programs, software, databases, and related documentation and technical
+data delivered to U.S. Government customers are "commercial computer software" or "commercial technical data"
+pursuant to the applicable Federal Acquisition Regulation and agency-specific supplemental regulations. As such,
+the use, duplication, disclosure, modification, and adaptation shall be subject to the restrictions and
+license terms set forth in the applicable Government contract, and, to the extent
+applicable by the terms of the Government contract, the additional rights set forth
+in FAR 52.227-19, Commercial Computer Software License (December 2007). Oracle America, Inc., 500 Oracle
+Parkway, Redwood City, CA 94065.</p>
+
+<p>This software or hardware is developed for general use
+in a variety of information management applications. It is not developed or intended
+for use in any inherently dangerous applications, including applications which may create a
+risk of personal injury. If you use this software or hardware in dangerous
+applications, then you shall be responsible to take all appropriate fail-safe, backup, redundancy, and
+other measures to ensure its safe use. Oracle Corporation and its affiliates disclaim
+any liability for any damages caused by use of this software or hardware
+in dangerous applications.</p>
+
+<p> Oracle and Java are registered trademarks of Oracle and/or its
+affiliates. Other names may be trademarks of their respective owners.</p>
+
+<p>AMD, Opteron, the AMD
+logo, and the AMD Opteron logo are trademarks or registered trademarks of Advanced
+Micro Devices. Intel and Intel Xeon are trademarks or registered trademarks of Intel Corporation.
+All SPARC trademarks are used under license and are trademarks or registered trademarks
+of SPARC International, Inc. UNIX is a registered trademark licensed through X/Open Company, Ltd.</p>
+
+<p>This
+software or hardware and documentation may provide access to or information on content, products,
+and services from third parties. Oracle Corporation and its affiliates are not responsible
+for and expressly disclaim all warranties of any kind with respect to third-party
+content, products, and services. Oracle Corporation and its affiliates will not be responsible for
+any loss, costs, or damages incurred due to your access to or use
+of third-party content, products, or services.</p>
+  <hr class="light">
+<p>Copyright &#169; 2008, 2010, Oracle et/ou ses affili&#233;s.
+Tous droits r&#233;serv&#233;s.</p>
+
+<p>Ce logiciel et la documentation qui l&#8217;accompagne sont prot&#233;g&#233;s par les
+lois sur la propri&#233;t&#233; intellectuelle. Ils sont conc&#233;d&#233;s sous licence et soumis &#224;
+des restrictions d&#8217;utilisation et de divulgation. Sauf disposition de votre contrat de licence ou
+de la loi, vous ne pouvez pas copier, reproduire, traduire, diffuser, modifier, breveter,
+transmettre, distribuer, exposer, ex&#233;cuter, publier ou afficher le logiciel, m&#234;me partiellement, sous quelque forme
+et par quelque proc&#233;d&#233; que ce soit. Par ailleurs, il est interdit de
+proc&#233;der &#224; toute ing&#233;nierie inverse du logiciel, de le d&#233;sassembler ou de le d&#233;compiler,
+except&#233; &#224; des fins d&#8217;interop&#233;rabilit&#233; avec des logiciels tiers ou tel que prescrit par
+la loi.</p>
+
+<p>Les informations fournies dans ce document sont susceptibles de modification sans pr&#233;avis.
+Par ailleurs, Oracle Corporation ne garantit pas qu&#8217;elles soient exemptes d&#8217;erreurs et vous invite,
+le cas &#233;ch&#233;ant, &#224; lui en faire part par &#233;crit.</p>
+
+<p>Si ce logiciel, ou
+la documentation qui l&#8217;accompagne, est conc&#233;d&#233; sous licence au Gouvernement des Etats-Unis, ou &#224;
+toute entit&#233; qui d&#233;livre la licence de ce logiciel ou l&#8217;utilise pour le
+compte du Gouvernement des Etats-Unis, la notice suivante s&#8217;applique :</p>
+
+<p>U.S. GOVERNMENT RIGHTS. Programs,
+software, databases, and related documentation and technical data delivered to U.S. Government customers are
+"commercial computer software" or "commercial technical data" pursuant to the applicable Federal Acquisition
+Regulation and agency-specific supplemental regulations.  As such, the use, duplication, disclosure, modification, and
+adaptation shall be subject to the restrictions and license terms set forth in
+the applicable Government contract, and, to the extent applicable by the terms of the
+Government contract, the additional rights set forth in FAR 52.227-19, Commercial Computer Software
+License (December 2007).  Oracle America, Inc., 500 Oracle Parkway, Redwood City, CA
+94065.</p>
+
+<p>Ce logiciel ou mat&#233;riel a &#233;t&#233; d&#233;velopp&#233; pour un usage g&#233;n&#233;ral dans le
+cadre d&#8217;applications de gestion des informations. Ce logiciel ou mat&#233;riel n&#8217;est pas con&#231;u ni
+n&#8217;est destin&#233; &#224; &#234;tre utilis&#233; dans des applications &#224; risque, notamment dans des applications
+pouvant causer des dommages corporels. Si vous utilisez ce logiciel ou mat&#233;riel dans
+le cadre d&#8217;applications dangereuses, il est de votre responsabilit&#233; de prendre toutes les mesures
+de secours, de sauvegarde, de redondance et autres mesures n&#233;cessaires &#224; son utilisation
+dans des conditions optimales de s&#233;curit&#233;. Oracle Corporation et ses affili&#233;s d&#233;clinent toute responsabilit&#233;
+quant aux dommages caus&#233;s par l&#8217;utilisation de ce logiciel ou mat&#233;riel pour ce type
+d&#8217;applications.</p>
+
+<p>Oracle et Java sont des marques d&#233;pos&#233;es d&#8217;Oracle Corporation et/ou de ses affili&#233;s.Tout
+autre nom mentionn&#233; peut correspondre &#224; des marques appartenant &#224; d&#8217;autres propri&#233;taires qu&#8217;Oracle.</p>
+
+<p>AMD, Opteron,
+le logo AMD et le logo AMD Opteron sont des marques ou des
+marques d&#233;pos&#233;es d&#8217;Advanced Micro Devices. Intel et Intel Xeon sont des marques ou
+des marques d&#233;pos&#233;es d&#8217;Intel Corporation. Toutes les marques SPARC sont utilis&#233;es sous licence et
+sont des marques ou des marques d&#233;pos&#233;es de SPARC International, Inc. UNIX est une
+marque d&#233;pos&#233;e conc&#233;d&#233;e sous licence par X/Open Company, Ltd.</p>
+
+<p>Ce logiciel ou mat&#233;riel et
+la documentation qui l&#8217;accompagne peuvent fournir des informations ou des liens donnant acc&#232;s &#224;
+des contenus, des produits et des services &#233;manant de tiers. Oracle Corporation et
+ses affili&#233;s d&#233;clinent toute responsabilit&#233; ou garantie expresse quant aux contenus, produits ou services
+&#233;manant de tiers. En aucun cas, Oracle Corporation et ses affili&#233;s ne sauraient
+&#234;tre tenus pour responsables des pertes subies, des co&#251;ts occasionn&#233;s ou des dommages caus&#233;s
+par l&#8217;acc&#232;s &#224; des contenus, produits ou services tiers, ou &#224; leur utilisation.</p>
+</div>
+
+
+	</body>
+</html>

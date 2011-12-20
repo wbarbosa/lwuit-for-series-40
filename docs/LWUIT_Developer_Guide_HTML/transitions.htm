@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Using Transitions and Animations</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 5.1.2 Build 015" />
+<meta name="date" content="2011-11-03T11:27:26Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="Using Transitions and Animations" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E23376-02" />
+<link rel="copyright" href="./dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="./dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+<link rel="contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="index" href="index.htm" title="Index" type="text/html" />
+<link rel="prev" href="htmlcomponent.htm" title="Previous" type="text/html" />
+<link rel="next" href="extend.htm" title="Next" type="text/html" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Developer's Guide</b><br />
+<b>Release 1.5</b><br />
+E23376-02</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td align="center"><a href="htmlcomponent.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="extend.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header --><a id="CEHFEDIH" name="CEHFEDIH"></a>
+<h1 class="chapter"><span class="secnum">13</span> Using Transitions and Animations</h1>
+<p>The Lightweight UI Toolkit library implements transitions using animation.</p>
+<a id="CEHCJHCC" name="CEHCJHCC"></a>
+<div class="sect1">
+<h2 class="sect1">Animation</h2>
+<p><a id="sthref239" name="sthref239"></a>Animation is an interface that allows any object to react to events and draw an animation at a fixed interval. All animation methods are executed on the EDT. For simplicity's sake, all Components can be animated, however, no animation appears unless it is explicitly registered into the parent form. To stop animation callbacks the animation must be explicitly removed from the form (notice that this differs from removing the component from the form)! In Lightweight UI Toolkit there are few transitions that have been extended from Animation. See <a href="#Z40006f61289435">Transition</a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40006f61289428" name="Z40006f61289428"></a>
+<div class="sect1">
+<h2 class="sect1">Motion</h2>
+<p>The <a id="sthref240" name="sthref240"></a>Motion class abstracts the idea of motion over time, from one point to another. Motion can be subclassed to implement any motion equation for appropriate physics effects. This class relies on the <code>System.currentTimeMillis()</code> method to provide transitions between coordinates. Examples for such movement equations can be; parabolic, spline, or even linear motion. Default implementation provides a simple physical algorithm giving the feel of acceleration and deceleration. In this implementation all animation elements (Transition, Scrolling, and so forth) use the same motion implementation, so they all have smooth movement.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40006f61289435" name="Z40006f61289435"></a>
+<div class="sect1">
+<h2 class="sect1">Transition</h2>
+<p>Currently a transition refers to the transition between two Forms as animate In and Out transition animation. All transitions use a physical animation curve calculation to simulate acceleration and deceleration while pacing a motion based on the amount of time specified. There are three types of transitions:</p>
+<div class="inftblhruleinformal">
+<table class="HRuleInformal" summary="Add Summary attribute value here." dir="ltr" border="1" width="100%" frame="hsides" rules="rows" cellpadding="3" cellspacing="0">
+<col width="10%" />
+<col width="*" />
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r1c1-t2"><code>Slide</code></td>
+<td align="left">Exiting form by sliding out of the screen while the new form slides in.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t2"><code>Fade</code></td>
+<td align="left" headers="r2c1-t2">Components fade into and out of the screen at a predefined speed.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<a id="Z40006f61289405" name="Z40006f61289405"></a>
+<div class="sect2">
+<h3 class="sect2">Slide Transition</h3>
+<p><a id="sthref241" name="sthref241"></a>To create a slide transition, that reacts while exiting the first form, use:</p>
+<p><code>CommonTransitions.createSlide(int type, boolean forward, int speed)</code></p>
+<div class="inftblhruleinformal">
+<table class="HRuleInformal" summary="Add Summary attribute value here." dir="ltr" border="1" width="100%" frame="hsides" rules="rows" cellpadding="3" cellspacing="0">
+<col width="13%" />
+<col width="*" />
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r1c1-t3"><code>type</code></td>
+<td align="left">Type can be either <code>SLIDE_HORIZONTAL</code> or <code>SLIDE_VERTICAL</code>, indicating the movement direction of the forms.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t3"><code>forward</code></td>
+<td align="left" headers="r2c1-t3">Forward is a boolean value representing the directions of switching forms. For example for a horizontal type, true means horizontal movement to the right. For a vertical type, true means movement towards the bottom.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t3"><code>speed</code></td>
+<td align="left" headers="r3c1-t3">Speed is an integer representing the speed of changing components in milliseconds.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>For example:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+// Create a horizontal transition that moves to the right
+// and exposes the next form
+ 
+myForm.setTransitionOutAnimator(CommonTransitions.createSlide(
+   CommonTransitions.SLIDE_HORIZONTAL, true, 1000));
+</pre>
+<p><a href="#Z40006f61289516">Figure 13-1</a> shows four snapshots of the horizontal transition from a menu to a radio button list.</p>
+<div class="figure"><a id="Z40006f61289516" name="Z40006f61289516"></a>
+<p class="titleinfigure">Figure 13-1 Slide Transition from Form to Theme Menu</p>
+<img src="img/slide.jpg" alt="Description of Figure 13-1 follows" title="Description of Figure 13-1 follows" longdesc="img_text/slide.htm" /><br />
+<a id="sthref242" name="sthref242" href="img_text/slide.htm">Description of "Figure 13-1 Slide Transition from Form to Theme Menu"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect2" -->
+<a id="Z40008901289414" name="Z40008901289414"></a>
+<div class="sect2">
+<h3 class="sect2">Fade Transition</h3>
+<p>Fade transition<a id="sthref243" name="sthref243"></a> creates a fade-in effect when switching to the next form. To create this transition use:</p>
+<p><code>CommonTransitions.createFade(int speed)</code></p>
+<p>In the above code <code>speed</code> is an integer representing the speed of changing components, in milliseconds.</p>
+<p>For example:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+// Create a fade effect with speed of 400 millisecond, 
+// when entering myform
+ 
+themeForm.setTransitionInAnimator(CommonTransitions.createFade(400)
+);
+</pre>
+<div class="figure"><a id="Z40006f61289592" name="Z40006f61289592"></a>
+<p class="titleinfigure">Figure 13-2 Fade Transition From Form to Theme Menu</p>
+<img src="img/fade.jpg" alt="Description of Figure 13-2 follows" title="Description of Figure 13-2 follows" longdesc="img_text/fade.htm" /><br />
+<a id="sthref244" name="sthref244" href="img_text/fade.htm">Description of "Figure 13-2 Fade Transition From Form to Theme Menu"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+<td align="center"><a href="htmlcomponent.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="extend.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="./dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="./dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Introducing the Lightweight UI Toolkit Library</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 5.1.2 Build 015" />
+<meta name="date" content="2011-11-03T11:27:16Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="Introducing the Lightweight UI Toolkit Library" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E23376-02" />
+<link rel="copyright" href="./dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="./dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+<link rel="contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="index" href="index.htm" title="Index" type="text/html" />
+<link rel="prev" href="preface.htm" title="Previous" type="text/html" />
+<link rel="next" href="widgets.htm" title="Next" type="text/html" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Developer's Guide</b><br />
+<b>Release 1.5</b><br />
+E23376-02</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td align="center"><a href="preface.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="widgets.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header -->
+<script type="text/javascript" class="oac_no_warn">
+<!-- // <![CDATA[
+window.name='intro'
+// ]]> -->
+</script> <script type="text/javascript" class="oac_no_warn">
+// <![CDATA[
+function footdisplay(footnum,footnote) {
+    var msg = window.open('', 'NewWindow' + footnum,
+        'directories=no,height=120,location=no,menubar=no,resizable=yes,' +
+        'scrollbars=yes,status=no,toolbar=no,width=598');
+    msg.document.open('text/html');
+    msg.document.write('<!DOCTYPE html ');
+    msg.document.write('PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ');
+
+    msg.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
+    msg.document.write('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><title>');
+    msg.document.write('Footnote ' + footnum);
+    msg.document.write('<\/title><meta http-equiv="Content-Type" ');
+    msg.document.write('content="text/html; charset=utf-8" />');
+    msg.document.write('<meta http-equiv="Content-Script-Type" ');
+    msg.document.write('content="text/javascript" />');
+    msg.document.write('<style type="text/css"> <![CDATA[ ');
+    msg.document.write('h1 {text-align: center; font-size: 14pt;}');
+    msg.document.write('fieldset {border: none;}');
+    msg.document.write('form {text-align: center;}');
+    msg.document.write(' ]]\u003e <\/style>');
+    msg.document.write('<\/head><body><h1>Footnote ' + footnum + '<\/h1><p>');
+    msg.document.write(footnote);
+    msg.document.write('<\/p><form action="" method="post"><fieldset>');
+    msg.document.write('<input type="button" value="OK" ');
+    msg.document.write('onclick="window.close();" />');
+    msg.document.write('<\/fieldset><\/form><\/body><\/html>');
+    msg.document.close();
+    msg.focus();
+}
+// ]]>
+</script> <noscript>
+<p>The script content on this page is for navigation purposes only and does not alter the content in any way.</p>
+</noscript><a id="CEFIEGJH" name="CEFIEGJH"></a>
+<h1 class="chapter"><span class="secnum">1</span> Introducing the Lightweight UI Toolkit Library</h1>
+<p>This book describes how to use the Lightweight UI Toolkit (LWUIT) library. The Lightweight UI Toolkit library helps you create appealing graphical user interface (GUI) applications for mobile phones and other devices that support MIDP 2.0. Lightweight UI Toolkit supports visual components and other user interface (UI) ingredients such as theming, transitions, animation and more.</p>
+<p>After covering the basics of the Lightweight UI Toolkit, this book provides a walk through of the various widgets and uses of the LWUIT packages.</p>
+<a id="Z40008751289572" name="Z40008751289572"></a>
+<div class="sect1">
+<h2 class="sect1">API Overview</h2>
+<p>The Lightweight UI Toolkit is a lightweight widget library inspired by Swing but designed for constrained devices such as mobile phones and set-top boxes. Lightweight UI Toolkit supports pluggable theme-ability, a component and container hierarchy, and abstraction of the underlying GUI toolkit. The term lightweight indicates that the widgets in the library draw their state in Java source without native peer rendering.</p>
+<p>Internal interfaces and abstract classes provide abstraction of interfaces and APIs in the underlying profile. This allows portability and a migration path for both current and future devices and profiles. For example, Graphics would be an abstraction of the graphics object in the underlying profile.</p>
+<p>The Lightweight UI Toolkit library tries to avoid the "lowest common denominator" mentality by implementing some features missing in the low-end platforms and taking better advantage of high-end platforms. <a href="#CEFCFICG">Figure 1-1</a> shows the widget class <a id="sthref2" name="sthref2"></a>hierarchy.</p>
+<div class="figure"><a id="CEFCFICG" name="CEFCFICG"></a>
+<p class="titleinfigure">Figure 1-1 Simplified Widget Class Hierarchy</p>
+<img src="img/hierarchy.jpg" alt="Description of Figure 1-1 follows" title="Description of Figure 1-1 follows" longdesc="img_text/hierarchy.htm" /><br />
+<a id="sthref3" name="sthref3" href="img_text/hierarchy.htm">Description of "Figure 1-1 Simplified Widget Class Hierarchy"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<a id="Z40008751289547" name="Z40008751289547"></a>
+<div class="sect2">
+<h3 class="sect2">Scope and Portability</h3>
+<p>The Lightweight UI Toolkit library is strictly a widget UI library and does not try to abstract the underlying system services such as networking or storage. It also doesn't try to solve other UI issues related to native graphics, etcetera.</p>
+<p>To enable <a id="sthref4" name="sthref4"></a>portability, the Lightweight UI Toolkit library implements its own thin layer on top of the native system canvas and provides a widget abstraction. This abstraction is achieved using several key classes that hide the system specific equivalents to said classes, such as Graphics, Image and Font.</p>
+<p>When working with the Lightweight UI Toolkit library it is critical to use the <a id="sthref5" name="sthref5"></a>abstract classes for everything. To avoid corruption, there is no way to access the "real" underlying instances of these classes (for example, <code>javax.microedition.lwuit.Graphics</code>).</p>
+<p>LWUIT strives to enable great functionality on small devices that might be incapable of anti-aliasing at runtime, or might choke under the weight of many images. To solve these problems the LWUIT library ships with an optional <a id="sthref6" name="sthref6"></a>resource file format that improves resource utilization. For more details, see <a href="resources.htm#CJBCGCDD">Chapter 9</a>.</p>
+<div class="example"><a id="Z40008521289104" name="Z40008521289104"></a>
+<p class="titleinexample">Example 1-1 Hello World for MIDP</p>
+<p>This is a simple hello world example written on top of MIDP. All UI code making use of the Lightweight UI Toolkit is compatible to other platforms such as CDC.<a id="Z40008751289103" name="Z40008751289103" href="#Z40008751289103" onclick='footdisplay(1,"As of this writing the CDC version of LWUIT required for this compatibility hasn\x27t been released to the public.")'><sup class="tablefootnote">Foot&nbsp;1&nbsp;</sup></a></p>
+<p>However, this example is specifically for MIDP. For MIDP the application management system (AMS) requires a MIDlet class to exist, where in a CDC environment an Xlet would be expected (and in Java SE you would expect a main class, and so forth).</p>
+<pre xml:space="preserve" class="oac_no_warn">
+import com.sun.lwuit.Display;
+import com.sun.lwuit.Form;
+import com.sun.lwuit.Label;
+import com.sun.lwuit.layouts.BorderLayout;
+import com.sun.lwuit.plaf.UIManager;
+import com.sun.lwuit.util.Resources;
+ 
+public class HelloMidlet extends javax.microedition.midlet.MIDlet {
+ 
+   public void startApp() {
+       //init the LWUIT Display
+       Display.init(this);
+ 
+       // Setting the application theme is discussed
+       // later in the theme chapter and the resources chapter
+       try {
+             Resources r = Resources.open("/myresources.res");
+             UIManager.getInstance().setThemeProps(
+               r.getTheme(r.getThemeResourceNames()[0])
+              );
+            } catch (java.io.IOException e) {
+   }
+       Form f = new Form();
+       f.setTitle("Hello World");
+       f.setLayout(new BorderLayout());
+       f.addComponent(BorderLayout.CENTER, new Label("I am a Label"));
+       f.show();
+   }
+ 
+   public void pauseApp() {
+   }
+ 
+   public void destroyApp(boolean unconditional) {
+   }
+} 
+</pre></div>
+<!-- class="example" -->
+<p>Hello world looks like <a href="#Z40008521290439">Figure 1-2</a>.</p>
+<div class="figure"><a id="Z40008521290439" name="Z40008521290439"></a>
+<p class="titleinfigure">Figure 1-2 Hello World</p>
+<img src="img/hello_world.jpg" alt="Description of Figure 1-2 follows" title="Description of Figure 1-2 follows" longdesc="img_text/hello_world.htm" /><br />
+<a id="sthref7" name="sthref7" href="img_text/hello_world.htm">Description of "Figure 1-2 Hello World"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>Notice in <a href="#Z40008521289104">Example 1-1</a> that the very first line of code for any application using the Lightweight UI Toolkit library must register the main class with the display. This behavior is tool-specific. In MIDP there is not much you can do without a reference to the parent MIDlet, so this operation must be performed in the beginning of the application.</p>
+<p>The creation of the <a id="sthref8" name="sthref8"></a>UI code is left within the MIDlet for simplicity but it could be separated to any class to allow full portability in any future platform to which the Lightweight UI Toolkit library would be ported.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40008751289561" name="Z40008751289561"></a>
+<div class="sect2">
+<h3 class="sect2">Events and Threading</h3>
+<p>For increased compatibility, the Lightweight UI Toolkit library completely handles and encapsulates UI threading. It has a single main <a id="sthref9" name="sthref9"></a>thread referred to as the "EDT" (inspired by the Event Dispatch Thread in Swing and AWT). <a id="sthref10" name="sthref10"></a>All events and paint<a id="sthref11" name="sthref11"></a> calls are dispatched using this thread. This guarantees that event and paint calls are serialized and do not risk causing a threading issue. It also enables portability for profiles that might have minor threading model inconsistencies. See the <a id="sthref12" name="sthref12"></a>Display class (<code>com.sun.lwuit.Display</code> in the API documentation) for further details about integrating with the <a id="sthref13" name="sthref13"></a>EDT and serializing calls on it.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<hr />
+<br />
+<p style="text-decoration:underline">Footnote Legend</p>
+Footnote&nbsp;1:&nbsp;As of this writing the CDC version of LWUIT required for this compatibility hasn't been released to the public.<br /></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+<td align="center"><a href="preface.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="widgets.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="./dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&#169;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="./dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

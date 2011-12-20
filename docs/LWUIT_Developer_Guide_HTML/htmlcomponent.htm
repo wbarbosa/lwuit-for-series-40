@@ -1,0 +1,626 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>HTMLComponent</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 5.1.2 Build 015" />
+<meta name="date" content="2011-11-03T11:27:25Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="HTMLComponent" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E23376-02" />
+<link rel="copyright" href="./dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="./dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+<link rel="contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="index" href="index.htm" title="Index" type="text/html" />
+<link rel="prev" href="lwuitimpl.htm" title="Previous" type="text/html" />
+<link rel="next" href="transitions.htm" title="Next" type="text/html" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Developer's Guide</b><br />
+<b>Release 1.5</b><br />
+E23376-02</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td align="center"><a href="lwuitimpl.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="transitions.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header -->
+<script type="text/javascript" class="oac_no_warn">
+<!-- // <![CDATA[
+window.name='htmlcomponent'
+// ]]> -->
+</script> <script type="text/javascript" class="oac_no_warn">
+// <![CDATA[
+function footdisplay(footnum,footnote) {
+    var msg = window.open('', 'NewWindow' + footnum,
+        'directories=no,height=120,location=no,menubar=no,resizable=yes,' +
+        'scrollbars=yes,status=no,toolbar=no,width=598');
+    msg.document.open('text/html');
+    msg.document.write('<!DOCTYPE html ');
+    msg.document.write('PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ');
+
+    msg.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
+    msg.document.write('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><title>');
+    msg.document.write('Footnote ' + footnum);
+    msg.document.write('<\/title><meta http-equiv="Content-Type" ');
+    msg.document.write('content="text/html; charset=utf-8" />');
+    msg.document.write('<meta http-equiv="Content-Script-Type" ');
+    msg.document.write('content="text/javascript" />');
+    msg.document.write('<style type="text/css"> <![CDATA[ ');
+    msg.document.write('h1 {text-align: center; font-size: 14pt;}');
+    msg.document.write('fieldset {border: none;}');
+    msg.document.write('form {text-align: center;}');
+    msg.document.write(' ]]\u003e <\/style>');
+    msg.document.write('<\/head><body><h1>Footnote ' + footnum + '<\/h1><p>');
+    msg.document.write(footnote);
+    msg.document.write('<\/p><form action="" method="post"><fieldset>');
+    msg.document.write('<input type="button" value="OK" ');
+    msg.document.write('onclick="window.close();" />');
+    msg.document.write('<\/fieldset><\/form><\/body><\/html>');
+    msg.document.close();
+    msg.focus();
+}
+// ]]>
+</script> <noscript>
+<p>The script content on this page is for navigation purposes only and does not alter the content in any way.</p>
+</noscript><a id="BBJIDHGF" name="BBJIDHGF"></a>
+<h1 class="chapter"><span class="secnum">12</span> HTMLComponent</h1>
+<p>The <code>HTMLComponent</code> <a id="sthref226" name="sthref226"></a>class allows rendering of HTML documents that conform to the XHTML Mobile Profile 1.0 (XHTML-MP 1.0) standard.</p>
+<p>XHTML-MP 1.0 is a subset of XHTML adapted for mobile. The standard supports most of the basic elements such as Images, Fonts, Lists, Tables, Forms, and even WCSS (a subset of CSS2 for wireless). It does not support Javascript or frames, and it does not support all CSS2 tags or attributes.</p>
+<p>This chapter discusses <code>HTMLComponent</code> use cases, interfaces, and implementation details. To learn more about <code>HTMLComponent</code> check out the <code>LWUITBrowser</code> application from the LWUIT SVN repository and examine the code. <code>LWUITBrowser</code> uses most of <code>HTMLComponent's</code> capabilities.</p>
+<a id="Z40004c31296715" name="Z40004c31296715"></a>
+<div class="sect1">
+<h2 class="sect1"><code>HTMLComponent</code> Use Cases</h2>
+<p><code>HTMLComponent</code> can be used to render local or remote documents. It extends Container and as such it can be added to any Form.</p>
+<p><code>HTMLComponent</code> uses an internal parser to parse the given HTML documents. The parser is not 100% strict and can tolerate some errors in the document, however, some errors may be too fatal for the parser. It is very important to stick to the XHTML-MP1 standard. You must close all open tags in the correct hierarchical order.</p>
+<a id="Z40004c31296910" name="Z40004c31296910"></a>
+<div class="sect2">
+<h3 class="sect2">Rendering Rich Text</h3>
+<p>The most simple use case of <code>HTMLComponent</code> is rendering rich text:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+HTMLComponent htmlC = new HTMLComponent(null);
+htmlC.setBodyText("Hello &lt;b&gt;bold text&lt;/b&gt;");
+</pre>
+<p>The only parameter the constructor expects is a class implementing the <code>DocumentRequestHandler</code> interface. This interface defines how links and external resources (such as images, CSS files) in the document are fetched.</p>
+<p>Since the example does not use links, we can specify null instead of the document handler. In this case, if links or external resources are specified in the document body they are disabled or ignored.</p>
+<p><code>setBodyText</code> accepts a string containing any text with XHTML-MP 1.0 tags. The text is wrapped with the <code>HTML</code> and <code>BODY</code> tags and passed on for parsing.</p>
+<p>If the text is encoded, you can specify the encoding as follows:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+setBodyText(String htmlText,String encoding)
+</pre>
+<p>If you have a full HTML file and not just the body text, the following can be used:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+setHTML(String htmlText,String encoding,String title,boolean isFullHTML) 
+</pre>
+<p>To make the <code>HTMLComponent</code> visible add it to a form and display that form. For example:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Form form = new Form("HTML Test");
+form.setLayout(new BorderLayout());
+form.addComponent(BorderLayout.CENTER,htmlC);
+form.show();
+</pre>
+<div class="figure"><a id="Z4001ea41304232" name="Z4001ea41304232"></a>
+<p class="titleinfigure">Figure 12-1 Rich Text Rendered Using HTMLComponent</p>
+<img src="img/simple-example-screen.gif" alt="Description of Figure 12-1 follows" title="Description of Figure 12-1 follows" longdesc="img_text/simple-example-screen.htm" /><br />
+<a id="sthref227" name="sthref227" href="img_text/simple-example-screen.htm">Description of "Figure 12-1 Rich Text Rendered Using HTMLComponent"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect2" -->
+<a id="Z40004c31296924" name="Z40004c31296924"></a>
+<div class="sect2">
+<h3 class="sect2">Reading HTML and Enabling External Resources</h3>
+<p>The most common use case for HTMLComponent is reading HTML files from either a local or remote source, while enabling external resources such as images and CSS files, and allowing the user to follow links.</p>
+<p>To support this use case you must first implement a <code>DocumentRequestHandler</code> interface that contains a single method:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+InputStream resourceRequested(DocumentInfo docInfo)
+</pre>
+<p>This method is called by <code>HTMLComponent</code> (and other internal classes in the html package) to obtain the <code>InputStream</code> of the specified document. Requested documents are HTML files (followed links), referenced CSS files, and referenced images.</p>
+<p>The requested document information is stored in a <code>DocumentInfo</code> object, which is populated automatically by <code>HTMLComponent</code>. The <code>DocumentInfo</code> values can be used to determine the document's path, file name, type, etcetera.</p>
+<p>This example does not implement a <code>DocumentRequestHandler</code>. It uses the <code>HttpRequestHandler</code> (a ready-made implementation that can be found in the <code>LWUITBrowser</code> application) instead. LWUITBrowser be checked out from the LWUIT SVN under <code>MIDP/applications</code>.</p>
+<p><code>HttpRequestHandler</code> implementation supports fetching HTML documents via both HTTP and from a JAR file. It supports cookies, encoding, error handling and caching via the <code>Storage</code> class (also available in <code>LWUITBrowser</code>).</p>
+<p>The following sample code uses <code>HTMLComponent</code> and <code>HttpRequestHandler</code> to browse to the mobile Facebook site:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+HttpRequestHandler handler = new HttpRequestHandler();
+HTMLComponent htmlC = new HTMLComponent(handler);
+htmlC.setPage("http://m.facebook.com");
+</pre>
+<p>The <code>setPage</code> method accepts a String containing the URL to be rendered. This can be a remote resource (such as an http:// address) or a local file in the JAR such as <code>file:///somepath/somefile</code> . Alternatively it can be any kind of URL that our implementation of <code>DocumentRequestHandler</code> "understands".<a id="Z40004c31298218" name="Z40004c31298218" href="#Z40004c31298218" onclick='footdisplay(1,"For example if we want to allow fetching HTML documents via JSR75, we can define our own protocol identifier (i.e. jsr75://) and have our request handler detect that protocol and act accordingly to fetch the specified file via JSR75.")'><sup class="tablefootnote">Foot&nbsp;1&nbsp;</sup></a></p>
+<p>After showing the above <code>HTMLComponent</code> on a form, the user can view the HTML at the specified address (including images and CSS), and follow links.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="Z40004c31298318" name="Z40004c31298318"></a>
+<div class="sect1">
+<h2 class="sect1"><code>HTMLCallback</code></h2>
+<p>During the lifecycle<a id="sthref228" name="sthref228"></a> of <code>HTMLComponent</code> there are many events that the developer can respond to. Developers should implement the <code>HTMLCallback</code> interface and set it to the <code>HTMLComponent</code>.</p>
+<p>The html package provides a default implementation of the HTMLCallback named <code>DefaultHTMLCallback</code>. This implementation doesn't do too much, but it does demonstrate how to implement the interface methods without harming <code>HTMLComponent</code> tasks (as there are several potential pitfalls). The methods are <a href="#Z40004c31298332"><code>parsingError</code></a>, <a href="#Z40004c31298346"><code>pageStatusChanged</code></a>, <a href="#Z40004c31298368"><code>titleUpdated</code></a>, <a href="#Z40004c31298386"><code>linkClicked</code></a>, <a href="#Z40004c31298404"><code>getLinkProperties</code></a> and <a href="#Z40004c31298518">Auto Complete</a>.</p>
+<a id="Z40004c31298332" name="Z40004c31298332"></a>
+<div class="sect2">
+<h3 class="sect2"><code>parsingError</code></h3>
+<p>This <a id="sthref229" name="sthref229"></a>method is called whenever the internal parser encounters an error during the document's parsing. This can occur while processing the main HTML document or its referenced CSS files.</p>
+<p>You must return a boolean value denoting whether to continue the document processing despite the error (true) or to stop processing (false).</p>
+<p>Detailed information on the error can be found in the parameters the method passes, especially <code>errorId</code> which holds the error code (one of the ERROR_* constants).</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40004c31298346" name="Z40004c31298346"></a>
+<div class="sect2">
+<h3 class="sect2"><code>pageStatusChanged</code></h3>
+<p>This method notifies detects changes in the page loading lifecycle. <code>pageStatusChanged</code> can help you display status information to the user or to delay to certain statuses for certain flows.<a id="sthref230" name="sthref230"></a></p>
+<p>A new <code>HTMLComponent</code> starts as <code>STATUS_NONE</code>. Shortly after a page URL is set it becomes <code>STATUS_REQUESTED</code>. After a successful connection to the input stream it changes to <code>STATUS_CONNECTED</code>. When the page is displayed (and this can be before images have been completely loaded) the status changes to <code>STATUS_DISPLAYED</code> and finally after all resources have been fully loaded the status becomes <code>STATUS_COMPLETED</code>.</p>
+<p>If an error is encountered during the page loading, for example an unrecoverable parsing error, then the status is <code>STATUS_ERROR</code>. If the page loading was cancelled the status becomes <code>STATUS_CANCELLED</code>.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40004c31298368" name="Z40004c31298368"></a>
+<div class="sect2">
+<h3 class="sect2"><code>titleUpdated</code></h3>
+<p>A useful event that is called after the document's title has been extracted from the <code>TITLE</code> tag of the HTML document.<a id="sthref231" name="sthref231"></a></p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40004c31298386" name="Z40004c31298386"></a>
+<div class="sect2">
+<h3 class="sect2"><code>linkClicked</code></h3>
+<p>Called whenever a <a id="sthref232" name="sthref232"></a>link is clicked to allow alternative or additional handling. Usually when a link is clicked the link is simply followed through, but in some cases you might want to take additional actions. For example, some updates to the UI outside the <code>HTMLComponent</code>.</p>
+<p>The return value should be true if the regular link processing should proceed, and false if it should not.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40004c31298404" name="Z40004c31298404"></a>
+<div class="sect2">
+<h3 class="sect2"><code>getLinkProperties</code></h3>
+<p>This method is used to support Visited and Forbidden links.<a id="sthref233" name="sthref233"></a></p>
+<ul>
+<li>
+<p><span class="bold">Visited Links</span>: Most browsers to mark visited links in different colors. <code>HTMLComponent</code> does not have any info on which links have been visited before, but <code>getLinkProperties</code> can help hook it to any implementation that tracks links, returning <code>LINK_VISITED</code> for visited links. (See <code>LWUITBrowser</code> for an example.)</p>
+</li>
+<li>
+<p><span class="bold">Forbidden Links</span>: Sometimes you may want to disallow the use of some links. A common use case may be restricting the user from accessing links outside a defined domain. Another may be blocking content types that <code>HTMLComponent</code> can not render. When <code>getLinkProperties</code> is called, the implementation can look at the URL and determine whether it returns <code>LINK_REGULAR</code> which enables the link, or <code>LINK_FORBIDDEN</code> which disables it.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<a id="Z40004c31298518" name="Z40004c31298518"></a>
+<div class="sect2">
+<h3 class="sect2">Auto Complete</h3>
+<p>The <code>fieldSubmitted</code> <a id="sthref234" name="sthref234"></a>and <code>getAutoComplete</code><a id="sthref235" name="sthref235"></a> methods support an auto complete implementation.</p>
+<p><code>fieldSubmitted</code> is called whenever a field in an HTML form is submitted. In return, the implementation should return the actual field value to send to the form. This can be used to perform some content filtering if needed. When none is needed, the value should be returned as is. However, you get the chance to store the field value along with its name, the form URL etc.</p>
+<p>Data collected with <code>fieldSubmitted</code> can be used to populate form fields with <code>getAutoComplete</code>, which is called while constructing forms to obtain values for the various fields. Returning null simply means that users must fill out the form themselves. You can also supply another value that is appropriate for the form's specific field,. For example from a repository of stored values as recorded by <code>fieldSubmitted</code>.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="Z40004c31298585" name="Z40004c31298585"></a>
+<div class="sect1">
+<h2 class="sect1">Fonts</h2>
+<p>When rendering HTML, the <code>HTMLComponent</code> uses the following font facilities described in the following sections:</p>
+<ul>
+<li>
+<p><a href="#Z40004c31298599">Default Font</a></p>
+</li>
+<li>
+<p><a href="#Z40004c31298613">System Fonts in HTMLComponent</a></p>
+</li>
+<li>
+<p><a href="#Z40004c31298658">Bitmap Fonts</a></p>
+</li>
+<li>
+<p><a href="#Z40004c31298676">Font Tags</a></p>
+</li>
+</ul>
+<a id="Z40004c31298599" name="Z40004c31298599"></a>
+<div class="sect2">
+<h3 class="sect2">Default Font</h3>
+<p>The default font used is the system font with <code>FACE_SYSTEM</code>, <code>STYLE_PLAIN</code> and <code>SIZE_MEDIUM</code>. This can be changed using the <code>setDefaultFont</code> method that accepts a font key (see <a href="#Z40004c31298658">Bitmap Fonts</a>) and the font itself.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40004c31298613" name="Z40004c31298613"></a>
+<div class="sect2">
+<h3 class="sect2">System Fonts in HTMLComponent</h3>
+<p><code>HTMLComponent</code> automatically uses all available system fonts. For example if the <code>&lt;b&gt;</code> tag is encountered while rendering text with the default system font, the text in the tag is rendered with a system font with the style <code>STYLE_BOLD</code>. Same goes for the <code>&lt;big&gt;</code> tag which causes text to be rendered with a system font that has a size of <code>SIZE_LARGE</code>.</p>
+<p>Note that not all system fonts, faces, styles, and sizes are available on all handsets. In fact it is very rare that a device has the full range of fonts representing all possible combinations of those properties. When <code>HTMLComponent</code> attempts to use unavailable fonts they are rendered according to fonts the device actually supports.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40004c31298658" name="Z40004c31298658"></a>
+<div class="sect2">
+<h3 class="sect2">Bitmap Fonts</h3>
+<p>To enable <code>HTMLComponent</code> to use bitmap fonts, introduce them with the <code>addFont</code> method. This method accepts a String identifying the font (Font Key), and a LWUIT Font object. Usually this would be a bitmap font loaded from one of the resource files.</p>
+<p>The font keys is an<a id="sthref236" name="sthref236"></a> important concept in <code>HTMLComponent</code>. A font key identifies the font properties such as its family, style and size. While these properties are known for system fonts, they are unknown for bitmap fonts &#8211; and providing them to <code>HTMLComponent</code> allows them to be used correctly while rendering documents.</p>
+<p>For example, to add a bold Arial font with a size of 20 pixels, one should use:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Font font = Font.getBitmapFont("myarialfont");
+addFont("arial.12.bold", font);
+</pre>
+<p>The format of the font key is the family, size and style(s) delimited with the period sign. Order is irrelevant (i.e. <code>arial.12.bold</code> is the same as <code>12.bold.arial</code>).</p>
+<p>Note that the name of the font may be different in the resource files than the <a id="sthref237" name="sthref237"></a>font key (In our example it is called "<code>myarialfont</code>"), though it is a good practice to name the font according to the font key.</p>
+<p>Let's say that we add the following fonts as well:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+// fonts = &#8230; 
+// filling the fonts array with fonts from the resource file
+setDefaultFont("arial.12", fonts[0]);
+// Specifying "plain" as a style is optional
+addFont("arial.12.bold.italic", fonts[1]);
+addFont("timesnewroman.10", fonts[2]);
+addFont("arial.14", fonts[3]);
+</pre>
+<p>And now we load the following HTML:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+&lt;html&gt;
+   &lt;body&gt;
+      Default font
+      &lt;Bold font &lt;i&gt;Bold and Italic&lt;/i&gt; &lt;/b&gt;
+      &lt;big&gt; Big font &lt;/big&gt;
+      &lt;small&gt; Small font &lt;/small&gt;
+   &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>By specifying the font keys we allow <code>HTMLComponent</code> to know which font to assign when encountering font related tags (and also CSS attributes).</p>
+<p>In the example above the words "Default font" are displayed in <code>arial.12 font</code>, and the rest of the text is displayed according to the tags. However, the <code>"Small font"</code> text is displayed in the default font, because even though there is a smaller font (<code>"timesnewroman.10"</code>) it is not of the same family. The font matching algorithm gives more weight to the family than the size, and in fact is configured to match only fonts from the same family. Font matching is done sometimes under less then ideal scenarios. While HTML documents may be rich in fonts, the mobile client can offer a limited number of system and bitmap fonts. You should try to match the content with the available fonts in the application.</p>
+<p>Also note that system fonts are always matched with other system fonts and bitmap fonts only with other bitmap fonts.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40004c31298676" name="Z40004c31298676"></a>
+<div class="sect2">
+<h3 class="sect2">Font Tags</h3>
+<p>HTML defines several tags that cause (among other thing) a font change when rendered. The font selected to render these tags can be defined in a similar way to adding bitmap fonts. All you need to do is add the desired tag name to the font key. For example:</p>
+<p><code>addFont("arial.20.bold.h1", myheaderfont);</code></p>
+<p>Now text inside the &lt;h1&gt; tag is rendered with the specified font. Note that the font is added to the font pool and can be also used, for example, when the component seeks a matching bold and big font. Technically, you can prevent the component from using this font by adding it with a font key of just <code>"h1"</code>, but of course this is not recommended.The tags that have associated fonts are: <code>H1</code>, <code>H2</code>, <code>H3</code>, <code>H4</code>, <code>H5</code>, <code>H6</code>, <code>EM</code>, <code>STRONG</code>, <code>DFN</code>, <code>CODE</code>, <code>SAMP</code>, <code>KBD</code>, <code>VAR</code>, <code>CITE</code> and <code>PRE</code>.</p>
+<p>By default these tags are assigned with the following system fonts:</p>
+<ul>
+<li>
+<p><code>EM</code>, <code>DFN</code>, <code>VAR</code>, <code>CITE</code>: system, italic, medium</p>
+</li>
+<li>
+<p><code>CODE</code>, <code>SMAP</code>, <code>KBD</code>: monospace, plain, medium</p>
+</li>
+<li>
+<p><code>STRONG</code>, <code>H3</code>: system, bold, medium</p>
+</li>
+<li>
+<p><code>H1</code>:system, bold, large</p>
+</li>
+<li>
+<p><code>H2</code>:system, italic, large</p>
+</li>
+</ul>
+<p>Note that while usually there is no reason to add a system font (as they are all automatically used), there is a use case for defining a tag-related font as follows:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Font sysFont=Font.createSystemFont(Font.FACE_SYSTEM,
+     Font.STYLE_BOLD, Font.SIZE_SMALL);
+addFont("h4", sysFont);
+</pre>
+<p>Note that here it is totally unnecessary to provide any other font properties in the font key because system fonts are supported without explicit addition. But denoting the font key as <code>"h4"</code> makes the component render text inside the H4 tag with the specified font.</p>
+<p><span class="bold">Small-caps Font</span></p>
+<p>One special case worth noting is <a id="sthref238" name="sthref238"></a>small-caps fonts. In CSS one can define the <code>font-variant</code> property to the <code>small-caps</code> value. In this case the text should be displayed all in caps, with large capital letters depicting &#8220;regular&#8221; capital letters, and small caps depicting regular text.</p>
+<p>System and bitmap fonts do not have this effect. If you have system or bitmap fonts in the documents the application renders, add the font to a resource file. In the resource editor, select a font that behaves like a small caps font) and it should be named as a &#8220;small-caps&#8221; family:</p>
+<p><code>addFont(&#8220;small-caps.14.bold&#8221;, smallcapsFont);</code></p>
+<p>If no small-caps fonts are added, the <code>font-variant: small-caps</code> CSS directive is ignored if encountered.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="Z40004c31299157" name="Z40004c31299157"></a>
+<div class="sect1">
+<h2 class="sect1">Styles in HTMLComponent</h2>
+<p>HTMLComponent renders most of the HTML tags as regular LWUIT components and as such uses the defined styles for these components. For example, form buttons render as LWUIT's Button, and as such any style that is applied in the theme to Button is expressed in buttons inside the HTML document.</p>
+<p>There are however some custom components with the following UIIDs:</p>
+<ul>
+<li>
+<p><span class="bold">HTMLLink</span>: Used for links in the document.</p>
+</li>
+<li>
+<p><span class="bold">HTMLHR</span>: Used for the HTML <code>hr</code> tag (Horizontal separator)</p>
+</li>
+<li>
+<p><span class="bold">HTMLFieldSet</span>: Used to render the HTML <code>fieldset</code> tag</p>
+</li>
+<li>
+<p><span class="bold">HTMLOptgroup</span>: Used to render the title of an option group inside a ComboBox (option groups are defined by the <code>optgroup</code> html tag)</p>
+</li>
+<li>
+<p><span class="bold">HTMLOptgroupItem</span>: Used to render a ComboBox single item that is a part of an option group.</p>
+</li>
+<li>
+<p><span class="bold">HTMLMultiComboBoxItem</span>: Used to render an item in a multiple choice ComboBox. LWUIT ComboBox</p>
+</li>
+</ul>
+<p>One can define the style of these components in the theme by using the above UIIDs. The <code>LWUITBrowser</code> application contains a theme that includes standard definitions for these UIIDs and can be used as a starting point.</p>
+<p><span class="bold">Page Styling</span></p>
+<p>Pages rendered with <code>HTMLComponent</code> are rendered on an internal container. This means that setting styles to the <code>HTMLComponent</code> itself won't necessarily affect the page style.</p>
+<p>To change the style of this internal container, one can use the <code>setPageStyle</code> method that accepts a Style object.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40004c31299171" name="Z40004c31299171"></a>
+<div class="sect1">
+<h2 class="sect1">Character Entities</h2>
+<p>Some characters are represented by character entities (which can be compared to Java escape sequences) either because the characters are reserved or because the character matching key in the keyboard.</p>
+<p>A character entity is represented either by its Unicode numeric value or by a verbal symbol. For instance the character &gt; (greater than) which is reserved for HTML tags, is represented either by <code>&amp;#62;</code> (its Unicode value) or by <code>&amp;gt;</code> (gt is the symbol assigned to this character).</p>
+<p>HTMLComponent translates any numeric value and display the according character (of course depending on its availability in the font used). As for symbols, it supports all the standard ISO 8859-1 symbols (up until Unicode value of 255) and does not recognize symbols with Unicode value greater than 255 except 2 very common symbols - <code>euro</code> and <code>bull</code> (bullet).</p>
+<p>If you need support for upper symbols, they can be added using the static methods <code>addCharEntity</code> and <code>addCharEntitiesRange</code>. For example:</p>
+<p><code>HTMLComponent.addCharEntity("spades",9824);</code></p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40004c31299193" name="Z40004c31299193"></a>
+<div class="sect1">
+<h2 class="sect1">HTMLComponent Settings</h2>
+<p>There are various settings you can control (or relay to the user's control) with <code>HTMLComponent</code>:</p>
+<ul>
+<li>
+<p><span class="bold">Image loading</span>: Can be turned on/off using <code>setShowImages(boolean)</code>. The default is true (showing images). When this is set to false, referenced images are not loaded nor are they displayed.</p>
+</li>
+<li>
+<p><span class="bold">CSS loading</span>: Can be turned on/off using <code>setIgnoreCSS(boolean)</code>. The default is false (CSS are loaded). When this is set to true, all CSS directives are ignored including inline CSS, embedded CSS and external CSS files.</p>
+</li>
+<li>
+<p><span class="bold">CSS media types</span>: CSS references can specify which media types they are suitable for. For example an HTML document can have 2 separate CSS files, one for use with the "handheld" media type and the other with the "screen" media type. By default <code>HTMLComponent</code> accepts CSS files and segments that are defined as "handheld" or "all" (or if the media type is unspecified). To modify the supported media types one can use the <code>setCSSSupportedMediaTypes</code> method.</p>
+</li>
+<li>
+<p><span class="bold">Max Threads</span>: The number of threads used by <code>HTMLComponent</code> to load external referenced images and CSS files can be set with <code>setMaxThreads(int)</code>. The default is 2.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="Z40004c31299211" name="Z40004c31299211"></a>
+<div class="sect1">
+<h2 class="sect1">CSS Support</h2>
+<p><code>HTMLComponent</code> supports WCSS which is a subset of CSS 2.0. It supports inline CSS directives, embedded CSS segments, and external CSS files. Following are the supported attributes in <code>HTMLComponent</code>:</p>
+<p><span class="bold">Fully supported CSS properties:</span></p>
+<div class="inftblhruleinformal">
+<table class="HRuleInformal" summary="Add Summary attribute value here." dir="ltr" border="1" width="100%" frame="hsides" rules="rows" cellpadding="3" cellspacing="0">
+<col width="20%" />
+<col width="*" />
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r1c1-t2"><code>Background</code></td>
+<td align="left">background-color, background-image, background-repeat, background-attachment, background-position-x, background-position-y</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t2"><code>Border</code></td>
+<td align="left" headers="r2c1-t2">border-*-width, border-*-style, border-*-color</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t2"><code>Fonts</code></td>
+<td align="left" headers="r3c1-t2">font-family, font-size, font-style, font-weight, font-variant</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t2"><code>Lists</code></td>
+<td align="left" headers="r4c1-t2">list-style-image, list-style-position, list-style-type</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t2"><code>Margins</code></td>
+<td align="left" headers="r5c1-t2">margin-*, padding-*</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t2">Text</td>
+<td align="left" headers="r6c1-t2">text-align, text-indent, text-transform</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t2"><code>Misc</code></td>
+<td align="left" headers="r7c1-t2">color, height, width, visibility</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t2"><code>WAP</code></td>
+<td align="left" headers="r8c1-t2">-wap-access-key, -wap-input-format, -wap-input-required</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t2"><code>Shorthand properties</code></td>
+<td align="left" headers="r9c1-t2">All shorthand properties are fully supported</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t2"><br /></td>
+<td align="left" headers="r10c1-t2">* represents <code>top</code>, <code>left</code>, <code>bottom</code>, <code>right</code></td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p><span class="bold">Partially supported properties</span>:</p>
+<div class="inftblhruleinformal">
+<table class="HRuleInformal" summary="Add Summary attribute value here." dir="ltr" border="1" width="100%" frame="hsides" rules="rows" cellpadding="3" cellspacing="0">
+<col width="23%" />
+<col width="*" />
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r1c1-t3"><code>display</code></td>
+<td align="left">Supported: none, marquee
+<p>Unsupported: block, inline , list-item</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t3"><code>white-space</code></td>
+<td align="left" headers="r2c1-t3">Supported: normal, nowrap
+<p>Unsupported: pre</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t3"><code>vertical-align</code></td>
+<td align="left" headers="r3c1-t3">Works only within tables</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p><span class="bold">Unsupported properties:</span></p>
+<p><code>clear</code>, <code>float</code></p>
+<p><span class="bold">Known issues:</span></p>
+<ul>
+<li>
+<p><code>width</code> or <code>height</code> work for simple elements, but may be problematic with complex elements (for example tables).</p>
+</li>
+<li>
+<p><code>font-family</code> accepts the first mentioned font and ignores all fallback fonts, since finding a matching font is very time consuming, and also since in the ME environment usually there aren't that many fonts anyway.</p>
+</li>
+<li>
+<p><code>text-decoration</code> is irrelevant: since the only mandatory WCSS decoration value is 'none' which is usually used to remove underlines from links - since we don't have underlines it has no meaning.</p>
+</li>
+<li>
+<p>text-transform may have issues when overriding a parent which has a different transform.</p>
+</li>
+<li>
+<p>Some properties are ignored if associated with a pseudo-class (such as <code>a:focus</code> or <code>hover</code>) - and that's because while LWUIT does have separate styles for selected, unselected and pressed states - these styles include properties such as padding, margins, colors, background, font - but for example not alignment or visibility which affect the component in all of its states.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="Z40004c31299229" name="Z40004c31299229"></a>
+<div class="sect1">
+<h2 class="sect1">Implementing a DocumentRequestHandler</h2>
+<p>In the first example we have used a ready-made <code>DocumentRequestHandler</code> implementation. In this section we will create our own simple implementation that reads from files stored in the JAR.</p>
+<p>Our implementation will accept URLs with the <code>file://</code> protocol only, and fetch them from the JAR:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+import com.sun.lwuit.html.DocumentInfo;
+import com.sun.lwuit.html.DocumentRequestHandler;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+ 
+class FileRequestHandler implements DocumentRequestHandler {
+ 
+   public InputStream resourceRequested(DocumentInfo docInfo) {
+      // Get the full URL from the docInfo
+      String url=docInfo.getUrl();
+ 
+      if (!url.startsWith(&#8220;file://&#8221;)) { // We support only files
+         return getErrorStream(&#8220;This handler handles files only.&#8221;)
+      }
+ 
+      if (docInfo.isPostRequest()) { // We don't support POST
+         return getErrorStream(&#8220;GET requests only please!&#8221;);
+      }
+      url=url.substring(7); // Cut the file://
+      return getClass().getResourceAsStream(url);
+      }
+   // Utility method to get a stream out of a string
+   private InputStream getErrorStream(String err) {
+      err=&#8221;&lt;html&gt;&lt;body&gt;&#8221;+err+&#8221;&lt;/body&gt;&lt;/html&gt;&#8221;;
+      ByteArrayInputStream bais =
+         new ByteArrayInputStream(err.getBytes());
+      return bais;
+   }
+}
+</pre>
+<p>As we can see the implementation is quite simple. It uses the <code>getResourceAsStream</code> method to obtain an <code>InputStream</code> of the file and send it over, but before that it queries the passed <code>DocumentInfo</code> object to get some information on the requested page. This object is explained in detail in the next section.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40004c31299247" name="Z40004c31299247"></a>
+<div class="sect1">
+<h2 class="sect1">DocumentInfo</h2>
+<p>The <code>DocumentInfo</code> is an object that is passed from the <code>HTMLComponent</code> to the <code>DocumentRequestHandler</code>, and can be used by the latter to obtain information about the document such as its location, type, encoding etcetera, and also to hint back to the <code>HTMLComponent</code> about attributes it found about the document.</p>
+<p>When a <code>setPage</code> is called on an HTMLComponent, it results in a call to the <code>DocumentRequestHandler</code>'s <code>resourceRequested</code> method, with a populated <code>DocumentInfo</code> object. This method is also called when links are clicked or referenced images and CSS files are needed. The remainder of this section discusses some useful <code>DocumentInfo</code> getters/setters that a <code>DocumentRequestHandler</code> implementation should consider:</p>
+<ul>
+<li>
+<p><a href="#Z4000b9f1301184"><code>getUrl</code></a></p>
+</li>
+<li>
+<p><a href="#Z4000b9f1301148"><code>getEncoding</code> and <code>setEncoding</code></a></p>
+</li>
+<li>
+<p><a href="#Z4000b9f1301157"><code>getParams</code></a></p>
+</li>
+<li>
+<p><a href="#Z4000b9f1301166"><code>getExpectedContentType</code> and <code>setExpectedContentType</code></a></p>
+</li>
+<li>
+<p><a href="#Z4000b9f1301175"><code>getFullUrl</code> or <code>getBaseUrl</code></a></p>
+</li>
+</ul>
+<a id="Z4000b9f1301184" name="Z4000b9f1301184"></a>
+<div class="sect2">
+<h3 class="sect2"><code>getUrl</code></h3>
+<p>This method returns the absolute URL of the requested document. The absolute URL is automatically calculated internally according to the page on which the link was clicked on. Implementations can learn about the document protocol (file, http etc.) and about the document's domain and act accordingly. For example, it is possible to allow only certain protocols or domains, or to use custom protocol strings etc.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z4000b9f1301148" name="Z4000b9f1301148"></a>
+<div class="sect2">
+<h3 class="sect2"><code>getEncoding</code> and <code>setEncoding</code></h3>
+<p><code>getEncoding</code> and <code>setEncoding</code> are quite important when reading documents that can have different encodings.Encoding information of HTML and CSS documents can appear in multiple places. For example when posting a form, its <code>FORM</code> tag can have an ENCTYPE property that specifies the form's encoding. This is one situation in which the encoding in the provided <code>DocumentInfo</code> is different than the default (which is ISO-8859-1), and thus has to be queried to set encoding headers appropriately. On the other direction, when requesting a document, the encoding can be specified by the response headers (<code>charset</code> in the content-type header) &#8211; and then in order for <code>HTMLComponent</code> to be able to read the document properly, the encoding type must be set using <code>setEncoding</code>. Note that encoding can be set in other ways as well such as BOM (Byte Order Mark), and it is the responsibility of the <code>DocumentRequestHandler</code> to figure it out and relay that info to <code>HTMLComponent</code> via the <code>DocumentInfo</code> object.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z4000b9f1301157" name="Z4000b9f1301157"></a>
+<div class="sect2">
+<h3 class="sect2"><code>getParams</code></h3>
+<p><code>getParams</code> returns the request parameters. It can be used for example to screen parameters before sending to the server (And it has a matching setter as well)</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z4000b9f1301166" name="Z4000b9f1301166"></a>
+<div class="sect2">
+<h3 class="sect2"><code>getExpectedContentType</code> and <code>setExpectedContentType</code></h3>
+<p>The expected content type is what the <code>HTMLComponent</code> expects to find when requesting the resource in question. This would be an HTML document (<code>TYPE_HTML</code>) when setting a page or clicking links, an image (TYPE_IMAGE) for image references and a CSS file (TYPE_CSS) for CSS references. Queering the expected content type can help processing, for example we will check encoding only for HTML and CSS, but not for images. Another reason may be that we want to cache images and not HTML documents and so on.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z4000b9f1301175" name="Z4000b9f1301175"></a>
+<div class="sect2">
+<h3 class="sect2"><code>getFullUrl</code> or <code>getBaseUrl</code></h3>
+<p>Other more informative methods include <code>getFullUrl</code> returning a string composed of the absolute URL plus the parameters of the request (if any, and only if this was a GET request). Another one is <code>getBaseUrl</code> returning the document base URL.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<hr />
+<br />
+<p style="text-decoration:underline">Footnote Legend</p>
+Footnote&nbsp;1:&nbsp;For example if we want to allow fetching HTML documents via JSR75, we can define our own protocol identifier (i.e. jsr75://) and have our request handler detect that protocol and act accordingly to fetch the specified file via JSR75.<br /></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+<td align="center"><a href="lwuitimpl.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="transitions.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="./dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&#169;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="./dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

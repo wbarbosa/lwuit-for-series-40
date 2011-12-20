@@ -1,0 +1,421 @@
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-US">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>LWUIT Tutorial - Filling Forms with Components</title>
+<meta name="keywords" content="PUT, YOUR, PAGE-SPECIFIC, KEYWORDS, HERE">
+<meta name="description" content="PUT YOUR PAGE-SPECIFIC DESCRIPTION HERE">
+<meta http-equiv="content-language" content="en-US">
+<link rel="stylesheet" type="text/css" href="style/default.css">
+<link rel="stylesheet" type="text/css" href="style/local/www.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="search" type="application/opensearchdescription+xml" title="Sun Search" href="http://search.sun.com/search/resources/onesearch/default-osd.xml">
+<script type="text/javascript" src="/js/sniff.js"></script>
+<script type="text/javascript" src="/js/menucontent.js"></script>
+<script type="text/javascript" src="/js/menucode.js"></script>
+</head>
+
+<body bgcolor="#ffffff">
+<div class="a0 a0v0" id="a0v0">
+<!--stopindex-->
+<a name="top"></a>
+
+
+
+
+
+
+<!-- BEGIN A1 COMPONENT V.0 -->
+
+<!--
+<div class="a1 a1r2">
+<div class="a1v0">
+<a href="#skip2content" class="skiplink">Skip to Content</a>
+<span class="toolbarlinks">
+<a href="/java/">Java</a>
+<a href="/software/solaris/">Solaris</a>
+<a href="/communities/" class="dividelink">Communities</a>
+<a href="/aboutsun/">About Sun</a>
+<a href="/sales/" class="dividelink">How to Buy</a>
+<a href="https://portal.sun.com/portal/dt/">My Account</a>
+<a href="http://shop.sun.com/cart/" class="a1cart lastlink">Cart</a>
+</span>
+<span class="siteid">
+<span>United States</span>
+<a href="/worldwide/">Worldwide</a>
+</span>
+</div>
+</div>
+-->
+
+<!-- END A1 COMPONENT V.0 -->
+
+
+
+
+
+
+
+<!-- BEGIN A2 COMPONENT V.0 -->
+<div class="a2w0">
+<div class="a2" id="a2v0">
+<div class="a2w1"><div class="a2w2"><div class="a2w3"><div class="a2w4">
+<div class="a2topiclinks">
+<div class="a2search">
+<!--
+<form action="/cgi-bin/search/index.cgi">
+<input type="hidden" name="charset" value="UTF-8">
+<input id="searchfield" type="text" name="search" value="Search">
+<input id="searchbttn" type="image" border="0" src="/im/a2_bttn_search.gif" alt="Submit Search">
+</form>
+-->
+</div>
+<a href="http://www.sun.com/" title="Sun Microsystems Home Page" id="sunlogo"><img src="http://www.sun.com/im/a.gif" alt="Sun Microsystems Home Page" width="98" height="58" border="0" /></a>
+<!--
+<ul id="mtopics">
+<li id="mtopic1"><a id="glink1" class="tpclink a2menu" title="See All Products" href="/products/">Products</a></li>
+<li id="mtopic2"><a id="glink2" class="tpclink a2menu" title="See All Downloads" href="/download/">Downloads</a></li>
+<li id="mtopic3"><a id="glink3" class="tpclink a2menu" title="See All Services &amp; Solutions" href="/servicessolutions/">Services &amp; Solutions</a></li>
+<li id="mtopic4"><a id="glink4" class="tpclink a2menu" title="See All Support" href="http://sunsolve.sun.com/">Support</a></li>
+<li id="mtopic5"><a id="glink5" class="tpclink a2menu" title="See All Training" href="/training/">Training</a></li>
+<li id="mtopic6"><a id="glink6" class="tpclink a2menu" title="See All Developer" href="http://developers.sun.com/">Developer</a></li>
+</ul>
+-->
+</div>
+</div></div></div></div>
+</div></div>
+<!-- END A2 COMPONENT V.0 -->
+
+
+
+
+
+
+
+<!-- BEGIN BREADCRUMB -->
+<table width="100%">
+  <tr>
+    <td align="left"><div align="left" id="breadcrumb"><a href="forms.html">&lt;&lt;Previous</a></div></td>
+    <td align="center"><div align="center" id="breadcrumb"><a href="index.html">Top</a></div></td>
+    <td align="right"><div align="right" id="breadcrumb"><a href="layouts.html">Next&gt;&gt;</a></div></td>
+  </tr>
+</table>
+<!-- END BREADCRUMB -->
+
+
+
+
+
+
+
+<!-- BEGIN PAGETITLE TWO LINE -->
+<div class="pagetitle2">LWUIT Tutorial</div>
+<div class="smallpagetitle"><h1>Filling Forms with Components</h1></div>
+<!-- END PAGETITLE TWO LINE -->
+
+
+
+
+
+
+
+<!-- BEGIN WRAPPER TABLE, 1 COLUMN, MAIN -->
+<table border="0" cellpadding="0" cellspacing="10" width="100%">
+<tr><td width="100%" valign="top">
+<!-- BEGIN CENTRAL COLUMN COMPONENTS -->
+
+<a name="skip2content"> </a>
+
+<!--startindex-->
+
+<!-- ============ -->
+<!-- MAIN CONTENT -->
+<!-- ============ -->
+
+<div class="pc0"><div class="pc0v4">
+
+<p>
+  LWUIT offers a comprehensive toolbox for showing information on forms
+  and receiving user input, including many familiar components like
+  labels, buttons, and lists.
+</p>
+
+<p>
+  Simply create the compnents you want to use and pass them to the form's
+  <code>addComponent()</code> method.
+</p>
+
+<p>
+The simplest component is a label. A label can display
+text, an image, or both. Here are a few examples:
+</p>
+
+<pre>
+//Form f = ...
+Label label = new Label("Baldy");
+f.addComponent(label);
+
+Image image = Image.createImage("/res/baldy.png");
+Label pictureLabel = new Label(image);
+f.addComponent(pictureLabel);
+
+Label bottomText = new Label(image);
+bottomText.setText("Baldassare");
+bottomText.setTextPosition(Component.BOTTOM);
+f.addComponent(bottomText);
+</pre>
+
+<p><img src="images/labels.gif"></p>
+
+<p>
+  Buttons are similar to labels but the user can "click" on them. The exact details
+  of clicking depend on the device. On a device with a touch screen, the user
+  can simply touch the button. On devices with four-way navigation, the user
+  can move focus to the button, then press the select key.
+</p>
+
+<p>
+<code>Button</code> inherits from <code>Label</code>. Here are a few examples:
+</p>
+
+<pre>
+//Form f = ...
+Button button = new Button("Baldy");
+f.addComponent(button);
+
+Image image = Image.createImage("/res/baldy.png");
+Button pictureButton = new Button(image);
+f.addComponent(pictureButton);
+
+Button combined = new Button("Baldassare", image);
+combined.setTextPosition(Component.BOTTOM);
+f.addComponent(combined);
+</pre>
+
+<p><img src="images/buttons.gif"></p>
+
+<p>
+  Later in this tutorial, you'll learn how to respond to button events. The button
+  takes care of showing visual cues to indicate focus and pressing.
+</p>
+
+<p>
+Subclasses of <code>Button</code> represent checkboxes and radio buttons.
+<code>ButtonGroup</code> is used to manage groups of exclusive radio
+buttons.
+</p>
+
+<p>
+The following example shows one way to add checkboxes and radio buttons to a
+form. It uses a <i>layout</i> to keep the components neatly lined up. You'll
+read about layouts later in this tutorial.
+</p>
+
+<pre>
+Form f = new Form("More Buttons");
+f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+
+RadioButton rb;
+ButtonGroup group = new ButtonGroup();
+
+rb = new RadioButton("Grilled chicken");
+group.add(rb);
+f.addComponent(rb);
+
+rb = new RadioButton("Filet mignon");
+group.add(rb);
+f.addComponent(rb);
+
+rb = new RadioButton("Mahi mahi");
+group.add(rb);
+f.addComponent(rb);
+
+rb = new RadioButton("Chili");
+group.add(rb);
+f.addComponent(rb);
+
+CheckBox cb;
+
+cb = new CheckBox("Guacamole");
+f.addComponent(cb);
+
+cb = new CheckBox("Tabasco sauce");
+f.addComponent(cb);
+
+cb = new CheckBox("Mango salsa");
+f.addComponent(cb);
+
+cb = new CheckBox("Mayonnaise");
+f.addComponent(cb);
+
+cb = new CheckBox("Whipped cream");
+f.addComponent(cb);
+</pre>
+
+<p><img src="images/morebuttons.gif"></p>
+
+<p>
+  Two components for showing lists of items are <code>List</code> and
+  <code>ComboBox</code>. Both use a <code>ListModel</code> to contain the
+  data that is displayed. You can use the default list model, which is
+  sufficient for many applications, or you can create your own. Like Swing,
+  LWUIT uses the Model-View-Controller paradigm for a clean separation of the
+  data, its presentation, and user interactions.
+</p>
+
+<p>
+  This example shows how to create a simple list. Behind the scenes, a
+  <code>ListModel</code> is created automatically. The combo box uses the
+  same <code>ListModel</code>. When you make a selection in the list or the
+  combo box, the other component is automatically updated to match.
+</p>
+
+<pre>
+//Form f = ...
+List list = new List();
+list.addItem("uno");
+list.addItem("due");
+list.addItem("tre");
+list.addItem("quattro");
+list.addItem("cinque");
+list.addItem("sei");
+f.addComponent(list);
+
+ComboBox comboBox = new ComboBox(list.getModel());
+f.addComponent(comboBox);
+</pre>
+
+<p><img src="images/listandcombobox.gif"></p>
+
+<p>
+    Another commonly used component is a <code>TextArea</code>, which displays
+    text that users can edit. Text is
+  displayed directly on your form, but entry will be done in a separate
+      screen. LWUIT provides editing on a separate screen to take advantage of
+      whatever predictive text mechanisms are available on the device. This
+      happens transparently as far as your application is concerned. All your
+      application has to do is add a <code>TextArea</code> to a form. LWUIT takes
+      care of handling user interactions for editing.
+</p>
+
+<p>
+  This example shows how to create a simple text area (more like a field)
+  by specifying the initial text. It also shows creating a larger text
+  area by specifying the number of visible rows and columns.
+</p>
+
+<pre>
+//Form f = ...
+TextArea area = new TextArea("Peppino");
+f.addComponent(area);
+
+TextArea big = new TextArea("On February 24, 1815, the lookout at " + 
+    "Notre-Dame de la Garde signalled the arrival of the three-master " +
+    "Pharaon, coming from Smyrna, Trieste and Naples.", 5, 20);
+f.addComponent(big);
+</pre>
+
+<p><img src="images/textarea.gif"></p>
+
+<p>
+  LWUIT includes several other components which are not described in this
+  tutorial. Consult the API documentation for
+  more information.
+</p>
+
+<ul>
+<li><code>Calendar</code> displays a calendar and allows the user to choose
+a day.</li>
+<li><code>TabbedPane</code> is a special container which represents panes of
+information with selectable tabs.</li>
+<li><code>MediaComponent</code> is used to display rich media content.</li>
+</ul>
+
+<!-- =================== -->
+<!-- END OF MAIN CONTENT -->
+<!-- =================== -->
+
+<!--stopindex-->
+
+<!-- END CENTRAL COLUMN COMPONENTS -->
+</td></tr>
+<!-- BEGIN SPACER ROW -->
+<tr><td><img src="/im/a.gif" width="780" height="1" border="0" alt="" /></td></tr>
+<!-- END SPACER ROW -->
+</table>
+<!-- END WRAPPER TABLE, 1 COLUMN, MAIN -->
+
+<!-- BEGIN BREADCRUMB -->
+<table width="100%">
+  <tr>
+    <td align="left"><div align="left" id="breadcrumb"><a href="forms.html">&lt;&lt;Previous</a></div></td>
+    <td align="center"><div align="center" id="breadcrumb"><a href="index.html">Top</a></div></td>
+    <td align="right"><div align="right" id="breadcrumb"><a href="layouts.html">Next&gt;&gt;</a></div></td>
+  </tr>
+</table>
+<!-- END BREADCRUMB -->
+
+
+
+
+
+
+
+<!-- START SITECATALYST -->
+<!--stopindex-->
+<script language="JavaScript" src="/share/omniture/s_code_remote.js"></script>
+<!--startindex-->
+<!-- END SITECATALYST -->
+
+
+
+
+<hr/>
+
+
+<!-- BEGIN G9 VARIATION 0 -->
+
+<!-- (removed) -->
+
+<!-- END G9 VARIATION 0 -->
+
+
+
+
+
+
+
+<!-- BEGIN A5 COMPONENT V.0 -->
+<div class="a5" id="a5v0">
+<span class="footerlinks">
+<!--
+<a href="/contact/">Contact</a>
+<a href="/aboutsun/index.html">About Sun</a>
+<a href="/aboutsun/media/index.html">News &amp; Events</a>
+<a href="/corp_emp/">Employment</a>
+<a href="/sitemap/">Site Map</a>
+<a href="/privacy/">Privacy</a>
+<a href="/share/text/termsofuse.html">Terms of Use</a>
+<a href="/suntrademarks/">Trademarks</a>
+-->
+<span class="footercopy">Copyright &#169; <span id="copyDate" class="cssDate">2008</span> Sun Microsystems, Inc.</span>
+
+</span>
+</div>
+<!-- END A5 COMPONENT V.0 -->
+
+
+
+
+
+
+
+</div>
+</body>
+</html>
+
+
+

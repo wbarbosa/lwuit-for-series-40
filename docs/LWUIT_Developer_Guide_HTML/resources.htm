@@ -1,0 +1,680 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Resources</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 5.1.2 Build 015" />
+<meta name="date" content="2011-11-03T11:27:24Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="Resources" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E23376-02" />
+<link rel="copyright" href="./dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="./dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+<link rel="contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="index" href="index.htm" title="Index" type="text/html" />
+<link rel="prev" href="theme.htm" title="Previous" type="text/html" />
+<link rel="next" href="painters.htm" title="Next" type="text/html" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Developer's Guide</b><br />
+<b>Release 1.5</b><br />
+E23376-02</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td align="center"><a href="theme.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="painters.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header --><a id="CJBCGCDD" name="CJBCGCDD"></a>
+<h1 class="chapter"><span class="secnum">9</span> Resources</h1>
+<p>LWUIT permits the following resource elements:</p>
+<ul>
+<li>
+<p><a href="#CJBDAHDJ">Image Resources</a></p>
+</li>
+<li>
+<p><a href="#CJBJCEBG">Dynamic Fonts</a></p>
+</li>
+<li>
+<p><a href="#CJBHGHFJ">Localization (L10N)</a> bundles</p>
+</li>
+<li>
+<p><a href="#CJBEAHFA">Themes</a></p>
+</li>
+<li>
+<p>GUI / UI Builder</p>
+</li>
+</ul>
+<p>Resources can be delivered as a bundle (a binary file that can be loaded and used on the device). A bundle can combine several different resource types within a single file, thereby easing distribution and improving compression. LWUIT supports two methods for creating a resource bundle: a set of Ant tasks, or the graphical Resource Editor utility (see <a href="#CJBGJEIB">The LWUIT Resource Editor</a>).</p>
+<a id="Z40006f51296068" name="Z40006f51296068"></a>
+<div class="sect1">
+<h2 class="sect1">Resource Elements</h2>
+<p>The following sections detail the five resource types and the ways in which they relate to the resource bundle mechanism.</p>
+<a id="Z400088e1295938" name="Z400088e1295938"></a>
+<div class="sect2">
+<h3 class="sect2">Building a Bundle</h3>
+<p>A <a id="sthref178" name="sthref178"></a>resource bundle can be built using Ant during the standard application build process. Resource files convert existing files into bundles as necessary. An application can have any number of resource files.</p>
+<p>A resource file it is loaded fully into memory (due to Java ME IO constraints), so you should group resources based on the needs of the application flow. This allows the application to load only the necessary resources for a given form or use case and leaves memory free for additional resources needed by other forms or use cases.</p>
+<a id="Z40006f51295860" name="Z40006f51295860"></a>
+<div class="sect3">
+<h4 class="sect3">Creating a Resource</h4>
+<p>To create a <a id="sthref179" name="sthref179"></a>resource, use code similar to the following example in your build file:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+&lt;taskdef 
+  classpath="editor.jar" 
+  classname="com.sun.lwuit.tools.resourcebuilder.LWUITTask" 
+  name="build" /&gt;
+&lt;build dest="src/myresourceFile .res"&gt;
+  &lt;image file="images/myImage.png" name=&rdquo;imageName&rdquo; /&gt;
+&lt;/build&gt;
+</pre>
+<p>You can add several additional types of resources to the build tag. These optional resource tags are explained in the remainder of this chapter.</p>
+</div>
+<!-- class="sect3" -->
+<a id="Z400088e1295866" name="Z400088e1295866"></a>
+<div class="sect3">
+<h4 class="sect3">Loading a Resource</h4>
+<p>To load a <a id="sthref180" name="sthref180"></a>resource into your application, use code similar to this:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Resources res = Resources.open(&ldquo;/myresourceFile.res&rdquo;);
+Image i = res.getImage(&ldquo;imageName&rdquo;);
+</pre></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="CJBDAHDJ" name="CJBDAHDJ"></a>
+<div class="sect2">
+<h3 class="sect2">Image Resources</h3>
+<p>There are several types of images in LWUIT, most of which can be stored either individually in the Java archive (JAR&trade;) or packaged as part of a <a id="sthref181" name="sthref181"></a>resource bundle.</p>
+<p>To load an <a id="sthref182" name="sthref182"></a>image stored in the JAR file, use the following code:</p>
+<p><code>Image image = Image.createImage("/images/duke.png");</code></p>
+<p>The Image tag supports the following attributes:</p>
+<div class="inftblhruleinformal">
+<table class="HRuleInformal" summary="Add Summary attribute value here." dir="ltr" border="1" width="100%" frame="hsides" rules="rows" cellpadding="3" cellspacing="0">
+<col width="15%" />
+<col width="*" />
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r1c1-t2"><code>name</code></td>
+<td align="left">The name of the resource (defaults to the name of the file name).</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t2"><code>file</code></td>
+<td align="left" headers="r2c1-t2">The file that would be used for the image (required)</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>Once loaded, the image is ready to be used as a background image of a component or even as an icon for a component that can contain an image.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z400088e1295971" name="Z400088e1295971"></a>
+<div class="sect2">
+<h3 class="sect2">Fonts</h3>
+<p>The LWUIT library supports bitmap <a id="sthref183" name="sthref183"></a>fonts, system fonts, and loadable fonts. System fonts use basic native fonts and are based on the common MIDP fonts. For more detailed information please see the Font API in the API documentation located in <span class="italic">install-dir</span><code>/docs/api/lwuit</code>.</p>
+<p>Bitmap fonts generate fonts on the desktop as image files. These image can be used to draw desktop quality fonts on a device without requiring specific support from the device.</p>
+<p>Loadable fonts support specifying a font as a name or even as a TrueType font file, if the underlying operating system supports such fonts, the font object would be created.</p>
+<p>All fonts can be used in a theme file and are represented using the Font class in LWUIT.</p>
+<a id="Z400088e1295872" name="Z400088e1295872"></a>
+<div class="sect3">
+<h4 class="sect3">System Font</h4>
+<p>Three basic parameters define a <a id="sthref184" name="sthref184"></a>system font<a id="sthref185" name="sthref185"></a>:</p>
+<div class="inftblhruleinformal">
+<table class="HRuleInformal" summary="Add Summary attribute value here." dir="ltr" border="1" width="100%" frame="hsides" rules="rows" cellpadding="3" cellspacing="0">
+<col width="11%" />
+<col width="*" />
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r1c1-t3"><code>Face</code></td>
+<td align="left">Valid values are <code>FACE_SYSTEM</code>, <code>FACE_PROPORTIONAL</code> and <code>FACE_MONOSPACE</code>.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t3"><code>Style</code></td>
+<td align="left" headers="r2c1-t3">Valid values are <code>STYLE_PLAIN</code>, <code>STYLE_ITALIC</code>, <code>STYLE_BOLD</code>.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t3"><code>Size</code></td>
+<td align="left" headers="r3c1-t3">Valid values are <code>SIZE_SMALL</code>, <code>SIZE_MEDIUM</code>, <code>SIZE_LARGE</code>.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" -->
+<p>To create a system font, use the following code:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Font.createSystemFont(Font.FACE_SYSTEM, 
+                      Font.STYLE_BOLD, 
+                      Font.SIZE_MEDIUM);
+</pre>
+<p>To create a bold italic font style use code similar to the following:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Font.createSystemFont(Font.FACE_SYSTEM, 
+                      Font.STYLE_BOLD | Font.STYLE_ITALIC,
+                      Font.SIZE_MEDIUM);
+</pre></div>
+<!-- class="sect3" -->
+<a id="CJBJCEBG" name="CJBJCEBG"></a>
+<div class="sect3">
+<h4 class="sect3">Dynamic Fonts</h4>
+<p>Different platforms have different <a id="sthref186" name="sthref186"></a>font support. For example, phones usually only support system and bitmap fonts while TVs usually support TrueType fonts but don't work well with bitmap fonts. LWUIT has support for defining fonts in resources that allow a resource to adapt for different devices. To support portability LWUIT allows specifying a loadable font if such a font is supported by the underlying system and allows bundling bitmaps for increased portability. As a fallback a system font is always defined, thus if the native font isn't supported or a developer isn't interested in using a bitmap font the system font fallback can always be used. It is possible to define such a font using the Ant task with the following syntax:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+&lt;build dest="src/myresourceFile.res"&gt;
+     &lt;font logicalName=&rdquo;SansSerif&rdquo; name=&rdquo;myFont&rdquo; size=&rdquo;20&rdquo; /&gt; 
+&lt;/build&gt;
+</pre>
+<p>The following attributes are supported for the font Ant task:</p>
+<div class="inftblhruleinformal">
+<table class="HRuleInformal" summary="Add Summary attribute value here." dir="ltr" border="1" width="100%" frame="hsides" rules="rows" cellpadding="3" cellspacing="0">
+<col width="20%" />
+<col width="*" />
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r1c1-t4"><code>name</code></td>
+<td align="left">Name of the font to load from the resource file (optional: defaults to logical name or file name).</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t4"><code>charset</code></td>
+<td align="left" headers="r2c1-t4">Defaults to the English alphabet, numbers and common signs. Should contain a list of all characters that are supported by a font. For example, if a font is always used for uppercase letters then it would save space to define the charset as: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t4"><code>src</code></td>
+<td align="left" headers="r3c1-t4">Font file in the case of using a file. Defaults to TrueType font. size floating point size of the font.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t4"><code>bold</code></td>
+<td align="left" headers="r4c1-t4">Defaults to False. Indicates whether the font should be bold.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t4"><code>trueType</code></td>
+<td align="left" headers="r5c1-t4">Defaults to True, relevant only when src is used. If set to False, type 1 fonts are assumed.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t4"><code>antiAliasing</code></td>
+<td align="left" headers="r6c1-t4">Defaults to True. If false, fonts are aliased.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t4"><code>logicalName</code></td>
+<td align="left" headers="r7c1-t4">The logical name of the font as specified by java.awt.Font in Java SE: Dialog, DialogInput, Monospaced, Serif, or SansSerif.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t4"><code>createBitmap</code></td>
+<td align="left" headers="r8c1-t4">Defaults to True. If false no bitmap version of the font is created.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblhruleinformal" --></div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="CJBHGHFJ" name="CJBHGHFJ"></a>
+<div class="sect2">
+<h3 class="sect2">Localization (L10N)</h3>
+<p>Resource bundles support <a id="sthref187" name="sthref187"></a>localization resources, allowing the developer to store key-value pairs within the resource file. The localization bundles use the format of Java property files, which only support USASCII characters. To enter characters in a different script, either use a special editor (such as NetBeans) or use the native2ascii JDK tool with the Ant task to convert the file.</p>
+<p>To create a resource bundle use the following code</p>
+<pre xml:space="preserve" class="oac_no_warn">
+&lt;build dest="src/myresourceFile.res"&gt;
+   &lt;l10n name="localize"&gt;
+      &lt;locale name="en" file="l10n/localize.properties" /&gt;
+       &lt;locale name="iw" file="l10n/localize_iw_IL.properties" /&gt;
+   &lt;/l10n&gt;
+&lt;/build&gt;
+</pre>
+<p>To load the localization resource use the following syntax:</p>
+<p><code>Hashtable h = bundle.getL10N("localize", "en");</code></p>
+<p>The hashtable contains the key value pairs of the resources within the bundle allowing for easy localization. LWUIT supports automatic localization through the <code>UIManager.setResourceBundle(Hashtable)</code> method. This installs a global resource bundle which is &ldquo;checked&rdquo; whenever a localizable resource is created, thus allowing for the replacement of the entire UI language without querying the resource bundle manually.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z400088e1296003" name="Z400088e1296003"></a>
+<div class="sect2">
+<h3 class="sect2">Themes</h3>
+<p>This section discusses how themes work as resources. See <a href="style.htm#BADGGABB">Chapter 7</a> and <a href="theme.htm#BADBCIEI">Chapter 8</a> to both of these chapters in-depth discussions of styles and theming in LWUIT.</p>
+<p>A <a id="sthref188" name="sthref188"></a>theme can be defined using a key value properties file containing selectors and values. A selector can be defined as an attribute value, optionally with a component name prepended to it for narrowing the selection further.</p>
+<p>The value of an entry in the theme depends on the type of the entry, some entries such as bgImage expect an image object and some entries such as Font expect a font definition. Most entries just expect numbers. For example, this is a typical snippet from a theme:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+sel#fgColor= 0017ff 
+font= systemSmall 
+Form.bgImage=myBackground 
+Form.font=Serif 
+SoftButton.bgColor= ff 
+SoftButton.fgColor= ffffff
+</pre>
+<p>To add this theme into a resource, add the following:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+&lt;build dest="src/myresourceFile .res"&gt; 
+   &lt;font logicalName="Serif" bold="true" /&gt; 
+   &lt;font createBitmap="false" name="systemSmall" 
+         system="FACE_SYSTEM ; STYLE_PLAIN; SIZE_SMALL" /&gt;    
+   &lt;image file="images/background.png" name="myBackground" /&gt;    
+   &lt;theme file="themes/myTheme.conf" name="myTheme" /&gt; 
+&lt;/build&gt;
+</pre>
+<p>This theme can then be installed as follows:</p>
+<p><code>UIManager.getInstance().setThemeProps(res.getTheme(myTheme));</code></p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CJBGJEIB" name="CJBGJEIB"></a>
+<div class="sect1">
+<h2 class="sect1">The LWUIT Resource Editor</h2>
+<p>The <a id="sthref189" name="sthref189"></a>Resource Editor is a standalone GUI tool that allows UI experts, developers, and translators to open, create, and edit resource packages for LWUIT. The Resource Editor was designed for visual work and provides &ldquo;live&rdquo; preview of all UI changes, enabling rapid UI customization.</p>
+<p>The resource editor and the Ant tasks accomplish similar things, with some limitations in the Ant task feature set. The Ant task is designed for features that make more sense as developer tasks, while the Resource Editor is a tool aimed at designers doing visual work.</p>
+<p>The Resource Editor supports the resource types described in <a href="#Z40006f51296068">Resource Elements</a>.</p>
+<div class="figure"><a id="Z4000f5f1296762" name="Z4000f5f1296762"></a>
+<p class="titleinfigure">Figure 9-1 Editing the Default LWUIT Look and Feel</p>
+<img src="img/resource_editor.jpg" alt="Description of Figure 9-1 follows" title="Description of Figure 9-1 follows" longdesc="img_text/resource_editor.htm" /><br />
+<a id="sthref190" name="sthref190" href="img_text/resource_editor.htm">Description of "Figure 9-1 Editing the Default LWUIT Look and Feel"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>To use the tool, launch the Resource Editor application from your LWUIT distribution.</p>
+<ul>
+<li>
+<p>Use File &gt; Open to load an existing resource (<code>.res</code>) file.</p>
+</li>
+<li>
+<p>To add a resource, click the + button in the tab representing the element type you wish to add and specify a name for the resource. Specify a name for the resource. The new resource is added under the appropriate tab.</p>
+<img src="img/add_resource.jpg" alt="Description of add_resource.jpg follows" title="Description of add_resource.jpg follows" longdesc="img_text/add_resource.htm" /><br />
+<a id="sthref191" name="sthref191" href="img_text/add_resource.htm">Description of the illustration add_resource.jpg</a><br />
+<br /></li>
+<li>
+<p>To create a new theme, select the Theme node, then click the + button. Note that a resource bundle can contain more than one theme.</p>
+<div align="center">
+<div class="inftblnote"><br />
+<table class="Note oac_no_warn" summary="" border="1" width="80%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td align="left">
+<p class="notep1">Note:</p>
+The live preview is displayed for themes only and represents the behavior of the theme alone. It doesn't contain the other resources in the file that do not relate to the theme.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblnote" --></div>
+</li>
+</ul>
+<a id="Z400088e1296012" name="Z400088e1296012"></a>
+<div class="sect2">
+<h3 class="sect2">Images and Animations</h3>
+<p>The LWUIT Resource Editor supports the following image types:</p>
+<ul>
+<li>
+<p><a id="sthref192" name="sthref192"></a>RGB<a id="sthref193" name="sthref193"></a>: Standard JPG/PNG formats. Indexed PNGs also work very well (and are highly recommended) with this image type.</p>
+</li>
+<li>
+<p>SVG<a id="sthref194" name="sthref194"></a>: SVG<a id="sthref195" name="sthref195"></a> Tiny<a id="sthref196" name="sthref196"></a> images are supported. LWUIT can optionally seamlessly generate PNG images for the SVG files when a device doesn't support SVG.</p>
+</li>
+<li>
+<p>Multi-Image<a id="sthref197" name="sthref197"></a>: One can add several images based on the DPI of the device (one of several predefined family ranges). Irrelevant images are skipped when loading the resource file .</p>
+<p>Multi-images are ideal for icons or small artifacts that are hard to scale properly. They are not meant to replace things such as 9-image borders and so forth since adapting them to every resolution or to device rotation isn't practical.</p>
+</li>
+<li>
+<p>Timeline<a id="sthref198" name="sthref198"></a>: <a id="sthref199" name="sthref199"></a>A timeline is a set of images that can be moved rotated, scaled, and blended to provide interesting animation effects.Timelines allow rudimentary animation and enable GIF importing using the resource editor.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<a id="Z400088e1296018" name="Z400088e1296018"></a>
+<div class="sect2">
+<h3 class="sect2">Fonts</h3>
+<p>The Resource Editor can use device specific fonts or create bitmap <a id="sthref200" name="sthref200"></a>fonts for the devices from any font installed in your desktop operating system. <a href="#Z4000f5f1297433">Figure 9-2</a> shows the font editing dialog that appears when adding a new font to the resource file.</p>
+<div class="figure"><a id="Z4000f5f1297433" name="Z4000f5f1297433"></a>
+<p class="titleinfigure">Figure 9-2 Font Editing View</p>
+<img src="img/resource_editor_font.jpg" alt="Description of Figure 9-2 follows" title="Description of Figure 9-2 follows" longdesc="img_text/resource_editor_font.htm" /><br />
+<a id="sthref201" name="sthref201" href="img_text/resource_editor_font.htm">Description of "Figure 9-2 Font Editing View"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<div align="center">
+<div class="inftblnote"><br />
+<table class="Note oac_no_warn" summary="" border="1" width="80%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td align="left">
+<p class="notep1">Note:</p>
+Using the Resource Editor does not grant you permission to use the fonts commercially in any way. Licensing the right to use a particular font within a mobile application is strictly your responsibility!</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblnote" --></div>
+<p>Make sure to specify the characters you need from the font (defaults to upper and lower case English with numbers and symbols). Notice that the more characters you pick in the character set, the more RAM the font will consume on the device. Anti-aliasing is built in to the bitmap font. When running under Java 5 the Resource Editor has two anti-aliasing options: Off indicates no anti-aliasing in the bitmap font, and Simple indicates standard anti-aliasing.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z400088e1296027" name="Z400088e1296027"></a>
+<div class="sect2">
+<h3 class="sect2">Localization</h3>
+<p>A <a id="sthref202" name="sthref202"></a>localization resource can be edited by assigning key/value pairs to use within the application. A key can be mapped to a resource name in any locale.</p>
+<p>The editor allows you to add or remove locales listed in the combo box above and appropriately edit the locale entries in the table below. To add or remove a locale property use the buttons on the bottom of the screen.</p>
+<div class="figure"><a id="Z4000f5f1297489" name="Z4000f5f1297489"></a>
+<p class="titleinfigure">Figure 9-3 Localization and Internationalization View</p>
+<img src="img/picture2.jpg" alt="Description of Figure 9-3 follows" title="Description of Figure 9-3 follows" longdesc="img_text/picture2.htm" /><br />
+<a id="sthref203" name="sthref203" href="img_text/picture2.htm">Description of "Figure 9-3 Localization and Internationalization View"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect2" -->
+<a id="CJBEAHFA" name="CJBEAHFA"></a>
+<div class="sect2">
+<h3 class="sect2">Themes</h3>
+<p>To modify a <a id="sthref204" name="sthref204"></a>theme resource, set the selectors and the theme resources to appropriate values to produce an attractive UI. When creating a new theme you see a UI containing the table of selectors and resources (for more in depth details of themes for developers, see <a href="theme.htm#BADBCIEI">Chapter 8</a>).</p>
+<div class="figure"><a id="Z4000f5f1297591" name="Z4000f5f1297591"></a>
+<p class="titleinfigure">Figure 9-4 Blank Theme View Without Any Styles</p>
+<img src="img/blank_theme_view.png" alt="Description of Figure 9-4 follows" title="Description of Figure 9-4 follows" longdesc="img_text/blank_theme_view.htm" /><br />
+<a id="sthref205" name="sthref205" href="img_text/blank_theme_view.htm">Description of "Figure 9-4 Blank Theme View Without Any Styles"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>To modify the theme, choose a selector on the left side and click the Edit button. You can add new selectors using the Add button in the theme. To modify an existing selector, select it in the table and double click or press the Edit button.</p>
+<a id="Z400088e1295897" name="Z400088e1295897"></a>
+<div class="sect3">
+<h4 class="sect3">Example: Adding a New Theme</h4>
+<p>This section describes how to add a new <a id="sthref206" name="sthref206"></a>theme using the Resource Editor.</p>
+<ol>
+<li>
+<p>Select the theme tab on the left, and click the + button to open the New Theme window. From the Template combo box, select Blank.</p>
+</li>
+<li>
+<p>The UI area on the right shows the Unselected tab by default. Click the Add button at the bottom of the UI area. <img src="img/add.jpg" alt="Description of add.jpg follows" title="Description of add.jpg follows" longdesc="img_text/add.htm" /><br />
+<a id="sthref207" name="sthref207" href="img_text/add.htm">Description of the illustration add.jpg</a><br />
+<br /></p>
+<p>The Add window opens.</p>
+<p>Select Form from the Component combo box at the top of the Add window.</p>
+<ul>
+<li>
+<p>In the Background tab uncheck Derive. From the Type dropdown, choose GRADIENT_RADIAL.</p>
+</li>
+<li>
+<p>Type ff into the left gradient color (to select a blue to black radial gradient).</p>
+</li>
+<li>
+<p>Type 2 into the gradient Size spinner to double the size of the gradient.</p>
+</li>
+</ul>
+<img src="img/gradient_radial.jpg" alt="Description of gradient_radial.jpg follows" title="Description of gradient_radial.jpg follows" longdesc="img_text/gradient_radial.htm" /><br />
+<a id="sthref208" name="sthref208" href="img_text/gradient_radial.htm">Description of the illustration gradient_radial.jpg</a><br />
+<br />
+<p>Click OK to save your changes.</p>
+</li>
+<li>
+<p>Click the Add button again and select Title from the Component combo box.</p>
+<ul>
+<li>
+<p>Select the Background tab.</p>
+<p>Uncheck Derive.</p>
+<p>In the Type combo box select GRADIENT_LINEAR_VERTICAL.</p>
+<p>In the Gradient input field on the right, type 6363ff to select a light blue color.</p>
+</li>
+<li>
+<p>Select the Color Tab.</p>
+<p>Uncheck the Derive Foreground checkbox</p>
+<p>Type ffffff into theForeground field.</p>
+</li>
+<li>
+<p>Select the Alignment tab.</p>
+<p>Uncheck the Derive checkbox and make sure Left is selected in the Alignment combo box.</p>
+</li>
+<li>
+<p>Select the Padding tab.</p>
+<p>Uncheck the Derive checkbox</p>
+<p>Type 10 in the Left and Right fields, and type 5 in the Top and Bottom fields.</p>
+</li>
+<li>
+<p>Select the Font tab.</p>
+<p>Uncheck the Derive Font check box.</p>
+<p>Select BOLD in the center combo box and LARGE in the combo box on the right.</p>
+</li>
+</ul>
+<p>These steps will create a left-aligned spaced large title that uses white bold text on a vertical gradient background.</p>
+</li>
+<li>
+<p>In the UI area Unselected tab, double-click the <span class="bold">[Default Style]</span> selector to open the Edit window.</p>
+<ul>
+<li>
+<p>Select the Color tab.</p>
+</li>
+<li>
+<p>Uncheck Derive Foreground and type in ffffff to make the default text color white.</p>
+</li>
+<li>
+<p>Uncheck Derive Transparency and type in 0 to make components transparent by default.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>In the UI area choose the Selected tab and double-click the <span class="bold">[Default Style]</span> entry.</p>
+<ol>
+<li>
+<p>Select the Color tab.</p>
+<ul>
+<li>
+<p>Uncheck Derive Foreground.</p>
+</li>
+<li>
+<p>Type in ff to make the foreground blue</p>
+</li>
+<li>
+<p>Uncheck Derive Transparency</p>
+<p>Type in 200 to make the selection color blend nicely. Click OK.</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Click the Border Wizard button on the top of the UI area.</p>
+<p>Make these changed on the Create Image tab:</p>
+<ul>
+<li>
+<p>In the Width and Height spinners, type 200.</p>
+</li>
+<li>
+<p>In the Thickness spinner, type 4.</p>
+</li>
+<li>
+<p>In the Arc Width and Arc Height fields, type 30.</p>
+</li>
+<li>
+<p>In Color A and Color D fields, type in ffffff.</p>
+<p>In Color B and Color C fields, type in 9f9f9f.</p>
+<p>This creates a reverse border gradient which strengthens a sense of depth.</p>
+</li>
+<li>
+<p>In the opacity spinner type 130 to make the image translucent.</p>
+</li>
+</ul>
+<p>Select the Cut Image tab.</p>
+<ul>
+<li>
+<p>Type 100 in the Top spinner, 90 in the Bottom spinner.</p>
+</li>
+<li>
+<p>Type 25 in the Left and Right spinners.</p>
+</li>
+</ul>
+<p>Select the Apply To tab.</p>
+</li>
+</ol>
+<ol>
+<li>
+<ul>
+<li>
+<p>In the Component field, type Content Pane.</p>
+</li>
+<li>
+<p>In the Style combo box, choose Unselected.</p>
+</li>
+<li>
+<p>Click the Add button on the Right. This populates the Applies To area.</p>
+</li>
+<li>
+<p>Click the Generate button at the bottom, and close the wizard.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Click the Unselected tab.</p>
+<p>Double-click the ContentPane style entry.</p>
+<p>Select the Padding tab.</p>
+<ul>
+<li>
+<p>Uncheck Derive.</p>
+</li>
+<li>
+<p>Input 5 in Top, Bottom, Left and Right spinners.</p>
+</li>
+</ul>
+<p>Select the Margin tab.</p>
+<ul>
+<li>
+<p>Uncheck Derive.</p>
+</li>
+<li>
+<p>Input 14 in Top, Bottom, Left and Right spinners.</p>
+</li>
+</ul>
+<p>This will provide some spacing around the border to accentuate its effect.</p>
+</li>
+</ol>
+<p><a href="#Z4000f5f1298018">Figure 9-5</a> shows the final result.</p>
+<div class="figure"><a id="Z4000f5f1298018" name="Z4000f5f1298018"></a>
+<p class="titleinfigure">Figure 9-5 New Theme</p>
+<img src="img/new_theme.png" alt="Description of Figure 9-5 follows" title="Description of Figure 9-5 follows" longdesc="img_text/new_theme.htm" /><br />
+<a id="sthref209" name="sthref209" href="img_text/new_theme.htm">Description of "Figure 9-5 New Theme"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>To gain a deeper understanding of themes add a theme from a template and review its settings. In the Themes tab on the left, click + to add a new theme. From the template combo box, choose Wood and click OK. For example, view the Transitions.</p>
+<div class="figure"><a id="sthref210" name="sthref210"></a>
+<p class="titleinfigure">Figure 9-6 Wood Theme Default</p>
+<img src="img/wood_theme.png" alt="Description of Figure 9-6 follows" title="Description of Figure 9-6 follows" longdesc="img_text/wood_theme.htm" /><br />
+<a id="sthref211" name="sthref211" href="img_text/wood_theme.htm">Description of "Figure 9-6 Wood Theme Default "</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>You can gain deeper understanding of the selector concepts from <a href="style.htm#BADGGABB">Chapter 7</a> and <a href="theme.htm#BADBCIEI">Chapter 8</a>.</p>
+</div>
+<!-- class="sect3" -->
+<a id="Z400088e1295910" name="Z400088e1295910"></a>
+<div class="sect3">
+<h4 class="sect3">Modifying Theme Entries</h4>
+<p>A theme entry is comprised of a UIID<a id="sthref212" name="sthref212"></a> and the attributes modified for the specific UIID. The hardest part in building a theme is understanding the component names for the entries within the UI.</p>
+<p>When pointing at the UI preview on the right, a tooltip pops up indicating the UIID of the component you are pointing at, however, this might not work as expected for list renderers (who are no longer there) or for components that are underneath other components (for example. a container that has components on top of it).</p>
+<p>When adding a new entry (using the Add button at the bottom of the screen) the combo box at the top highlights in bold the UIIDs that are present in the current screen. This allows discovery via trial and error.</p>
+<div class="figure"><a id="sthref213" name="sthref213"></a>
+<p class="titleinfigure">Figure 9-7 Component UIIDs</p>
+<img src="img/uiid_combo_box.png" alt="Description of Figure 9-7 follows" title="Description of Figure 9-7 follows" longdesc="img_text/uiid_combo_box.htm" /><br />
+<a id="sthref214" name="sthref214" href="img_text/uiid_combo_box.htm">Description of "Figure 9-7 Component UIIDs"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>Notice that every attribute within this dialog has a Derive<a id="sthref215" name="sthref215"></a> check box associated with it. The default behavior of adding a new theme entry is to derive from the base style. You need to explicitly indicate that you are interested in modifying a specific attribute. This allows the theme to remain efficient by reducing the amount of "noise" within the theme and also allows inheritance to work properly.</p>
+<p>LWUIT style inheritance is built in stages:</p>
+<ul>
+<li>
+<p>LWUIT has constant "sensible defaults" for some component behaviors (for example, Buttons have a border style by default).</p>
+</li>
+<li>
+<p>Every style type has the <span class="bold">[Default Style]</span> global scope where you can define your own defaults for components (although this won't replace LWUIT's builtin defaults such as the button borders).</p>
+</li>
+<li>
+<p>Individual styles can use the Derive tab to define explicit inheritance hierarchy from a specific style UIID to reuse definitions made for one component. This is very useful when you have multiple style types because the Selected, Pressed and Disabled component styles can derive from the Unselected style of a component.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect3" -->
+<a id="Z400088e1295919" name="Z400088e1295919"></a>
+<div class="sect3">
+<h4 class="sect3">Data</h4>
+<p>Data is generally designed for developers and shouldn't be used by designers.</p>
+<p>An arbitrary file can be placed within this section and it can be accessed by developers in runtime. This section has no effect on the rest of the functionality even if the data file is an image or font.</p>
+</div>
+<!-- class="sect3" -->
+<a id="Z400088e1295923" name="Z400088e1295923"></a>
+<div class="sect3">
+<h4 class="sect3">Customizing the Preview</h4>
+<p>The <a id="sthref216" name="sthref216"></a>preview<a id="sthref217" name="sthref217"></a> showing the LWUIT Demo allows for easy customization of a MIDlet. This capability is not limited to the LWUIT Demo. The Resource Editor supports plugging in your own MIDlet so you can test your theme on the fly.You can install your own MIDlet into the Resource Editor preview panel. In the Resource Editor menu bar, select Application &gt; Pick Application MIDlet and select your MIDlet's JAR file.</p>
+<div class="figure"><a id="Z4000f5f1298351" name="Z4000f5f1298351"></a>
+<p class="titleinfigure">Figure 9-8 LWUIT Browser Demo With</p>
+<img src="img/basic_theme.png" alt="Description of Figure 9-8 follows" title="Description of Figure 9-8 follows" longdesc="img_text/basic_theme.htm" /><br />
+<a id="sthref218" name="sthref218" href="img_text/basic_theme.htm">Description of "Figure 9-8 LWUIT Browser Demo With"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>There are, however, several restrictions and limitations in this feature:</p>
+<p>Since the MIDlet is executed in Java SE it can't leverage <code>javax.microedition</code> APIs. While the APIs are present they are implemented in stub form. For example, if you use RMS, GCF, and so forth, they will return null for all queries and do nothing in all operations. Additionally, invoking features such as theming won't work.</p>
+<p>If there is a failure in the <a id="sthref219" name="sthref219"></a>MIDlet the Resource Editor will silently load the LWUIT Demo in the preview and use it instead. To debug the failure, execute the Resource Editor from command line using <code>java -jar ResourceEditor.jar</code>. When entering the theme option you can see the stack trace of the exception that caused the failure.</p>
+<p>It is critical that you DO NOT obfuscate the MIDlet meant for the Resource Editor's preview feature since the Resource Editor must replace the LWUIT instance used within the MIDlet with its own!</p>
+<p>Some developers use a preprocesso<a id="sthref220" name="sthref220"></a>r to create a custom version of their MIDlet for use within this feature. This allows them to avoid functionality that won't work properly in the tool and still give designers the ability to view the entire application for customization.</p>
+</div>
+<!-- class="sect3" -->
+<a id="Z400088e1295934" name="Z400088e1295934"></a>
+<div class="sect3">
+<h4 class="sect3">Known Issues</h4>
+<p>There is currently a known issue in some operating systems which causes the Resource Editor to fail in some cases when using the Aero theme. This issue stems from Java SE's look and feel implementation and the only workaround is to change the application look and feel using the Look And Feel menu option.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+<td align="center"><a href="theme.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="painters.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="./dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="./dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

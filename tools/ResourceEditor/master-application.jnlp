@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="https://lwuit.dev.java.net/designer/" href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>Theme Creator</title>
+        <vendor>Sun Microsystems Inc.</vendor>
+        <homepage href="http://lwuit.dev.java.net/"/>
+        <description>Theme Creator</description>
+        <description kind="short">Theme Creator (LWUIT Designer/resource editor) for the Java ME LWUIT resource file format.</description>
+        <icon href="resource-splash1-w-copyr.png" kind="splash"/>
+        <icon href="application32.png" kind="default" width="32" height="32" />
+        <offline-allowed/>
+        <association mime-type="application-x/LWUIT-Designer" extensions="res">
+            <description>Theme Creator</description>
+            <icon href="application32.png" width="32" height="32" />
+        </association>
+        <shortcut online="false">
+            <desktop />
+            <menu submenu="LWUIT" />
+        </shortcut>
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <j2se version="1.5+"/>
+        <jar eager="true" href="ResourceEditor.jar" main="true"/>
+        <jar href="lib/SwingPort.jar"/>
+        <jar href="lib/swing-layout-1.0.3.jar"/>
+        <jar href="lib/LWUITDemo.jar"/>
+        <jar href="lib/MIDP_SE.jar"/>
+        <jar href="lib/LWUIT4IO.jar"/>
+
+        <jar href="lib/SwingPort.jar"/>
+        <jar href="lib/swing-layout-1.0.3.jar"/>
+        <jar href="lib/LWUITDemo.jar"/>
+        <jar href="lib/MIDP_SE.jar"/>
+        <jar href="lib/batik-anim.jar"/>
+        <jar href="lib/batik-awt-util.jar"/>
+        <jar href="lib/batik-bridge.jar"/>
+        <jar href="lib/batik-codec.jar"/>
+        <jar href="lib/batik-css.jar"/>
+        <jar href="lib/batik-dom.jar"/>
+        <jar href="lib/batik-ext.jar"/>
+        <jar href="lib/batik-extension.jar"/>
+        <jar href="lib/batik-gui-util.jar"/>
+        <jar href="lib/batik-gvt.jar"/>
+        <jar href="lib/batik-parser.jar"/>
+        <jar href="lib/batik-script.jar"/>
+        <jar href="lib/batik-svg-dom.jar"/>
+        <jar href="lib/batik-svggen.jar"/>
+        <jar href="lib/batik-swing.jar"/>
+        <jar href="lib/batik-transcoder.jar"/>
+        <jar href="lib/batik-util.jar"/>
+        <jar href="lib/batik-xml.jar"/>
+        <jar href="lib/js.jar"/>
+        <jar href="lib/xalan-2.6.0.jar"/>
+        <jar href="lib/xerces_2_5_0.jar"/>
+        <jar href="lib/xml-apis-ext.jar"/>
+        <jar href="lib/xml-apis.jar"/>
+    </resources>
+    <application-desc main-class="com.sun.lwuit.resources.editor.ResourceEditorApp">
+    </application-desc>
+</jnlp>

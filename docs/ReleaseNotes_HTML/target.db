@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div element="article" href="toc.htm" number="" targetptr="">
+  <ttl>Lightweight UI Toolkit Release Notes for Windows</ttl>
+  <xreftext><cite>Lightweight UI Toolkit Release Notes for Windows</cite></xreftext>
+  <obj element="bridgehead" href="toc.htm" number="" targetptr="">
+    <ttl>Contents</ttl>
+    <xreftext>&#x201C;Contents&#x201D;</xreftext>
+  </obj>
+  <div element="sect1" href="toc.htm" number="1" targetptr="CHDJBHAJ">
+    <ttl>Introduction</ttl>
+    <xreftext>&#x201C;Introduction&#x201D;</xreftext>
+  </div>
+  <div element="sect1" href="toc.htm" number="2" targetptr="CHDFJJJB">
+    <ttl>Release Highlights</ttl>
+    <xreftext>&#x201C;Release Highlights&#x201D;</xreftext>
+  </div>
+  <div element="sect1" href="toc.htm" number="3" targetptr="CHDBEBAA">
+    <ttl>Prerequisites</ttl>
+    <xreftext>&#x201C;Prerequisites&#x201D;</xreftext>
+  </div>
+  <div element="sect1" href="toc.htm" number="4" targetptr="CHDFBCGI">
+    <ttl>Installing the LWUIT Binary</ttl>
+    <xreftext>&#x201C;Installing the LWUIT Binary&#x201D;</xreftext>
+    <div element="sect2" href="toc.htm" number="4.1" targetptr="CHDBEIFC">
+      <ttl>Using the Library With NetBeans</ttl>
+      <xreftext>&#x201C;Using the Library With NetBeans&#x201D;</xreftext>
+    </div>
+    <div element="sect2" href="toc.htm" number="4.2" targetptr="CHDDFIFG">
+      <ttl>Using the Resource Editor</ttl>
+      <xreftext>&#x201C;Using the Resource Editor&#x201D;</xreftext>
+    </div>
+  </div>
+  <div element="sect1" href="toc.htm" number="5" targetptr="CHDECGCD">
+    <ttl>What&#x0027;s New In This Release</ttl>
+    <xreftext>&#x201C;What&#x0027;s New In This Release&#x201D;</xreftext>
+    <div element="sect2" href="toc.htm" number="5.1" targetptr="CFAEGHHF">
+      <ttl>Major Changes in This Release</ttl>
+      <xreftext>&#x201C;Major Changes in This Release&#x201D;</xreftext>
+    </div>
+    <div element="sect2" href="toc.htm" number="5.2" targetptr="CFAGBEDD">
+      <ttl>All Changes in This Release</ttl>
+      <xreftext>&#x201C;All Changes in This Release&#x201D;</xreftext>
+    </div>
+  </div>
+  <div element="sect1" href="toc.htm" number="6" targetptr="CHDFAAGJ">
+    <ttl>Documentation Accessibility</ttl>
+    <xreftext>&#x201C;Documentation Accessibility&#x201D;</xreftext>
+    <obj element="formalpara" href="toc.htm" number="" targetptr="">
+      <ttl>Access to Oracle Support</ttl>
+      <xreftext>&#x201C;Access to Oracle Support&#x201D;</xreftext>
+    </obj>
+  </div>
+</div>

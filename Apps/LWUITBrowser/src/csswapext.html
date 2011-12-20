@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>WAP Extensions</title>
+  </head>
+
+  <body>
+
+<!--
+This Demo shows the extra CSS properties available in WAP, these include:
+ -wap-marquee
+ -wap-access-key
+ -wap-input-format
+ -wap-input-required
+-->
+
+    <p style="display: -wap-marquee">
+      This is a ticker or CSS -wap-marquee
+    </p>
+
+<form action="index.html" method="post">
+Username: <input type="text" name="user" size="15" style="-wap-access-key:u; -wap-input-format:MM; -wap-input-required:false"><br>
+Password: <input type="password" name="pass" size="15" accesskey="p" style="-wap-input-required:true"><br>
+A little about yourself:<br>
+<textarea name="about" accesskey="z">
+Fill in...
+</textarea><br>
+I code in:<br>
+<input type="checkbox" name="platform" value="javame" checked="checked" accesskey="a" style="-wap-access-key:b,; ">JavaME
+<input type="checkbox" name="platform" value="javase" accesskey="b" style="-wap-access-key:t send, f; ">JavaSE
+<input type="checkbox" name="platform" value="javaee" accesskey="c">JavaEE<br>
+Favorite API:<br>
+<input type="radio" name="api" value="SVG" id="svg"><label for="svg" accesskey="s" style="-wap-access-key:h">SVG</label>
+<input type="radio" name="api" value="Location">Location
+<input type="radio" name="api" value="PIM">PIM<br>
+<input type="hidden" name="hiddenfield" value="hiddenvalue">
+
+<input type="submit" value="Send">
+<input type="reset">
+
+</form>
+
+
+
+  </body>
+</html>
+

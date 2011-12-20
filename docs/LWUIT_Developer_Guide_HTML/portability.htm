@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Portability and Performance</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 5.1.2 Build 015" />
+<meta name="date" content="2011-11-03T11:27:26Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="Portability and Performance" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E23376-02" />
+<link rel="copyright" href="./dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="./dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+<link rel="contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="index" href="index.htm" title="Index" type="text/html" />
+<link rel="prev" href="extend.htm" title="Previous" type="text/html" />
+<link rel="next" href="minifaq.htm" title="Next" type="text/html" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Developer's Guide</b><br />
+<b>Release 1.5</b><br />
+E23376-02</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td align="center"><a href="extend.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="minifaq.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header --><a id="CEHEFJDI" name="CEHEFJDI"></a>
+<h1 class="chapter"><span class="secnum">15</span> Portability and Performance</h1>
+<p>While <a id="sthref263" name="sthref263"></a>portability is one of LWUIT's best attributes, it is also one of the hardest features to grasp. LWUIT is portable as a library and it also enables application porting in such a way that binary code or source can be compatible across different Java ME profiles.</p>
+<a id="Z40008981293323" name="Z40008981293323"></a>
+<div class="sect1">
+<h2 class="sect1">Introduction</h2>
+<p>Much has been said in the past about Java device fragmentation (write once debug everywhere). To understand LWUIT's portability you must first understand the original problems and the solutions LWUIT provides for each problem:</p>
+<ul>
+<li>
+<p>Low quality or buggy implementations of the specification</p>
+<p>This problem was far more severe with older (prior to CLDC 1.1) devices that LWUIT does not support. Thanks to modern TCKs, the virtual machine (VM) in modern devices is compatible, and furthermore the UI layer on which LWUIT is based is very narrow and relatively robust across devices.</p>
+</li>
+<li>
+<p>Low power, low memory devices</p>
+<p>Again with newer CLDC 1.1 devices this is not as much of a problem as it used to be, but there are still concerns. See <a href="widgets.htm#CEHGAEFC">Chapter 2</a> for a discussion on increasing performance and reducing memory overhead (sometimes trading off one for the other).</p>
+</li>
+<li>
+<p>Varying screen resolutions</p>
+<p>LWUIT ships with a very fast low memory overhead scaling algorithm that doesn't lose transparency information. For extreme cases where the algorithm is not enough, LWUIT supports pluggable themes, allowing the UI to be customized with images more fitting to the resolution of the phone.</p>
+</li>
+<li>
+<p>Varying input methods</p>
+<p>LWUIT detects soft buttons automatically, and navigation is already portable. LWUIT supports touch screens seamlessly out of the box. Text input works with the device native text box, ensuring proper input.</p>
+</li>
+<li>
+<p>Over-The-Air (OTA) code size limitations</p>
+<p>This problem is solving itself, given relaxed carrier restrictions and increasing JAR file size allocations. LWUIT fully supports obfuscation and works properly with obfuscators that remove redundant code.</p>
+</li>
+<li>
+<p>Non-UI related pitfalls (networking issues, RMS incompatibility, etcetera)</p>
+<p>LWUIT currently focuses only on UI related issues, so you must find your own solution for the many minor issues related to these problems. For most common use cases failure occurs because the device expects the &ldquo;right thing&rdquo;. For example, networking is problematic on some devices due to a connection that was never closed, and so forth.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008981293331" name="Z40008981293331"></a>
+<div class="sect1">
+<h2 class="sect1">Performance</h2>
+<p>Performance is a huge problem in portability. Problems in <a id="sthref264" name="sthref264"></a>performance often creep on an application only to appear later in its life cycle. Performance is often a trade-off, mostly of memory for CPU or visa versa. The easiest way to improve performance is to reduce functionality.</p>
+<p>Since LWUIT has pluggable theming you can substitute a simple theme without changing code. This makes it easier to see whether the problem is in the UI itself.</p>
+<p>The following subsections discuss the specifics of memory and responsiveness. One thing to keep in mind is that performance and memory use on an emulator is no indication of device performance and memory overhead.</p>
+<a id="Z40008981293228" name="Z40008981293228"></a>
+<div class="sect2">
+<h3 class="sect2">Memory</h3>
+<p>This section discussions factors that impact memory and speed.</p>
+<a id="Z40008981293193" name="Z40008981293193"></a>
+<div class="sect3">
+<h4 class="sect3">Encoded Images</h4>
+<p>Memory is problematic, especially when programming small devices. When using LWUIT you must understand how memory directly relates to resolution and bit depth.</p>
+<p>Assume you have two devices, a 16-bit color (65536 colors) device with 128x128 resolution that has 2 megabytes of memory, and a 24-bit color device (1.6 million colors) with a 320x240 resolution and 3 megabytes of memory. Which device provides more memory for a LWUIT application? The answer is not so simple.</p>
+<p>Assume both devices have a background image set and scaled, so they need enough RAM to hold the uncompressed image in memory.</p>
+<p>The smaller device needs 32,768 bytes just for a background buffer of the screen. The larger device requires 307,200 bytes for the same buffer!</p>
+<p>Because screen buffers are needed both for the current form, the current transition (twice), and the MIDP implementation, the amount of memory the larger device consumes is staggering! How did we reach these numbers?</p>
+<p>The simple formula is:</p>
+<p>screen width * screen height * bytes per pixel = memory</p>
+<p>Therefore:</p>
+<p><span class="bold">16 bit</span>: 128 * 128 * 2 = 32,768</p>
+<p><span class="bold">24 bit</span>: 320 * 240 * 4 = 307,200</p>
+<p>Notice that in the 24-bit device 24 bits are counted as an integer because there is no 24-bit primitive and implementations treat 24-bit color as 32-bit color.</p>
+<p>So getting back to the two devices: In the worst case scenario four buffers are immediately consumed, and the remaining RAM compares as follows:</p>
+<p><span class="bold">16 bit</span>: 2,097,152 &ndash; 32,768 * 4 = 1,966,125</p>
+<p><span class="bold">24 bit</span>: 3,145,728 &ndash; 307,200 * 4 = 1,916,928</p>
+<p>It turns out the 24-bit device has more RAM to begin with but doesn't have as much RAM to work with!</p>
+<div align="center">
+<div class="inftblnote"><br />
+<table class="Note oac_no_warn" summary="" border="1" width="80%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td align="left">
+<p class="notep1">Note:</p>
+<p>All of these calculations don't take into account the additional memory overhead required for LWUIT and your application.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblnote" --></div>
+<p>Thankfully, LWUIT offers a partial solution in the form of encoded images<a id="sthref265" name="sthref265"></a>, which allow the device to cleanup unnecessary bitmap data from memory when it is scarce.</p>
+<p>Encoded images<a id="sthref266" name="sthref266"></a> work by using a weak/soft reference to a keep the encoded version of an image. For example, a PNG or JPEG is usually compressed at a very high ratio producing a much smaller byte size than the ones mentioned above (typically a 240x320 image can be 4-5kb or even less!). The EncodedImage keeps in memory the actual JPEG or PNG data, when image information such as pixels, dimensions etc. is needed the native Image object is dynamically created and maintained in a weak/soft reference for caching.</p>
+<p>This allows the garbage collection<a id="sthref267" name="sthref267"></a> to remove the image from memory when additional memory is needed, however its potentially expensive since an image might be created multiple times. It is also expensive to scale an encoded image since scaling is far more expensive for these cases.</p>
+<p>The encoded image<a id="sthref268" name="sthref268"></a> is the default image type returned when loading an image through a resource file.</p>
+<p>Using encoded images, a UI-heavy application can be run on a 2 megabyte 320x240 24-bit color device. Note that using tiled images or a solid color to fill the background is much &ldquo;cheaper&rdquo; than the savings reachable using encoded images.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" -->
+<a id="Z40008981293240" name="Z40008981293240"></a>
+<div class="sect2">
+<h3 class="sect2">Speed</h3>
+<p>UI speed is often a user perception rather than a &ldquo;real&rdquo; performance issue. Slow performance happens, but a developer's opinion of performance may not match an end-user's perception. The best way to measure the speed of a UI is to give devices to a focus group of objective people and ask them how the UI &ldquo;feels&rdquo;.</p>
+<p>That said, the following subsections you can monitor the event dispatch thread and LWUIT performance.</p>
+<a id="Z40008981293209" name="Z40008981293209"></a>
+<div class="sect3">
+<h4 class="sect3">Event Dispatch Thread (EDT)</h4>
+<p>Performance<a id="sthref269" name="sthref269"></a> often suffers because of slow paints. This often occurs when the <a id="sthref270" name="sthref270"></a>EDT is being used without being released. It's important not to &ldquo;hold&rdquo; the EDT and release it immediately when performing long running tasks. For further details on releasing the EDT see Display methods <code>callSerially</code>, <code>callSeriallyAndWait</code>, and <code>invokeAndBlock</code>.</p>
+<p>The EDT might be blocked due to unrelated work on a different thread. Bad thread scheduling on devices causes this problem, in part because many hardware devices ignore thread priorities.</p>
+<p>On some devices networking can cause a visible stall in the UI, a problem for which there is no &ldquo;real&rdquo; solution. The workaround for such cases is logical rather than technical. In this case a standard progress indicator stalls during a networking operation. It might work better to use a progress indicator heuristic that moves slower or does not move at all so the user is less likely to notice the interruption in the display.</p>
+</div>
+<!-- class="sect3" -->
+<a id="Z40008981293219" name="Z40008981293219"></a>
+<div class="sect3">
+<h4 class="sect3">LWUIT Performance</h4>
+<p>Different transition types have different performance overheads on devices. Play with the transition selection and possibly disable transitions if necessary.</p>
+<p>Indexed <a id="sthref271" name="sthref271"></a>images <a id="sthref272" name="sthref272"></a>carry a performance overhead. It shouldn't be excessive, but when using many animations or indexed images you can expect a slower repaint cycle, especially on devices without a JIT or fast CPU.</p>
+<p>Light mode often trades speed for memory overhead. If there is plenty of memory and low performance, explicitly turning off light mode (after <code>Display.init()</code>) might impact speed.</p>
+</div>
+<!-- class="sect3" --></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="Z40008981293356" name="Z40008981293356"></a>
+<div class="sect1">
+<h2 class="sect1">Device Bugs And Limitations</h2>
+<p>This section describes the device bugs and limitations the LWUIT development team found while in the process of creating demos and applications. While this is not an exhaustive list, you can apply these principles if you encounter device issues of your own.</p>
+<a id="Z40008981293255" name="Z40008981293255"></a>
+<div class="sect2">
+<h3 class="sect2">Bugs</h3>
+<p>The LWUIT development team encountered several device bugs and limitations (but not nearly as many as were expected). The first rule of bug investigation is:</p>
+<p><span class="italic">It is not a VM bug.</span></p>
+<p>Often developers blame the VM for bugs. Despite many rumors, the development team hasn't found a CLDC 1.1 VM with a significant bug (they reproduced crashes, but they were all due to bad API implementations).</p>
+<p>The VM and GC seem to work pretty flawlessly, which means several things should work. You should be able to rely on proper exception handling and proper class loading behavior. This essentially allows you to use Java technology for exception handling and class loading to work with multiple devices, instead of the &ldquo;problematic&rdquo; preprocessor statements used in the past.</p>
+<p>The preprocessor approach was essential in the past when targeting all phones (even seriously broken VMs) with code size requirements that were very low. Today's market has changed considerably, both in the quality of the common devices and in the space or OTA code size available for a typical application.</p>
+<p>The advantages of avoiding preprocessor are mostly in code maintenance (refactoring, compiler checks, etcetera), simplicity in reusing object oriented paradigms, and easier deployment (one JAR file for all or most devices).</p>
+<p>Rather than beat around the bush, here are a few examples of actual device behaviors:</p>
+<ul>
+<li>
+<p>A device throws an exception in a certain condition when using an API. This happens with several devices that fail in <code>drawRGB</code>. The solution is to catch the exception and activate a flag to invoke a different code path designed for that device class only.</p>
+</li>
+<li>
+<p>Some devices have a bug with API <span class="italic">X</span> or with a specific usage of API <span class="italic">X</span>. Avoid that API or usage if possible. For example, many devices have a problem with<a id="sthref273" name="sthref273"></a> <code>flushGraphics(int, int, int, int)</code>, but all devices tested worked perfectly with <code>flushGraphics()</code>.</p>
+</li>
+</ul>
+<p>As you can see, you can rely on Java working properly and throwing exceptions, making it possible to implement workarounds on the fly.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40008981293267" name="Z40008981293267"></a>
+<div class="sect2">
+<h3 class="sect2">Limitations</h3>
+<p>The rules for dealing with device limitations are very similar to the rules for dealing with device bugs. If a missing API is invoked in code, it throws an exception because it doesn't exist. You can catch that exception and activate a flag disabling the functionality related to the feature. For example, your application might offer a location based feature based on JSR 179. You can wrap the calls related to JSR 179 code in try/catch and disable the functionality if a Throwable is thrown by the code (for example, <code>NoSuchMethodError</code> or <code>ClassNotFoundException</code>).</p>
+<p>An example of this approach exists in the M3G class from LWUIT which is designed to run on devices that do not support JSR 184. The Log class is also designed in a similar way. It can utilize the <code>FileConnector</code> when the API is available in order to log to the device file system rather than RMS.</p>
+<p>Limitations are often related to appearance, number of colors, device speed, device resolution, and so forth. These can be worked around using a multitude of themes and picking the right default theme upon startup. Use the methods in Display to check general device capabilities, then enable or disable some features.</p>
+<p>For example, some devices support only three alpha levels (0%, 50%, 100%). This causes anti-aliased fonts to look horrible on those devices especially when using white over black color schemes. Devices like these can be easily detected using <a id="sthref274" name="sthref274"></a><code>Display.numAlphaLevels()</code> and such themes can be disabled on these devices (or simply excluded from the default state). Similar properties such as <code>numColors</code> are available on display.</p>
+<p>Speed and memory constraints are much harder to detect on the fly. <code>TotalMemory</code> is often incorrect on devices and speed is notoriously hard to detect. True memory heap can be detected by allocating byte arrays until an <code>OutOfMemoryError</code> is thrown. While the VM is not guaranteed to be stable after an OOM it generally recovers nicely. Store the amount of memory in RMS to avoid the need to repeat this exercise.</p>
+<p>The best solution is to allow your users as much configurability as possible (to themes, animations, transitions, etcetera) thus giving them the choice to tailor the application to their device needs.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="Z40008981293380" name="Z40008981293380"></a>
+<div class="sect1">
+<h2 class="sect1">Resolution Independence</h2>
+<p>One of the biggest problems in Java ME programming is the selection of device resolutions. This problem is aggravated by lack of scaling support and the small selection of devices with SVG device. A bigger problem than multiple resolutions is the problem of varying aspect ratios, even changing in runtime on the same device! (For example some slider devices change resolution and aspect ratio on the fly.)<a id="sthref275" name="sthref275"></a></p>
+<p>LWUIT solves the lack of scaling support by including a fast low overhead scaling algorithm that keeps the image's alpha channel intact. Scaling on devices is far from ideal for some image types. It is recommended that designers avoid &ldquo;fine details&rdquo; in images that are destined for scaling.</p>
+<p>Since images and themes can be stored in resource bundles, such bundles can be conditionally used to support different resolutions. This solution is not practical on a grand scale with a single JAR file strategy, however, for some basic resolution and important images this is a very practical solution, especially when dynamically downloading resources from a server.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008981293385" name="Z40008981293385"></a>
+<div class="sect1">
+<h2 class="sect1">Input</h2>
+<p>This section describes input methods that LWUIT supports.</p>
+<a id="Z40008981293283" name="Z40008981293283"></a>
+<div class="sect2">
+<h3 class="sect2">Soft Buttons</h3>
+<p>Soft <a id="sthref276" name="sthref276"></a>buttons for common devices in the market are detected automatically by LWUIT. If LWUIT fails to detect a specific device a developer can still set the key code for the soft keys using setter methods in Display.</p>
+<p>LWUIT supports 3 SoftButton navigation common in newer phones from Sony Ericsson and Nokia. The 3 SoftButton mode can be activated via the Display class. In this mode the center &ldquo;fire&rdquo; key acts as a soft button.</p>
+</div>
+<!-- class="sect2" -->
+<a id="CEHFCGII" name="CEHFCGII"></a>
+<div class="sect2">
+<h3 class="sect2">Back Button</h3>
+<p><a id="sthref277" name="sthref277"></a>Some devices, most commonly older Sony Ericsson devices, have a special hardcoded back button device. You can assign a command as a &ldquo;back command&rdquo; using the form method for determining the back command. This ensures that only one command at any given time is deemed as a back command. The back command can also be configured using the Display methods. Currently the back button is only supported on Sony Ericsson devices.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40008981293294" name="Z40008981293294"></a>
+<div class="sect2">
+<h3 class="sect2">Touch Screen Devices</h3>
+<p>Touch screens are supported out of the box, however, designing a UI for finger operation is very different from designing a UI for general use. Finger operations expect everything to be accessible via taps (not keys). <a id="sthref278" name="sthref278"></a></p>
+<p>A touch interface expects widgets to be big enough to fit the size of a human finger. This is somewhat counter-intuitive because normally you might want to cram as much UI detail as possible into a single screen to avoid scrolling.</p>
+<p>Component sizes can be easily customized globally using the theme. Simply set the default padding attribute to a large enough value (e.g. 5, 5, 5, 5) and all widgets &ldquo;grow&rdquo; to suit finger navigation. It is also a good practice to use buttons for touch devices and avoid menus where possible.</p>
+<p>The only problem is that currently there is no standard code that allows you to detect touch screen devices on the fly. However such information can be easily placed in the Java application descriptor (JAD) file for the application to query.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="Z40008981293393" name="Z40008981293393"></a>
+<div class="sect1">
+<h2 class="sect1">Specific Device Issues</h2>
+<p>This list is rather limited since the development team doesn't have much to say about most devices. Most of the common CLDC 1.1 devices just work out of the box without much of a hassle. This section describes behaviors that might catch developers off guard. This is by no means an exhaustive or definitive list.</p>
+<a id="Z40008981293299" name="Z40008981293299"></a>
+<div class="sect2">
+<h3 class="sect2">Motorola</h3>
+<p>The RAZR family doesn't support different levels of translucency -only 50% translucency is supported. This causes anti-aliased fonts to look bad on these devices.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40008981293303" name="Z40008981293303"></a>
+<div class="sect2">
+<h3 class="sect2">BlackBerry</h3>
+<p>The BlackBerry<a id="sthref279" name="sthref279"></a> is very different from most typical MIDP devices. It has several limitations.</p>
+<ul>
+<li>
+<p>It fails completely when a developer tries to access a class he doesn't have access to or that doesn't exist (other devices throw an exception which can be caught for graceful recovery).</p>
+</li>
+<li>
+<p>It also has its own set of APIs which are effectively the only way to provide true integration and fast performance on this device.</p>
+</li>
+</ul>
+<p>To alleviate these issues LWUIT set about creating a BlackBerry port with help from community member Thorsten Schemm. However there are quite a few variations in the BlackBerry device. RIM introduced a new touch API in OS 4.7, and several RIM APIs for properties or URL execution require digital signing. Hence the RIM port has 3 different versions:</p>
+<ul>
+<li>
+<p>The default version works on BlackBerry OS 4.2.x and higher but will not work on the newer touch devices.</p>
+</li>
+<li>
+<p>The New OS version that works on OS 4.7 or higher works on none-touch devices just as well, assuming they are using a new OS version.</p>
+</li>
+<li>
+<p>The signed new OS version is designed for developers who sign their applications and enables additional minor features (getProperty, execute, etcetera).</p>
+</li>
+</ul>
+<p>The RIM port supports both CLDC applications (RIM's term for their proprietary API) and MIDlets but requires linking with their port. The LWUIT distribution ships with the LWUIT demo which has a RIM CLDC application port.</p>
+<p>In order to compile a BlackBerry application one must use the BlackBerry tools (JDE) to build a COD file, these can be easily added to the Netbeans build/run process using instructions from here: <code><a href="http://lwuit.blogspot.com/2010/12/better-way-to-blackberry-and-misc.html">http://lwuit.blogspot.com/2010/12/better-way-to-blackberry-and-misc.html</a></code></p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40008981293187" name="Z40008981293187"></a>
+<div class="sect2">
+<h3 class="sect2">Create a <code>.cod</code> File</h3>
+<ol>
+<li><a id="Z40008981293163" name="Z40008981293163"></a>
+<p>Create a new project in JDE and name it appropriately. Select project type: "Empty Midlet project".</p>
+</li>
+<li><a id="Z40008981293167" name="Z40008981293167"></a>
+<p>Right click on the project and choose the "add file to project" option and choose the JAR file from your projects /dist directory.</p>
+</li>
+<li><a id="Z40008981293171" name="Z40008981293171"></a>
+<p>Right click on the project and choose "properties".</p>
+</li>
+<li><a id="Z40008981293175" name="Z40008981293175"></a>
+<p>In the "Application" tab insert the name of your main MIDlet class.</p>
+</li>
+<li><a id="Z40008981293179" name="Z40008981293179"></a>
+<p>Build and run the project.</p>
+</li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="Z40008981293309" name="Z40008981293309"></a>
+<div class="sect2">
+<h3 class="sect2">Nokia S40</h3>
+<p>Generally series 40 devices work well. Some &ldquo;high end&rdquo; S40 devices only contain 2mb of memory yet have 24-bit color 320x240 resolutions. These devices have 3mb installed but only 2mb is accessible to Java applications.</p>
+<p>The Nokia S40 emulator provides a very good approximation of the devices.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40008981293313" name="Z40008981293313"></a>
+<div class="sect2">
+<h3 class="sect2">Sony Ericsson</h3>
+<p>Sony Ericsson makes good Java devices that are indexed with memory and have 16-bit color for even better memory.</p>
+<p>The Back button, as discussed in <a href="#CEHFCGII">Back Button</a> exists in SE until JP-8, at which point a new interface based on three soft keys was introduced.</p>
+<p>Native Networking Sony Ericsson threads in SE tend to freeze the GUI. The devices in JP-7 and newer completely ignore thread priorities as well.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z40008981293319" name="Z40008981293319"></a>
+<div class="sect2">
+<h3 class="sect2">General Portability Tip</h3>
+<p>Test on manufacturers emulators. While development is easier using the Java ME SDK, the Sprint Plugin for Java ME SDK, or the Sprint Wireless Toolkit, there is no substitute for occasional emulator testing. An emulator provides more accurate memory readings especially related to images and buffers.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+<td align="center"><a href="extend.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="minifaq.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="./dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="./dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

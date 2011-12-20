@@ -1,0 +1,629 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Using Lightweight UI Toolkit Widgets</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 5.1.2 Build 015" />
+<meta name="date" content="2011-11-03T11:27:17Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="Using Lightweight UI Toolkit Widgets" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E23376-02" />
+<link rel="copyright" href="./dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="./dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+<link rel="contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="index" href="index.htm" title="Index" type="text/html" />
+<link rel="prev" href="intro.htm" title="Previous" type="text/html" />
+<link rel="next" href="lists.htm" title="Next" type="text/html" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Developer's Guide</b><br />
+<b>Release 1.5</b><br />
+E23376-02</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td align="center"><a href="intro.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="lists.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header --><a id="CEHGAEFC" name="CEHGAEFC"></a>
+<h1 class="chapter"><span class="secnum">2</span> Using Lightweight UI Toolkit Widgets</h1>
+<p>This chapter introduces the LWUIT widgets and provides sample code for several components.</p>
+<a id="Z40008781292076" name="Z40008781292076"></a>
+<div class="sect1">
+<h2 class="sect1">Component</h2>
+<p>A <a id="sthref14" name="sthref14"></a><span class="italic">Component</span> is an object having a graphical representation that can be displayed on the screen and can interact with the user. The buttons, check boxes, and radio buttons in a typical graphical UI are all examples of a component. Component is the base class. All the widgets in the Lightweight UI Toolkit library use the composite pattern in a manner similar to the AWT Container and Component relationship.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008781292083" name="Z40008781292083"></a>
+<div class="sect1">
+<h2 class="sect1">Container</h2>
+<p>A <span class="italic">Container</span> is a <a id="sthref15" name="sthref15"></a>composite pattern with a Component object. It enables nesting and arranging multiple components using a pluggable layout manager architecture. Containers can be nested one within the other to form elaborate UIs. Components added to a container are tracked in a list. The order of the list defines the components' front-to-back stacking order within the container. If you do not specify an index when you add a component to a container, it is added to the end of the list (and hence to the bottom of the stacking order).</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008781292090" name="Z40008781292090"></a>
+<div class="sect1">
+<h2 class="sect1">Form</h2>
+<p><a id="sthref16" name="sthref16"></a><span class="italic">Form</span> is a top-level component that serves as the root for the UI library. This <a id="sthref17" name="sthref17"></a>Container handles the title and menus and allows content to be placed between them. By default the form's central content (the content pane) is scrollable. Form contains Title bar, MenuBar and a ContentPane. Invocations of Form's <code>addComponent</code> method are delegated to the content pane's <code>addComponent</code>. The same applies to most <a id="sthref18" name="sthref18"></a>composite related methods (e.g. <code>setLayout</code>, <code>getComponent</code> and so forth).</p>
+<p>The following code demonstrates creation and setup of a <a id="sthref19" name="sthref19"></a>form.</p>
+<div class="example"><a id="Z4000acc1292705" name="Z4000acc1292705"></a>
+<p class="titleinexample">Example 2-1 Form Setup and Creation;</p>
+<pre xml:space="preserve" class="oac_no_warn">
+// 1. Create a Form
+Form mainForm = new Form("Form Title");
+// 2. Set LayoutManager
+mainForm.setLayout(new BorderLayout());
+// 3. Add a Label to the center of Form content pane
+mainForm.addComponent(BorderLayout.CENTER, new Label(&ldquo;Hello World&rdquo;));
+// 4. Set Transitions animation of Fade
+mainForm.setTransitionOutAnimator(CommonTransitions.createFade(400));
+// 5. Add Command key
+mainForm.addCommand(new Command("Run", 2));
+// 6. Show it
+mainForm.show();
+</pre></div>
+<!-- class="example" -->
+<p>The following notes correspond to the comments in <a href="#Z4000acc1292705">Example 2-1</a>.</p>
+<ol>
+<li>
+<p>The first line of code creates a form using a constructor that lets you set the form title. The other frequently used form constructor is the no-argument constructor.</p>
+</li>
+<li>
+<p>Next the code specifies the layout manager of the form. Layout managers are discussed later in this guide.</p>
+</li>
+<li>
+<p>The next bit of code adds a label to the form content pane. Adding components to a Form (which is a Container) is done with <a id="sthref20" name="sthref20"></a><code>addComponent(Component cmp)</code> or <code>addComponent(Object constraints, Component cmp)</code>, where <code>constraints</code> are the locations in the layout manager, BorderLayout.</p>
+</li>
+<li>
+<p>A Transition is the movement effect action that occurs when switching between forms. See the Transitions and Animation chapter.</p>
+</li>
+<li>
+<p>Form has <a id="sthref21" name="sthref21"></a>menus to emulate the device soft keys, for example. To set such a menu bar item, command, use the <a id="sthref22" name="sthref22"></a><code>addCommand(Command cmd)</code> method. The Commands are placed in the order they are added. If the Form has one Command it is placed on the right. If the Form has two Commands the first one added is placed on the left and the second one is placed on the right. If the Form has more than two Commands the first one stays on the left and a Menu is added with all the remaining Commands.</p>
+</li>
+<li>
+<p>The <a id="sthref23" name="sthref23"></a>show method displays the current form on the screen.</p>
+</li>
+</ol>
+<div class="figure"><a id="Z4000acc1292986" name="Z4000acc1292986"></a>
+<p class="titleinfigure">Figure 2-1 Form Element</p>
+<img src="img/form.jpg" alt="Description of Figure 2-1 follows" title="Description of Figure 2-1 follows" longdesc="img_text/form.htm" /><br />
+<a id="sthref24" name="sthref24" href="img_text/form.htm">Description of "Figure 2-1 Form Element"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z4000acc1292103" name="Z4000acc1292103"></a>
+<div class="sect1">
+<h2 class="sect1">Create and Set Up a Form Label</h2>
+<p>The <a id="sthref25" name="sthref25"></a>Label widget can display a single line of text and/or an image and align them using multiple options. If you need to create a component that displays a string, an image, or both, you should use or extend Label. If the component is interactive and has a specific state, a Button is the<a id="sthref26" name="sthref26"></a> most suitable widget (instead of a label).</p>
+<p>To create a Label, use one of the following calls:</p>
+<p><code>Label textLabel = new Label("I am a Label");</code> // for a text label</p>
+<p>Create an image for an icon label:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Image icon = Image.createImage("/images/duke.png");
+Label imageLabel = new Label(icon); 
+</pre>
+<p>Labels <a id="sthref27" name="sthref27"></a>can be aligned to one of the following directions: CENTER, LEFT, RIGHT. LEFT is the default. In addition the text can be aligned relative to the image position. Valid values are TOP, BOTTOM, LEFT, RIGHT, where the default is RIGHT. To update the text position use:</p>
+<p><code>setTextPosition(int alignment);</code></p>
+<p><a href="#Z4000acc1292040">Figure 2-2</a> displays three types of labels with text to icon <a id="sthref28" name="sthref28"></a>alignment position of RIGHT. The container is divided into three rows, and the label in each row is as wide as possible. <a href="#Z4000acc1292044">Figure 2-3</a> shows relative alignment, with the label below the icon.</p>
+<div class="figure"><a id="Z4000acc1292040" name="Z4000acc1292040"></a>
+<p class="titleinfigure">Figure 2-2 Label With Text, Label With Icon, and Label with Text and Icon</p>
+<img src="img/labels.jpg" alt="Description of Figure 2-2 follows" title="Description of Figure 2-2 follows" longdesc="img_text/labels.htm" /><br />
+<a id="sthref29" name="sthref29" href="img_text/labels.htm">Description of "Figure 2-2 Label With Text, Label With Icon, and Label with Text and Icon"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<div class="figure"><a id="Z4000acc1292044" name="Z4000acc1292044"></a>
+<p class="titleinfigure">Figure 2-3 Text to Icon Alignment Position of BOTTOM</p>
+<img src="img/label_text_pos.jpg" alt="Description of Figure 2-3 follows" title="Description of Figure 2-3 follows" longdesc="img_text/label_text_pos.htm" /><br />
+<a id="sthref30" name="sthref30" href="img_text/label_text_pos.htm">Description of "Figure 2-3 Text to Icon Alignment Position of BOTTOM"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z4000acc1292115" name="Z4000acc1292115"></a>
+<div class="sect1">
+<h2 class="sect1">Button</h2>
+<p>The <a id="sthref31" name="sthref31"></a>Button component enables the GUI developer to receive action events when the user focuses on the component and clicks. In some devices a button might be more practical and usable than a command option. Button is the base class for several UI widgets that accept click actions. It has three <a id="sthref32" name="sthref32"></a>states: rollover, pressed, and the default state. It can also have ActionListeners that react when the Button is clicked.</p>
+<p>To get the user clicking event, you must implement an <a id="sthref33" name="sthref33"></a>ActionListener, which is notified each time the user clicks the button. The following code snippet creates an action listener and changes the text on the button, every time the user clicks it.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+final Button button  = new Button("Old Text");
+button.addActionListener(new ActionListener() {
+     public void actionPerformed(ActionEvent evt) {
+         button.setText("New Text");
+      }
+   });
+</pre>
+<p>Button extends Label, so you can create three type of buttons:<a id="sthref34" name="sthref34"></a> text only, image only or image and text button.</p>
+<div class="figure"><a id="Z4000acc1293982" name="Z4000acc1293982"></a>
+<p class="titleinfigure">Figure 2-4 Button With Text, Button With Icon, and Button With Text and Icon</p>
+<img src="img/buttons.jpg" alt="Description of Figure 2-4 follows" title="Description of Figure 2-4 follows" longdesc="img_text/buttons.htm" /><br />
+<a id="sthref35" name="sthref35" href="img_text/buttons.htm">Description of "Figure 2-4 Button With Text, Button With Icon, and Button With Text and Icon"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z40008781292126" name="Z40008781292126"></a>
+<div class="sect1">
+<h2 class="sect1">RadioButton</h2>
+<p>RadioButton is a Button that maintains a selection state exclusively within a specific ButtonGroup. <a id="sthref36" name="sthref36"></a><a id="sthref37" name="sthref37"></a>Because RadioButton inherits from Button, radio buttons have all the usual button characteristics, as discussed in <a href="#Z4000acc1292115">Button</a>. For example, you can specify the image displayed in a radio button. Each time the user clicks a radio button (even if it was already selected), the button fires an action event, just as in Button.</p>
+<p>To create a RadioButton use:</p>
+<p><code>RadioButton radioButton = new RadioButton(&ldquo;Radio Button&rdquo;);</code></p>
+<p><a href="#Z4000acc1294049">Figure 2-5</a> shows the RadioButton this code produces.</p>
+<div class="figure"><a id="Z4000acc1294049" name="Z4000acc1294049"></a>
+<p class="titleinfigure">Figure 2-5 Sample Radio Button</p>
+<img src="img/radio_button.jpg" alt="Description of Figure 2-5 follows" title="Description of Figure 2-5 follows" longdesc="img_text/radio_button.htm" /><br />
+<a id="sthref38" name="sthref38" href="img_text/radio_button.htm">Description of "Figure 2-5 Sample Radio Button"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z40008781292134" name="Z40008781292134"></a>
+<div class="sect1">
+<h2 class="sect1">ButtonGroup</h2>
+<p>The <a id="sthref39" name="sthref39"></a>ButtonGroup component manages the selected and unselected states for a set of RadioButtons. For the group, the ButtonGroup instance guarantees that only one button can be selected at a time.</p>
+<p>Initially, all RadioButtons in a ButtonGroup are unselected. Each ButtonGroup maintains the selected index, and can get a specific RadioButton by calling <a id="sthref40" name="sthref40"></a><code>getRadioButton(int index)</code>.</p>
+<p>The following code snippet creates a button group made of two RadioButtons.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Label radioButtonsLabel = new Label("RadioButton:");
+....
+RadioButton rb1 = new RadioButton("First RadioButton in Group 1");
+RadioButton rb2 = new RadioButton("Second RadioButton in Group 1");
+ 
+   ButtonGroup group1 = new ButtonGroup();
+   group1.add(rb1);
+   group1.add(rb2);
+ 
+exampleContainer.addComponent(radioButtonsLabel);
+exampleContainer.addComponent(rb1);
+exampleContainer.addComponent(rb2);
+</pre>
+<p>The code snippet result is shown in <a href="#Z4000acc1294114">Figure 2-6</a>.</p>
+<div class="figure"><a id="Z4000acc1294114" name="Z4000acc1294114"></a>
+<p class="titleinfigure">Figure 2-6 RadioButton Group</p>
+<img src="img/radio_group.jpg" alt="Description of Figure 2-6 follows" title="Description of Figure 2-6 follows" longdesc="img_text/radio_group.htm" /><br />
+<a id="sthref41" name="sthref41" href="img_text/radio_group.htm">Description of "Figure 2-6 RadioButton Group"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z40008781292145" name="Z40008781292145"></a>
+<div class="sect1">
+<h2 class="sect1">CheckBox</h2>
+<p><a id="sthref42" name="sthref42"></a>Check boxes are similar to RadioButtons but their selection model is different, because they can flip the selection state between selected and unselected modes. A group of radio buttons, on the other hand, can have only one button selected. Because CheckBox inherits from Button, check boxes have all the usual button characteristics, as discussed in <a href="#Z4000acc1292115">Button</a>. For example, you can specify the image displayed in a check box. Each time the user select a check box (even if it was already selected), it fires an action event, just as in Button.</p>
+<p>To create a CheckBox use:</p>
+<p><code>final CheckBox checkBox = new CheckBox(&ldquo;Check Box&rdquo;);</code></p>
+<p>This code produces the CheckBox shown in <a href="#Z4000acc1294188">Figure 2-7</a>.</p>
+<p>To catch select and unselect events you can try this:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+checkBox.addActionListener(new ActionListener() {
+   public void actionPerformed(ActionEvent evt) {
+      if(checkBox.isSelected()) {
+         System.out.println("CheckBox got selected");
+      } else {
+         System.out.println("CheckBox got unselected");
+      }
+   }
+});
+</pre>
+<div class="figure"><a id="Z4000acc1294188" name="Z4000acc1294188"></a>
+<p class="titleinfigure">Figure 2-7 CheckBox Sample</p>
+<img src="img/checkbox.jpg" alt="Description of Figure 2-7 follows" title="Description of Figure 2-7 follows" longdesc="img_text/checkbox.htm" /><br />
+<a id="sthref43" name="sthref43" href="img_text/checkbox.htm">Description of "Figure 2-7 CheckBox Sample"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z40008781292153" name="Z40008781292153"></a>
+<div class="sect1">
+<h2 class="sect1">ComboBox</h2>
+<p>A combo box is a list that allows only one selection at a time. When a user clicks the combo box button, a drop-down list of elements allows the user to select a single element. The combo box is driven by the list model and allows all the renderer features of the List as well.</p>
+<p>Other components that can display one-of-many choices are groups of radio buttons, check boxes, buttons, and lists. Groups of radio buttons are generally the easiest for users to understand, but combo boxes can be more appropriate when space is limited or more than a few choices are available. Lists are not always attractive, but they are more appropriate than combo boxes when the number of items is large (say, over five).</p>
+<p>The following code creates a combo box (a list model that is built from check boxes) and sets it <a id="sthref44" name="sthref44"></a>up:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+String[] content = { "Red", "Blue", "Green", "Yellow" };
+ 
+// 1. Creating the combo box
+ComboBox comboBox = new ComboBox(content);
+ 
+// 2. Setting a checkBox renderer
+comboBox.setListCellRenderer(new checkBoxRenderer());
+ 
+// 3. Adding a action listener to catch user clicking
+//    to open the ComboBox
+ 
+comboBox.addActionListener(myActionListener......);
+</pre>
+<p>The following notes correspond to the comments in the code above.</p>
+<ol>
+<li>
+<p>This combo box code contains an array of strings, but you could just as easily use labels instead.</p>
+</li>
+<li>
+<p>To put anything else into a combo box or to customize how the items in a combo box look, you need to write a custom renderer.</p>
+</li>
+<li>
+<p>The next line of code (which calls<a id="sthref45" name="sthref45"></a> setListCellRender) registers an action listener on the combo box.</p>
+</li>
+</ol>
+<p>The following is a sample of renderer <a id="sthref46" name="sthref46"></a>code:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+/**
+ * Demonstrates implementation of a renderer derived from a CheckBox 
+ */
+private static class checkBoxRenderer extends CheckBox implements ListCellRenderer {
+ 
+      /** Creates a new instance of checkBoxRenderer */
+      public checkBoxRenderer() {
+         super("");
+      }
+ 
+      // Setting the current check box text and status
+      public Component getListCellRendererComponent(List list,
+                      Object value, int index, boolean isSelected) {
+         setText("" + value);
+         if (isSelected) {
+            setFocus(true);
+            setSelected(true);
+         } else {
+            setFocus(false);
+            setSelected(false);
+         }
+         return this;
+      }
+ 
+      // Returning the list focus component 
+      public Component getListFocusComponent(List list) {
+            setText("");
+            setFocus(true);
+            setSelected(true);
+            return this;
+      }
+   }
+</pre>
+<p>The sample code produces the combo box in <a href="#Z4000acc1294357">Figure 2-8</a>.</p>
+<div class="figure"><a id="Z4000acc1294357" name="Z4000acc1294357"></a>
+<p class="titleinfigure">Figure 2-8 Combo Box</p>
+<img src="img/combobox.jpg" alt="Description of Figure 2-8 follows" title="Description of Figure 2-8 follows" longdesc="img_text/combobox.htm" /><br />
+<a id="sthref47" name="sthref47" href="img_text/combobox.htm">Description of "Figure 2-8 Combo Box"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z40008781292178" name="Z40008781292178"></a>
+<div class="sect1">
+<h2 class="sect1">Tabs</h2>
+<p>Tabs are containers that let the user switch between a group of components that all share the same space by focusing on a tab with a title, an icon, or both. The user chooses which component to view by selecting the tab corresponding to the desired component.</p>
+<p>To create a tab pane, instantiate <a id="sthref48" name="sthref48"></a>Tabs, create the components you wish it to display, and then add the components to the tabbed pane using the <code>addTab</code> or <code>insertTab</code> methods. <a id="sthref49" name="sthref49"></a>Tabs has the ability to remove tabs as well, by calling <a id="sthref50" name="sthref50"></a><code>removeTabAt(int index)</code> at a given position index. A tab is represented by an index corresponding to the position it was added in, where the first tab has an index equal to 0 and the last tab has an index equal to the tab count minus 1.</p>
+<p>If the tab count is greater than 0, then there is always a selected index, which by default is initialized to the first tab. If the tab count is 0, then the selected index is -1.</p>
+<p>Tabs has four different tab placement orientations. The default <a id="sthref51" name="sthref51"></a>tab placement is set to the TOP location. You can change the tab placement to LEFT, RIGHT, TOP or BOTTOM using the <code>setTabPlacement</code> method.</p>
+<p>The following code creates a pane with tab placement of bottom, and places a Label in the center of the first (and only) tab.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Tabs tabs = new Tabs(Tabs.TOP);
+tabs.addTab("Tab 1", new Label("I am a Tab!"));
+tabs.addTab("Tab 2", new Label("Tab number 2"));
+...
+</pre></div>
+<!-- class="sect1" -->
+<a id="Z4000acc1292166" name="Z4000acc1292166"></a>
+<div class="sect1">
+<h2 class="sect1">TextArea</h2>
+<p>The text area represents text that might be editable using the system native editor (it might occur in a new screen). The native editor is used to enable complex input methods (such as T9) and application internationalization. The following code creates and initializes the text <a id="sthref52" name="sthref52"></a>area:</p>
+<p><code>TextArea textArea = new TextArea(5, 20, TextArea.NUMERIC);</code></p>
+<p><code>textArea.setEditable(false);</code></p>
+<p>The first two arguments to the TextArea constructor are hints as to the number of rows and columns, respectively, that the text area should display. The third one is a constraint that is passed into the native text editor. Valid values can be one of <code>ANY</code>, <code>EMAILADDR</code>, <code>NUMERIC</code>, <code>PHONENUMBER</code>, <code>URL</code>, or <code>DECIMAL</code>. In addition it can be bitwise OR'd with one of <code>PASSWORD</code>, <code>UNEDITABLE</code>, <code>SENSITIVE</code>, <code>NON_PREDICTIVE</code>, <code>INITIAL_CAPS_SENTENCE</code>, <code>INITIAL_CAPS_WORD</code>. For example, <code>ANY | PASSWORD</code>. The default value is <code>ANY</code>. In the above example <code>NUMERIC</code> only allows the user to type numbers.</p>
+<p>Text areas are editable by default. The <a id="sthref53" name="sthref53"></a>code <code>setEditable(false)</code> makes the text area uneditable. It is still selectable, but the user cannot change the text area's contents directly.</p>
+<p>A 5 x 20 text area is shown in <a href="#Z4000acc1294489">Figure 2-9</a>.</p>
+<div class="figure"><a id="Z4000acc1294489" name="Z4000acc1294489"></a>
+<p class="titleinfigure">Figure 2-9 Form With Text Area</p>
+<img src="img/textarea.jpg" alt="Description of Figure 2-9 follows" title="Description of Figure 2-9 follows" longdesc="img_text/textarea.htm" /><br />
+<a id="sthref54" name="sthref54" href="img_text/textarea.htm">Description of "Figure 2-9 Form With Text Area"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z40008781294906" name="Z40008781294906"></a>
+<div class="sect1">
+<h2 class="sect1">TextField</h2>
+<p><a href="#Z4000acc1292166">TextArea</a> <a id="sthref55" name="sthref55"></a>doesn't always allow in-place editing on existing devices and doesn't provide "fine grained control" over the input. This allows a text area to be lightweight, and portable for all possible devices. These restrictions sometimes cause a poor user experience because it requires users to go into a different screen for input (since all input is handled natively by the device). From a developer standpoint the native input can be a problem since it doesn't send change events and doesn't provide control over allowed input.</p>
+<p>LWUIT provides the TextField component to support direct mobile phone input from within LWUIT. Unlike a TextArea, TextField is completely implemented in LWUIT. Developers can override almost all of its features to provide deep customization (for example, masked input, localization, and more).</p>
+<p>TextField inherits the TextArea component and all of its features. It also supports moving to the native text editor.</p>
+<p>The constructor also accepts several arguments, similar to the <a href="#Z4000acc1292166">TextArea</a> component.</p>
+<p>TextField also has some limitations:</p>
+<ul>
+<li>
+<p>Does not support input in foreign locales unless you provide code for foreign input</p>
+</li>
+<li>
+<p>Does not support device features, such as T9 input</p>
+</li>
+<li>
+<p>Might not correctly detect QWERTY devices</p>
+</li>
+<li>
+<p>Does not work on devices with unique keyboards, such as the Perl</p>
+</li>
+</ul>
+<p>Creating a text field is trivial:</p>
+<p><code>TextField f = new TextField();</code></p>
+<div class="figure"><a id="Z4000e651296845" name="Z4000e651296845"></a>
+<p class="titleinfigure">Figure 2-10 Sample Text Field</p>
+<img src="img/textfield.gif" alt="Description of Figure 2-10 follows" title="Description of Figure 2-10 follows" longdesc="img_text/textfield.htm" /><br />
+<a id="sthref56" name="sthref56" href="img_text/textfield.htm">Description of "Figure 2-10 Sample Text Field"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z40008781295033" name="Z40008781295033"></a>
+<div class="sect1">
+<h2 class="sect1">Calendar</h2>
+<p>The LWUIT <a id="sthref57" name="sthref57"></a>calendar component allows users to pick a date using a monthly calendar user interface. Use the calendar component to navigate and pick a date, as shown in the following code:</p>
+<p><code>Calendar cal = new Calendar();</code></p>
+<p>Developers can monitor state changes within the calendar using a data change listener or an action listener.</p>
+<div class="figure"><a id="Z40020e51296643" name="Z40020e51296643"></a>
+<p class="titleinfigure">Figure 2-11 Calendar Component</p>
+<img src="img/calendar.gif" alt="Description of Figure 2-11 follows" title="Description of Figure 2-11 follows" longdesc="img_text/calendar.htm" /><br />
+<a id="sthref58" name="sthref58" href="img_text/calendar.htm">Description of "Figure 2-11 Calendar Component"</a><br />
+<br /></div>
+<!-- class="figure" --></div>
+<!-- class="sect1" -->
+<a id="Z4000f541295149" name="Z4000f541295149"></a>
+<div class="sect1">
+<h2 class="sect1">Tickering</h2>
+<p>Label (and all its subclasses) includes ticker <a id="sthref59" name="sthref59"></a>support. A ticker scrolls the content of a long label across the screen. Ticker ability in labels is usually indicated by displaying three dots "..." after the end of the label. When the label (button, checkbox, etcetera) receives focus, these three dots disappear and the label starts animating like a stock ticker.</p>
+<p>A ticker can be started explicitly using a call to <code>startTicker</code> or <code>stopTicker</code> in Label. It can also be prevented by invoking <code>setTickerEnabled(false)</code>. To prevent the three dots from appearing at the end of labels or components that support tickering, use <code>setEndsWith3Points(false)</code>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z4000f541295175" name="Z4000f541295175"></a>
+<div class="sect1">
+<h2 class="sect1">Bidi</h2>
+<p>BiDi refers<a id="sthref60" name="sthref60"></a> to bidirectional language support, generally used for right-to-left (RTL) languages. There is plenty of information about RTL languages (Arabic, Hebrew, Syriac, Thaana) on the internet, but as a brief primer here is a minor summary.</p>
+<p>Most western languages are written from left to right (LTR), however some languages are normally written from right to left (RTL). Speakers of these languages expect the UI to flow in the opposite direction, otherwise it seems "weird" just like reading this word in RTL would look: "driew" to most English speakers.</p>
+<p>The problem posed by RTL languages is known as bi-directional) and not as RTL since the "true" problem isn't the reversal of the writing/UI but rather the mixing of RTL and LTR together. For example, numbers are always written from left to right (just like in English) so in an RTL language the direction is from right to left and once we reach a number or English text embedded in the middle of the sentence (such as a name) the direction switches for a duration and is later restored.</p>
+<p>LWUIT supports BiDi with the following components:</p>
+<ul>
+<li>
+<p>BiDi algorithm - allows converting between logical to visual representation for rendering</p>
+</li>
+<li>
+<p>Global RTL flag- default flag for the entire application indicating the UI should flow from right to left</p>
+</li>
+<li>
+<p>Individual RTL flag - flag indicating that the specific component/container should be presented as an RTL/LTR component (for example, for displaying English elements within an RTL UI).</p>
+</li>
+<li>
+<p>RTL text field input</p>
+</li>
+<li>
+<p>RTL text field input</p>
+</li>
+<li>
+<p>RTL bitmap font rendering</p>
+</li>
+</ul>
+<p>Most of LWUIT's RTL support is under the hood. The LookAndFeel global RTL flag can be enabled using:</p>
+<p><code>UIManager.getInstance().getLookAndFeel().se</code>t<code>RTL(true)</code></p>
+<p>(Notice that setting the RTL to true implicitly activates the BiDi algorithm).Once RTL is activated all positions in LWUIT become reversed and the UI becomes a mirror of itself. For example, a softkey placed on the left moves to the right, padding on the left becomes padding on the right, the scroll moves to the left, etcetera.</p>
+<p>This applies to the layout managers (except for group layout) and most components. BiDi is mostly seamless in LWUIT but a developer still needs to be aware that his UI might be mirrored for these cases.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z400002a1297070" name="Z400002a1297070"></a>
+<div class="sect1">
+<h2 class="sect1">Virtual Keyboard</h2>
+<p>LWUIT supports a lightweight <a id="sthref61" name="sthref61"></a>Virtual Keyboard which is implemented with LWUIT's own components. The LWUIT virtual keyboard is used seamlessly where access to the native virtual keyboard isn't possible (for example, MIDP).</p>
+<img src="img/vkb.gif" alt="Description of vkb.gif follows" title="Description of vkb.gif follows" longdesc="img_text/vkb.htm" /><br />
+<a id="sthref62" name="sthref62" href="img_text/vkb.htm">Description of the illustration vkb.gif</a><br />
+<br /></div>
+<!-- class="sect1" -->
+<a id="Z40008781297419" name="Z40008781297419"></a>
+<div class="sect1">
+<h2 class="sect1">Customizing the Virtual Keyboard</h2>
+<p>Since the Virtual Keyboard is a pure LWUIT component it can be customized in various ways.</p>
+<a id="Z400002a1297491" name="Z400002a1297491"></a>
+<div class="sect2">
+<h3 class="sect2">Changing the Virtual Keyboard Look and Feel</h3>
+<p>All Virtual Keyboard items can be customized from the resource editor. The associated UI IDs are as follows:</p>
+<div class="tblhruleformal"><a id="sthref63" name="sthref63"></a><a id="Z400002a1297533" name="Z400002a1297533"></a>
+<p class="titleintable">Table 2-1 Virtual Keyboard User Interface IDs</p>
+<table class="HRuleFormal" title="Virtual Keyboard User Interface IDs" summary="Add Summary attribute value here." dir="ltr" border="1" width="100%" frame="hsides" rules="rows" cellpadding="3" cellspacing="0">
+<col width="25%" />
+<col width="*" />
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r1c1-t2">
+<p><a id="sthref64" name="sthref64"></a><code>VKB</code></p>
+</td>
+<td align="left">
+<p>Customizes the Virtual Keyboard body.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t2">
+<p><code>VKBtooltip</code></p>
+</td>
+<td align="left" headers="r2c1-t2">
+<p>Customizes the popup tooltip.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t2">
+<p><code>VKBButton</code></p>
+</td>
+<td align="left" headers="r3c1-t2">
+<p>Customizes a regular button on the virtual keyboard (usually a char or a string).</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t2">
+<p><code>VKBSpecialButton</code></p>
+</td>
+<td align="left" headers="r4c1-t2">
+<p>Customizes the special buttons such as: 'Space', 'SH', etcetera.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t2">
+<p><code>VKBTextInput</code></p>
+</td>
+<td align="left" headers="r5c1-t2">
+<p>Customizes the textfield on the virtual keyboard.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblhruleformal" --></div>
+<!-- class="sect2" -->
+<a id="Z400002a1297109" name="Z400002a1297109"></a>
+<div class="sect2">
+<h3 class="sect2">Adding a Language</h3>
+<p>The following example demonstrates how to add an input mode that supports Hebrew.</p>
+</div>
+<!-- class="sect2" -->
+<a id="Z400002a1297674" name="Z400002a1297674"></a>
+<div class="sect2">
+<h3 class="sect2">Adding an Input Mode for Hebrew</h3>
+<ol>
+<li><a id="Z40008781297689" name="Z40008781297689"></a>
+<p>Create an array of String arrays in which each array represents a button's column.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+private static final String[][] DEFAULT_HEBREW = new String[][]{
+   {"\u05e7", "\u05e8", "\u05d0", "\u05d8", "\u05d5", "\u05df", "\u05dd",
+    "\u05e4", "$Delete$"},
+   {"\u05e9", "\u05d3", "\u05d2", "\u05db", "\u05e2", "\u05d9", "\u05d7",
+    "\u05dc", "\u05da"},
+   {"\u05d6", "\u05e1", "\u05d1", "\u05d4", "\u05e0", "\u05de", "\u05e6", 
+    "\u05ea", "\u05e5"},
+   {"$Mode$", "$Space$", "\u05E3", "$OK$"}
+ };
+</pre></li>
+<li><a id="Z40008781297697" name="Z40008781297697"></a>
+<p>Now extend the VirtualKeyboard and make sure the new language mode is added when the VirtualKeyboard is initialized.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+public static class HebrewK extends VirtualKeyboard {
+   public HebrewK() {
+      addInputMode("&#728;05d0&#728;05d1&#728;05d2", DEFAULT_HEBREW);
+      setInputModeOrder(new String[]{"&#728;05d0&#728;05d1&#728;05d2", QWERTY_MODE,
+            NUMBERS_SYMBOLS_MODE, NUMBERS_MODE, SYMBOLS_MODE
+         });
+   }
+}
+</pre></li>
+<li><a id="Z40008781297706" name="Z40008781297706"></a>
+<p>When calling the virtual keyboard, specify the HebrewK class to make it the default:<a id="sthref65" name="sthref65"></a></p>
+<p><code>VKBImplementationFactory.init(HebrewK.class);</code></p>
+<img src="img/vkb_hebrew.gif" alt="Description of vkb_hebrew.gif follows" title="Description of vkb_hebrew.gif follows" longdesc="img_text/vkb_hebrew.htm" /><br />
+<a id="sthref66" name="sthref66" href="img_text/vkb_hebrew.htm">Description of the illustration vkb_hebrew.gif</a><br />
+<br /></li>
+</ol>
+</div>
+<!-- class="sect2" -->
+<a id="Z400002a1297131" name="Z400002a1297131"></a>
+<div class="sect2">
+<h3 class="sect2">Binding a Virtual Keyboard to a TextField</h3>
+<p>In some cases a TexField should accept only numbers, therefore launching the regular VirtualKeyboard is a mistake. What we need to do is to create a &ldquo;numbers only&rdquo; VirtualKeyboard and launch it for a specific TextField.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+TextField txt = new TextField();
+txt.setConstraint(TextField.NUMERIC);
+txt.setInputModeOrder(new String[]{"123"});
+txt.setInputMode("123");
+ 
+VirtualKeyboard vkb = new VirtualKeyboard();
+vkb.setInputModeOrder(new String[]{VirtualKeyboard.NUMBERS_MODE});
+ 
+VirtualKeyboard.bindVirtualKeyboard(txt, vkb);
+</pre></div>
+<!-- class="sect2" -->
+<a id="Z400002a1297153" name="Z400002a1297153"></a>
+<div class="sect2">
+<h3 class="sect2">Adding Your Own Button to a TextField</h3>
+<p>There are several use cases where you would want to place your own buttons on a specific Virtual Keyboard. For example if you are asking the user to insert input for a search field you might want a "search" command instead of the regular "ok" command that when pressed automatically invokes a submit action to the network.To accomplish that you must create a new virtual keyboard, declare your own input buttons, and to add your own special button to be part of the virtual keyboard. (By default the Virtual Keyboard understands only the following special keys: "Shift", "Delete", "T9", "Mode", "Space", and "OK").</p>
+<p>The following example declares a new input with a new special button "Search".</p>
+<pre xml:space="preserve" class="oac_no_warn">
+String[][] SEARCH_QWERTY = new String[][]{
+   {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"},
+   {"a", "s", "d", "f", "g", "h", "j", "k", "l"},
+   {"$Shift$", "z", "x", "c", "v", "b", "n", "m", "$Delete$"},
+   {"$Mode$", "$Space$", "$Search$"}
+};
+ 
+VirtualKeyboard vkb = new VirtualKeyboard();
+//add the new input mode
+   vkb.addInputMode("ABC_S", SEARCH_QWERTY);
+   vkb.setInputModeOrder(new String[]{"ABC_S"});
+//add the new special button to the vkb
+   vkb.addSpecialButton("Search", new Command("Search") {
+ 
+   public void actionPerformed(ActionEvent evt) {
+      //search logic...
+   }
+});
+ 
+//bind the vkb to the textfield
+VirtualKeyboard.bindVirtualKeyboard(txt, vkb);
+f.addComponent(txt);
+</pre>
+<img src="img/vkb_search.gif" alt="Description of vkb_search.gif follows" title="Description of vkb_search.gif follows" longdesc="img_text/vkb_search.htm" /><br />
+<a id="sthref67" name="sthref67" href="img_text/vkb_search.htm">Description of the illustration vkb_search.gif</a><br />
+<br /></div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+<td align="center"><a href="intro.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="lists.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="./dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="./dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

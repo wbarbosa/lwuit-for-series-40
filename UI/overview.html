@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1255">
+	<TITLE>LWUIT API Documentation</TITLE>
+	<META NAME="GENERATOR" CONTENT="StarOffice 8  (Win32)">
+	<META NAME="CREATED" CONTENT="20080107;17020506">
+	<META NAME="CHANGEDBY" CONTENT="Tamir Shabat">
+	<META NAME="CHANGED" CONTENT="20080121;11531210">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H2>Overview</H2>
+<P>The LightWeight User Interface Toolkit library (LWUIT) is inspired
+by Swing but designed for constrained devices such as mobile phones
+and set top boxes. LWUIT supports pluggable theme-ability, {@link
+com.sun.lwuit.Component}/{@link com.sun.lwuit.Container} hierarchy
+and abstraction of underlying GUI toolkit. 
+</P>
+<P>Interfaces and API's of the underlying profile are abstracted by
+internal toolkit interfaces and abstract classes. This allows
+portability and a migration path for both current and future devices
+and profiles. E.g. the graphics object of the underlying profile
+would be encapsulated by {@link com.sun.lwuit.Graphics}. 
+</P>
+<P>The toolkit tries to avoid the &quot;lowest common denominator&quot;
+mentality by implementing some missing features in the lower end
+platforms and taking better advantage of higher end platforms. 
+</P>
+<P>Partial class diagram:<BR><IMG SRC="classes.png" NAME="graphics1" ALIGN=BOTTOM WIDTH=1240 HEIGHT=498 BORDER=0>
+</P>
+<H3>Hello World Example</H3>
+<P>Following is a simple hello world example written on top of MIDP,
+all the LWUITcode is 100% binary compatible to other platforms such
+as CDC. However, this example is specific for MIDP for AMS
+requirements a MIDlet class must exist for MIDP where in a CDC
+environment an Xlet would be expected (in Java SE we would expect a
+main class etc...). 
+</P>
+<PRE><B>public</B> <B>class</B> <FONT COLOR="#2040a0">HiMidlet</FONT> <B>extends</B> <FONT COLOR="#2040a0">MIDlet</FONT> <B><FONT COLOR="#4444ff">{</FONT></B>
+
+    <B>public</B> <B>void</B> <FONT COLOR="#2040a0">startApp</FONT><B><FONT COLOR="#4444ff">()</FONT></B> <B><FONT COLOR="#4444ff">{</FONT></B>
+        <FONT COLOR="#2040a0">Display</FONT>.<FONT COLOR="#2040a0">init</FONT><B><FONT COLOR="#4444ff">(</FONT>this<FONT COLOR="#4444ff">)</FONT></B><FONT COLOR="#4444ff">;</FONT>
+
+        <FONT COLOR="#2040a0">Form</FONT> <FONT COLOR="#2040a0">f</FONT> <FONT COLOR="#4444ff">=</FONT> <FONT COLOR="#2040a0">new Form</FONT><FONT COLOR="#4444ff"><B>()</B>;</FONT>
+        <FONT COLOR="#2040a0">f</FONT>.<FONT COLOR="#2040a0">setTitle</FONT><B><FONT COLOR="#4444ff">(</FONT></B><FONT COLOR="#008000">&quot;Hello World&quot;</FONT><FONT COLOR="#4444ff"><B>)</B>;</FONT>
+
+        <FONT COLOR="#2040a0">f</FONT>.<FONT COLOR="#2040a0">setLayout</FONT><B><FONT COLOR="#4444ff">(</FONT>new</B> <FONT COLOR="#2040a0">BorderLayout</FONT><FONT COLOR="#4444ff"><B>())</B>;</FONT>
+        <FONT COLOR="#2040a0">f</FONT>.<FONT COLOR="#2040a0">add</FONT><B><FONT COLOR="#4444ff">(</FONT></B><FONT COLOR="#008000">&quot;Center&quot;</FONT>, <B>new</B> <FONT COLOR="#2040a0">Label</FONT><B><FONT COLOR="#4444ff">(</FONT></B><FONT COLOR="#008000">&quot;Hello Label&quot;</FONT><FONT COLOR="#4444ff"><B>))</B>;</FONT>
+
+        <FONT COLOR="#2040a0">f</FONT>.<FONT COLOR="#2040a0">show</FONT><FONT COLOR="#4444ff"><B>()</B>;</FONT>        
+    <B><FONT COLOR="#4444ff">}</FONT></B>
+
+    <B>public</B> <B>void</B> <FONT COLOR="#2040a0">pauseApp</FONT><B><FONT COLOR="#4444ff">()</FONT></B> <B><FONT COLOR="#4444ff">{</FONT></B>
+    <B><FONT COLOR="#4444ff">}</FONT></B>
+
+    <B>public</B> <B>void</B> <FONT COLOR="#2040a0">destroyApp</FONT><B><FONT COLOR="#4444ff">(</FONT>boolean</B> <FONT COLOR="#2040a0">unconditional</FONT><B><FONT COLOR="#4444ff">)</FONT></B> <B><FONT COLOR="#4444ff">{</FONT></B>
+    <B><FONT COLOR="#4444ff">}</FONT></B>
+<FONT COLOR="#4444ff"><B>}</B></FONT>
+        </PRE><P>
+Notice in the example above that the very first line of code for any
+application using this toolkit must register the main class with the
+display. This behavior is toolkit specific since in MIDP there is not
+much you can do without a reference to the parent MIDlet this
+operation must be performed in the beginning of the application. 
+</P>
+<P>The rest of the code is left within the MIDlet for simplicity but
+could be separated to any class whatsoever to allow full portability
+to any future platform to which the LWUIT library would be ported. 
+</P>
+<P>
+    For current up to date information about LWUIT please visit
+    the <a href="http://lwuit.blogspot.com/">blog</a> and the 
+    <a href="http://lwuit.java.net/">web site</a>. For help you
+    can turn to the forum <a href="http://www.java.net/forums/mobile-embedded/lwuit">here</a>.
+</P>
+</BODY>
+</HTML>

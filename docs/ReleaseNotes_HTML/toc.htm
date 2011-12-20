@@ -1,0 +1,1473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Lightweight UI Toolkit Release Notes</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 5.1.2 Build 015" />
+<meta name="date" content="2011-08-01T14:39:57Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="Lightweight UI Toolkit Release Notes" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E24866-01" />
+<link rel="copyright" href="dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Release Notes</b><br />
+<b>Release 1.5 for Windows</b><br />
+E24866-01</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header -->
+<h1>Lightweight UI Toolkit</h1>
+<p class="booktitle">Release Notes</p>
+<p><span class="revnumber">Release 1.5</span> <span class="platform">for Windows</span></p>
+<p class="invpartnumber">E24866-01</p>
+<p class="date">August 2011</p>
+<a id="sthref1" name="sthref1"></a>
+<p class="subhead2">Contents</p>
+<br />
+<a href="#CHDJBHAJ">Introduction</a><br />
+<a href="#CHDFJJJB">Release Highlights</a><br />
+<a href="#CHDBEBAA">Prerequisites</a><br />
+<a href="#CHDFBCGI">Installing the LWUIT Binary</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#CHDBEIFC">Using the Library With NetBeans</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#CHDDFIFG">Using the Resource Editor</a><br />
+<a href="#CHDECGCD">What's New In This Release</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#CFAEGHHF">Major Changes in This Release</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#CFAGBEDD">All Changes in This Release</a><br />
+<a href="#CHDFAAGJ">Documentation Accessibility</a><a id="CHDJBHAJ" name="CHDJBHAJ"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1">Introduction</h2>
+<p>The Lightweight User Interface Toolkit (LWUIT) is a widget library that you can bundle with your application. Lightweight refers to the library's small footprint and moderate device requirements. With LWUIT, resource-constrained devices can have a rich look and feel. Inspired by Swing, the toolkit implements a peer-less graphics and UI model in a compact package.</p>
+<p>LWUIT is an open source project. To join the community, visit <a href="http://lwuit.java.net"><code>http://lwuit.java.net</code></a>.</p>
+</div>
+<!-- class="sect1" -->
+<a id="CHDFJJJB" name="CHDFJJJB"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1">Release Highlights</h2>
+<p>This release has the following highlights, as summarized in this section. For a list of major changes see <a href="#CFAEGHHF">"Major Changes in This Release"</a>, and for a full list of changes, see <a href="#CFAGBEDD">"All Changes in This Release"</a>.</p>
+<ul>
+<li>
+<p><span class="bold">GUI builder</span> - A tool for designing screen layouts by drag and drop Components on a palette, plus an IDE integration which allows developers to hook an action to the UI.</p>
+</li>
+<li>
+<p><span class="bold">IO Framework</span> - Allows portable access to network, file system, storage, web services and a json parser.</p>
+</li>
+<li>
+<p><span class="bold">New Ports</span> - Java SE port (allows testing, debugging, profiling and demonstrating the application on the desktop), and a CDC/PBP port for embedded devices.</p>
+</li>
+<li>
+<p><span class="bold">HTML4 Tag Support</span> - Provides support for most of the HTML4 tags in the HTML component.</p>
+</li>
+<li>
+<p><span class="bold">XML Parsing API</span></p>
+</li>
+<li>
+<p><span class="bold">Enhanced Blackberry support</span> - Includes support for the torch as well as better system integration.</p>
+</li>
+<li>
+<p><span class="bold">New Components</span> - Tabs (replacing the old TabbedPane), Slider, Popup dialogs, and the Peer Component (allowing integration of native components "in place" within a LWUIT application) are new in this release.</p>
+</li>
+<li>
+<p><span class="bold">Container list</span> - Allows for variable-sized lists, grid lists and similar effects.</p>
+</li>
+<li>
+<p><span class="bold">Audio playback API</span> - Allows portable access to media.</p>
+</li>
+<li>
+<p><span class="bold">Drag and drop API</span> - Supports touch devices and tablets.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="CHDBEBAA" name="CHDBEBAA"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1">Prerequisites</h2>
+<p>In general you will use the library with an IDE or a toolkit such as the Java ME SDK. If you have a recent version of the toolkit installed, its environment will support the addition of the LWUIT library.</p>
+<p>A minimal environment is:</p>
+<ul>
+<li>
+<p>Microsoft Windows XP or Windows Vista.</p>
+</li>
+<li>
+<p>Java Platform, Standard Edition Software Development Kit (Java SE SDK) version 1.6 update 4 or higher. To download the SDK software, go to <a href="http://java.sun.com/javase/downloads/index.html"><code>http://java.sun.com/javase/downloads/index.html</code></a>.</p>
+</li>
+<li>
+<p>Java ME SDK.</p>
+<p>To download the current SDK, go to <a href="http://java.sun.com/javame/downloads/sdk30.jsp"><code>http://java.sun.com/javame/downloads/sdk30.jsp</code></a></p>
+<p>In the future the Java ME SDK will be available as a NetBeans plugin. A version of LWUIT is included in the Java ME SDK plugin and it will be upgraded with the Autoupdate feature.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect1" -->
+<a id="CHDFBCGI" name="CHDFBCGI"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1">Installing the LWUIT Binary</h2>
+<p>The downloadable LWUIT binary includes the toolkit libraries, the Resource Editor, documentation, and sample applications. This Toolkit is able to run on CLDC1.1, MIDP2.0/CDC PBP/SE, Blackberry, Java SE. The <code>lib</code> directory contains the following toolkit platforms:</p>
+<ul>
+<li>
+<p><code>LWUIT_MIDP.jar</code> - Standard MIDP/J2ME binary (does NOT work with Blackberry devices, works with standard MIDP 2.x/CLDC 1.1 devices)</p>
+</li>
+<li>
+<p><code>MIDP_IO.jar</code> - LWUIT4IO's MIDP version, allows IO operations such as networking, storage and filesystem actions</p>
+</li>
+<li>
+<p><code>LWUIT_Desktop.jar</code> - Works with Java SE applications, very useful for debugging/developing/demoing without a mobile environment</p>
+</li>
+<li>
+<p><code>SE_IO.jar</code> - LWUIT4IO's Java SE version, allows IO operations such as networking, storage and filesystem actions</p>
+</li>
+<li>
+<p><code>NOKIA_IO.jar</code> - Same as the MIDP_IO.jar with a couple of Nokia specific patches for APN support</p>
+</li>
+<li>
+<p><code>LWUIT_Blackberry_Legacy_Pre4_7.jar</code> - Blackberry specific version for older devices from OS 4.2 to Blackberry OS 4.7</p>
+</li>
+<li>
+<p><code>LWUIT_Blackberry_4_7_OrNewerSigned.jar</code> - Same as the version above, however requires code signing certificate from RIM to work properly</p>
+</li>
+<li>
+<p><code>RIM_IO.jar</code> - RIM specific version of LWUIT4IO, notice that in most cases the MIDP version will work just fine. The RIM version includes a couple of RIM specific enhancements for APN</p>
+</li>
+<li>
+<p><code>LWUIT_CDC_PBP_UI.jar</code> - Version of LWUIT compiled to run on top of the CDC PBP (Personal Basis Profile)</p>
+</li>
+</ul>
+<p>LWUIT has been ported to other platforms. See: <a href="http://www.pader-sync.com/lwuit-for-blackberry-and-android.html"><code>http://www.pader-sync.com/lwuit-for-blackberry-and-android.html</code></a></p>
+<a id="CHDBEIFC" name="CHDBEIFC"></a>
+<div class="sect2">
+<h3 class="sect2">Using the Library With NetBeans</h3>
+<p>Follow these steps to add LWUIT to an existing project:</p>
+<ul>
+<li>
+<p>Download and unzip the LWUIT binary.</p>
+</li>
+<li>
+<p>In the NetBeans Project Window, right-click on a project and select Properties. Choose the Libraries and Resources category and click the Add Jar/Zip button.</p>
+</li>
+<li>
+<p>Browse to select the appropriate platform from the lib directory, and then click Open. Click OK.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<a id="CHDDFIFG" name="CHDDFIFG"></a>
+<div class="sect2">
+<h3 class="sect2">Using the Resource Editor</h3>
+<p>The Resource Editor has been redesigned and improved in many ways. In the <code>resource_editor</code> directory, double-click the <code>ResourceEdit.exe</code> file to launch the editor.</p>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CHDECGCD" name="CHDECGCD"></a>
+<div class="sect1"><!-- infolevel="all" infotype="General" -->
+<h2 class="sect1">What's New In This Release</h2>
+<p>This section compiles the release changes. For a summary, see <a href="#CFAEGHHF">"Major Changes in This Release"</a>, and for a full list of changes, see <a href="#CFAGBEDD">"All Changes in This Release"</a>.</p>
+<a id="CFAEGHHF" name="CFAEGHHF"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2">Major Changes in This Release</h3>
+<ul>
+<li>
+<p>Adapted the LWUIT Demo for tablet devices.</p>
+</li>
+<li>
+<p>Added a call to <code>hidenotify</code>/<code>shownotify</code> when <code>onDisplay</code>/<code>onUndisplay</code> occurs.</p>
+</li>
+<li>
+<p>Added a feature to install the default painter into a custom style (custom in the sense that it represents a state other than pressed, selected, unselected or disabled).</p>
+</li>
+<li>
+<p>Added a feature to the image border allowing a developer to specify arrow images and a destination component thus allowing a border for a component to point at another component. This is used by the <code>PopupDialog</code> to point at the component that popped it up if instructed to do so by the theme.</p>
+</li>
+<li>
+<p>Added a new animation mode to replace and wait where the layout is animated when replace and wait finishes.</p>
+</li>
+<li>
+<p>Added a new dialog transition type and made a slight improvement to the slide and fade transition.</p>
+</li>
+<li>
+<p>Added a new mode for the combo box where its popup can act as a spinner for platforms where it is uncommon to have a "real" combo box.</p>
+</li>
+<li>
+<p>Added a new popup dialog feature to the dialog demo.</p>
+</li>
+<li>
+<p>Added a new type of replace method that performs a callback when the replace completes and allows triggering a layout animation on completion rather than revalidation. This allows the replaced component to "slide into place" rather than jump into place.</p>
+</li>
+<li>
+<p>Added a properties mechanism allowing custom components to expose mutable state to the GUI builder. Added such properties to some of the complex components such as table, tree, tabs and HTML component.</p>
+</li>
+<li>
+<p>Added a simple 3D text effect style.</p>
+</li>
+<li>
+<p>Added ability for a component to indicate the "selected" rectangle which might be useful for many purposes (specifically for popup dialogs).</p>
+</li>
+<li>
+<p>Added ability to graphics to more easily get/set the clip as an array.</p>
+</li>
+<li>
+<p>Added ability to hide a component when in portrait mode, this is useful for UIs such as master detail where the master aspect is prominently displayed when room is available in landscape.</p>
+</li>
+<li>
+<p>Added ability to move the checkbox/radio button to the opposite side.</p>
+</li>
+<li>
+<p>Added ability to unify component groups for the toggle buttons in very large screens.</p>
+</li>
+<li>
+<p>Added ability to visually localize the VKB and the text field input modes.</p>
+</li>
+<li>
+<p>Added an orientation listener feature to Form.</p>
+</li>
+<li>
+<p>Added Audio playback API and support for built-in device sounds.</p>
+</li>
+<li>
+<p>Added built-in support for fading scrollbar and gradient fading edges of the screen.</p>
+</li>
+<li>
+<p>Added cache for the radial gradient backgrounds.</p>
+</li>
+<li>
+<p>Added experimental support for drawing scaled images and for an image border that scales the patches rather than tiles them.</p>
+</li>
+<li>
+<p>Added feature to disable the scaling feature of coordinate layout.</p>
+</li>
+<li>
+<p>Added <code>flushEDT</code> to the <code>callSeriallyAndWait</code>.</p>
+</li>
+<li>
+<p>Added Generic XML Parsing API.</p>
+</li>
+<li>
+<p>Added <code>GridLayout</code> support for dialog commands.</p>
+</li>
+<li>
+<p>Added high resolution images to the LWUIT Demo's scroll demo.</p>
+</li>
+<li>
+<p>Added layout animations which are effectively an animated version of revalidate.</p>
+</li>
+<li>
+<p>Added new Blackberry theme to the LWUIT Demo that would be applied automatically by default with the new RIM port.</p>
+</li>
+<li>
+<p>Added new disabled style type.</p>
+</li>
+<li>
+<p>Added new drag and drop API.</p>
+</li>
+<li>
+<p>Added <code>PackTouchMenuBool</code> constant to allow the touch menu to size using the legacy size code.</p>
+</li>
+<li>
+<p>Added snap to grid functionality to component with supported implementations in container/list allowing the component to align according to a predefined grid when scrolled. This is an optional component turned off by default.</p>
+</li>
+<li>
+<p>Added support for a default icon in the tabs for some UIs that make no sense without an icon.</p>
+</li>
+<li>
+<p>Added support for declarative style inheritance, allowing style UIID reuse.</p>
+</li>
+<li>
+<p>Added support for fading image scrollbar in platforms where alpha transparency is supported.</p>
+</li>
+<li>
+<p>Added support for HTML generated content using CSS <code>content</code> and counter mechanism. This includes support for the following CSS properties: counter-reset, counter-increment content (including all of it's sub properties), before/after pseudo-classes.</p>
+</li>
+<li>
+<p>Added support for padding/margin based on millimeters (approximate) or screen size percentage, this is exposed in the style using the margin/padding unit when unspecified pixels are the default.</p>
+</li>
+<li>
+<p>Added support for platform APIs: <code>exitApplication</code>, <code>getProperty</code>, <code>execute</code>.</p>
+</li>
+<li>
+<p>Added support for tensile highlighting behavior for platforms that support that form of tactile feedback on overscrolling.</p>
+</li>
+<li>
+<p>Added support for the full range of CSS2.1 selectors (Above XHTML-MP1): Attribute selectors, Child selectors, Sibling/Adjacent selectors, First child selector, Language selectors.</p>
+</li>
+<li>
+<p>Added support for theme constant detection which allows for an undefined value, this enables the theme not to override an existing value with a made-up default.</p>
+</li>
+<li>
+<p>Added support for theme picking in the <code>UIBuilder</code> allowing us to view the UI with different themes far more easily.</p>
+</li>
+<li>
+<p>Added support for vertical aligning a text field/single line text area.</p>
+</li>
+<li>
+<p>Added tablet detection API.</p>
+</li>
+<li>
+<p>Added tablet support to the resource editor.</p>
+</li>
+<li>
+<p>Added the ability to customize default tab placement from the theme.</p>
+</li>
+<li>
+<p>Added the ability to define an overlay to the spinner.</p>
+</li>
+<li>
+<p>Added the ability to disable tickering by setting the ticker speed to -1.</p>
+</li>
+<li>
+<p>Added the ability to set a focused mode image for check boxes/radio buttons.</p>
+</li>
+<li>
+<p>Added the ability to tabs to switch on focus and the ability to customize the tabs container based on the tabs having focus.</p>
+</li>
+<li>
+<p>Allowed themes that have a title border to hide that border completely and also remove the preferred size inherited from this border.</p>
+</li>
+<li>
+<p>Applied the patch from thorsten in RFE 446: Fixed outer borders to work with image border and exposed the thickness property.</p>
+</li>
+<li>
+<p>Blocked the VKB from showing on none-editable text areas.</p>
+</li>
+<li>
+<p><code>Border.java</code> accidentally exposed an internal implementation method.</p>
+</li>
+<li>
+<p>Changed the default themes of the LWUIT demo to use the tipster/timeline themes and removed the old themes, added ability to plugin external themes and use the native themes when available.</p>
+</li>
+<li>
+<p>Container list allows for variable sized lists, grid lists and similar effects.</p>
+</li>
+<li>
+<p>Demos now leverage the new project structure, feature versions for Java SE and RIM out of the box.</p>
+</li>
+<li>
+<p>Disabled the ends with 3 points behavior for touch commands which isn't quite right for touch buttons.</p>
+</li>
+<li>
+<p>Disabled width/height CSS properties since they cause in many cases some components to disappear or be very small.</p>
+</li>
+<li>
+<p>Fix for a table refresh error from the forum where table headers appear despite include headers being turned off.</p>
+</li>
+<li>
+<p>Fix for a tree replace issue reported in the forum that can be triggered when clicking a node multiple times fast.</p>
+</li>
+<li>
+<p>Fix for an issue when replacing a focusable component, this triggers a request focus which triggered a layout that broke the animation AFTER then replace.</p>
+</li>
+<li>
+<p>Fix for <code>bgImage</code> multi-image bug.</p>
+</li>
+<li>
+<p>Fix for issue 385 - Long Pressing * key on <code>TextField</code> causes Symbol dialog to appear repeatedly.</p>
+</li>
+<li>
+<p>Fix for issue 389 - Ability to disable virtual keyboard.</p>
+</li>
+<li>
+<p>Fix for issue 413 - <code>TextArea.getLines()</code> is incorrect when the last character is a newline character.</p>
+</li>
+<li>
+<p>Fix for issue 439 - added the option to drop events on <code>invokeAndBlock</code> and added an additional version of <code>replaceAndWait</code> that drop events.</p>
+</li>
+<li>
+<p>Fix for issue 464 from thorsten: lookup fonts don't fail gracefully when null is returned as a result.</p>
+</li>
+<li>
+<p>Fix for issue in transition when sliding between a scrolled down view.</p>
+</li>
+<li>
+<p>Fix for issue when replacing a theme to a theme that has a different menu behavior.</p>
+</li>
+<li>
+<p>Fix for issue where a component has <code>repaint()</code> invoked on it and is removed immediately after (this can happen as an edge case of replace even when used correctly), a dangling component instance might remain in the paint queue. It is now removed.</p>
+</li>
+<li>
+<p>Fix for issues 460 - Wrong size of combobox popup.</p>
+</li>
+<li>
+<p>Fix for touch bug where the a button action event code triggered by a touch event removed the button. The remove happened after the repaint entered the queue thus triggering the button to play at the top of the screen.</p>
+</li>
+<li>
+<p>Fixed a null pointer exception on text area that can occur if a click triggers a component removal.</p>
+</li>
+<li>
+<p>Fixed alignment of bottom aligned image.</p>
+</li>
+<li>
+<p>Fixed list pure touch selection to work with fisheye lists and to detect that use case (brought up by the tipster demo).</p>
+</li>
+<li>
+<p>Fixed padding in the table layout which didn't sum up the position of the cells correctly.</p>
+</li>
+<li>
+<p>Generalized the LWUIT demo to rely less on forms and work better for tablet form factors.</p>
+</li>
+<li>
+<p>Generic list renderer allows easier renderer creation based on container concepts, includes many features such as built-in tickering, check boxes, animated images etcetera.</p>
+</li>
+<li>
+<p>Hid a text field API blocking users from overriding and accidentally removing the code.</p>
+</li>
+<li>
+<p>Improved Blackberry port includes support for the torch as well as better system integration.</p>
+</li>
+<li>
+<p>Improved pixel density query to allow for none-square pixels.</p>
+</li>
+<li>
+<p>Improved the styling of dialogs to make more sense, this allows dialogs to be customized more effectively in the resource editor.</p>
+</li>
+<li>
+<p>Improved the title back command behavior to place 2 or 4 commands in the title bar area and added a new UIID for none-back title bar area commands.</p>
+</li>
+<li>
+<p>Improved the updating of the checkbox/radio button art when changing a theme by clearing out the variable values.</p>
+</li>
+<li>
+<p>Incorporated the virtual keyboard into the main implementation and deprecated the VKBImplementation. Improved the integration with the native Virtual Keyboards when applicable.</p>
+</li>
+<li>
+<p>Issue 457 <code>Display.shouldRenderSelection()</code>: Rather complex patch adapting <code>shouldRenderSelection</code> to work in a case where a repaint can be triggered on an unrelated component.</p>
+</li>
+<li>
+<p>Issue 458 <code>Component.isDragActivated()</code> behavior: added a global drag activated flag which solves the issue with none-scrollable parent drag.</p>
+</li>
+<li>
+<p>Java SE port allows testing, debugging, profiling and demoing the application on the desktop or within a browser Applet.</p>
+</li>
+<li>
+<p>Lead component feature, allows complex container hierarchies to act as a simple component and delegate their event handling logic to a single "lead" This allows for easy construction of elaborate UIs such as multiline buttons without much code and without inheritance.</p>
+</li>
+<li>
+<p>LWUIT4IO allows access to filesystem, storage and networking in a cross-platform way.</p>
+</li>
+<li>
+<p>Made the cancel command of the combo box map to the back button of the device when applicable.</p>
+</li>
+<li>
+<p>Many fixes and improvements for in-place text editing issues in Blackberry including attempts to introduce the ability to exit from the field by rolling the trackball.</p>
+</li>
+<li>
+<p>Minor fixes for the new popup demo and theme fixes so the UI will look decent in the popup demo.</p>
+</li>
+<li>
+<p>Minor improvement for tab behavior when focused.</p>
+</li>
+<li>
+<p>Minor performance improvement for box layout.</p>
+</li>
+<li>
+<p>Moved allot of the LWUIT Demo resources into the <code>src</code> directory and added larger multi-image versions of the icons of the application suitable for high resolution devices.</p>
+</li>
+<li>
+<p>Moved the initial pointer pressed members to the Form.</p>
+</li>
+<li>
+<p>Moved theme constants to the look and feel so we don't need to perform a constant lookup for every constructed component.</p>
+</li>
+<li>
+<p>Multi-Image and Improved SVG support allow targeting multiple resolutions more easily by providing resolution specific graphics.</p>
+</li>
+<li>
+<p>New animation demo in the LWUIT Demo to better match what we think of today as "animations".</p>
+</li>
+<li>
+<p>New command behavior functionality allows defining how commands are added to LWUIT. Allows mapping commands to native menus, touch menus, back button in title, menu key or softbuttons.</p>
+</li>
+<li>
+<p>New GUI builder API the UIBuilder.</p>
+</li>
+<li>
+<p>New <code>LayeredLayout</code> layout manager allows stacking elements one on top of another.</p>
+</li>
+<li>
+<p>New peer component support allowing integration of native components "in place" within LWUIT applications.</p>
+</li>
+<li>
+<p>New project structure allowing greater portability of applications and removes reliance on MIDP.</p>
+</li>
+<li>
+<p>New slider component, provides both vertical and horizontal progress indication as well as an editable mode where the user can modify the slider to indicate things such as volume.</p>
+</li>
+<li>
+<p>New Tabs component replacing TabbedPane allowing side swipe gestures to switch between tabs and adding greater ability to style/customize the tabs.</p>
+</li>
+<li>
+<p>New Theme constant functionality allowing customization of various LWUIT properties such as transitions and dialog positioning from the theme.</p>
+</li>
+<li>
+<p>New Tipster demo application.</p>
+</li>
+<li>
+<p>New <code>VideoComponent</code> simplifies the cross platform interaction with videos.</p>
+</li>
+<li>
+<p>Performance improvement for very large numbers of components specifically in calculation in the Container class that seemed to slow down considerably for HUGE numbers of components.</p>
+</li>
+<li>
+<p>Placed tab text bellow the icon by default which is the most common configuration.</p>
+</li>
+<li>
+<p>Prevented an edge case null pointer exception in text area.</p>
+</li>
+<li>
+<p>Prevented potential division by 0 mentioned by thorsten in issue 398.</p>
+</li>
+<li>
+<p>Removed old deprecated code and considerable API cleanup.</p>
+</li>
+<li>
+<p>Removed the old drag and drop code in the LWUIT demo and replaced it with the generic LWUIT drag and drop support.</p>
+</li>
+<li>
+<p>Renamed the tabbed pane demo to the tabs demo.</p>
+</li>
+<li>
+<p>Reset the calculated preferred size on <code>setUIID</code> which might affect the preferred size.</p>
+</li>
+<li>
+<p>RFE 455 Copy and Paste API: Added support for a simple copy and paste API which by default just stores everything in a LWUIT clipboard but can/should map to a native clipboard when available.</p>
+</li>
+<li>
+<p>RFE 456 Feature request: device orientation. Added support for requesting/querying device orientation (haven't changed LWUIT to use it though). This is only implemented as a generic stub and not supported in the current BB port although it should be easy enough.</p>
+</li>
+<li>
+<p>Support for native browser embedding specifically useful for RIM devices.</p>
+</li>
+<li>
+<p>Template support in the resource editor.</p>
+</li>
+<li>
+<p>Toggle button support allows checkboxes/radio buttons to be rendered as toggle buttons.</p>
+</li>
+<li>
+<p>Updated project VMs to use the RIM 5.0 JDE in the signed target for the browser.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" -->
+<a id="CFAGBEDD" name="CFAGBEDD"></a>
+<div class="sect2"><!-- infolevel="all" infotype="General" -->
+<h3 class="sect2">All Changes in This Release</h3>
+<p>This is a detailed list of all changed in Release 1.5.</p>
+<ul>
+<li>
+<p>Added a "name" attribute to components.</p>
+</li>
+<li>
+<p>Added a client property feature to commands.</p>
+</li>
+<li>
+<p>Added a command behavior API that allows changing the way commands are processed by LWUIT, this replaces and unifies all the different ways to customize the command menu (touch commands, native commands etc.).</p>
+</li>
+<li>
+<p>Added a constructor to <code>PainterChain</code>.</p>
+</li>
+<li>
+<p>Added a default document request handler which works with JAR local resources and res files.</p>
+</li>
+<li>
+<p>Added a default value for <code>List.fireOnClick</code>.</p>
+</li>
+<li>
+<p>Added a DPI density API in for the multi-image feature.</p>
+</li>
+<li>
+<p>Added a feature allowing menus to assume their preferred size on the screen.</p>
+</li>
+<li>
+<p>Added a feature to border layout allowing it to absolutely center an entry within the center constraint rather than stretch that entry.</p>
+</li>
+<li>
+<p>Added a feature to <code>FlowLayout</code> allowing it to grow to accommodate an entire row, this is very useful for the touch menus which now also allow such a flow layout as an option.</p>
+</li>
+<li>
+<p>Added a feature to grid layout allowing it to occupy an entire row even when the number of columns doesn't divide perfectly with the number of cells. This feature is integrated into the touch menu to make it more appealing.</p>
+</li>
+<li>
+<p>Added a feature to <code>GridLayout</code> allowing it to automatically calculate the optimum number of columns/rows based on content preferred size.</p>
+</li>
+<li>
+<p>Added a feature to keep tensile drag always on.</p>
+</li>
+<li>
+<p>Added a feature to prevent the virtual keyboard from folding automatically on form switching.</p>
+</li>
+<li>
+<p>Added a grid list feature to the scroll demo to show off the <code>ContainerList</code> class.</p>
+</li>
+<li>
+<p>Added a more robust <code>readAll</code> method that works similar to <code>readFully</code> but doesn't expect a known array size.</p>
+</li>
+<li>
+<p>Added a resource editor ability to extract localization data from the UI builder resources.</p>
+</li>
+<li>
+<p>Added a resource editor dialog to list image sizes in the resource which allows us to see why a resource of size X is taking so much storage.</p>
+</li>
+<li>
+<p>Added a separate border mode to table (A border surrounds each cell) - default is the previous one (collapsed).</p>
+</li>
+<li>
+<p>Added a title area container that allows placing additional elements in the title (at your own risk), this is used internally for features like a title based back button.</p>
+</li>
+<li>
+<p>Added ability to "lock" component painting useful for transitions, this allows locking the painting of components so they draw once into a buffered image (optionally weak reference) and then paint only that image.</p>
+</li>
+<li>
+<p>Added ability to access the listeners of the list to allow seamlessly transferring listeners from a List to a <code>ContainerList</code>.</p>
+</li>
+<li>
+<p>Added ability to define disabled state checkbox/radio button images.</p>
+</li>
+<li>
+<p>Added ability to disable tickering globally in LWUIT.</p>
+</li>
+<li>
+<p>Added ability to set a property in display, this is mostly useful for cases where applications have business logic that needs to override application wide defaults.</p>
+</li>
+<li>
+<p>Added accessibility theme templates to the resource editor.</p>
+</li>
+<li>
+<p>Added additional tile abilities allowing to tile background images on the top/bottom/left/right and center of a component.</p>
+</li>
+<li>
+<p>Added alignment/text decoration support for resource files.</p>
+</li>
+<li>
+<p>Added an ability to "preposition" a specific dialog in the screen, this allows us to give dialog X a coordinate in advance of showing.</p>
+</li>
+<li>
+<p>Added an easier way to associate a radio button with a specific group.</p>
+</li>
+<li>
+<p>Added an empty background option for style to allow a UIID deriving from another style to override background image/gradient settings with blank.</p>
+</li>
+<li>
+<p>Added an event framework to <code>HTMLComponent</code> that allows dispatching events from controls (textfield, buttons etc.) via <code>HTMLCallback</code> and to alter the DOM dynamically according to user input in such controls. Use <code>setEventsEnabled(true)</code> to enable - it is disabled by default to save resources.</p>
+</li>
+<li>
+<p>Added an HTML demo to the UI demo application.</p>
+</li>
+<li>
+<p>Added an <code>init()</code> callback to the implementation that's invoked on the EDT right when it starts. This allows an implementation that depends on binding logic to a specific thread to make use of that feature.</p>
+</li>
+<li>
+<p>Added an optimization for the use case of repeatedly loading the same resource file which might happen in the UI builder. Also added the ability to cache the resource file in the UIBuilder from now on.</p>
+</li>
+<li>
+<p>Added an option for an outer border (a border of the border).</p>
+</li>
+<li>
+<p>Added an option to disable auto focusing on first link in <code>HTMLComponent</code>.</p>
+</li>
+<li>
+<p>Added background none to the style options in the theme editing.</p>
+</li>
+<li>
+<p>Added benchmarking tool to allow measuring the cost of a theme/UI in proportion.</p>
+</li>
+<li>
+<p>Added call for repaint when removing a painter from a paintchain as <code>setGlassPane</code> is not called in that case, but still the painterchain changes.</p>
+</li>
+<li>
+<p>Added cell spacing for tables (increases margins between cells) - both horizontally and vertically.</p>
+</li>
+<li>
+<p>Added embedded container support to the UI builder which allow embedding a UI resource into a form.</p>
+</li>
+<li>
+<p>Added <code>ExtHTMLComponent</code> which is an extended <code>HTMLComponent</code> that has a pointer mode, which can be helpful on some non-touch devices (Similar to other mobile browsers) This mode can be toggled using the <code>ExtHTMLComponent.setPointerEnabled()</code> method. Added shortkey 8 to toggle this mode, and added a menu item for it.</p>
+</li>
+<li>
+<p>Added feature to allow tabs to grab up all available space on the screen (horizontally) as a side feature they can now also break lines when running out of space.</p>
+</li>
+<li>
+<p>Added feature to resource editor allowing the import of a separate resource file.</p>
+</li>
+<li>
+<p>Added focus listeners to Tabs Component and removed the final from the class definition.</p>
+</li>
+<li>
+<p>Added <code>getElementById</code> returning an element with the given ID (in the sense of the ID attribute).</p>
+</li>
+<li>
+<p>Added <code>grabsPointerEvents</code> to resolve issue 430: <code>getComponentAt(xy)</code>, containers and z-layout.</p>
+</li>
+<li>
+<p>Added help information to multiple dialogs within the resource editor.</p>
+</li>
+<li>
+<p>Added horizontal/vertical image borders that can only grow on one axis but provide very accurate asymmetric UI replication.</p>
+</li>
+<li>
+<p>Added HTML4 tags, mainly: Image maps (MAP, AREA), Subscript and superscript (SUB, SUP), Legend for fieldsets (LEGEND).</p>
+</li>
+<li>
+<p>Added image/border locking feature which optimizes the <code>EncodedImage</code> objects to prevent us from constantly recreating/discarding them in image heavy UIs by notifying the image when its showing on the screen.</p>
+</li>
+<li>
+<p>Added information to images in the resource editor, specifically showing the components in the UI builder/theme making use of a specific image (or another timeline image). Also in a case of an image that is a part of a border we now show a preview of the border.</p>
+</li>
+<li>
+<p>Added information to the action event allowing an event broadcast by a button with a command to contain both the button and the command.</p>
+</li>
+<li>
+<p>Added inner borders modes (draw all, columns, rows, groups).</p>
+</li>
+<li>
+<p>Added <code>isInitialized</code> method to Display.</p>
+</li>
+<li>
+<p>Added line wrapping to the i18n editor of the resource editor.</p>
+</li>
+<li>
+<p>Added links to help videos to the resource editor.</p>
+</li>
+<li>
+<p>Added more elaborate border layout configuration features allowing the center alignment of the component to be more refined (either center by available space or absolutely), this was needed by the back button title bar to create proper centering of the text.</p>
+</li>
+<li>
+<p>Added new cell renderer interface which should supersede the <code>ListCellRenderer</code> in the future.</p>
+</li>
+<li>
+<p>Added preview on device feature for the resource editor. Currently for Nokia (using Nokia PC Suite) and Blackberry Devices (using the JDE).</p>
+</li>
+<li>
+<p>Added readable conventions for the Display.getProperty method to allow cross platform lookup for common lookups (e.g. app name/version) that should work regardless of the platform.</p>
+</li>
+<li>
+<p>Added resource editor video tutorial entries into the help menu allowing designers/developers easier access to information about the tool. This way the help is video-based and live with the ability to include comments/discussion.</p>
+</li>
+<li>
+<p>Added <code>setEnabled</code> to Container, which will enable/disable all Container's children.</p>
+</li>
+<li>
+<p>Added support for 11 common HTML4 tags that are outside the XHTML-MP 1.0 spec (including U for underline).</p>
+</li>
+<li>
+<p>Added support for an enabled flag on commands.</p>
+</li>
+<li>
+<p>Added support for CDATA sections in XML - they will be added as text nodes to the document.</p>
+</li>
+<li>
+<p>Added support for commands to include rollover, pressed and disabled icons so they can be reflected in menu.</p>
+</li>
+<li>
+<p>Added support for customizing the VKB and changing the text field input modes from a localization file with visual editing support.</p>
+</li>
+<li>
+<p>Added support for device density (DPI) which is currently mapped/defined as a set of resolutions but ports to more advanced platforms can map this to more sensible values.</p>
+</li>
+<li>
+<p>Added support for exiting the <code>RunnableWrapper</code> loop when exiting LWUIT which was requested in the forum for Kindle support <a href="http://www.java.net/forum/topic/mobile-embedded/lwuit/lwuit-port-amazon-kindle"><code>http://www.java.net/forum/topic/mobile-embedded/lwuit/lwuit-port-amazon-kindle</code></a>.</p>
+</li>
+<li>
+<p>Added support for flattening a component thus allowing it to paint the layered background in a more efficient yet memory intensive way.</p>
+</li>
+<li>
+<p>Added support for image scaling to the image download service.</p>
+</li>
+<li>
+<p>Added support for obtaining the underlying native graphics object during paint methods which will allow integration with elaborate native APIs that require the graphics object context. This is achieved by storing the state of the LWUIT graphics, before returning the native graphics then restoring the original state when the graphics is returned. It is still recommended to return the graphics object to its original state.</p>
+</li>
+<li>
+<p>Added support for password protecting resource files.</p>
+</li>
+<li>
+<p>Added support for placing a hint on the list that will be rendered when the list contains no elements similarly to the feature already available in text area.</p>
+</li>
+<li>
+<p>Added support for SoftReferences on platforms that support it.</p>
+</li>
+<li>
+<p>Added support for the <code>cellspacing</code> and <code>cellpadding</code> attributes in the TABLE tag.</p>
+</li>
+<li>
+<p>Added support for the <code>direction</code> CSS property.</p>
+</li>
+<li>
+<p>Added support for the following CSS properties: <code>"border-collapse", "empty-cells", "border-spacing", "caption-side", "word-spacing", "line-height", "min-width", "max-width", "min-height", "max-height","quotes", "outline-width", "outline-style", "outline-color"</code></p>
+</li>
+<li>
+<p>Added support for the <code>noframes</code> and <code>noscript</code> html tags.</p>
+</li>
+<li>
+<p>Added support for the rules and frame attributes in the TABLE tag (allows drawing partial segments of the inner or outer borders).</p>
+</li>
+<li>
+<p>Added support for the TBODY, THEAD and TFOOT HTML tags.</p>
+</li>
+<li>
+<p>Added support for the text-decoration CSS property.</p>
+</li>
+<li>
+<p>Added the ability for a border to declare a minimum size thus enforcing the UI to use said size at a minimum. This is implemented for the image border which now makes sure not to shrink bellow its corner sizes which allows things like gradients to always look good. Our previous solution of requiring padding to workaround this issue wasn't practical since font sizes change between platforms making padding inappropriate.</p>
+</li>
+<li>
+<p>Added the ability for the locale to determine RTL orientation and for the resource editor to enforce a specific locale.</p>
+</li>
+<li>
+<p>Added the ability to add multiple SVG images in the resource editor.</p>
+</li>
+<li>
+<p>Added the ability to <code>callSeriallyAndWait</code> with a timeout to prevent a potential deadlock. Normally no one should use that method but its essential for some edge cases where you explicitly know you are violating the EDT and still want to do that which is a case with the resource editor which must either violate the LWUIT EDT or the Swing EDT and runs into exactly that problem.</p>
+</li>
+<li>
+<p>Added the ability to get an event when a form is shown.</p>
+</li>
+<li>
+<p>Added the ability to globally determine the default list behavior (cyclic/none etc.) from the theme.</p>
+</li>
+<li>
+<p>Added the <code>AsyncDocumentRequestHandler</code> interface which allows providing async implementations.</p>
+</li>
+<li>
+<p>Added the border attribute to the HTML img tag.</p>
+</li>
+<li>
+<p>Added the disabled and readonly properties and applied to all relevant HTML tags.</p>
+</li>
+<li>
+<p>Added the following border styles: Double, Dotted, Dashed, Groove, Ridge, Inset, Outset.</p>
+</li>
+<li>
+<p>Added the full table of HTML color names (with matching values).</p>
+</li>
+<li>
+<p>Added the HTML <code>ismap</code> property to the <code>img</code> tag, allowing server image maps.</p>
+</li>
+<li>
+<p>Added the overline text decoration to Style.</p>
+</li>
+<li>
+<p>Added the segment concept, allowing defining logical table segments (currently used for <code>INNER_BORDER_GROUPS</code>, but it's in the model and can be used for other issues).</p>
+</li>
+<li>
+<p>Added timeline transition feature allowing timelines to represent the mask image for a transition.</p>
+</li>
+<li>
+<p>Added to border layout the ability to rearrange itself based on the devices portrait/landscape mode. When this feature is active all border layout activity is assumed to be targeted at portrait devices, when landscape mode is activated in the device (device width &gt; device height) the layout changes based on the defined constraints. This allows shifting of logical UI component positions based on device orientation.</p>
+</li>
+<li>
+<p>Added to the implementation the ability to exit from an application if supported by the platform.</p>
+</li>
+<li>
+<p>Added <code>toString</code> and comparability to layout managers.</p>
+</li>
+<li>
+<p>Added vertical alignment support to flow layout.</p>
+</li>
+<li>
+<p>Alignment of components was moved from Label/TextArea to the style class which means all the old alignment code is now deprecated and some odd things might happen because of selected/unselected/pressed alignments differing one from the other. Please let us know if you see such issues and we will try to help.</p>
+</li>
+<li>
+<p>Allowed bidi sensitive constants to refresh when a theme is updated.</p>
+</li>
+<li>
+<p>Allowed implementations to cleanup after themselves.</p>
+</li>
+<li>
+<p>Allowed zooming images in the resource editor to see them more clearly in the UI.</p>
+</li>
+<li>
+<p>Also provided the List with an ability to calculate its preferred size based on a larger pool of cells (although this is quite inefficient).</p>
+</li>
+<li>
+<p>Attempted Fix for issue 377: <code>NumberFormatException</code> in <code>LookAndFeel.refreshTheme()</code>.</p>
+</li>
+<li>
+<p>Border - allowed compound borders to have empty sides.</p>
+</li>
+<li>
+<p>Bug fix when negative margin/padding exists they are ignored (so not to cause an exception).</p>
+</li>
+<li>
+<p>Button now fires events on pointer release only if it was pressed first which prevents an issue where users drag their finger into a button and release by mistake which can happen on touch device UIs that are comprised heavily of buttons.</p>
+</li>
+<li>
+<p>Changed names of public methods in Element and HTMLElement: all <code>get..byName</code> to byTagName and <code>get..byId</code> to byTagId, due to the fact that both name and id have double meanings in XML/HTML.</p>
+</li>
+<li>
+<p>Changed pure touch mode to no longer render selected entries as selected when no selection is rendered behind the list.</p>
+</li>
+<li>
+<p>Changed the Blackberry native editing to use <code>ActiveAutoTextEditField</code>.</p>
+</li>
+<li>
+<p>Changed the day localization keys to comply with the Month localization keys.</p>
+</li>
+<li>
+<p>Changed the default behavior of the list to not render the focus component when it doesn't have focus.</p>
+</li>
+<li>
+<p>Combo box popups now have a long requested overhaul for their popup logic allowing overriding the placement of the popup dialog both by the theme and programmatically. We also allow for different renderers between the combo and the popup which was also requested in the forum. This is activated via a constant flag.</p>
+</li>
+<li>
+<p>Complete resource editor rewrite of the UI for the theme editing with a "simplified" list of properties and streamlined properties editing dialog.</p>
+</li>
+<li>
+<p>Compound borders are done now via the code in Border which was moved from CSSBorder (the latter is deleted in this version).</p>
+</li>
+<li>
+<p>Deprecated <code>setListCellRenderer()</code> so <code>get</code>/<code>setRenderer()</code> will confirm to the JavaBeans standard.</p>
+</li>
+<li>
+<p>Deprecated the Log class, a somewhat compatible class is now in LWUIT4IO. This class relied on APIs that aren't as portable.</p>
+</li>
+<li>
+<p>Dialogs now have their own content pane which is NOT the standard Form content pane and their own title (again NOT the form title). The reasoning for this is to solve a serious styling of dialogs hack that required complex treatment of the dialog/dialog title in a way that didn't make sense. One can now define a Dialog border in the resource editor and actually get something that works as expected with/without the title.</p>
+</li>
+<li>
+<p>DOM manipulation is supported via the Element/HTMLElement classes.</p>
+</li>
+<li>
+<p>Eliminated the <code>bgAlign</code> property effectively and replaced it with more entries to the <code>bgType</code> making the UI/programming of background alignment much simpler.</p>
+</li>
+<li>
+<p>Enabled SVG preview in the resource editor preview file open dialog.</p>
+</li>
+<li>
+<p>Enhanced encoded image to allow for some unique customizations including lazy loading from file system etcetera.</p>
+</li>
+<li>
+<p>Exposed a setter to the hint icon and fixed the hint text method in text area to allow the GUI builder to better customize them.</p>
+</li>
+<li>
+<p>Exposed alignment in flow layout and some minor features for the resource editor.</p>
+</li>
+<li>
+<p>Exposed dispose when pointer is out of bounds in the dialog so the UI builder can make use of that.</p>
+</li>
+<li>
+<p>Exposed scroll rect to visible since it was required to properly implement native component scrolling on the Blackberry port logic.</p>
+</li>
+<li>
+<p>Exposed the ability to place commands as buttons within a dialog, this feature was used by the dialogs static show methods but was internal in the Dialog class. It is now public and also includes some more elaborate styling.</p>
+</li>
+<li>
+<p>Exposed the native font for some elaborate implementation and platform specific uses.</p>
+</li>
+<li>
+<p>Exposed the show native screen feature from the LWUIT implementation.</p>
+</li>
+<li>
+<p>Exposed the text decoration feature of the style properly and fixed some inconsistencies within it.</p>
+</li>
+<li>
+<p>Exposed <code>validChar</code> and fixed <code>VirtualKeyboard</code> to valid the chars inserted according to the given <code>TextField</code>.</p>
+</li>
+<li>
+<p>Fix for a border layout bug which always returned WEST for a component that has no constraint. This can happen when changing the layout AFTER adding the components (common in the UI builder).</p>
+</li>
+<li>
+<p>Fix for a constantly recurring regression with fast scrolling in list while holding the down/up button, it seems animation was de-registered too soon due to a bug that effectively ignored the key if an animation was in progress. This now changes the appearance of fast scrolling but for a change it actually works and doesn't result with focus hanging outside the list boundary. Previous "fixes" for this issue triggered a bug where animations were never de-registered after the fact effectively seeping CPU.</p>
+</li>
+<li>
+<p>Fix for a couple of tab bugs one of which only relevant to the resource editor and another style issue only relevant to the resource editor.</p>
+</li>
+<li>
+<p>Fix for a major bug in image rotation behavior .</p>
+</li>
+<li>
+<p>Fix for a transition issue when transitioning between two components that are within a scrollable container they can be much larger than the screen size and cause an exception.</p>
+</li>
+<li>
+<p>Fix for a unique case of exception reported in the forum in the <code>DefaultLookAndFeel</code> that can occur in CJK languages rendered in a label in a list cell renderer.</p>
+</li>
+<li>
+<p>Fix for an issue where we layer themes one on top of the other the constants of the second theme weren't processed since <code>refreshTheme</code> wasn't invoked again.</p>
+</li>
+<li>
+<p>Fix for an issue with back navigation in some edge cases of transitional forms.</p>
+</li>
+<li>
+<p>Fix for an issue with List selection being outside of the scroll viewport for some special cases on some devices. I'm not exactly sure why that happened (probably a race condition due to a thread bug that I missed) but this works around that issue.</p>
+</li>
+<li>
+<p>Fix for bug 354 - TextArea and form scrolling/height problem.</p>
+</li>
+<li>
+<p>Fix for implicit issue mentioned in 429: <a href="http://java.net/jira/browse/LWUIT-429"><code>http://java.net/jira/browse/LWUIT-429.</code></a> When clicking a softbutton in a dialog that has <code>commandsAsButtons</code> active the physical softbutton keys don't work as expected.</p>
+</li>
+<li>
+<p>Fix for installing the button menu bar in devices that don't have softkeys which is naturally a large demographic for this feature.</p>
+</li>
+<li>
+<p>Fix for issue 329: <code>refreshTheme()</code> doesn't honor custom BG painters.</p>
+</li>
+<li>
+<p>Fix for issue 332: <code>ArithmeticException</code> thrown when using <code>scaledWidth</code> or <code>scaledHeight</code>.</p>
+</li>
+<li>
+<p>Fix for issue 360: invoking <code>repaint(int,int,int,int)</code> might interfere with an existing <code>repaint()</code> (no args) call by setting the <code>dirtyRegion</code> field to a partial value.</p>
+</li>
+<li>
+<p>Fix for issue 363: Typo in <code>form.java</code> size change handling.</p>
+</li>
+<li>
+<p>Fix for issue 376: <code>LabelForComponent</code> is not working for TextField, working for <code>TextArea</code> in LWUIT 1.4.</p>
+</li>
+<li>
+<p>Fix for issue 408: editing on the Blackberry should stop when pressing enter on a single line text area/field only when its explicitly marked as such.</p>
+</li>
+<li>
+<p>Fix for issue 423 from Thorsten: Method returning system font sizes incorrectly returned pixel size.</p>
+</li>
+<li>
+<p>Fix for issue 425 simplifying the process of inheriting the border class.</p>
+</li>
+<li>
+<p>Fix for issue 431: regression due to lead component patch.</p>
+</li>
+<li>
+<p>Fix for issue 440: <code>Motion.getFriction()</code> - edge case issue.</p>
+</li>
+<li>
+<p>Fix for issue 454 from thorsten related to minor issues with scroll fading implementation and a couple of tensile drag improvements.</p>
+</li>
+<li>
+<p>Fix for issue in adding a layout component with an index.</p>
+</li>
+<li>
+<p>Fix for issue in Button which didn't override its <code>setUIID</code> method to nullify the pressed state.</p>
+</li>
+<li>
+<p>Fix for issue with title containers that prevented them from disappearing when there was no content in the title but the title had an image border. This was triggered by the minimum size for an image border feature.</p>
+</li>
+<li>
+<p>Fix for list behavior in pure touch mode which doesn't seem to be correct.</p>
+</li>
+<li>
+<p>Fix for long existing bug in list renderer size calculations that didn't take container caching the preferred size into calculation when running the algorithm of sizing based on the first 5 entries. The fix for this required exposing the <code>setShouldCalcPreferredSize</code> method to allow access from the look and feel calculation code.</p>
+</li>
+<li>
+<p>Fix for null pointer exception in the <code>GameCanvasImplementation</code>.</p>
+</li>
+<li>
+<p>Fix for radial gradient positioning when their diameter is different than 1.</p>
+</li>
+<li>
+<p>Fix for some menu bar issues specifically in touch menu detection and the usage of the global commands rather than the commands passed to the method in the case of the touch menu.</p>
+</li>
+<li>
+<p>Fix for synchronization issue in the log requested in the mailing list.</p>
+</li>
+<li>
+<p>Fix for text area out of memory error on infinite loop.</p>
+</li>
+<li>
+<p>Fix for text wrapping in languages that need text width size by string and not by char (e.g. Arabic).</p>
+</li>
+<li>
+<p>Fix for the virtual keyboard moving the anonymous inner class to a static inner class thus removing the reliance on the behavior of the parent class field key and access to the parent class. This caused problems in some unique circumstances which were hard for people to figure out (justifiably) since the behavior relied on rather esoteric behavior of the JVM generated code when creating inner classes and allowing them to access parent classes.</p>
+</li>
+<li>
+<p>Fix for the width and height CSS properties (when used before the size of the component would be 0).</p>
+</li>
+<li>
+<p>Fix for tickering issue in the generic list cell renderer which always tickered based on the first entry since the selection component is always created based on the first entry.</p>
+</li>
+<li>
+<p>Fixed a bug in button where one of the alternative icons (pressed/rollover/disabled) didn't get animated.</p>
+</li>
+<li>
+<p>Fixed a bug in <code>ResourceThreadQueue</code> that caused NPE when no HTMLCallback was set and an image was not found.</p>
+</li>
+<li>
+<p>Fixed a bug in the title button bar that caused tickering if a title with short text was replaced with a title with long text, this happened in the LWUIT demo when entering the HTML demo.</p>
+</li>
+<li>
+<p>Fixed a few issues in Form - the <code>focusScrolling</code> initialization was inside an if statement by mistake.</p>
+</li>
+<li>
+<p>Fixed a form resize issue that prevented a hidden form from updating its size causing an unattractive transition if a rotation of the screen occurred in between.</p>
+</li>
+<li>
+<p>Fixed a performance issue with TextField drawing.</p>
+</li>
+<li>
+<p>Fixed a regression in Table cell editing and virtualKeyboard.</p>
+</li>
+<li>
+<p>Fixed a VERY old LWUIT bug causing the dialog to resize itself on <code>refreshTheme</code>.</p>
+</li>
+<li>
+<p>Fixed addition of a painter to a painterchain - the previous code called <code>addPainter</code> and did nothing with the return value which is the new <code>PainterChain</code> that needs to be set.</p>
+</li>
+<li>
+<p>Fixed alignment in button to also support pressed state alignment in the style (pressing the button returned to the default alignment).</p>
+</li>
+<li>
+<p>Fixed all of the resource editors image combo boxes to use a single code base that supports both a larger icon preview and keyboard searching.</p>
+</li>
+<li>
+<p>Fixed an arithmetic exception with an empty grid layout for an auto fitting grid.</p>
+</li>
+<li>
+<p>Fixed an emulator issue relevant for Torch device.</p>
+</li>
+<li>
+<p>Fixed an incorrect vkb lookup bug.</p>
+</li>
+<li>
+<p>Fixed <code>Border.equals</code> so it now compares correctly compound borders (This affects for example HTML elements that received several partial borders from different CSS classes, and needed to merge into one compound border).</p>
+</li>
+<li>
+<p>Fixed bug 390 (NPE possible in <code>HTMLComponent.displayPage</code>).</p>
+</li>
+<li>
+<p>Fixed bug in border color in HTMLComponent (when not specified - take theme colors).</p>
+</li>
+<li>
+<p>Fixed bug in descendant CSS selectors.</p>
+</li>
+<li>
+<p>Fixed bug that resulted in wrong rendering of tables with padding.</p>
+</li>
+<li>
+<p>Fixed bug that some pages got stuck after stopping/canceling.</p>
+</li>
+<li>
+<p>Fixed cases of HTMLComponent not showing the entire page (by revalidating the parent form if it exists).</p>
+</li>
+<li>
+<p>Fixed compound border so that if all 4 sides are the same - it creates a regular BORDER.</p>
+</li>
+<li>
+<p>Fixed CSS borders issue on multiple words.</p>
+</li>
+<li>
+<p>Fixed encoding bug when setting an HTML using <code>setTextBody</code>/HTML.</p>
+</li>
+<li>
+<p>Fixed focus scrolling to set the default in the constructor otherwise its impossible to apply it using the standard form setter method.</p>
+</li>
+<li>
+<p>Fixed font size recalculation on CSS font change.</p>
+</li>
+<li>
+<p>Fixed form reload in the UIBuilder to disable all the transitions.</p>
+</li>
+<li>
+<p>Fixed HTML lists indentation.</p>
+</li>
+<li>
+<p>Fixed <code>HTMLElement</code> to parse names attributes.</p>
+</li>
+<li>
+<p>Fixed issue when multiple roots are present at an XML/HTML.</p>
+</li>
+<li>
+<p>Fixed issue with excessive spacing.</p>
+</li>
+<li>
+<p>Fixed issue with zero length attributes.</p>
+</li>
+<li>
+<p>Fixed key events to work more consistently in the resource editor.</p>
+</li>
+<li>
+<p>Fixed MANY SVG bugs, SVG images now work as expected and on devices.</p>
+</li>
+<li>
+<p>Fixed mmapi nullpointer exception.</p>
+</li>
+<li>
+<p>Fixed numeric char entity rendering.</p>
+</li>
+<li>
+<p>Fixed ordered list numbers alignment in the HTML component.</p>
+</li>
+<li>
+<p>Fixed pointer hover events - this fixes scrolling issues on BlackBerry storm devices.</p>
+</li>
+<li>
+<p>Fixed pure touch behavior to hide selection while dragging, this includes a fix in button as well. Exposed the pure touch implementation flag which is useful to block tickering in pureTouch which are usually disabled by default (since there is no focus).</p>
+</li>
+<li>
+<p>Fixed race conditions in the HTMLComponent that caused it to fail on the resource editors GUI builder.</p>
+</li>
+<li>
+<p>Fixed <code>refreshTheme</code> to revalidate the Form.</p>
+</li>
+<li>
+<p>Fixed spacing between words when white spaces are involved - for example o<code>ne &lt;b&gt;two&lt;/b&gt; three</code> - would render before as <code>one twothree</code>, since leading spaces were omitted automatically. Now we consider the word position in the paragraph and add a leading space if needed.</p>
+</li>
+<li>
+<p>Fixed style bug with links press (font now stays the same size).</p>
+</li>
+<li>
+<p>Fixed text field/area preferred width to add the padding before the image border minimum size is used.</p>
+</li>
+<li>
+<p>Fixed the background image aligned top style to center align.</p>
+</li>
+<li>
+<p>Fixed the Blackberry ports <code>setClip</code> bug (from Thorsten port) - among other things this should make the inline editing look better.</p>
+</li>
+<li>
+<p>Fixed the fade transition on global alpha true platforms.</p>
+</li>
+<li>
+<p>Fixed the flickering in the resource editor.</p>
+</li>
+<li>
+<p>Fixed the generic list cell renderer to restore focus to the list.</p>
+</li>
+<li>
+<p>Fixed the hint preferred size so the list/text components take up enough space for the hint label.</p>
+</li>
+<li>
+<p>Fixed the look of the back button title bar command behavior.</p>
+</li>
+<li>
+<p>Fixed timeline animation scaling.</p>
+</li>
+<li>
+<p>Fixed unordered list indentation to have a bigger indent in level 2 and beyond in the HTML Component.</p>
+</li>
+<li>
+<p>Fixed white spaces between tags.</p>
+</li>
+<li>
+<p>Fixes for touch support in the new blackberry port features, added support for the new ITUI blackberry device which sends incorrect key events.</p>
+</li>
+<li>
+<p>Generic renderer now sets the focus only to focusable subcomponents thus allowing more powerful styling for its child components.</p>
+</li>
+<li>
+<p><code>HTMLComponent</code> autodetects if the implementation is <code>sync</code> or <code>async</code> and activates the appropriate methods.</p>
+</li>
+<li>
+<p>Important fix for multiple cookies for the same domain, this enables browsing to the new versions of Facebook and Twitter.</p>
+</li>
+<li>
+<p>Improved error detection in image creation since some platforms just return a null image instead of throwing an exception.</p>
+</li>
+<li>
+<p>Improved lots of setters/getters to make the task of the GUI builder reflection more intuitive.</p>
+</li>
+<li>
+<p>Improved the performance of <code>replaceAndWait</code> using locks.</p>
+</li>
+<li>
+<p>Improved the text area hint API.</p>
+</li>
+<li>
+<p>Improved the UIID list in the combo boxes for UIIDs to include all the UIIDs declared in the theme.</p>
+</li>
+<li>
+<p>Improvements for list animation which again doesn't de-register itself when animation finishes.</p>
+</li>
+<li>
+<p>Initial work for improved native platform integration including new APIs for mixing a LWUIT based UI with a platform native component and interacting with said component. This is working only partially on RIM and there are still unimplemented portions such as seamless integration with the native command API.</p>
+</li>
+<li>
+<p>Initial work on a resource editor effect menu, specifically introducing the pulsate effect.</p>
+</li>
+<li>
+<p>Line borders can now have titles which are displayed on the top line (Top padding should be applied).</p>
+</li>
+<li>
+<p>LWUIT-wide Underline and Strike-Through support (see <code>Style.get</code>/<code>setTextDecoration</code> and <code>get</code>/<code>setUnderline</code>, <code>get</code>/<code>setStrikethru</code>).</p>
+</li>
+<li>
+<p>Made bidi in the implementation class static so deinitialize/re-init don't lose the bidirectional state.</p>
+</li>
+<li>
+<p>Made button press/release methods public.</p>
+</li>
+<li>
+<p>Made resource editor images use checkered background to make it easier to distinguish some image types.</p>
+</li>
+<li>
+<p>Made <code>showMenu</code> public allowing external code to trigger menu display with custom buttons.</p>
+</li>
+<li>
+<p>Major fix for opaque aligned image which failed on a LWUIT optimization that seamlessly sets backgrounds to opaque, however if the image is aligned it might be seen.</p>
+</li>
+<li>
+<p>Major fixes for background aligned image painting issues, also added 4 additional alignment destinations (top left, top right, bottom left, bottom right).</p>
+</li>
+<li>
+<p>Major re-architecture of the native integration to support the new APIs committed into LWUIT just now. There are still some issues related to the camera capture bug in the issue tracker which I hope to resolve somehow but generally the API seems to work for basic use cases. Still need to improve touch integration with native components. See this issue if you have any experience in video capture on the Blackberry, we could use your help: <a href="http://supportforums.blackberry.com/t5/Java-Development/Absolutely-positioning-and-sizing-a-video-component/m-p/586079#M120756"><code>http://supportforums.blackberry.com/t5/Java-Development/Absolutely-positioning-and-sizing-a-video-component/m-p/586079#M120756</code></a></p>
+</li>
+<li>
+<p>Many fixes to the table layout allowing it to reflow and work in a more robust way when mutated.</p>
+</li>
+<li>
+<p>MenuBar - added the softbutton area only on devices with enough soft keys.</p>
+</li>
+<li>
+<p>Minor additions to list allowing the theme to define the default list item gap which for historical reasons is 2 by default. Also allowing the theme to define the renderer behavior when the list doesn't have focus.</p>
+</li>
+<li>
+<p>Minor fix to the flowlayout resolves some HTML issues where tables and flowlayouts were mixed.</p>
+</li>
+<li>
+<p>Mixing of heavyweight (platform specific components) and lightweight (LWUIT components) is potentially problematic and might cause some basic LWUIT features such as z-ordering/glasspane to fail for such cases. In features such as dialogs the underlying native component might disappear when the dialog is shown but should work none the less.</p>
+</li>
+<li>
+<p>Moved <code>isEnable</code> use to the Form, rather then keep it in the Buttons level.</p>
+</li>
+<li>
+<p>Moved resource editor image menu functionality into the Image menu.</p>
+</li>
+<li>
+<p>Moved the button pressed style up into component to enable lead component to work more effectively with pressed buttons.</p>
+</li>
+<li>
+<p>Moved the grow animation from its hidden location in "Effects" to the Component class.</p>
+</li>
+<li>
+<p>Multi images are now supported both for rasters and SVGs providing far more resolution independence.</p>
+</li>
+<li>
+<p>Multiple bug fixes for the tabs component which had some issues such as a race condition when selecting a tab programmatically. Layout size issues preventing the Tabs from being placed in a flow layout.</p>
+</li>
+<li>
+<p>Optimizations for cases in which no external/embedded CSS segments exist.</p>
+</li>
+<li>
+<p>Parser and DOM APIs are now exposed and can be used/extended.</p>
+</li>
+<li>
+<p>Performance and memory improvement: All words in a text segment get now the same Style object, thus saves memory and also boosts performance when CSS is involved.</p>
+</li>
+<li>
+<p>Performance improvement for timeline animation, needs some more work.</p>
+</li>
+<li>
+<p>Potential workaround for GTK exception in font editor.</p>
+</li>
+<li>
+<p>Removed calls for <code>contains()</code> instead of <code>containsKey()</code> on Hashtables which effectively meant all hashtables that used this method didn't work.</p>
+</li>
+<li>
+<p>Removed MANY softbutton hacks that existed mostly for the purpose of overriding the style of the softbuttons in a particular way. This essentially opens up the softbuttons to "proper" customization via styling in LWUIT.</p>
+</li>
+<li>
+<p>Removed the deprecated border painted method.</p>
+</li>
+<li>
+<p>Significant performance improvement for HTMLComponent due to a change in event dispatcher.</p>
+</li>
+<li>
+<p>Resource Editor now supports keyboard navigation in the UI preview, arbitrary preview size/font size, defining device types in the UI preview (touch/none-touch, 1 menu button etc.) and overriding localization by the UI preview.</p>
+</li>
+<li>
+<p>Simplified styling handling in Calendar.</p>
+</li>
+<li>
+<p>Small bug fix, title events are now dispatched as usual (In the last revision there was a problem).</p>
+</li>
+<li>
+<p>Small improvements to the RSS reader allowing users to customize the destination form in the list.</p>
+</li>
+<li>
+<p>Some generic HTML utilities moved and exposed at HTMLUtils.</p>
+</li>
+<li>
+<p>Style events are not dispatched when in non-EDT thread unless a special static flag is set in <code>EventDispatcher</code>.</p>
+</li>
+<li>
+<p>Tuned the behavior of transitions in the theme to match what users expect more closely.</p>
+</li>
+<li>
+<p>Updated the BlackBerry port to use the new VirtualKeyboard concept.</p>
+</li>
+<li>
+<p>Workaround for Blackberry 9105 Perl3G which uses the * as its backspace key hence breaking usage of the * key.</p>
+</li>
+<li>
+<p>XML Package was added, can be used to parse XML documents of all types.</p>
+</li>
+</ul>
+</div>
+<!-- class="sect2" --></div>
+<!-- class="sect1" -->
+<a id="CHDFAAGJ" name="CHDFAAGJ"></a>
+<div class="sect1">
+<h2 class="sect1">Documentation Accessibility</h2>
+<p>For information about Oracle's commitment to accessibility, visit the Oracle Accessibility Program website at <code><a href="http://www.oracle.com/us/corporate/accessibility/index.html">http://www.oracle.com/us/corporate/accessibility/index.html</a></code>.</p>
+<a id="sthref2" name="sthref2"></a>
+<p class="subhead2">Access to Oracle Support</p>
+<p>Oracle customers have access to electronic support through My Oracle Support. For information, visit <code><a href="http://www.oracle.com/support/contact.html">http://www.oracle.com/support/contact.html</a></code> or visit <code><a href="http://www.oracle.com/accessibility/support.html">http://www.oracle.com/accessibility/support.html</a></code> if you are hearing impaired.</p>
+</div>
+<!-- class="sect1" -->
+<a id="sthref3" name="sthref3"></a>
+<hr />
+<p>Lightweight UI Toolkit, Release 1.5 for Windows</p>
+<p>E24866-01</p>
+<p>Copyright &copy; 2008, 2011,&nbsp;Oracle and/or its affiliates. All rights reserved.</p>
+<p>This software and related documentation are provided under a license agreement containing restrictions on use and disclosure and are protected by intellectual property laws. Except as expressly permitted in your license agreement or allowed by law, you may not use, copy, reproduce, translate, broadcast, modify, license, transmit, distribute, exhibit, perform, publish, or display any part, in any form, or by any means. Reverse engineering, disassembly, or decompilation of this software, unless required by law for interoperability, is prohibited.</p>
+<p>The information contained herein is subject to change without notice and is not warranted to be error-free. If you find any errors, please report them to us in writing.</p>
+<p>If this is software or related documentation that is delivered to the U.S. Government or anyone licensing it on behalf of the U.S. Government, the following notice is applicable:</p>
+<p>U.S. GOVERNMENT RIGHTS Programs, software, databases, and related documentation and technical data delivered to U.S. Government customers are "commercial computer software" or "commercial technical data" pursuant to the applicable Federal Acquisition Regulation and agency-specific supplemental regulations. As such, the use, duplication, disclosure, modification, and adaptation shall be subject to the restrictions and license terms set forth in the applicable Government contract, and, to the extent applicable by the terms of the Government contract, the additional rights set forth in FAR 52.227-19, Commercial Computer Software License (December 2007). Oracle America, Inc., 500 Oracle Parkway, Redwood City, CA 94065.</p>
+<p>This software or hardware is developed for general use in a variety of information management applications. It is not developed or intended for use in any inherently dangerous applications, including applications that may create a risk of personal injury. If you use this software or hardware in dangerous applications, then you shall be responsible to take all appropriate fail-safe, backup, redundancy, and other measures to ensure its safe use. Oracle Corporation and its affiliates disclaim any liability for any damages caused by use of this software or hardware in dangerous applications.</p>
+<p>Oracle and Java are registered trademarks of Oracle and/or its affiliates. Other names may be trademarks of their respective owners.</p>
+<p>Intel and Intel Xeon are trademarks or registered trademarks of Intel Corporation. All SPARC trademarks are used under license and are trademarks or registered trademarks of SPARC International, Inc. AMD, Opteron, the AMD logo, and the AMD Opteron logo are trademarks or registered trademarks of Advanced Micro Devices. UNIX is a registered trademark licensed through X/Open Company, Ltd.</p>
+<p>This software or hardware and documentation may provide access to or information on content, products, and services from third parties. Oracle Corporation and its affiliates are not responsible for and expressly disclaim all warranties of any kind with respect to third-party content, products, and services. Oracle Corporation and its affiliates will not be responsible for any loss, costs, or damages incurred due to your access to or use of third-party content, products, or services.</p>
+</div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>LWUIT Mini FAQ</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 5.1.2 Build 015" />
+<meta name="date" content="2011-11-03T11:27:26Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="LWUIT Mini FAQ" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E23376-02" />
+<link rel="copyright" href="./dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="./dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+<link rel="contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="index" href="index.htm" title="Index" type="text/html" />
+<link rel="prev" href="portability.htm" title="Previous" type="text/html" />
+<link rel="next" href="index.htm" title="Next" type="text/html" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Developer's Guide</b><br />
+<b>Release 1.5</b><br />
+E23376-02</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td align="center"><a href="portability.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="index.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header --><a id="BBJGJGGH" name="BBJGJGGH"></a>
+<h1 class="appendix"><span class="secnum">A</span> LWUIT Mini FAQ</h1>
+<p>This appendix addresses common questions about LWUIT.</p>
+<p><span class="bold">Performance on the Java ME SDK or the Wireless Toolkit is very slow, what is the problem?</span></p>
+<p>There are documented issues of slow performance due to Hyperthreading.</p>
+<ul>
+<li>
+<p>Slow loopback in the network interface (often caused by miss-configured networking) also impacts performance because the toolkit uses network calls to perform all drawing.</p>
+</li>
+<li>
+<p>Sprint WirelessToolkit versions 3.2 and higher do not have these performance issues because they feature a different architecture.</p>
+</li>
+</ul>
+<p><span class="bold">How does <a id="sthref280" name="sthref280"></a>painting in LWUIT differ from Swing/AWT?</span></p>
+<p>Generally both are very much alike. There are, however, some minor key differences that might &ldquo;bite&rdquo; an unsuspecting Swing/AWT developer:</p>
+<ul>
+<li>
+<p>LWUIT clears the background &ndash; when drawing the component LWUIT makes sure to first clear the background for the component using the painters for its parents if necessary.</p>
+</li>
+<li>
+<p>LWUIT translates to parent component coordinates &ndash; A Swing component always starts at 0, 0. This is because Graphics.translate is invoked with the X and Y coordinates of the component. In LWUIT this is done only for parent containers, which is why the components in LWUIT must be drawn in their X and Y location. The problem with this approach is that drawing in 0,0 often works for the first component in the container and fail for subsequent components.</p>
+</li>
+<li>
+<p>LWUIT doesn't make a distinction between paintContent or paintChildren &ndash; All calls in LWUIT lead to paint and paintBorder. There is no separate call for painting the children of a container.</p>
+</li>
+</ul>
+<p><span class="bold">Scrolling isn't working like I expect. What went wrong?</span></p>
+<p>There are several common possibilities.<a id="sthref281" name="sthref281"></a></p>
+<ul>
+<li>
+<p>You nested a scrollable component within another scrollable component (this is technically legal but might look odd). By default the form is scrollable so just try invoking setScrollableY(false) on the form.</p>
+</li>
+<li>
+<p>Scrolling behaves based on the amount of space allocated by the layout manager. Some layout managers do everything to prevent scrolling (such as grid layout) while the box layout tries to increase size as much as possible. Read the documentation for your layout manager of choice.</p>
+</li>
+<li>
+<p>For group layout components (generated by the UI builder) you must make sure to mark components to grow and verify that they indeed do so in preview mode. You must size the container to match the size of the component boundaries, otherwise the container size is hardcoded.</p>
+</li>
+</ul>
+<p><span class="bold">What is a <a id="sthref282" name="sthref282"></a>painter? Why not just use an image?</span></p>
+<p>The idea behind a painter is simple, provide flexibility to the developer and allow the developer to define rendering suitable for his needs on any device. While images provide decent flexibility for artists' ideas, painters provide limitless flexibility:</p>
+<ul>
+<li>
+<p>A developer can use a relatively low overhead gradient painter to get a very compelling look without a single additional image file. Furthermore, the gradient adapts nicely to any screen resolution.</p>
+</li>
+<li>
+<p>In high-end devices that support SVG, etcetera, painters can use SVG to render and scale vector graphics rather than scale raster graphics. This increases the application UI fidelity.</p>
+</li>
+</ul>
+<p><span class="bold">Is LWUIT identical across all platforms?</span></p>
+<p>Yes and No.</p>
+<p>The basic core API is the same on most tested platforms and is binary compatible, allowing MIDP applications to run on Java SE (for example, in the Resource Editor actual MIDlet code is running in Java SE).</p>
+<p>The catch is in several details:</p>
+<ul>
+<li>
+<p>Some components aren't available in other platforms: M3G, Media (sometimes available), and SVG.</p>
+</li>
+<li>
+<p>Rendering might seem different on other platforms due to platform issues. For example, in some platforms LWUIT takes advantage of anti-aliasing. System fonts look completely different between platforms and bitmap fonts look odd in some platforms that don't properly support alpha channels.</p>
+</li>
+<li>
+<p>Different platforms have different performance characteristics.</p>
+</li>
+</ul>
+<p>For more details on these issues check out the portability chapter.</p>
+<p><span class="bold">Does LWUIT support 3 SoftButton devices?</span></p>
+<p>Yes, 3 SoftButton mode is implemented in display. However, since there is no reliable way to detect 3 SoftButton phones this features can be activated either programmatically or through a JAD file attribute.</p>
+<p><span class="bold">A device doesn't seem to work with LWUIT. What should I do?</span></p>
+<p>Is it a MIDP 2.0/CLDC 1.1 device? If it is then please mail lwuit@sun.com with the following additional details:</p>
+<ul>
+<li>
+<p>Does LWUIT hello world work on the device?</p>
+</li>
+<li>
+<p>Does the LWUIT UIDemo work on the device?</p>
+</li>
+<li>
+<p>What is the resolution+color depth of the device, and how much memory is allocated for Java?</p>
+</li>
+</ul>
+<p><span class="bold">I want my application to look "native" on the device. Is there any way to accomplish that?</span></p>
+<p>While LWUIT is designed to do the exact opposite (support your own look and feel) a native look and feel can be partially achieved if you implement a theme or look and feel that resembles the native look.</p>
+<p>This won't work very well on most devices since there is no way to detect if the user switched the default theme.</p>
+<p>Downloadable themes are probably a good approach for a strong user community.</p>
+<p><span class="bold">The UI for my<a id="sthref283" name="sthref283"></a> touch screen phone seems too small for my fingers. How do I make the UI more appropriate for such a device?</span></p>
+<p>Use a global padding setting in the theme to increase the size of all widgets to a point where they are big enough for a finger tip.</p>
+<p><span class="bold">Why am I getting memory errors in LWUIT? Why is LWUIT is consuming a lot of memory in my memory monitor?</span><a id="sthref284" name="sthref284"></a></p>
+<p>Check that your application doesn't hold onto pointers for components. Because a component references its parent component, holding onto a single button can keep an entire form with all its content in memory... LWUIT allocates and discards frequently to allow for a small memory footprint. This causes the graph of free memory to fluctuate but the alternative of caching would be worse for highly constrained devices. Check out the LWUIT blog for more information on the subject of tracking and identifying memory issues.</p>
+<p><span class="bold">Why won't my list/text area scroll? Why does my list/text area jump around?</span></p>
+<p>You need to disable the scrolling<a id="sthref285" name="sthref285"></a> for the form using myForm.setScrollable(false) and you should place the list in the center of a border layout. For deeper understanding of why this is required, read the next question about scrolling.</p>
+<p><span class="bold">How do I change the appearance of the list? Remove the numbers from the side etcetera? Can I nest containers in the list?</span></p>
+<p>List<a id="sthref286" name="sthref286"></a>is designed for a very large number of element and fast traversal. You can use its cell renderer facility to customize it any way you want as explained here. How the list can scale and grow is explained here and additionally here.</p>
+<p><span class="bold">My application freezes or stalls. How do I fix this?</span></p>
+<p>99% of the problems of this type are related to Event Dispatch Thread (EDT)<a id="sthref287" name="sthref287"></a> violations.</p>
+<p><span class="bold">What is the Event Dispatch Thread (EDT)</span>?</p>
+<p>The EDT broadcasts all the events in LWUIT. It is also responsible for drawing all elements on the screen.The EDT thread is responsible for drawing all screen elements, if it is blocked by a long running operation elements won't update and key/pointer events won't be received. The solution is to use threads for such long running tasks, however interaction with LWUIT can only be performed on the EDT. To return into the EDT you can use Display.callSerially and callSeriallyAndWait. A different option is to use invokeAndBlock.</p>
+<p><span class="bold">I'm not opening any threads, why am I having problems?</span></p>
+<p>A typical application always uses at least two threads, lifecycle and the EDT. The lifecycle thread is the callback thread used for the application. For example, in MIDP the startApp method is invoked from the MIDP thread which is different from the EDT.</p>
+<p><span class="bold">Does anything work from a separate thread?</span></p>
+<p>There are no guarantees, but repaint() should generally work from every thread and show() should as well.</p>
+<p><span class="bold">How do I reposition/resize a dialog?</span></p>
+<p>Use a Dialog instance and a version of show which accepts 4 integer values to position the dialog. You can use the set the default dialog position to simplify dialog positioning.</p>
+<p><span class="bold">How do I show Video?</span></p>
+<p>Use MMAPI to create a Player object, then use the VideoComponent class.</p>
+<p><span class="bold">Can I create my own components?</span></p>
+<p>Everything in LWUIT is fully extensible.You can derive from any component and extend it. It is demonstrated in the <a href="extend.htm#CHECEECE">Chapter 14</a> and it is discussed extensively in the blog at <code><a href="http://lwuit.blogspot.com/">http://lwuit.blogspot.com/</a></code>.</p>
+<p><span class="bold">I'm trying to display an animated gif. Why isn't it working?</span></p>
+<p>Animated gifs can be shown in MIDP using the MMAPI and VideoComponent (see How do I show Video?). LWUIT has special support for StaticAnimation which is a LWUIT specific format very similar to the animated gif. Both the Resource Editor and the Ant task accept animated GIF files to create static animations.</p>
+<p><span class="bold">I'm having issues on a Windows Mobile device?</span></p>
+<p>Windows mobile VMs vary significantly in their quality. If the VM is giving you problems try the Phone ME open source VM port for Windows mobile devices.</p>
+<p><span class="bold">How do I create resource (.res) files?</span></p>
+<p>Use the Resource Editor or the Ant task.<a id="sthref288" name="sthref288"></a></p>
+<p><span class="bold">What is the difference between the Resource Editor and the Ant task?</span></p>
+<p>The difference is mainly in the use case, the ant tool is designed mostly for developer related resources (locales, application images, etcetera). The Resource Editor is targeted for use by graphic designers.</p>
+</div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+<td align="center"><a href="portability.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="index.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="./dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="./dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

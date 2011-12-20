@@ -1,0 +1,373 @@
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-US">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>LWUIT Tutorial - Event Handling</title>
+<meta name="keywords" content="PUT, YOUR, PAGE-SPECIFIC, KEYWORDS, HERE">
+<meta name="description" content="PUT YOUR PAGE-SPECIFIC DESCRIPTION HERE">
+<meta http-equiv="content-language" content="en-US">
+<link rel="stylesheet" type="text/css" href="style/default.css">
+<link rel="stylesheet" type="text/css" href="style/local/www.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="search" type="application/opensearchdescription+xml" title="Sun Search" href="http://search.sun.com/search/resources/onesearch/default-osd.xml">
+<script type="text/javascript" src="/js/sniff.js"></script>
+<script type="text/javascript" src="/js/menucontent.js"></script>
+<script type="text/javascript" src="/js/menucode.js"></script>
+</head>
+
+<body bgcolor="#ffffff">
+<div class="a0 a0v0" id="a0v0">
+<!--stopindex-->
+<a name="top"></a>
+
+
+
+
+
+
+<!-- BEGIN A1 COMPONENT V.0 -->
+
+<!--
+<div class="a1 a1r2">
+<div class="a1v0">
+<a href="#skip2content" class="skiplink">Skip to Content</a>
+<span class="toolbarlinks">
+<a href="/java/">Java</a>
+<a href="/software/solaris/">Solaris</a>
+<a href="/communities/" class="dividelink">Communities</a>
+<a href="/aboutsun/">About Sun</a>
+<a href="/sales/" class="dividelink">How to Buy</a>
+<a href="https://portal.sun.com/portal/dt/">My Account</a>
+<a href="http://shop.sun.com/cart/" class="a1cart lastlink">Cart</a>
+</span>
+<span class="siteid">
+<span>United States</span>
+<a href="/worldwide/">Worldwide</a>
+</span>
+</div>
+</div>
+-->
+
+<!-- END A1 COMPONENT V.0 -->
+
+
+
+
+
+
+
+<!-- BEGIN A2 COMPONENT V.0 -->
+<div class="a2w0">
+<div class="a2" id="a2v0">
+<div class="a2w1"><div class="a2w2"><div class="a2w3"><div class="a2w4">
+<div class="a2topiclinks">
+<div class="a2search">
+<!--
+<form action="/cgi-bin/search/index.cgi">
+<input type="hidden" name="charset" value="UTF-8">
+<input id="searchfield" type="text" name="search" value="Search">
+<input id="searchbttn" type="image" border="0" src="/im/a2_bttn_search.gif" alt="Submit Search">
+</form>
+-->
+</div>
+<a href="http://www.sun.com/" title="Sun Microsystems Home Page" id="sunlogo"><img src="http://www.sun.com/im/a.gif" alt="Sun Microsystems Home Page" width="98" height="58" border="0" /></a>
+<!--
+<ul id="mtopics">
+<li id="mtopic1"><a id="glink1" class="tpclink a2menu" title="See All Products" href="/products/">Products</a></li>
+<li id="mtopic2"><a id="glink2" class="tpclink a2menu" title="See All Downloads" href="/download/">Downloads</a></li>
+<li id="mtopic3"><a id="glink3" class="tpclink a2menu" title="See All Services &amp; Solutions" href="/servicessolutions/">Services &amp; Solutions</a></li>
+<li id="mtopic4"><a id="glink4" class="tpclink a2menu" title="See All Support" href="http://sunsolve.sun.com/">Support</a></li>
+<li id="mtopic5"><a id="glink5" class="tpclink a2menu" title="See All Training" href="/training/">Training</a></li>
+<li id="mtopic6"><a id="glink6" class="tpclink a2menu" title="See All Developer" href="http://developers.sun.com/">Developer</a></li>
+</ul>
+-->
+</div>
+</div></div></div></div>
+</div></div>
+<!-- END A2 COMPONENT V.0 -->
+
+
+
+
+
+
+
+<!-- BEGIN BREADCRUMB -->
+<table width="100%">
+  <tr>
+    <td align="left"><div align="left" id="breadcrumb"><a href="transitions.html">&lt;&lt;Previous</a></div></td>
+    <td align="center"><div align="center" id="breadcrumb"><a href="index.html">Top</a></div></td>
+    <td align="right"><div align="right" id="breadcrumb"><a href="styling.html">Next&gt;&gt;</a></div></td>
+  </tr>
+</table>
+<!-- END BREADCRUMB -->
+
+
+
+
+
+
+
+<!-- BEGIN PAGETITLE TWO LINE -->
+<div class="pagetitle2">LWUIT Tutorial</div>
+<div class="smallpagetitle"><h1>Event Handling</h1></div>
+<!-- END PAGETITLE TWO LINE -->
+
+
+
+
+
+
+
+<!-- BEGIN WRAPPER TABLE, 1 COLUMN, MAIN -->
+<table border="0" cellpadding="0" cellspacing="10" width="100%">
+<tr><td width="100%" valign="top">
+<!-- BEGIN CENTRAL COLUMN COMPONENTS -->
+
+<a name="skip2content"> </a>
+
+<!--startindex-->
+
+<!-- ============ -->
+<!-- MAIN CONTENT -->
+<!-- ============ -->
+
+<div class="pc0"><div class="pc0v4">
+
+<h1>Responding to Button Clicks</h1>
+
+<p>
+LWUIT notifies your application about events via listener interfaces. Your
+application provides implementations of the appropriate interface, registers
+them with LWUIT, and takes action when an event occurs.
+</p>
+
+<p>
+To respond to a button press, for example, your application needs to do
+two things:
+</p>
+
+<ol>
+<li>Define an implementation of <code>ActionListener</code>.</li>
+<li>Pass an instance of the <code>ActionListener</code> to the <code>Button</code>'s
+<code>addActionListener()</code>. </li>
+</ol>
+
+<p>
+The following example uses an inner class to implement <code>ActionListener</code>.
+Every time you press the button, the label changes.
+</p>
+
+<pre>
+final Form f = new Form("Events");
+
+Button button = new Button("Push me!");
+final Label countLabel = new Label(" ");
+button.addActionListener(new ActionListener() {
+  private int c = 0;
+  public void actionPerformed(ActionEvent ae) {
+    c++;
+    countLabel.setText(Integer.toString(c));
+    f.layoutContainer();
+  }
+});
+</pre>
+
+<p>
+The call to <code>layoutContainer()</code> ensures that the label's size is
+adjusted correctly when the number gets bigger. For example, notice how the
+size adjusts when the count goes from 9 to 10.
+</p>
+
+<p>
+If you use a single listener for more than one button, you can find out which
+button was pressed by calling the <code>ActionEvent</code>'s
+<code>getSource()</code> method.
+</p>
+
+<h1>Using Commands</h1>
+
+<p>
+LWUIT includes the concept of a <i>command</i>. A command is something that
+your user can do in your application. LWUIT decides how to show the command
+on the screen and how the user makes it happen. Usually, commands are
+assigned to the soft buttons on a mobile phone. LWUIT will normally show commands
+as labels at the bottom corners of the screen; the user can invoke them by
+pressing the corresponding soft button. On touch devices, the user can
+touch directly on a command to invoke it.
+</p>
+
+<p>
+  Conceptually, commands in LWUIT closely resemble commands in MIDP. Some of
+  the details are slightly different, but if you already understand MIDP
+  commands, you'll have no trouble with LWUIT commands.
+</p>
+
+<p>
+  In LWUIT, create commands and add them to forms. Then register a listener
+  object with the form to be notified when the user invokes a command.
+</p>
+
+<p>
+  This simple example creates a form and registers a listener. The listener
+  shuts down the application when it is invoked.
+</p>
+
+<pre>
+import javax.microedition.midlet.*;
+
+import com.sun.lwuit.*;
+import com.sun.lwuit.events.*;
+
+public class HelloLWUITMidlet extends MIDlet implements ActionListener {
+
+  private Form mForm;
+
+  public void startApp() {
+    if (mForm == null) {
+      Display.init(this);
+
+      Form f = new Form("Hello, LWUIT!");
+
+      Command exitCommand = new Command("Exit");
+      f.addCommand(exitCommand);
+      f.setCommandListener(this);
+
+      f.show();
+    }
+  }
+
+  public void pauseApp() {
+  }
+
+  public void destroyApp(boolean unconditional) {
+  }
+
+  public void actionPerformed(ActionEvent ae) {
+    destroyApp(true);
+    notifyDestroyed();
+  }
+}
+</pre>
+
+<p>
+If you add more than two commands to a form, they won't fit on the two
+available soft buttons. In this case, one of the soft buttons will become
+a menu. When the user invokes the menu, it shows a list of the rest of the
+commands.
+</p>
+
+<p>
+When your listener's <code>actionPerformed()</code> method must respond to more
+than one command, you can find out which one was invoked by calling the
+<code>ActionEvent</code>'s <code>getCommand()</code> method.
+</p>
+
+<h1>Other Event Types</h1>
+
+<p>
+Most of your event handling will involve <code>ActionListener</code> for
+commands and buttons, but LWUIT includes other useful listeners:
+</p>
+
+<ul>
+  <li>Use <code>DataChangedListener</code> to find out when a <code>ListModel</code>
+  changes. Remember, <code>ListModel</code> represents the data behind a
+  list or combo box.</li>
+  <li>A <code>SelectionListener</code> is notified when the current selection
+  of a <code>ListModel</code> changes.</li>
+  <li>A <code>FocusListener</code> is notified when a
+  component gains or loses focus.</li>
+  <li>Finally, <code>StyleListener</code> receives notifications about changes
+  in a component's style. The next section of this tutorial describes
+  styles and themes.</li>
+</ul>
+
+<!-- =================== -->
+<!-- END OF MAIN CONTENT -->
+<!-- =================== -->
+
+<!--stopindex-->
+
+<!-- END CENTRAL COLUMN COMPONENTS -->
+</td></tr>
+<!-- BEGIN SPACER ROW -->
+<tr><td><img src="/im/a.gif" width="780" height="1" border="0" alt="" /></td></tr>
+<!-- END SPACER ROW -->
+</table>
+<!-- END WRAPPER TABLE, 1 COLUMN, MAIN -->
+
+<!-- BEGIN BREADCRUMB -->
+<table width="100%">
+  <tr>
+    <td align="left"><div align="left" id="breadcrumb"><a href="transitions.html">&lt;&lt;Previous</a></div></td>
+    <td align="center"><div align="center" id="breadcrumb"><a href="index.html">Top</a></div></td>
+    <td align="right"><div align="right" id="breadcrumb"><a href="styling.html">Next&gt;&gt;</a></div></td>
+  </tr>
+</table>
+<!-- END BREADCRUMB -->
+
+
+
+
+
+
+
+<!-- START SITECATALYST -->
+<!--stopindex-->
+<script language="JavaScript" src="/share/omniture/s_code_remote.js"></script>
+<!--startindex-->
+<!-- END SITECATALYST -->
+
+
+
+
+<hr/>
+
+
+<!-- BEGIN G9 VARIATION 0 -->
+
+<!-- (removed) -->
+
+<!-- END G9 VARIATION 0 -->
+
+
+
+
+
+
+
+<!-- BEGIN A5 COMPONENT V.0 -->
+<div class="a5" id="a5v0">
+<span class="footerlinks">
+<!--
+<a href="/contact/">Contact</a>
+<a href="/aboutsun/index.html">About Sun</a>
+<a href="/aboutsun/media/index.html">News &amp; Events</a>
+<a href="/corp_emp/">Employment</a>
+<a href="/sitemap/">Site Map</a>
+<a href="/privacy/">Privacy</a>
+<a href="/share/text/termsofuse.html">Terms of Use</a>
+<a href="/suntrademarks/">Trademarks</a>
+-->
+<span class="footercopy">Copyright &#169; <span id="copyDate" class="cssDate">2008</span> Sun Microsystems, Inc.</span>
+
+</span>
+</div>
+<!-- END A5 COMPONENT V.0 -->
+
+
+
+
+
+
+
+</div>
+</body>
+</html>
+
+
+

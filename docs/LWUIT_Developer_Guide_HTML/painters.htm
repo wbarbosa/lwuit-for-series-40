@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>Painters</title>
+<meta name="generator" content="Oracle DARB XHTML Converter (Mode = document) - Version 5.1.2 Build 015" />
+<meta name="date" content="2011-11-03T11:27:25Z" />
+<meta name="robots" content="noarchive" />
+<meta name="doctitle" content="Painters" />
+<meta name="relnum" content="Release 1.5" />
+<meta name="partnum" content="E23376-02" />
+<link rel="copyright" href="./dcommon/html/cpyr.htm" title="Copyright" type="text/html" />
+<link rel="stylesheet" href="./dcommon/css/blafdoc.css" title="Oracle BLAFDoc" type="text/css" />
+<link rel="contents" href="toc.htm" title="Contents" type="text/html" />
+<link rel="index" href="index.htm" title="Index" type="text/html" />
+<link rel="prev" href="resources.htm" title="Previous" type="text/html" />
+<link rel="next" href="lwuitimpl.htm" title="Next" type="text/html" />
+</head>
+<body>
+<div class="header"><a id="top" name="top"></a>
+<div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" valign="top"><b>Lightweight UI Toolkit Developer's Guide</b><br />
+<b>Release 1.5</b><br />
+E23376-02</td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<tr>
+<td align="center"><a href="resources.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="lwuitimpl.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<a name="BEGIN" id="BEGIN"></a></div>
+<!-- class="header" -->
+<div class="ind"><!-- End Header --><a id="CGFDAHFE" name="CGFDAHFE"></a>
+<h1 class="chapter"><span class="secnum">10</span> Painters</h1>
+<p>Painter is an interface that can be used to draw on a component background. The Painter draws itself and then the component draws itself on top within the restrictions of the component bounds. One of the biggest advantages of using a painter is that you can write arbitrary code to draw the component background. An example of such code might be a gradient background for a component, or tiling (using an image to tile the component background). Using a generic painter allows you to reuse background painters for various components.</p>
+<div align="center">
+<div class="inftblnote"><br />
+<table class="Note oac_no_warn" summary="" border="1" width="80%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td align="left">
+<p class="notep1">Note:</p>
+To view the painter drawing, a component must have some level of transparency.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblnote" --></div>
+<p>To clarify these points, assume you want to make a painter that draws a diagonal line in the background of a component. This kind of painting is vectoring since you are specifying the absolute coordinates and dimensions of a component. You can reuse the painter for other components.</p>
+<a id="Z40006f21289792" name="Z40006f21289792"></a>
+<div class="sect1">
+<h2 class="sect1">Using Painter</h2>
+<p>The Painter code might look like the following <a id="sthref221" name="sthref221"></a>example:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Painter diagonalPainter = new Painter() {
+ 
+   public void paint(Graphics g, Rectangle rect) {
+      g.drawLine(rect.getX(), 
+                 rect.getY(), 
+                 rect.getX() + rect.getSize().getWidth(),
+                 rect.getY() + rect.getSize().getHeight());
+   }
+};
+</pre>
+<p>To use the diagonalPainter you created, use it as the component background painter:</p>
+<p><code>myComponent.getStyle().setBgPainter(diagonalPainter);</code></p>
+<p>Let's create a Label, Button and a RadioButton and set their background painter with the above diagonalPainter.</p>
+<pre xml:space="preserve" class="oac_no_warn">
+....
+ 
+Label myLabel  = new Label(Image.createImage("/images/duke.png"));
+myLabel.setAlignment(Component.CENTER);
+myLabel.getStyle().setBgTransparency(100);            
+myLabel.getStyle().setBgPainter(diagonalPainter);
+ 
+....
+Button myButton  = new Button("Image and Text Button");
+myButton.setIcon(Image.createImage("/images/duke.png"));
+myButton.setAlignment(Component.CENTER);
+myButton.getStyle().setBgTransparency(100);            
+myButton.getStyle().setBgPainter(diagonalPainter);
+ 
+....
+RadioButton myRadioButton = new RadioButton("RadioButton");
+myRadioButton.getStyle().setBgTransparency(100);            
+myRadioButton.getStyle().setBgPainter(diagonalPainter);
+ 
+....
+</pre>
+<p>The three components are shown in <a href="#Z40006f21290163">Figure 10-1</a>.</p>
+<div class="figure"><a id="Z40006f21290163" name="Z40006f21290163"></a>
+<p class="titleinfigure">Figure 10-1 Label, Button, and RadioButton With diagonalPainter in Background</p>
+<img src="img/painter_diagonal.jpg" alt="Description of Figure 10-1 follows" title="Description of Figure 10-1 follows" longdesc="img_text/painter_diagonal.htm" /><br />
+<a id="sthref222" name="sthref222" href="img_text/painter_diagonal.htm">Description of "Figure 10-1 Label, Button, and RadioButton With diagonalPainter in Background"</a><br />
+<br /></div>
+<!-- class="figure" -->
+<p>As a result, you see a diagonal line that is painted in the components' background (behind the Duke images and text).</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40008841358354" name="Z40008841358354"></a>
+<div class="sect1">
+<h2 class="sect1">Painter Chain</h2>
+<p>Sometimes a <a id="sthref223" name="sthref223"></a>single painter is not enough to represent complex drawing logic necessary for an application's needs. The painter chain allows you to bind together several painters and present them as one. This can be used to separate responsibilities. For example, one painter can draw a background image while another painter can highlight validation errors.</p>
+<p>To create a painter chain just use:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+PainterChain chain = new PainterChain(new Painter[]{painter1, painter2});
+</pre>
+<p>The painter chain is very useful with the glass pane.</p>
+</div>
+<!-- class="sect1" -->
+<a id="Z40027511358817" name="Z40027511358817"></a>
+<div class="sect1">
+<h2 class="sect1">Glass Pane</h2>
+<p>The <a id="sthref224" name="sthref224"></a>glass pane is a painter that is drawn on top of the form. The form cannot paint over the glass panel! This allows creating very unique visual effects for an application and allows a developer to implement functionality such as validation errors, or special effects such as fading tooltips.A glass pane can be installed using a painter chain to prevent a new glasspane from overriding the already installed glass pane.</p>
+<p>To install a glass pane invoke:</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Painter glassPane = ...;
+myForm.setGlassPane(glassPane);
+</pre>
+<p>Use this code to &nbsp; install a glass pane without overriding an existing glass pane (this method works correctly even if a glass pane is not installed):</p>
+<pre xml:space="preserve" class="oac_no_warn">
+Painter glassPane = ...;
+PainterChain.installGlassPane(myForm, glassPane);
+</pre></div>
+<!-- class="sect1" --></div>
+<!-- class="ind" -->
+<!-- Start Footer -->
+<div class="footer">
+<hr />
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100%">
+<col width="33%" />
+<col width="*" />
+<col width="33%" />
+<tr>
+<td valign="bottom">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="100">
+<col width="*" />
+<col width="48%" />
+<col width="48%" />
+<tr>
+<td>&nbsp;</td>
+<td align="center"><a href="resources.htm"><img src="./dcommon/gifs/leftnav.gif" alt="Previous" /><br />
+<span class="icon">Previous</span></a>&nbsp;</td>
+<td align="center"><a href="lwuitimpl.htm"><img src="./dcommon/gifs/rightnav.gif" alt="Next" /><br />
+<span class="icon">Next</span></a></td>
+</tr>
+</table>
+</td>
+<td class="copyrightlogo"><img class="copyrightlogo" src="./dcommon/gifs/oracle.gif" alt="Oracle Logo" /><br />
+<span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2008, 2011,&nbsp;Oracle&nbsp;and/or&nbsp;its&nbsp;affiliates.&nbsp;All&nbsp;rights&nbsp;reserved.</span> <a href="./dcommon/html/cpyr.htm"><br />
+<span class="copyrightlogo">Legal Notices</span></a></td>
+<td valign="bottom" align="right">
+<table class="simple oac_no_warn" summary="" cellspacing="0" cellpadding="0" width="225">
+<tr>
+<td>&nbsp;</td>
+<td align="center" valign="top"><a href="toc.htm"><img src="./dcommon/gifs/toc.gif" alt="Go To Table Of Contents" /><br />
+<span class="icon">Contents</span></a></td>
+<td align="center" valign="top"><a href="index.htm"><img src="./dcommon/gifs/index.gif" alt="Go To Index" /><br />
+<span class="icon">Index</span></a></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

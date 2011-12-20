@@ -1,0 +1,354 @@
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-US">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>LWUIT Tutorial - Using Transitions</title>
+<meta name="keywords" content="PUT, YOUR, PAGE-SPECIFIC, KEYWORDS, HERE">
+<meta name="description" content="PUT YOUR PAGE-SPECIFIC DESCRIPTION HERE">
+<meta http-equiv="content-language" content="en-US">
+<link rel="stylesheet" type="text/css" href="style/default.css">
+<link rel="stylesheet" type="text/css" href="style/local/www.css">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="search" type="application/opensearchdescription+xml" title="Sun Search" href="http://search.sun.com/search/resources/onesearch/default-osd.xml">
+<script type="text/javascript" src="/js/sniff.js"></script>
+<script type="text/javascript" src="/js/menucontent.js"></script>
+<script type="text/javascript" src="/js/menucode.js"></script>
+</head>
+
+<body bgcolor="#ffffff">
+<div class="a0 a0v0" id="a0v0">
+<!--stopindex-->
+<a name="top"></a>
+
+
+
+
+
+
+<!-- BEGIN A1 COMPONENT V.0 -->
+
+<!--
+<div class="a1 a1r2">
+<div class="a1v0">
+<a href="#skip2content" class="skiplink">Skip to Content</a>
+<span class="toolbarlinks">
+<a href="/java/">Java</a>
+<a href="/software/solaris/">Solaris</a>
+<a href="/communities/" class="dividelink">Communities</a>
+<a href="/aboutsun/">About Sun</a>
+<a href="/sales/" class="dividelink">How to Buy</a>
+<a href="https://portal.sun.com/portal/dt/">My Account</a>
+<a href="http://shop.sun.com/cart/" class="a1cart lastlink">Cart</a>
+</span>
+<span class="siteid">
+<span>United States</span>
+<a href="/worldwide/">Worldwide</a>
+</span>
+</div>
+</div>
+-->
+
+<!-- END A1 COMPONENT V.0 -->
+
+
+
+
+
+
+
+<!-- BEGIN A2 COMPONENT V.0 -->
+<div class="a2w0">
+<div class="a2" id="a2v0">
+<div class="a2w1"><div class="a2w2"><div class="a2w3"><div class="a2w4">
+<div class="a2topiclinks">
+<div class="a2search">
+<!--
+<form action="/cgi-bin/search/index.cgi">
+<input type="hidden" name="charset" value="UTF-8">
+<input id="searchfield" type="text" name="search" value="Search">
+<input id="searchbttn" type="image" border="0" src="/im/a2_bttn_search.gif" alt="Submit Search">
+</form>
+-->
+</div>
+<a href="http://www.sun.com/" title="Sun Microsystems Home Page" id="sunlogo"><img src="http://www.sun.com/im/a.gif" alt="Sun Microsystems Home Page" width="98" height="58" border="0" /></a>
+<!--
+<ul id="mtopics">
+<li id="mtopic1"><a id="glink1" class="tpclink a2menu" title="See All Products" href="/products/">Products</a></li>
+<li id="mtopic2"><a id="glink2" class="tpclink a2menu" title="See All Downloads" href="/download/">Downloads</a></li>
+<li id="mtopic3"><a id="glink3" class="tpclink a2menu" title="See All Services &amp; Solutions" href="/servicessolutions/">Services &amp; Solutions</a></li>
+<li id="mtopic4"><a id="glink4" class="tpclink a2menu" title="See All Support" href="http://sunsolve.sun.com/">Support</a></li>
+<li id="mtopic5"><a id="glink5" class="tpclink a2menu" title="See All Training" href="/training/">Training</a></li>
+<li id="mtopic6"><a id="glink6" class="tpclink a2menu" title="See All Developer" href="http://developers.sun.com/">Developer</a></li>
+</ul>
+-->
+</div>
+</div></div></div></div>
+</div></div>
+<!-- END A2 COMPONENT V.0 -->
+
+
+
+
+
+
+
+<!-- BEGIN BREADCRUMB -->
+<table width="100%">
+  <tr>
+    <td align="left"><div align="left" id="breadcrumb"><a href="layouts.html">&lt;&lt;Previous</a></div></td>
+    <td align="center"><div align="center" id="breadcrumb"><a href="index.html">Top</a></div></td>
+    <td align="right"><div align="right" id="breadcrumb"><a href="events.html">Next&gt;&gt;</a></div></td>
+  </tr>
+</table>
+<!-- END BREADCRUMB -->
+
+
+
+
+
+
+
+<!-- BEGIN PAGETITLE TWO LINE -->
+<div class="pagetitle2">LWUIT Tutorial</div>
+<div class="smallpagetitle"><h1>Using Transitions</h1></div>
+<!-- END PAGETITLE TWO LINE -->
+
+
+
+
+
+
+
+<!-- BEGIN WRAPPER TABLE, 1 COLUMN, MAIN -->
+<table border="0" cellpadding="0" cellspacing="10" width="100%">
+<tr><td width="100%" valign="top">
+<!-- BEGIN CENTRAL COLUMN COMPONENTS -->
+
+<a name="skip2content"> </a>
+
+<!--startindex-->
+
+<!-- ============ -->
+<!-- MAIN CONTENT -->
+<!-- ============ -->
+
+<div class="pc0"><div class="pc0v4">
+
+<p>
+  Many applications use more than one form. For example,
+  a messaging application might use one screen to show incoming messages, one
+  screen for composing messages, and one screen to display an address book.
+</p>
+
+<p>
+  To show more than one form in LWUIT, simply create <code>Form</code>s and
+  call each <code>show()</code> method when you want to display the corresponding
+  form.
+</p>
+
+<p>
+  A <i>transition</i> provides a helpful visual cue to the user about the
+  relationship between different forms. LWUIT can slide
+  forms horizontally or vertically. LWUIT also includes a gradual
+  fade from one form to the next. On devices with the JSR 184 Mobile 3D
+  Graphics API, LWUIT can also perform some three dimensional transitions.
+</p>
+
+<p>
+If LWUIT's transitions don't meet your needs, you can write your own transition.
+</p>
+
+<p>
+  <code>CommonTransitions</code> contains static factory methods for creating
+  slide and fade transitions.
+</p>
+
+<ul>
+<li><code>createSlide()</code> creates a transition that slides a new form onto
+the screen while sliding the current form off. Sliding can be up, down, left,
+or right.</li>
+<li><code>createFade()</code> makes a transition that smoothly fades from the
+current from to a new one.</li>
+</ul>
+
+<p>
+    For devices that support the JSR 184 Mobile 3D Graphics API, LWUIT offers
+    static methods in <code>Transition3D</code> for three additional types of
+    transitions.
+</p>
+
+<ul>
+<li><code>createFlyIn()</code> zooms the new form in from the center to fill
+the entire screen.</li>
+<li><code>createCube()</code> gives the illusion that the current form is the
+front face of a cube. The cube rotates to show another face which is the new form.</li>
+<li><code>createRotation()</code> flips the current form like a playing card. The
+new form is revealed on the other side.</li>
+</ul>
+
+<p>
+  You can set an incoming and outgoing transition for each form. The incoming
+  transition is used when the form will be displayed. The outgoing transition
+  is used when the form will be replaced by another.
+</p>
+
+<p>
+  The following example sets up two forms with a single button on each. Press
+  the button to switch between the forms using slide transitions.
+</p>
+
+<p>
+  The slides transitions are created by specifying whether the slide is
+  horizontal or vertical, a direction (<code>true</code> for forward,
+  <code>false</code> for reverse), and the time in milliseconds.
+</p>
+
+<p>
+  In the
+  example, the first form's outgoing transition is horizontal, backward (meaning
+  that the form will slide off to the left), and 200 milliseconds long. The second
+  form's outgoing transition is the same, but forward, which means it slides off
+  to the right.
+</p>
+
+<pre>
+import javax.microedition.midlet.*;
+
+import com.sun.lwuit.*;
+import com.sun.lwuit.animations.*;
+import com.sun.lwuit.events.*;
+
+public class TransitionMIDlet extends MIDlet implements ActionListener {
+    private Form mFirstForm, mSecondForm;
+    
+    public void startApp() {
+      if (mFirstForm == null) {
+        Display.init(this);
+
+        mFirstForm = new Form("First Form");
+        
+        Button button = new Button("Switch");
+        mFirstForm.addComponent(button);
+        button.addActionListener(this);
+        
+        mFirstForm.setTransitionOutAnimator(
+            CommonTransitions.createSlide(
+                CommonTransitions.SLIDE_HORIZONTAL, false, 200));
+
+        mSecondForm = new Form("Second Form");
+
+        Button button2 = new Button("Switch");
+        mSecondForm.addComponent(button2);
+        button2.addActionListener(this);
+
+        mSecondForm.setTransitionOutAnimator(
+            CommonTransitions.createSlide(
+                CommonTransitions.SLIDE_HORIZONTAL, true, 200));
+
+        mFirstForm.show();
+      }
+    }
+
+    public void pauseApp() {}
+
+    public void destroyApp(boolean unconditional) {}
+
+    public void actionPerformed(ActionEvent ae) {
+      Form current = Display.getInstance().getCurrent();
+      if (current == mFirstForm) {
+        mSecondForm.show();
+      } else if (current == mSecondForm) {
+        mFirstForm.show();
+      }
+    }
+}
+</pre>
+
+<!-- =================== -->
+<!-- END OF MAIN CONTENT -->
+<!-- =================== -->
+
+<!--stopindex-->
+
+<!-- END CENTRAL COLUMN COMPONENTS -->
+</td></tr>
+<!-- BEGIN SPACER ROW -->
+<tr><td><img src="/im/a.gif" width="780" height="1" border="0" alt="" /></td></tr>
+<!-- END SPACER ROW -->
+</table>
+<!-- END WRAPPER TABLE, 1 COLUMN, MAIN -->
+
+<!-- BEGIN BREADCRUMB -->
+<table width="100%">
+  <tr>
+    <td align="left"><div align="left" id="breadcrumb"><a href="layouts.html">&lt;&lt;Previous</a></div></td>
+    <td align="center"><div align="center" id="breadcrumb"><a href="index.html">Top</a></div></td>
+    <td align="right"><div align="right" id="breadcrumb"><a href="events.html">Next&gt;&gt;</a></div></td>
+  </tr>
+</table>
+<!-- END BREADCRUMB -->
+
+
+
+
+
+
+
+<!-- START SITECATALYST -->
+<!--stopindex-->
+<script language="JavaScript" src="/share/omniture/s_code_remote.js"></script>
+<!--startindex-->
+<!-- END SITECATALYST -->
+
+
+
+
+<hr/>
+
+
+<!-- BEGIN G9 VARIATION 0 -->
+
+<!-- (removed) -->
+
+<!-- END G9 VARIATION 0 -->
+
+
+
+
+
+
+
+<!-- BEGIN A5 COMPONENT V.0 -->
+<div class="a5" id="a5v0">
+<span class="footerlinks">
+<!--
+<a href="/contact/">Contact</a>
+<a href="/aboutsun/index.html">About Sun</a>
+<a href="/aboutsun/media/index.html">News &amp; Events</a>
+<a href="/corp_emp/">Employment</a>
+<a href="/sitemap/">Site Map</a>
+<a href="/privacy/">Privacy</a>
+<a href="/share/text/termsofuse.html">Terms of Use</a>
+<a href="/suntrademarks/">Trademarks</a>
+-->
+<span class="footercopy">Copyright &#169; <span id="copyDate" class="cssDate">2008</span> Sun Microsystems, Inc.</span>
+
+</span>
+</div>
+<!-- END A5 COMPONENT V.0 -->
+
+
+
+
+
+
+
+</div>
+</body>
+</html>
+
+
+
