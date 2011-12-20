@@ -23,6 +23,8 @@
  */
 package com.sun.lwuit;
 
+import com.nokia.mid.ui.TextEditor;
+import com.nokia.mid.ui.TextEditorListener;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.geom.Dimension;
@@ -41,7 +43,7 @@ import java.util.Vector;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component {
+public class TextArea extends Component implements TextEditorListener {
     private static int defaultValign = TOP;
 
     /**
@@ -1398,4 +1400,9 @@ public class TextArea extends Component {
     public int getVerticalAlignment(){
         return valign;
     }
+
+    public void inputAction(TextEditor textEditor, int actions) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 }

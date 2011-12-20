@@ -3167,7 +3167,8 @@ public abstract class LWUITImplementation {
      * Base implementation returns null.
      * @return TextEditor class
      */
-     public TextEditor requestNewNativeTextEditor() {
+     public TextEditor requestNewNativeTextEditor(int maxSize, int constraints, int width, int rows) {
+         
          return null;
      }
 }

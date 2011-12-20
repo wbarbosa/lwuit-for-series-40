@@ -23,6 +23,7 @@
  */
 package com.sun.lwuit.impl.midp;
 
+import com.nokia.mid.ui.TextEditor;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
@@ -1917,4 +1918,22 @@ public class GameCanvasImplementation extends LWUITImplementation {
     public int getVolume() {
         return MMAPIPlayer.getVolume();
     }
+
+    /**
+     * overriden form the baseclass. This version creates a Nokia TextEditor and sets the canvas 
+     * as the parent.
+     * @param maxSize
+     * @param constraints
+     * @param width
+     * @param rows
+     * @return 
+     */
+    public TextEditor requestNewNativeTextEditor(int maxSize, int constraints, int width, int rows) {
+        TextEditor ret = TextEditor.createTextEditor(maxSize, constraints, width, rows);
+        ret.setParent(canvas);
+        return ret;
+    }
+
+    
+    
 }
