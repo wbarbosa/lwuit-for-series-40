@@ -318,7 +318,7 @@ public class TextArea extends Component implements TextEditorListener {
         setUIID("TextArea");
         setSelectCommandText(UIManager.getInstance().localize("edit", "Edit"));
         this.maxSize = maxSize;
-        setText(text);
+        
         setConstraint(constraint);
         if(rows <= 0){
             throw new IllegalArgumentException("rows must be positive");
@@ -332,6 +332,7 @@ public class TextArea extends Component implements TextEditorListener {
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
         textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
+        setText(text);
     }
 
     /**
