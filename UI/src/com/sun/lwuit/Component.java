@@ -2413,6 +2413,7 @@ public class Component implements Animation, StyleListener {
         Form rootForm = getComponentForm();
         if (rootForm != null) {
             rootForm.requestFocus(this);
+            
         }
     }
 
@@ -3376,7 +3377,7 @@ public class Component implements Animation, StyleListener {
         return false;
     }
 
-    void paintHint(Graphics g) {
+     void paintHint(Graphics g) {
         Label hintLabel = getHintLabelImpl();
         if (hintLabel != null && shouldShowHint()) {
             hintLabel.setX(getX());

@@ -211,7 +211,11 @@ public class TextArea extends Component implements TextEditorListener {
     private int currentRowWidth;
     
     private Label hintLabel;
-
+    
+    /**
+     * In place texteditor
+     */
+    private TextEditor textEditor;
     /**
      * Creates an area with the given rows and columns
      * 
@@ -326,6 +330,8 @@ public class TextArea extends Component implements TextEditorListener {
         this.columns = columns;
         LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
+        //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
+        textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
     }
 
     /**
@@ -375,6 +381,7 @@ public class TextArea extends Component implements TextEditorListener {
             //zero the vector inorder to initialize it on the next paint
             rowStrings=null; 
         }
+        textEditor.setContent(text);
         repaint();
     }
 
@@ -512,7 +519,7 @@ public class TextArea extends Component implements TextEditorListener {
     }
         
     void editString() {
-        if(autoDegradeMaxSize && (!hadSuccessfulEdit) && (maxSize > 1024)) {
+        /*if(autoDegradeMaxSize && (!hadSuccessfulEdit) && (maxSize > 1024)) {
             try {
                 Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
             } catch(IllegalArgumentException err) {
@@ -522,7 +529,9 @@ public class TextArea extends Component implements TextEditorListener {
             }
         } else {
             Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
-        }
+        }*/
+        //Hide text and show texteditor
+        textEditor.setVisible(true);
     }
 
     /**
@@ -925,15 +934,20 @@ public class TextArea extends Component implements TextEditorListener {
      * @inheritDoc
      */
     protected Dimension calcPreferredSize(){
+        Dimension ret;
         if(shouldShowHint()) {
             Label l = getHintLabelImpl();
             if(l != null) {
                 Dimension d1 = UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
                 Dimension d2 = l.getPreferredSize();
-                return new Dimension(d1.getWidth() + d2.getWidth(), d1.getHeight() + d2.getHeight());
+                ret = new Dimension(d1.getWidth() + d2.getWidth(), d1.getHeight() + d2.getHeight());
+                textEditor.setSize(ret.getWidth(), ret.getHeight());
+                return ret;
             }
         }
-        return UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
+        ret = UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
+        textEditor.setSize(ret.getWidth(), ret.getHeight());
+        return ret;
     }
         
     /**
@@ -1400,9 +1414,33 @@ public class TextArea extends Component implements TextEditorListener {
     public int getVerticalAlignment(){
         return valign;
     }
-
+    /**
+     * Get events from the textEditor. Add content from texteditor to text variable every
+     * time there is some change in the editor.
+     * @param textEditor
+     * @param actions 
+     */
     public void inputAction(TextEditor textEditor, int actions) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       
+       //this.text = textEditor.getContent();
     }
+
+    
+    public void requestFocus() {
+        super.requestFocus();
+        if(isEditable()) {
+            textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
+            textEditor.setVisible(true);
+        }
+    }
+
+    public void setFocus(boolean focused) {
+        super.setFocus(focused);
+        textEditor.setVisible(focused);
+        if(!focused) {
+            setText(textEditor.getContent());
+        }
+    }
+    
     
 }
