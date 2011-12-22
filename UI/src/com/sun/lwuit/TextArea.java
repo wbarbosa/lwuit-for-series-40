@@ -559,13 +559,7 @@ public class TextArea extends Component implements TextEditorListener {
         } else {
             super.pointerReleased(x, y);
             if (isEditable() && isEnabled() && !isCellRenderer()) {
-                if (Display.getInstance().isTouchScreenDevice()) {
-                    if (!Display.getInstance().isVirtualKeyboardShowing()) {
-                        Display.getInstance().setShowVirtualKeyboard(true);
-                    }
-                } else {
-                    onClick();
-                }
+                onClick();
             }
         }
 
