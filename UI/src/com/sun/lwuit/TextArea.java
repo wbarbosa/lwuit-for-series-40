@@ -332,6 +332,7 @@ public class TextArea extends Component implements TextEditorListener {
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
         textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
+        textEditor.setForegroundColor(0xFF000000);
         setText(text);
     }
 
@@ -531,8 +532,18 @@ public class TextArea extends Component implements TextEditorListener {
         } else {
             Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
         }*/
-        //Hide text and show texteditor
+        showTextEditor();
+        
+    }
+    private void showTextEditor() {
+        //hide text
+        
+        //show texteditor
+        textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
+        textEditor.setSize(getWidth(), getHeight());
         textEditor.setVisible(true);
+        textEditor.setFocus(true);
+        
     }
 
     /**
@@ -1424,8 +1435,7 @@ public class TextArea extends Component implements TextEditorListener {
     public void requestFocus() {
         super.requestFocus();
         if(isEditable()) {
-            textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
-            textEditor.setVisible(true);
+            showTextEditor();
         }
     }
 
