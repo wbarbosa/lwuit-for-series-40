@@ -569,8 +569,9 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                         x+= (ta.getWidth()-leftPadding-rightPadding-f.stringWidth(displayText))/2;
                         break;
                 }
-            
-                g.drawString(displayText, x, y ,ta.getStyle().getTextDecoration());
+                if(!ta.isNativeTextEditorVisible()) {
+                    g.drawString(displayText, x, y ,ta.getStyle().getTextDecoration());
+                }
                 shouldBreak = true;
             }else{
                 if(shouldBreak){

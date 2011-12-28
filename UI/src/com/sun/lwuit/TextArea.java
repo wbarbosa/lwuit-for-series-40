@@ -1447,5 +1447,8 @@ public class TextArea extends Component implements TextEditorListener {
         }
     }
     
+    public boolean isNativeTextEditorVisible() {
+        return textEditor.isVisible();
+    }
     
 }
