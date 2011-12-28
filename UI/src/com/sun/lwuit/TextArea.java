@@ -332,6 +332,9 @@ public class TextArea extends Component implements TextEditorListener {
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
         textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
+        if(rows == 1) {
+            textEditor.setMultiline(false);
+        }
         textEditor.setForegroundColor(0xFF000000);
         setText(text);
     }
@@ -540,6 +543,7 @@ public class TextArea extends Component implements TextEditorListener {
         
         //show texteditor
         textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
+        System.out.println("set size in showTextEditor");
         textEditor.setSize(getWidth(), getHeight());
         textEditor.setVisible(true);
         textEditor.setFocus(true);
@@ -641,6 +645,9 @@ public class TextArea extends Component implements TextEditorListener {
     public void setRows(int rows) {
         setShouldCalcPreferredSize(true);
         this.rows = rows;
+        if(rows == 1) {
+            textEditor.setMultiline(false);
+        }
     }
     
     void initComponentImpl() {
@@ -932,7 +939,7 @@ public class TextArea extends Component implements TextEditorListener {
      * @inheritDoc
      */
     public void paint(Graphics g) {
-        UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
+        //UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         paintHint(g);
     }
     
@@ -941,6 +948,7 @@ public class TextArea extends Component implements TextEditorListener {
      */
     protected Dimension calcPreferredSize(){
         Dimension ret;
+        System.out.println("Setting size in calcPreferredSize");
         if(shouldShowHint()) {
             Label l = getHintLabelImpl();
             if(l != null) {
@@ -1427,8 +1435,8 @@ public class TextArea extends Component implements TextEditorListener {
      * @param actions 
      */
     public void inputAction(TextEditor textEditor, int actions) {
+       setText(textEditor.getContent());
        
-       //this.text = textEditor.getContent();
     }
 
     
@@ -1442,9 +1450,7 @@ public class TextArea extends Component implements TextEditorListener {
     public void setFocus(boolean focused) {
         super.setFocus(focused);
         textEditor.setVisible(focused);
-        if(!focused) {
-            setText(textEditor.getContent());
-        }
+        
     }
     
     public boolean isNativeTextEditorVisible() {
