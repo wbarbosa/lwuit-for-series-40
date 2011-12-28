@@ -336,6 +336,8 @@ public class TextArea extends Component implements TextEditorListener {
             textEditor.setMultiline(false);
         }
         textEditor.setForegroundColor(0xFF000000);
+        textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
+        textEditor.setVisible(true);
         setText(text);
     }
 
@@ -545,7 +547,7 @@ public class TextArea extends Component implements TextEditorListener {
         textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
         System.out.println("set size in showTextEditor");
         textEditor.setSize(getWidth(), getHeight());
-        textEditor.setVisible(true);
+        
         textEditor.setFocus(true);
         
     }
@@ -1449,12 +1451,24 @@ public class TextArea extends Component implements TextEditorListener {
 
     public void setFocus(boolean focused) {
         super.setFocus(focused);
-        textEditor.setVisible(focused);
+        textEditor.setFocus(focused);
+        
         
     }
     
     public boolean isNativeTextEditorVisible() {
         return textEditor.isVisible();
     }
+
+    public void setX(int x) {
+        super.setX(x);
+        textEditor.setPosition(getAbsoluteX(), textEditor.getPositionY());
+    }
+
+    public void setY(int y) {
+        super.setY(y);
+        textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY());
+    }
+    
     
 }
