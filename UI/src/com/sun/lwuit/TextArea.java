@@ -335,6 +335,8 @@ public class TextArea extends Component implements TextEditorListener {
         textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
         if(rows == 1) {
             textEditor.setMultiline(false);
+        }else if(rows > 1){
+            textEditor.setMultiline(true);
         }
         textEditor.setForegroundColor(0xFF000000);
         textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
@@ -373,6 +375,7 @@ public class TextArea extends Component implements TextEditorListener {
      */
     public void setWidth(int width) {
         super.setWidth(width);
+        textEditor.setSize(width, textEditor.getHeight());
         getRowStrings();
     }
 
@@ -1470,6 +1473,16 @@ public class TextArea extends Component implements TextEditorListener {
     public void setY(int y) {
         super.setY(y);
         textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY());
+    }
+
+    public void setHeight(int height) {
+        super.setHeight(height);
+        textEditor.setSize(textEditor.getWidth(), height);
+    }
+
+    public void setSize(Dimension d) {
+        super.setSize(d);
+        textEditor.setSize(d.getWidth(), d.getHeight());
     }
     
     
