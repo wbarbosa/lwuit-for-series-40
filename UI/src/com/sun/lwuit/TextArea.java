@@ -23,6 +23,7 @@
  */
 package com.sun.lwuit;
 
+import com.nokia.mid.ui.DirectUtils;
 import com.nokia.mid.ui.TextEditor;
 import com.nokia.mid.ui.TextEditorListener;
 import com.sun.lwuit.events.ActionEvent;
@@ -339,6 +340,10 @@ public class TextArea extends Component implements TextEditorListener {
         textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
         textEditor.setVisible(true);
         setText(text);
+        Font f = getStyle().getFont();
+        javax.microedition.lcdui.Font nativeFont = DirectUtils.getFont(f.getFace(), f.getStyle(), f.getHeight());
+        textEditor.setFont(nativeFont);
+        
     }
 
     /**
@@ -537,18 +542,17 @@ public class TextArea extends Component implements TextEditorListener {
         } else {
             Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
         }*/
-        showTextEditor();
+        focusTextEditor(true);
         
     }
-    private void showTextEditor() {
-        //hide text
-        
+    private void focusTextEditor(boolean focused) {
         //show texteditor
         textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
-        System.out.println("set size in showTextEditor");
-        textEditor.setSize(getWidth(), getHeight());
-        
-        textEditor.setFocus(true);
+        System.out.println("set size in showTextEditor:" + getWidth() + "x" + getHeight());
+        if(getWidth() > 0 && getHeight() > 0) {
+            textEditor.setSize(getWidth(), getHeight());
+        }
+        textEditor.setFocus(focused);
         
     }
 
@@ -950,19 +954,17 @@ public class TextArea extends Component implements TextEditorListener {
      */
     protected Dimension calcPreferredSize(){
         Dimension ret;
-        System.out.println("Setting size in calcPreferredSize");
+        
         if(shouldShowHint()) {
             Label l = getHintLabelImpl();
             if(l != null) {
                 Dimension d1 = UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
                 Dimension d2 = l.getPreferredSize();
                 ret = new Dimension(d1.getWidth() + d2.getWidth(), d1.getHeight() + d2.getHeight());
-                textEditor.setSize(ret.getWidth(), ret.getHeight());
                 return ret;
             }
         }
         ret = UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
-        textEditor.setSize(ret.getWidth(), ret.getHeight());
         return ret;
     }
         
@@ -1445,15 +1447,15 @@ public class TextArea extends Component implements TextEditorListener {
     public void requestFocus() {
         super.requestFocus();
         if(isEditable()) {
-            showTextEditor();
+            focusTextEditor(true);
         }
     }
 
     public void setFocus(boolean focused) {
         super.setFocus(focused);
-        textEditor.setFocus(focused);
-        
-        
+        if(isEditable()) {
+            focusTextEditor(focused);
+        }
     }
     
     public boolean isNativeTextEditorVisible() {
