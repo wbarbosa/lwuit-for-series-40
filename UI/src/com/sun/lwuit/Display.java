@@ -39,6 +39,7 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+import javax.microedition.midlet.MIDlet;
 
 /**
  * Central class for the API that manages rendering/events and is used to place top
@@ -443,7 +444,24 @@ public final class Display {
                 INSTANCE.edt.setPriority(Thread.NORM_PRIORITY + 1);
                 INSTANCE.edt.start();
             }
-            UIManager.getInstance();
+            
+            // hackety hack: set basic colors from system theme
+            UIManager uim = UIManager.getInstance();
+            javax.microedition.lcdui.Display d = javax.microedition.lcdui.Display.getDisplay((MIDlet)m);
+            int bg = d.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND);
+            int border = d.getColor(javax.microedition.lcdui.Display.COLOR_BORDER);
+            int fg = d.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND);
+            int bg_hi = d.getColor(javax.microedition.lcdui.Display.COLOR_HIGHLIGHTED_BACKGROUND);
+            int border_hi = d.getColor(javax.microedition.lcdui.Display.COLOR_HIGHLIGHTED_BORDER);
+            int fg_hi = d.getColor(javax.microedition.lcdui.Display.COLOR_HIGHLIGHTED_FOREGROUND);
+            Hashtable themeprops = new Hashtable();
+            themeprops.put("bgColor", Integer.toHexString(bg));
+            themeprops.put("sel#bgColor", Integer.toHexString(bg_hi));
+            themeprops.put("fgColor", Integer.toHexString(fg));
+            themeprops.put("sel#fgColor", Integer.toHexString(fg_hi));
+            uim.setThemeProps(themeprops);
+            // end hackety hack
+            
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
             INSTANCE.registerVirtualKeyboard(vkb);
         }else{
