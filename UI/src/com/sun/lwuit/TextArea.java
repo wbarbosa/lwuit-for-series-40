@@ -331,20 +331,23 @@ public class TextArea extends Component implements TextEditorListener {
         this.columns = columns;
         LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
+        System.out.println("Rows:" + rows);
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
         textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
         if(rows == 1) {
             textEditor.setMultiline(false);
         }else if(rows > 1){
-            textEditor.setMultiline(true);
+            textEditor.setMultiline(true); 
         }
         textEditor.setForegroundColor(0xFF000000);
+        //textEditor.setBackgroundColor(0xFFFF0000);
         textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
         textEditor.setVisible(true);
         setText(text);
         Font f = getStyle().getFont();
         javax.microedition.lcdui.Font nativeFont = DirectUtils.getFont(f.getFace(), f.getStyle(), f.getHeight());
-        textEditor.setFont(nativeFont);
+        textEditor.setFont(nativeFont); 
+        textEditor.setSize(textEditor.getWidth(), (nativeFont.getHeight() + textEditor.getLineMarginHeight() + 5) * rows);
     }
 
     /**
@@ -550,10 +553,9 @@ public class TextArea extends Component implements TextEditorListener {
     private void focusTextEditor(boolean focused) {
         //show texteditor
         textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
-        System.out.println("set size in showTextEditor:" + getWidth() + "x" + getHeight());
-        if(getWidth() > 0 && getHeight() > 0) {
+        /*if(getWidth() > 0 && getHeight() > 0) {
             textEditor.setSize(getWidth(), getHeight());
-        }
+        }*/
         textEditor.setFocus(focused);
         
     }
@@ -1477,14 +1479,11 @@ public class TextArea extends Component implements TextEditorListener {
     public void setHeight(int height) {
         height = calculateCorrectHeight(height);
         super.setHeight(height);
-        textEditor.setSize(textEditor.getWidth(), height);
     }
     private int calculateCorrectHeight(int proposedHeight) {
         javax.microedition.lcdui.Font f = textEditor.getFont();
         int margin = textEditor.getLineMarginHeight();
-        System.out.println("Rows:" + rows + " fontheight:" + f.getHeight() + " margin:" + margin);
         int minHeight = (f.getHeight() + margin) * rows;
-        System.out.println("minHeight:" + minHeight + " proposed:" + proposedHeight);
         int ret = (minHeight > proposedHeight) ? minHeight : proposedHeight;
         return ret;
     }
@@ -1492,7 +1491,7 @@ public class TextArea extends Component implements TextEditorListener {
     public void setSize(Dimension d) {
         d.setHeight(calculateCorrectHeight(d.getHeight()));
         super.setSize(d);
-        textEditor.setSize(d.getWidth(), d.getHeight());
+        textEditor.setSize(d.getWidth(), textEditor.getHeight());
     }
     
     
