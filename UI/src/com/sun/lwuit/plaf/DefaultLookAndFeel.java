@@ -536,7 +536,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         int oHeight = g.getClipHeight();
         Font f = ta.getStyle().getFont();
         int fontHeight = f.getHeight();
-
+        System.out.println("Font height used to draw text:" + fontHeight);
         int align = reverseAlignForBidi(ta);
 
         int leftPadding = ta.getStyle().getPadding(ta.isRTL(), Component.LEFT);
@@ -569,9 +569,8 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                         x+= (ta.getWidth()-leftPadding-rightPadding-f.stringWidth(displayText))/2;
                         break;
                 }
-                if(!ta.isNativeTextEditorVisible()) {
-                    g.drawString(displayText, x, y ,ta.getStyle().getTextDecoration());
-                }
+                g.drawString(displayText, x, y ,ta.getStyle().getTextDecoration());
+                
                 shouldBreak = true;
             }else{
                 if(shouldBreak){

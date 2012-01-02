@@ -217,6 +217,10 @@ public class TextArea extends Component implements TextEditorListener {
      * In place texteditor
      */
     private TextEditor textEditor;
+    
+    int leftPadding;
+    int rightPadding;
+    int topPadding;
     /**
      * Creates an area with the given rows and columns
      * 
@@ -340,14 +344,18 @@ public class TextArea extends Component implements TextEditorListener {
             textEditor.setMultiline(true); 
         }
         textEditor.setForegroundColor(0xFF000000);
-        //textEditor.setBackgroundColor(0xFFFF0000);
-        textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
+        
+        //these are from DefaultLookAndFeel.drawTextArea to help position texteditor
+        leftPadding = getStyle().getPadding(isRTL(), Component.LEFT);
+        rightPadding = getStyle().getPadding(isRTL(), Component.RIGHT);
+        topPadding = getStyle().getPadding(false, Component.TOP);
+        
+        textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
         textEditor.setVisible(true);
         setText(text);
-        Font f = getStyle().getFont();
-        javax.microedition.lcdui.Font nativeFont = DirectUtils.getFont(f.getFace(), f.getStyle(), f.getHeight());
+        javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
         textEditor.setFont(nativeFont); 
-        textEditor.setSize(textEditor.getWidth(), (nativeFont.getHeight() + textEditor.getLineMarginHeight() + 5) * rows);
+        
     }
 
     /**
@@ -551,12 +559,9 @@ public class TextArea extends Component implements TextEditorListener {
         
     }
     private void focusTextEditor(boolean focused) {
-        //show texteditor
-        textEditor.setPosition(getAbsoluteX(), getAbsoluteY());
-        /*if(getWidth() > 0 && getHeight() > 0) {
-            textEditor.setSize(getWidth(), getHeight());
-        }*/
+        textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
         textEditor.setFocus(focused);
+        textEditor.setVisible(focused);
         
     }
 
@@ -1443,6 +1448,7 @@ public class TextArea extends Component implements TextEditorListener {
      * @param actions 
      */
     public void inputAction(TextEditor textEditor, int actions) {
+        System.out.println("inputAction");
        setText(textEditor.getContent());
        
     }
@@ -1457,6 +1463,8 @@ public class TextArea extends Component implements TextEditorListener {
 
     public void setFocus(boolean focused) {
         super.setFocus(focused);
+        setText(textEditor.getContent());
+        System.out.println("TextEditor fontsize:" + textEditor.getFont().getHeight());
         if(isEditable()) {
             focusTextEditor(focused);
         }
@@ -1468,16 +1476,16 @@ public class TextArea extends Component implements TextEditorListener {
 
     public void setX(int x) {
         super.setX(x);
-        textEditor.setPosition(getAbsoluteX(), textEditor.getPositionY());
+        textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
     }
 
     public void setY(int y) {
         super.setY(y);
-        textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY());
+        textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
     }
 
     public void setHeight(int height) {
-        height = calculateCorrectHeight(height);
+        //height = calculateCorrectHeight(height);
         super.setHeight(height);
     }
     private int calculateCorrectHeight(int proposedHeight) {
@@ -1489,7 +1497,7 @@ public class TextArea extends Component implements TextEditorListener {
     }
 
     public void setSize(Dimension d) {
-        d.setHeight(calculateCorrectHeight(d.getHeight()));
+        //d.setHeight(calculateCorrectHeight(d.getHeight()));
         super.setSize(d);
         textEditor.setSize(d.getWidth(), textEditor.getHeight());
     }
