@@ -1448,7 +1448,12 @@ public class TextArea extends Component implements TextEditorListener {
      * @param actions 
      */
     public void inputAction(TextEditor textEditor, int actions) {
-        System.out.println("inputAction");
+       if((actions&TextEditorListener.ACTION_TRAVERSE_NEXT) != 0) {
+           //focus to next element
+       }
+       if((actions&TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
+           //focus previous element
+       }
        setText(textEditor.getContent());
        
     }
