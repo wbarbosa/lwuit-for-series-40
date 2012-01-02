@@ -355,6 +355,7 @@ public class TextArea extends Component implements TextEditorListener {
         setText(text);
         javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
         textEditor.setFont(nativeFont); 
+        setGrowByContent(false);
         
     }
 
