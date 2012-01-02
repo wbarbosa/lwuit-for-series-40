@@ -561,7 +561,6 @@ public class TextArea extends Component implements TextEditorListener {
     private void focusTextEditor(boolean focused) {
         textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
         textEditor.setFocus(focused);
-        textEditor.setVisible(focused);
         
     }
 
