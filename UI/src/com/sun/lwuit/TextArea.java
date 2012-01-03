@@ -1468,7 +1468,6 @@ public class TextArea extends Component implements TextEditorListener {
     public void setFocus(boolean focused) {
         super.setFocus(focused);
         setText(textEditor.getContent());
-        System.out.println("TextEditor fontsize:" + textEditor.getFont().getHeight());
         if(isEditable()) {
             focusTextEditor(focused);
         }
@@ -1502,4 +1501,17 @@ public class TextArea extends Component implements TextEditorListener {
     public TextEditor getTextEditor() {
         return textEditor;
     }
+
+    protected void deinitialize() {
+        super.deinitialize();
+        textEditor.setVisible(false);
+        
+    }
+
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        textEditor.setVisible(visible);
+    }
+    
+    
 }
