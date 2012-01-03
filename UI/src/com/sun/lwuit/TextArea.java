@@ -23,7 +23,6 @@
  */
 package com.sun.lwuit;
 
-import com.nokia.mid.ui.DirectUtils;
 import com.nokia.mid.ui.TextEditor;
 import com.nokia.mid.ui.TextEditorListener;
 import com.sun.lwuit.events.ActionEvent;
@@ -1493,13 +1492,6 @@ public class TextArea extends Component implements TextEditorListener {
         //height = calculateCorrectHeight(height);
         super.setHeight(height);
     }
-    private int calculateCorrectHeight(int proposedHeight) {
-        javax.microedition.lcdui.Font f = textEditor.getFont();
-        int margin = textEditor.getLineMarginHeight();
-        int minHeight = (f.getHeight() + margin) * rows;
-        int ret = (minHeight > proposedHeight) ? minHeight : proposedHeight;
-        return ret;
-    }
 
     public void setSize(Dimension d) {
         //d.setHeight(calculateCorrectHeight(d.getHeight()));
@@ -1507,5 +1499,7 @@ public class TextArea extends Component implements TextEditorListener {
         textEditor.setSize(d.getWidth(), textEditor.getHeight());
     }
     
-    
+    public TextEditor getTextEditor() {
+        return textEditor;
+    }
 }

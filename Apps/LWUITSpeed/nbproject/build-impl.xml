@@ -96,6 +96,15 @@
         <condition property="app-version.autoincrement.trigger">
             <istrue value="${app-version.autoincrement}"/>
         </condition>
+        <condition property="debug.timeout" value="30000">
+            <or>
+                <equals arg1="${debugger.timeout}" arg2="" trim="true"/>
+                <not>
+                    <isset property="debugger.timeout"/>
+                </not>
+            </or>
+        </condition>
+        <property name="debug.timeout" value="${debugger.timeout}"/>
         <nb-overrideproperty name="buildsystem.baton" value="${src.dir}"/>
     </target>
     <!--cldc-init-->
@@ -164,11 +173,12 @@
             <equals arg1="${deployment.number}" arg2="" trim="true"/>
         </condition>
         <fail if="application.version.invalid" message="Property deployment.number must not be empty and must contain version in format %d.%d.%d!"/>
-    </target>
-    <!--blackberry-init-->
-    <target name="blackberry-init">
-        <available file="${platform.home}/bin/rapc.jar" property="blackberry.trigger"/>
-        <available file="${platform.home}/bin/Settings.rc" property="blackberry.settings.trigger"/>
+        <condition property="sign.jar.trigger" value="true">
+            <and>
+                <isset property="cdc-platform.trigger"/>
+                <istrue value="${sign.enabled}"/>
+            </and>
+        </condition>
     </target>
     <!--ricoh-init-->
     <target name="ricoh-pre-init" if="cdc-platform.trigger">
@@ -290,6 +300,20 @@
         </condition>
     </target>
     <target name="sjmc-init" depends="sjmc-pre-init" if="sjmc-platform.trigger"/>
+    <!--ojec-init-->
+    <target name="ojec-pre-init" if="cdc-platform.trigger">
+        <condition property="ojec-platform.trigger">
+            <equals arg1="ojec" arg2="${platform.type}" casesensitive="false"/>
+        </condition>
+    </target>
+    <target name="ojec-init" depends="ojec-pre-init" if="ojec-platform.trigger"/>
+    <!--cdc-hi-init-->
+    <target name="cdc-hi-pre-init" if="cdc-platform.trigger">
+        <condition property="cdc-hi-platform.trigger">
+            <equals arg1="cdc-hi" arg2="${platform.type}" casesensitive="false"/>
+        </condition>
+    </target>
+    <target name="cdc-hi-init" depends="cdc-hi-pre-init" if="cdc-hi-platform.trigger"/>
     <!--nokiaS80-init-->
     <target name="nokiaS80-pre-init" if="cdc-platform.trigger">
         <condition property="nokiaS80-platform.trigger">
@@ -322,47 +346,10 @@
             <include name="${dist.jar}"/>
         </patternset>
     </target>
-    <!--bdj-init-->
-    <target name="-bdj-pre-pre-init" if="cdc-platform.trigger">
-        <echo message="Calling BD-J init"/>
-        <condition property="bdj-platform.trigger">
-            <equals arg1="bdj" arg2="${platform.type}" casesensitive="false"/>
-        </condition>
-    </target>
-    <target name="-pre-bdj-init" if="bdj-platform.trigger"/>
-    <target name="-bdj-init" if="bdj-platform.trigger">
-        <condition property="bdj.organization.id.invalid">
-            <or>
-                <contains string="${bdj.organization.id}" substring="$${"/>
-                <equals arg1="${bdj.organization.id}" arg2="" trim="true"/>
-            </or>
-        </condition>
-        <fail if="bdj.organization.id.invalid">Missing organization ID!</fail>
-        <condition property="bdj.application.id.invalid">
-            <or>
-                <contains string="${bdj.application.id}" substring="$${"/>
-                <equals arg1="${bdj.application.id}" arg2="" trim="true"/>
-            </or>
-        </condition>
-        <fail if="bdj.application.id.invalid">Missing application ID!</fail>
-        <condition property="bdj.deployment.dir.invalid">
-            <or>
-                <contains string="${bdj.deployment.dir}" substring="$${"/>
-                <equals arg1="${bdj.deployment.dir}" arg2="" trim="true"/>
-            </or>
-        </condition>
-        <fail if="bdj.deployment.dir.invalid">Deployment directory is set!</fail>
-        <property name="deployment.dir" location="${dist.dir}"/>
-        <patternset id="deployment.patternset">
-            <include name="${dist.jar}"/>
-        </patternset>
-    </target>
-    <target name="-post-bdj-init" if="bdj-platform.trigger"/>
-    <target name="bdj-init" depends="-bdj-pre-pre-init, -pre-bdj-init, -bdj-init, -post-bdj-init" if="bdj-platform.trigger"/>
     <!--init-->
     <target name="pre-init"/>
     <target name="post-init"/>
-    <target name="init" depends="pre-init,load-properties,basic-init,cldc-init,cdc-init,blackberry-init,ricoh-init,semc-init,savaje-init,sjmc-init,nokiaS80-init,nsicom-init,bdj-init,post-init"/>
+    <target name="init" depends="pre-init,load-properties,basic-init,cldc-init,cdc-init,ricoh-init,semc-init,savaje-init,sjmc-init,ojec-init,cdc-hi-init,nokiaS80-init,nsicom-init,post-init"/>
     <!--conditional clean-->
     <target name="conditional-clean-init">
         <uptodate property="no.clean.before.build" targetfile="${build.dir}/.timestamp">
@@ -472,6 +459,22 @@
     <target name="pre-obfuscate"/>
     <target name="post-obfuscate"/>
     <target name="obfuscate" depends="compile,pre-obfuscate,proguard,post-obfuscate" description="Obfuscate project classes."/>
+    <!--lwuit-build-->
+    <import file="lwuit.xml" optional="true"/>
+    <target name="-lwuit-check">
+        <condition property="lwuit.allowed">
+            <and>
+                <available file="nbproject/lwuit.xml"/>
+                <isset property="is.mesdk_lwuit"/>
+            </and>
+        </condition>
+    </target>
+    <target name="-pre-lwuit-build" depends="-lwuit-check" if="lwuit.allowed"/>
+    <target name="-lwuit-build" depends="-lwuit-check" if="lwuit.allowed">
+        <antcall target="lwuit_build"/>
+    </target>
+    <target name="-post-lwuit-build" depends="-lwuit-check" if="lwuit.allowed"/>
+    <target name="lwuit-build" depends="-lwuit-check,-pre-lwuit-build, -lwuit-build, -post-lwuit-build" if="lwuit.allowed"/>
     <!--preverify-->
     <target name="pre-preverify"/>
     <target name="do-preverify" if="cldc-platform.trigger">
@@ -488,7 +491,7 @@
         <nb-overrideproperty name="buildsystem.baton" value="${preverify.classes.dir}"/>
     </target>
     <target name="post-preverify"/>
-    <target name="preverify" depends="obfuscate,pre-preverify,do-preverify,post-preverify" description="Preverify project classes."/>
+    <target name="preverify" depends="obfuscate,lwuit-build,pre-preverify,do-preverify,post-preverify" description="Preverify project classes."/>
     <!--set-password-->
     <target name="set-password-init">
         <property name="sign.enabled" value="false"/>
@@ -582,9 +585,10 @@
     <target name="do-extra-libs" if="extra.classpath">
         <property name="dist.lib.dir" value="${dist.dir}/lib"/>
         <mkdir dir="${dist.lib.dir}"/>
-        <copypath destdir="${dist.lib.dir}" path="${extra.classpath}">
+        <copy todir="${dist.lib.dir}">
+            <path path="${extra.classpath}"/>
             <flattenmapper/>
-        </copypath>
+        </copy>
     </target>
     <!--nokiaS80-manifest-->
     <target name="nokiaS80-prepare-j9" if="nokiaS80-platform.trigger">
@@ -628,6 +632,19 @@
         </manifest>
     </target>
     <target name="nokiaS80-create-manifest" depends="nokiaS80-prepare-j9,nokiaS80-prepare-manifest,nokiaS80-prepare-manifest-no-icon" if="nokiaS80-platform.trigger"/>
+    <!--jad-jsr211-properties-->
+    <target name="jad-jsr211-properties.check">
+        <condition property="jad-jsr211-properties.allowed">
+            <and>
+                <isset property="cldc-platform.trigger"/>
+                <isset property="netbeans.home"/>
+                <isset property="is.mesdk_jsr211"/>
+            </and>
+        </condition>
+    </target>
+    <target name="jad-jsr211-properties" description="Updates JAD and manifest with JSR211 properties." depends="jad-jsr211-properties.check" if="jad-jsr211-properties.allowed">
+        <jadjsr211properties jadfile="${dist.dir}/${dist.jad}" manifestfile="${build.dir}/${manifest.file}"/>
+    </target>
     <!--semc-build-j9-->
     <target name="semc-build-j9" if="semc-platform.trigger">
         <epocpathsetter home="${platform.home}"/>
@@ -666,138 +683,12 @@
             <fileset dir="${buildsystem.baton}"/>
         </jar>
     </target>
-    <!--bdj-build-image-->
-    <target name="-pre-bdj-build-perm-file" if="bdj-platform.trigger"/>
-    <target name="-do-bdj-build-perm-file" if="bdj-platform.trigger">
-        <fail message="Main class is not set!">
-            <condition>
-                <equals arg1="${main.class}" arg2="" trim="true"/>
-            </condition>
-        </fail>
-        <property name="bdj.tmp.dir" value="${build.dir}/bdj"/>
-        <property name="bluray.bdjoxml.file" value="${bdj.tmp.dir}/bdjo00000.xml"/>
-        <property name="bluray.bdjo.file" value="${bdj.tmp.dir}/00000.bdjo"/>
-        <mkdir dir="${bdj.tmp.dir}"/>
-        <taskdef name="buildbdjperm" classname="org.netbeans.modules.j2me.cdc.project.bdj.BdjBuildPermTask" classpath="${libs.bdj-ant-utils.classpath}"/>
-        <buildbdjperm jarFile="${dist.dir}/${dist.jar}" xletClass="${main.class}" orgId="${bdj.organization.id}" appId="${bdj.application.id}" fileAccess="${bdj.file.access}" appLifecycle="${bdj.application.lifecycle}" serviceSelect="${bdj.service.selection}" prefRead="${bdj.user.preferences.read}" prefWrite="${bdj.user.preferences.write}" networkPerm="${bdj.network.permissions}"/>
-    </target>
-    <target name="-post-bdj-build-perm-file" if="bdj-platform.trigger"/>
-    <target name="-bdj-build-perm-file" if="bdj-platform.trigger" depends="-pre-bdj-build-perm-file, -do-bdj-build-perm-file, -post-bdj-build-perm-file"/>
-    <target name="-pre-bdj-generate-certificate" if="bdj-platform.trigger"/>
-    <target name="-do-bdj-generate-certificate" if="bdj-platform.trigger">
-        <java classpath="${libs.bdj-ant-utils.classpath}" classname="net.java.bd.tools.security.BDCertGenerator" dir="${bdj.tmp.dir}" fork="true">
-            <arg value="-root"/>
-            <arg value="${bdj.organization.id}"/>
-        </java>
-        <java classpath="${libs.bdj-ant-utils.classpath}" classname="net.java.bd.tools.security.BDCertGenerator" dir="${bdj.tmp.dir}" fork="true">
-            <arg value="-app"/>
-            <arg value="${bdj.organization.id}"/>
-        </java>
-    </target>
-    <target name="-post-bdj-generate-certificate" if="bdj-platform.trigger"/>
-    <target name="-bdj-generate-certificate" if="bdj-platform.trigger" depends="-bdj-build-perm-file, -pre-bdj-generate-certificate, -do-bdj-generate-certificate, -post-bdj-generate-certificate"/>
-    <target name="-pre-bdj-prepare-jar" if="bdj-platform.trigger"/>
-    <target name="-do-bdj-prepare-jar" if="bdj-platform.trigger">
-        <copy file="${dist.dir}/${dist.jar}" tofile="${bdj.tmp.dir}/00000.jar"/>
-    </target>
-    <target name="-post-bdj-prepare-jar" if="bdj-platform.trigger"/>
-    <target name="-bdj-prepare-jar" depends="-bdj-generate-certificate, -pre-bdj-prepare-jar, -do-bdj-prepare-jar, -post-bdj-prepare-jar" if="bdj-platform.trigger"/>
-    <target name="-pre-bdj-sign-jar" if="bdj-platform.trigger"/>
-    <target name="-do-bdj-sign-jar" if="bdj-platform.trigger">
-        <property name="java.home.parent" location="${java.home}/.."/>
-        <condition property="nbjdk.home" value="${java.home.parent}">
-            <available file="${java.home.parent}/lib/tools.jar" type="file"/>
-        </condition>
-        <fail unless="nbjdk.home">Can not find tools.jar</fail>
-        <java classpath="${libs.bdj-ant-utils.classpath}:${java.home.parent}/lib/tools.jar" classname="net.java.bd.tools.security.BDSigner" dir="${bdj.tmp.dir}" fork="true">
-            <arg value="00000.jar"/>
-        </java>
-    </target>
-    <target name="-post-bdj-sign-jar" if="bdj-platform.trigger"/>
-    <target name="-bdj-sign-jar" depends="-bdj-prepare-jar, -pre-bdj-sign-jar, -do-bdj-sign-jar, -post-bdj-sign-jar" if="bdj-platform.trigger"/>
-    <target name="-pre-bdj-generate-bdjo-xml" if="bdj-platform.trigger"/>
-    <target name="-do-bdj-generate-bdjo-xml" if="bdj-platform.trigger">
-        <taskdef name="buildbdjo" classname="org.netbeans.modules.j2me.cdc.project.bdj.BdjBuildBdjo" classpath="${libs.bdj-ant-utils.classpath}"/>
-        <buildbdjo bdjoFile="${bluray.bdjoxml.file}" orgId="${bdj.organization.id}" appId="${bdj.application.id}" mainClass="${main.class}"/>
-    </target>
-    <target name="-post-bdj-generate-bdjo-xml" depends="-bdj-sign-jar" if="bdj-platform.trigger"/>
-    <target name="-bdj-generate-bdjo-xml" depends="-bdj-sign-jar, -pre-bdj-generate-bdjo-xml, -do-bdj-generate-bdjo-xml, -post-bdj-generate-bdjo-xml" if="bdj-platform.trigger"/>
-    <target name="-pre-bdj-generate-bdjo" if="bdj-platform.trigger"/>
-    <target name="-do-bdj-generate-bdjo" if="bdj-platform.trigger">
-        <java classpath="${libs.bdj-ant-utils.classpath}" classname="net.java.bd.tools.bdjo.Converter" fork="true">
-            <arg value="${bluray.bdjoxml.file}"/>
-            <arg value="${bluray.bdjo.file}"/>
-        </java>
-    </target>
-    <target name="-post-bdj-generate-bdjo" if="bdj-platform.trigger"/>
-    <target name="-bdj-generate-bdjo" depends="-bdj-generate-bdjo-xml, -pre-bdj-generate-bdjo, -do-bdj-generate-bdjo, -post-bdj-generate-bdjo" if="bdj-platform.trigger"/>
-    <target name="-pre-bdj-build-bdmv" if="bdj-platform.trigger"/>
-    <target name="-do-bdj-build-bdmv" if="bdj-platform.trigger">
-        <property name="bluray.bdmv.index.file" value="${bdj.tmp.dir}/index.bdmv"/>
-        <property name="bluray.bdmv.movieobject.file" value="${bdj.tmp.dir}/MovieObject.bdmv"/>
-        <taskdef name="buildbdmv" classname="org.netbeans.modules.j2me.cdc.project.bdj.BdjBuildBdmv" classpath="${libs.bdj-ant-utils.classpath}"/>
-        <buildbdmv file="${bluray.bdmv.index.file}" type="index"/>
-        <buildbdmv file="${bluray.bdmv.movieobject.file}" type="movie"/>
-    </target>
-    <target name="-post-bdj-build-bdmv" if="bdj-platform.trigger"/>
-    <target name="-bdj-build-bdmv" depends="-bdj-generate-bdjo, -pre-bdj-build-bdmv, -do-bdj-build-bdmv, -post-bdj-build-bdmv" if="bdj-platform.trigger"/>
-    <target name="-pre-bdj-build-bdjo-image" if="bdj-platform.trigger"/>
-    <target name="-do-bdj-build-bdjo-image" if="bdj-platform.trigger">
-        <property name="bdj.deployment.bdmv.dir" value="${bdj.deployment.dir}/BDMV"/>
-        <property name="bdj.deployment.bdmv.backup.dir" value="${bdj.deployment.bdmv.dir}/BACKUP"/>
-        <property name="bdj.deployment.certificate.dir" value="${bdj.deployment.dir}/CERTIFICATE"/>
-        <property name="bdj.deployment.certificate.backup.dir" value="${bdj.deployment.certificate.dir}/BACKUP"/>
-        <mkdir dir="${bdj.deployment.bdmv.dir}"/>
-        <mkdir dir="${bdj.deployment.bdmv.dir}/AUXDATA"/>
-        <mkdir dir="${bdj.deployment.bdmv.dir}/BDJO"/>
-        <mkdir dir="${bdj.deployment.bdmv.dir}/CLIPINF"/>
-        <mkdir dir="${bdj.deployment.bdmv.dir}/JAR"/>
-        <mkdir dir="${bdj.deployment.bdmv.dir}/META"/>
-        <mkdir dir="${bdj.deployment.bdmv.dir}/PLAYLIST"/>
-        <mkdir dir="${bdj.deployment.bdmv.dir}/STREAM"/>
-        <mkdir dir="${bdj.deployment.bdmv.backup.dir}"/>
-        <mkdir dir="${bdj.deployment.bdmv.backup.dir}/BDJO"/>
-        <mkdir dir="${bdj.deployment.bdmv.backup.dir}/CLIPINF"/>
-        <mkdir dir="${bdj.deployment.bdmv.backup.dir}/JAR"/>
-        <mkdir dir="${bdj.deployment.bdmv.backup.dir}/PLAYLIST"/>
-        <copy todir="${bdj.deployment.bdmv.dir}" file="${bluray.bdmv.index.file}"/>
-        <copy todir="${bdj.deployment.bdmv.dir}" file="${bluray.bdmv.movieobject.file}"/>
-        <copy todir="${bdj.deployment.bdmv.backup.dir}" file="${bluray.bdmv.index.file}"/>
-        <copy todir="${bdj.deployment.bdmv.backup.dir}" file="${bluray.bdmv.movieobject.file}"/>
-        <copy todir="${bdj.deployment.bdmv.dir}/JAR">
-            <fileset dir="${bdj.tmp.dir}">
-                <include name="*.jar"/>
-            </fileset>
-        </copy>
-        <copy todir="${bdj.deployment.bdmv.dir}/BDJO">
-            <fileset dir="${bdj.tmp.dir}">
-                <include name="*.bdjo"/>
-            </fileset>
-        </copy>
-        <copy todir="${bdj.deployment.bdmv.backup.dir}/BDJO">
-            <fileset dir="${bdj.tmp.dir}">
-                <include name="*.bdjo"/>
-            </fileset>
-        </copy>
-        <mkdir dir="${bdj.deployment.certificate.dir}"/>
-        <mkdir dir="${bdj.deployment.certificate.backup.dir}"/>
-        <copy todir="${bdj.deployment.certificate.dir}">
-            <fileset dir="${bdj.tmp.dir}">
-                <include name="app.discroot.crt"/>
-            </fileset>
-        </copy>
-        <copy todir="${bdj.deployment.certificate.backup.dir}">
-            <fileset dir="${bdj.tmp.dir}">
-                <include name="app.discroot.crt"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="-post-bdj-build-bdjo-image" if="bdj-platform.trigger"/>
-    <target name="-bdj-build-bdjo-image" depends="-bdj-build-bdmv, -pre-bdj-build-bdjo-image, -do-bdj-build-bdjo-image, -post-bdj-build-bdjo-image" if="bdj-platform.trigger"/>
-    <target name="bdj-build-image" depends="-bdj-build-perm-file, -bdj-generate-certificate, -bdj-prepare-jar, -bdj-sign-jar, -bdj-generate-bdjo-xml, -bdj-generate-bdjo, -bdj-build-bdmv, -bdj-build-bdjo-image" if="bdj-platform.trigger"/>
     <!--update-jad-->
     <target name="update-jad" if="cldc-platform.trigger">
         <nb-jad jadfile="${dist.dir}/${dist.jad}" jarfile="${dist.dir}/${dist.jar}" url="${dist.jar}" sign="${sign.enabled}" keystore="${sign.keystore}" keystorepassword="${sign.keystore.password}" alias="${sign.alias}" aliaspassword="${sign.alias.password}" encoding="UTF-8"/>
+    </target>
+    <target name="sign-jar" if="sign.jar.trigger">
+        <signjar jar="${dist.dir}/${dist.jar}" alias="${sign.alias}" keystore="${sign.keystore}" storepass="${sign.keystore.password}" keypass="${sign.alias.password}"/>
     </target>
     <!--ricoh-init-dalp-->
     <target name="ricoh-init-dalp" if="ricoh-platform.trigger">
@@ -902,49 +793,10 @@
             <fileset dir="${resources.dir}"/>
         </copy>
     </target>
-    <!--create-cod-->
-    <target name="create-cod" if="blackberry.trigger">
-        <exec dir="${dist.dir}" executable="java" failonerror="true">
-            <arg value="-cp"/>
-            <arg value="${platform.home}/bin/rapc.jar"/>
-            <arg value="net.rim.tools.compiler.Compiler"/>
-            <arg value="import=${platform.bootclasspath}"/>
-            <arg value="codename=${name}"/>
-            <arg value="-midlet"/>
-            <arg value="jad=${basedir}/${dist.dir}/${dist.jad}"/>
-            <arg value="${basedir}/${dist.dir}/${dist.jar}"/>
-        </exec>
-        <property file="${dist.dir}/${dist.jad}"/>
-        <echo file="${basedir}/${dist.dir}/${name}.alx">
-&lt;loader version="1.0"&gt;
-    &lt;application id="${name}"&gt;
-        &lt;name&gt;
-            ${MIDlet-Name}
-        &lt;/name&gt;
-        &lt;description&gt;
-            ${MIDlet-Description}
-        &lt;/description&gt;
-        &lt;version&gt;
-            ${MIDlet-Version}
-        &lt;/version&gt;
-        &lt;vendor&gt;
-            ${MIDlet-Vendor}
-        &lt;/vendor&gt;
-        &lt;copyright&gt;
-            ${MIDlet-Copyright}
-        &lt;/copyright&gt;
-        &lt;fileset Java="1.0"&gt;
-            &lt;directory/&gt;
-            &lt;files&gt;${name}.cod&lt;/files&gt;
-        &lt;/fileset&gt;
-    &lt;/application&gt;
-&lt;/loader&gt;
-        </echo>
-    </target>
     <!--jar-->
     <target name="pre-jar"/>
     <target name="post-jar"/>
-    <target name="jar" depends="preverify,pre-jar,set-password,create-jad,do-extra-libs,nokiaS80-create-manifest,semc-build-j9,do-jar,nsicom-create-manifest,do-jar-no-manifest,bdj-build-image,update-jad,ricoh-build-dalp,savaje-build-jnlp,create-cod,post-jar" description="Build jar and application descriptor."/>
+    <target name="jar" depends="preverify,pre-jar,set-password,create-jad,do-extra-libs,nokiaS80-create-manifest,jad-jsr211-properties,semc-build-j9,do-jar,nsicom-create-manifest,do-jar-no-manifest,update-jad,sign-jar,ricoh-build-dalp,savaje-build-jnlp,post-jar" description="Build jar and application descriptor."/>
     <!--override-jad-->
     <target name="override-jad" if="override.jarurl.trigger">
         <property name="deployment.jarurl" value="${dist.jar}"/>
@@ -1047,11 +899,20 @@
     <target name="pre-build"/>
     <target name="post-build"/>
     <target name="build" depends="jar,pre-build,override-jad,semc-sis,increment-app-version,post-build" description="Builds final distribution of the application."/>
-    <!--blackberry-pre-run-->
-    <target name="blackberry-pre-run" if="blackberry.trigger">
-        <copy todir="${platform.home}/simulator">
-            <fileset dir="${dist.dir}" includes="${name}.*"/>
-        </copy>
+    <!--open-netmon-->
+    <target name="netmon.check">
+        <condition property="netmon.allowed">
+            <and>
+                <not>
+                    <isset property="bdj-platform.trigger"/>
+                </not>
+                <isset property="netbeans.home"/>
+                <isset property="is.mesdk_netmon"/>
+            </and>
+        </condition>
+    </target>
+    <target name="open-netmon" description="Open network monitor" depends="netmon.check" if="netmon.allowed">
+        <opennetmon device="${platform.device}"/>
     </target>
     <!--cldc-run-->
     <target name="cldc-run" if="cldc-platform.trigger">
@@ -1105,7 +966,7 @@
     <target name="semc-run" depends="semc-icon-assembly,semc-ppro-emulator,semc-do-run" if="semc-platform.trigger"/>
     <!--savaje-run-->
     <target name="savaje-run" if="savaje-platform.trigger">
-        <sunEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.jvmargs}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}">
+        <sunEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.cmd.options}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}">
             <fileset dir="${dist.dir}">
                 <exclude name="javadoc/**"/>
             </fileset>
@@ -1114,11 +975,20 @@
     <!--sjmc-run-->
     <target name="sjmc-run" if="sjmc-platform.trigger">
         <taskdef name="sjmcEmulatorExec" classname="org.netbeans.modules.j2me.cdc.project.sjmc.SJMCToolkitEmulatorExecTask" classpath="${libs.sjmc-ant-utils.classpath}"/>
-        <sjmcEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.jvmargs}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}">
+        <sjmcEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.cmd.options}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}">
             <fileset dir="${dist.dir}">
                 <exclude name="javadoc/**"/>
             </fileset>
         </sjmcEmulatorExec>
+    </target>
+    <!--ojec-run-->
+    <target name="ojec-run" if="ojec-platform.trigger">
+        <taskdef name="ojecEmulatorExec" classname="org.netbeans.modules.j2me.cdc.project.ojec.OJECToolkitEmulatorExecTask" classpath="${libs.ojec-ant-utils.classpath}"/>
+        <ojecEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.cmd.options}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}">
+            <fileset dir="${dist.dir}">
+                <exclude name="javadoc/**"/>
+            </fileset>
+        </ojecEmulatorExec>
     </target>
     <!--nokiaS80-run-->
     <target name="nokiaS80-run" if="nokiaS80-platform.trigger">
@@ -1139,34 +1009,44 @@
             </fileset>
         </nsicomExecDeploy>
     </target>
-    <!--bdj-run-->
-    <target name="-pre-bdj-run" if="bdj-platform.trigger"/>
-    <target name="-bdj-run" if="bdj-platform.trigger">
-        <taskdef name="runbdj" classname="org.netbeans.modules.j2me.cdc.project.bdj.BdjRun" classpath="${libs.bdj-ant-utils.classpath}"/>
-        <runbdj platformhome="${platform.home}" deploymentroot="${bdj.deployment.dir}" jvmargs="${run.jvmargs}" args="${application.args}"/>
+    <!--cdc-hi-run-->
+    <target name="-pre-cdc-hi-run" if="cdc-hi-platform.trigger"/>
+    <target name="-cdc-hi-run" if="cdc-hi-platform.trigger">
+        <fail message="Main class is not set!">
+            <condition>
+                <equals arg1="${main.class}" arg2=""/>
+            </condition>
+        </fail>
+        <exec executable="${platform.home}/bin/emulator">
+            <arg value="-cp"/>
+            <arg value="${basedir}/${dist.dir}/${dist.jar}"/>
+            <arg value="-Xdevice:${platform.device}"/>
+            <arg value="${run.cmd.options}"/>
+            <arg value="-Xmain:${main.class}"/>
+            <arg value="${application.args}"/>
+        </exec>
     </target>
-    <target name="-post-bdj-run" if="bdj-platform.trigger"/>
-    <target name="bdj-run" if="bdj-platform.trigger" depends="-pre-bdj-run, -bdj-run, -post-bdj-run"/>
-    <!--run-->
-    <target name="pre-run"/>
-    <target name="run" depends="jar,pre-run,blackberry-pre-run,cldc-run,ricoh-run,semc-run,savaje-run,sjmc-run,nokiaS80-run,nsicom-run,bdj-run" description="Run MIDlet suite."/>
-    <target name="run-no-build" depends="init,pre-run,blackberry-pre-run,cldc-run,ricoh-run,semc-run,savaje-run,sjmc-run,nokiaS80-run,nsicom-run,bdj-run" description="Quick Run already built MIDlet suite."/>
-    <!--blackberry-pre-debug-->
-    <target name="blackberry-load-setings" if="blackberry.settings.trigger">
-        <loadproperties srcfile="${platform.home}/bin/Settings.rc">
-            <filterchain>
-                <containsregex pattern="^JDWPPort="/>
-            </filterchain>
-        </loadproperties>
-    </target>
-    <target name="blackberry-pre-debug" depends="blackberry-load-setings" if="blackberry.trigger">
-        <copy todir="${platform.home}/simulator">
-            <fileset dir="${dist.dir}" includes="${name}.*"/>
-        </copy>
-        <condition property="jpda.port" value="${JDWPPort}" else="8000">
-            <isset property="JDWPPort"/>
+    <target name="-post-cdc-hi-run" if="cdc-hi-platform.trigger"/>
+    <target name="cdc-hi-run" if="cdc-hi-platform.trigger" depends="-pre-cdc-hi-run, -cdc-hi-run, -post-cdc-hi-run"/>
+    <!--open-profiler-->
+    <target name="profiler.check">
+        <condition property="profiler.allowed">
+            <and>
+                <not>
+                    <isset property="bdj-platform.trigger"/>
+                </not>
+                <isset property="netbeans.home"/>
+                <isset property="is.mesdk_profiler"/>
+            </and>
         </condition>
     </target>
+    <target name="open-profiler" description="Open profiler snapshot" depends="profiler.check" if="profiler.allowed">
+        <openprofiler device="${platform.device}"/>
+    </target>
+    <!--run-->
+    <target name="pre-run"/>
+    <target name="run" depends="jar,pre-run,open-netmon,cldc-run,ricoh-run,semc-run,savaje-run,sjmc-run,ojec-run,nokiaS80-run,nsicom-run,cdc-hi-run,open-profiler" description="Run MIDlet suite."/>
+    <target name="run-no-build" depends="init,pre-run,open-netmon,cldc-run,ricoh-run,semc-run,savaje-run,sjmc-run,ojec-run,nokiaS80-run,nsicom-run,cdc-hi-run,open-profiler" description="Quick Run already built MIDlet suite."/>
     <!--cldc-debug-->
     <target name="cldc-debug" if="cldc-platform.trigger">
         <parallel>
@@ -1194,7 +1074,6 @@
                 <sleep seconds="5"/>
                 <property name="jpda.port" value="8000"/>
                 <property name="debug.period" value="3000"/>
-                <property name="debug.timeout" value="30000"/>
                 <antcall target="nbdebug" inheritall="true" inheritrefs="true"/>
             </sequential>
         </parallel>
@@ -1223,7 +1102,7 @@
     <!--savaje-debug-->
     <target name="savaje-debug" if="savaje-platform.trigger">
         <parallel>
-            <sunEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.jvmargs}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}" debug="true" debuggeraddressproperty="jpda.port">
+            <sunEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.cmd.options}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}" debug="true" debuggeraddressproperty="jpda.port">
                 <fileset dir="${dist.dir}">
                     <exclude name="javadoc/**"/>
                 </fileset>
@@ -1238,7 +1117,7 @@
     <target name="sjmc-debug" if="sjmc-platform.trigger">
         <taskdef name="sjmcEmulatorExec" classname="org.netbeans.modules.j2me.cdc.project.sjmc.SJMCToolkitEmulatorExecTask" classpath="${libs.sjmc-ant-utils.classpath}"/>
         <parallel>
-            <sjmcEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.jvmargs}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}" debug="true" debuggeraddressproperty="jpda.port">
+            <sjmcEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.cmd.options}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}" debug="true" debuggeraddressproperty="jpda.port">
                 <fileset dir="${dist.dir}">
                     <exclude name="javadoc/**"/>
                 </fileset>
@@ -1249,6 +1128,41 @@
             </sequential>
         </parallel>
     </target>
+    <!--ojec-debug-->
+    <target name="ojec-debug" if="ojec-platform.trigger">
+        <taskdef name="ojecEmulatorExec" classname="org.netbeans.modules.j2me.cdc.project.ojec.OJECToolkitEmulatorExecTask" classpath="${libs.ojec-ant-utils.classpath}"/>
+        <parallel>
+            <ojecEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.cmd.options}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}" debug="true" debuggeraddressproperty="jpda.port">
+                <fileset dir="${dist.dir}">
+                    <exclude name="javadoc/**"/>
+                </fileset>
+            </ojecEmulatorExec>
+            <sequential>
+                <sleep seconds="1"/>
+                <antcall target="nbdebug"/>
+            </sequential>
+        </parallel>
+    </target>
+    <!--cdc-hi-debug-->
+    <target name="-pre-cdc-hi-debug" if="cdc-hi-platform.trigger"/>
+    <target name="-cdc-hi-debug" if="cdc-hi-platform.trigger">
+        <taskdef name="freePortRetriever" classname="org.netbeans.modules.j2me.cdc.project.savaje.FreePortRetriever" classpath="${libs.savaje-ant-utils.classpath}"/>
+        <freePortRetriever debuggerPortProperty="active.debug.port"/>
+        <parallel>
+            <exec executable="${platform.home}/bin/emulator">
+                <arg value="-cp"/>
+                <arg value="${basedir}/${dist.dir}/${dist.jar}"/>
+                <arg value="-Xdevice:${platform.device}"/>
+                <arg value="-Xmain:${main.class}"/>
+                <arg value="-Xrunjdwp:transport=dt_socket,address=${active.debug.port},server=y,suspend=y"/>
+                <arg value="-Xdebug"/>
+            </exec>
+            <property name="debug.delay" value="500"/>
+            <nb-mobility-debug address="${active.debug.port}" name="${app.codename}" delay="${debug.delay}" timeout="${debug.timeout}" period="2000"/>
+        </parallel>
+    </target>
+    <target name="-post-cdc-hi-debug" if="cdc-hi-platform.trigger"/>
+    <target name="cdc-hi-debug" if="cdc-hi-platform.trigger" depends="-pre-cdc-hi-debug, -cdc-hi-debug, -post-cdc-hi-debug"/>
     <!--nokiaS80-debug-->
     <target name="nokiaS80-debug" if="nokiaS80-platform.trigger">
         <taskdef name="j9builder" classname="org.netbeans.modules.j2me.cdc.project.J9Builder" classpath="${libs.cdc-ant-utils.classpath}"/>
@@ -1271,30 +1185,48 @@
     <target name="nsicom-debug" if="nsicom-platform.trigger">
         <fail message="Debugging is not supported in this NSIcom VM version. Use monitoring facility instead!"/>
     </target>
-    <!--bdj-debug-->
-    <target name="-pre-bdj-debug" if="bdj-platform.trigger"/>
-    <target name="-bdj-debug" if="bdj-platform.trigger">
-        <taskdef name="runbdj" classname="org.netbeans.modules.j2me.cdc.project.bdj.BdjRun" classpath="${libs.bdj-ant-utils.classpath}"/>
-        <parallel>
-            <runbdj platformhome="${platform.home}" deploymentroot="${bdj.deployment.dir}" debug="true" debuggeraddressproperty="jpda.port" jvmargs="${run.jvmargs}" args="${application.args}"/>
-            <sequential>
-                <sleep seconds="1"/>
-                <antcall target="nbdebug"/>
-            </sequential>
-        </parallel>
-    </target>
-    <target name="-post-bdj-debug" if="bdj-platform.trigger"/>
-    <target name="bdj-debug" if="bdj-platform.trigger" depends="-pre-bdj-debug, -bdj-debug, -post-bdj-debug"/>
     <!--debug-->
     <target name="remove-timestamp">
         <delete file="$/.timestamp"/>
     </target>
     <target name="pre-debug"/>
-    <target name="debug" description="Debug project." depends="clean,jar,remove-timestamp,pre-debug,blackberry-pre-debug,cldc-debug,ricoh-debug,semc-debug,savaje-debug,sjmc-debug,nokiaS80-debug,nsicom-debug,bdj-debug"/>
+    <target name="debug" description="Debug project." depends="clean,jar,remove-timestamp,pre-debug,cldc-debug,ricoh-debug,semc-debug,savaje-debug,sjmc-debug,ojec-debug,cdc-hi-debug,nokiaS80-debug,nsicom-debug"/>
     <target name="nbdebug" description="Start NetBeans debugger" if="netbeans.home">
         <property name="debug.delay" value="5000"/>
-        <nb-mobility-debug address="${jpda.port}" name="${app.codename}" delay="${debug.delay}" timeout="30000" period="2000"/>
+        <nb-mobility-debug address="${jpda.port}" name="${app.codename}" delay="${debug.delay}" timeout="${debug.timeout}" period="2000"/>
     </target>
+    <target name="debug-run-base" depends="cldc-debug-run,cdc-hi-debug-run"/>
+    <target name="-pre-cldc-debug-run" if="cldc-platform.trigger"/>
+    <target name="-cldc-debug-run" depends="init,jar" if="cldc-platform.trigger">
+        <echo> Starting emulator with port number ${active.debug.port} </echo>
+        <exec executable="${platform.home}/bin/emulator">
+            <arg value="-Xdescriptor:${basedir}/${dist.dir}/${dist.jad}"/>
+            <arg value="-Xdevice:${platform.device}"/>
+            <arg value="-Xdebug"/>
+            <arg value="-Xrunjdwp:transport=dt_socket,address=${active.debug.port},server=y,suspend=y"/>
+        </exec>
+    </target>
+    <target name="-post-cldc-debug-run" if="cldc-platform.trigger"/>
+    <target name="cldc-debug-run" if="cldc-platform.trigger" depends="-pre-cldc-debug-run, -cldc-debug-run, -post-cldc-debug-run"/>
+    <target name="-pre-cdc-hi-debug-run" if="cdc-hi-platform.trigger"/>
+    <target name="-cdc-hi-debug-run" depends="init,jar" if="cdc-hi-platform.trigger">
+        <fail message="Main class is not set!">
+            <condition>
+                <equals arg1="${main.class}" arg2=""/>
+            </condition>
+        </fail>
+        <echo> Starting emulator with port number ${active.debug.port} </echo>
+        <exec executable="${platform.home}/bin/emulator">
+            <arg value="-cp"/>
+            <arg value="${basedir}/${dist.dir}/${dist.jar}"/>
+            <arg value="-Xdevice:${platform.device}"/>
+            <arg value="-Xmain:${main.class}"/>
+            <arg value="-Xdebug"/>
+            <arg value="-Xrunjdwp:transport=dt_socket,address=${active.debug.port},server=y,suspend=y"/>
+        </exec>
+    </target>
+    <target name="-post-cdc-hi-debug-run" if="cdc-hi-platform.trigger"/>
+    <target name="cdc-hi-debug-run" if="cdc-hi-platform.trigger" depends="-pre-cdc-hi-debug-run, -cdc-hi-debug-run, -post-cdc-hi-debug-run"/>
     <!--javadoc-->
     <target name="browse-javadoc" if="netbeans.home" unless="no.javadoc.preview">
         <nbbrowse file="${dist.javadoc.dir}/index.html"/>
@@ -1344,17 +1276,6 @@
     <target name="clean-javadoc">
         <delete dir="${dist.javadoc.dir}"/>
     </target>
-    <!--clean-blackberry-->
-    <target name="clean-blackberry" if="blackberry.trigger">
-        <delete file="${dist.dir}/${name}.cod" failonerror="false"/>
-        <delete file="${dist.dir}/${name}.cso" failonerror="false"/>
-        <delete file="${dist.dir}/${name}.debug" failonerror="false"/>
-        <delete failonerror="false">
-            <fileset dir="${platform.home}/simulator">
-                <include name="**/${name}.*"/>
-            </fileset>
-        </delete>
-    </target>
     <target name="clean-j9" if="j9.dist">
         <delete file="${j9.dist}"/>
     </target>
@@ -1385,6 +1306,9 @@
         <delete dir="${dist.dir}/lib"/>
     </target>
     <target name="clean-sjmc" if="sjmc-platform.trigger">
+        <delete dir="${dist.dir}/lib"/>
+    </target>
+    <target name="clean-ojec" if="ojec-platform.trigger">
         <delete dir="${dist.dir}/lib"/>
     </target>
     <!--clean-->
@@ -1439,7 +1363,7 @@
         <delete dir="build" quiet="true"/>
         <delete dir="dist" quiet="true"/>
     </target>
-    <target name="do-clean" depends="pre-clean,clean-timestamp,clean-preprocessed,clean-classes,clean-obfuscated,clean-preverified,clean-manifest,clean-jar,clean-jad,clean-javadoc,clean-blackberry,clean-j9,clean-ricoh,clean-semc,clean-savaje,clean-sjmc,-clean-default-configuration-root,-clean-configuration-root,-clean-completely,post-clean"/>
+    <target name="do-clean" depends="pre-clean,clean-timestamp,clean-preprocessed,clean-classes,clean-obfuscated,clean-preverified,clean-manifest,clean-jar,clean-jad,clean-javadoc,clean-j9,clean-ricoh,clean-semc,clean-savaje,clean-sjmc,clean-ojec,-clean-default-configuration-root,-clean-configuration-root,-clean-completely,post-clean"/>
     <target name="clean" depends="conditional-clean" if="no.clean.before.build" description="Clean build products.">
         <antcall target="do-clean" inheritall="true" inheritrefs="true"/>
     </target>
