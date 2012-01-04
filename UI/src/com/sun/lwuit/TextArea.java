@@ -1524,20 +1524,5 @@ public class TextArea extends Component implements TextEditorListener, ActionLis
         public void inputActionReceived(int action);
         public void debugMsg(String msg);
     }
-
-    public void actionPerformed(ActionEvent evt) {
-        this.setText("keyevent:" + evt.getKeyEvent());
-        if(hasFocus()) {
-            //up down left right
-            switch(evt.getKeyEvent()) {
-                case -1:
-                case -2:
-                case -3:
-                case -4:
-                    if(isEditable())
-                        focusTextEditor(true);
-            }
-        }
-    }
     
 }
