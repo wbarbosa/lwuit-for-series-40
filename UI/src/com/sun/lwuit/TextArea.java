@@ -407,7 +407,7 @@ public class TextArea extends Component implements TextEditorListener {
             //zero the vector inorder to initialize it on the next paint
             rowStrings=null; 
         }
-        if(textEditor.getContent().equals(text)) {
+        if(!textEditor.getContent().equals(text)) {
             textEditor.setContent(text);
         }
         repaint();
@@ -1468,6 +1468,7 @@ public class TextArea extends Component implements TextEditorListener {
            f.findNextFocusUp().requestFocus();
 
        }
+       this.text = textEditor.getContent();
        if(tal != null) {
                tal.inputActionReceived(actions);
        }
