@@ -43,7 +43,7 @@ import java.util.Vector;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component implements TextEditorListener, ActionListener {
+public class TextArea extends Component implements TextEditorListener {
     private static int defaultValign = TOP;
 
     /**
@@ -407,7 +407,9 @@ public class TextArea extends Component implements TextEditorListener, ActionLis
             //zero the vector inorder to initialize it on the next paint
             rowStrings=null; 
         }
-        textEditor.setContent(text);
+        if(textEditor.getContent().equals(text)) {
+            textEditor.setContent(text);
+        }
         repaint();
     }
 
@@ -517,6 +519,8 @@ public class TextArea extends Component implements TextEditorListener, ActionLis
     public void keyReleased(int keyCode) {
         //wait for keyreleased before focusing so that lwuit won't lose the released event
         if(hasFocus() && !textEditor.hasFocus()) {
+            if(tal != null)
+                tal.debugMsg("setting texteditor focus.");
             textEditor.setFocus(true);
         }
         int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
@@ -1467,15 +1471,16 @@ public class TextArea extends Component implements TextEditorListener, ActionLis
        if(tal != null) {
                tal.inputActionReceived(actions);
        }
-       setText(textEditor.getContent());
        
     }
 
     public void setFocus(boolean focused) {
         super.setFocus(focused);
         setText(textEditor.getContent());
-        if(!focused)
+        if(!focused) {
+            tal.debugMsg("removing focus from editor.");
             textEditor.setFocus(focused);
+        }
     }    
     
     public boolean isNativeTextEditorVisible() {
