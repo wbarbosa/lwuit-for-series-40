@@ -1522,6 +1522,7 @@ public class TextArea extends Component implements TextEditorListener, ActionLis
     
     public static interface TextAreaListener {
         public void inputActionReceived(int action);
+        public void debugMsg(String msg);
     }
 
     public void actionPerformed(ActionEvent evt) {
