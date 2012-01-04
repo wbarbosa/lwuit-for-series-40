@@ -43,7 +43,7 @@ import java.util.Vector;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component implements TextEditorListener {
+public class TextArea extends Component implements TextEditorListener, ActionListener {
     private static int defaultValign = TOP;
 
     /**
@@ -354,6 +354,7 @@ public class TextArea extends Component implements TextEditorListener {
         setText(text);
         javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
         textEditor.setFont(nativeFont); 
+        textEditor.setTextEditorListener(this);
         setGrowByContent(false);
         
     }
@@ -514,6 +515,10 @@ public class TextArea extends Component implements TextEditorListener {
      * @inheritDoc
      */
     public void keyReleased(int keyCode) {
+        //wait for keyreleased before focusing so that lwuit won't lose the released event
+        if(hasFocus() && !textEditor.hasFocus()) {
+            textEditor.setFocus(true);
+        }
         int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
         if(isEditable()){
             // this works around a bug where fire is also a softkey on devices such as newer Nokia
@@ -1440,6 +1445,7 @@ public class TextArea extends Component implements TextEditorListener {
     public int getVerticalAlignment(){
         return valign;
     }
+    
     /**
      * Get events from the textEditor. Add content from texteditor to text variable every
      * time there is some change in the editor.
@@ -1449,29 +1455,28 @@ public class TextArea extends Component implements TextEditorListener {
     public void inputAction(TextEditor textEditor, int actions) {
        if((actions&TextEditorListener.ACTION_TRAVERSE_NEXT) != 0) {
            //focus to next element
+           Form f = getComponentForm();
+           f.findNextFocusDown().requestFocus();
        }
        if((actions&TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
            //focus previous element
+           Form f = getComponentForm();
+           f.findNextFocusUp().requestFocus();
+
+       }
+       if(tal != null) {
+               tal.inputActionReceived(actions);
        }
        setText(textEditor.getContent());
        
     }
 
-    
-    public void requestFocus() {
-        super.requestFocus();
-        if(isEditable()) {
-            focusTextEditor(true);
-        }
-    }
-
     public void setFocus(boolean focused) {
         super.setFocus(focused);
         setText(textEditor.getContent());
-        if(isEditable()) {
-            focusTextEditor(focused);
-        }
-    }
+        if(!focused)
+            textEditor.setFocus(focused);
+    }    
     
     public boolean isNativeTextEditorVisible() {
         return textEditor.isVisible();
@@ -1498,8 +1503,10 @@ public class TextArea extends Component implements TextEditorListener {
         textEditor.setSize(d.getWidth(), textEditor.getHeight());
     }
     
-    public TextEditor getTextEditor() {
-        return textEditor;
+    private TextAreaListener  tal;
+    
+    public void setTextAreaListener(TextAreaListener l) {
+        tal = l;
     }
 
     protected void deinitialize() {
@@ -1513,5 +1520,23 @@ public class TextArea extends Component implements TextEditorListener {
         textEditor.setVisible(visible);
     }
     
+    public static interface TextAreaListener {
+        public void inputActionReceived(int action);
+    }
+
+    public void actionPerformed(ActionEvent evt) {
+        this.setText("keyevent:" + evt.getKeyEvent());
+        if(hasFocus()) {
+            //up down left right
+            switch(evt.getKeyEvent()) {
+                case -1:
+                case -2:
+                case -3:
+                case -4:
+                    if(isEditable())
+                        focusTextEditor(true);
+            }
+        }
+    }
     
 }
