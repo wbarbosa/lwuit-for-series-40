@@ -1479,7 +1479,8 @@ public class TextArea extends Component implements TextEditorListener {
         super.setFocus(focused);
         setText(textEditor.getContent());
         if(!focused) {
-            tal.debugMsg("removing focus from editor.");
+            if(tal != null)
+                tal.debugMsg("removing focus from editor.");
             textEditor.setFocus(focused);
         }
     }    
