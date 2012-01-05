@@ -1688,8 +1688,9 @@ public class Form extends Container {
             }
             return;
         }
-
+        //scrolling related is here
         if (y >= contentPane.getY()) {
+            
             Component cmp = contentPane.getComponentAt(x, y);
             if(cmp != null) {
                 cmp.initDragAndDrop(x, y);
@@ -1702,6 +1703,7 @@ public class Form extends Container {
                     }
                     leadParent.repaint();
                     setFocused(leadParent);
+                    
                     cmp.getLeadComponent().pointerPressed(x, y);
                 } else {
                     if(cmp.isEnabled()) {

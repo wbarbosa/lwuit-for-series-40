@@ -962,7 +962,13 @@ public class TextArea extends Component implements TextEditorListener {
      * @inheritDoc
      */
     public void paint(Graphics g) {
-        //UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
+        //fix texteditor position if ie. scrolling occurs
+        if(getAbsoluteX() != textEditor.getPositionX()) {
+            textEditor.setPosition(getAbsoluteX(), textEditor.getPositionY());
+        }
+        if(getAbsoluteY() != textEditor.getPositionY()) {
+            textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY());
+        }
         paintHint(g);
     }
     
