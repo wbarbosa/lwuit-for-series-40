@@ -23,6 +23,8 @@
  */
 package com.sun.lwuit;
 
+import com.nokia.mid.ui.CanvasGraphicsItem;
+import com.nokia.mid.ui.CanvasItem;
 import com.sun.lwuit.util.EventDispatcher;
 import com.sun.lwuit.geom.Rectangle;
 import com.sun.lwuit.geom.Dimension;
@@ -224,6 +226,9 @@ public class Component implements Animation, StyleListener {
     private boolean dropTarget;
     private Image dragImage;
     private Component dropTargetComponent;
+    
+    private CanvasItem canvasItem;
+
 
     boolean isDragAndDropInitialized() {
         return dragAndDropInitialized;
@@ -880,6 +885,9 @@ public class Component implements Animation, StyleListener {
 
     final void paintInternal(Graphics g, boolean paintIntersects) {
         if (!isVisible()) {
+            if(canvasItem != null) {
+                canvasItem.setVisible(isVisible());
+            }
             return;
         }
 
@@ -3805,5 +3813,13 @@ public class Component implements Animation, StyleListener {
 
         public void paint(Graphics g) {
         }
+    }
+    
+    public CanvasItem getCanvasItem() {
+        return canvasItem;
+    }
+
+    public void setCanvasItem(CanvasItem CanvasItem) {
+        this.canvasItem = CanvasItem;
     }
 }

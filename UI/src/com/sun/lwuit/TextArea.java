@@ -337,6 +337,7 @@ public class TextArea extends Component implements TextEditorListener {
         System.out.println("Rows:" + rows);
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
         textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
+        setCanvasItem(textEditor);
         if(rows == 1) {
             textEditor.setMultiline(false);
         }else if(rows > 1){
@@ -962,6 +963,7 @@ public class TextArea extends Component implements TextEditorListener {
      * @inheritDoc
      */
     public void paint(Graphics g) {
+        
         //fix texteditor position if ie. scrolling occurs
         if(getAbsoluteX() != textEditor.getPositionX()) {
             textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
