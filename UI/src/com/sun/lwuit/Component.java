@@ -1907,7 +1907,6 @@ public class Component implements Animation, StyleListener {
      */
     public void pointerDragged(int x, int y) {
         if(dragAndDropInitialized) {
-            System.out.println("dragAndDropInitialized");
             Form p = getComponentForm();
             if (!dragActivated) {
                 dragActivated = true;
@@ -1935,8 +1934,6 @@ public class Component implements Animation, StyleListener {
         }
         if (isScrollable() && isSmoothScrolling()) {
             if (!dragActivated) {
-                System.out.println("dragActivated");
-                System.out.println("dragActivated:" + this.toString());
                 dragActivated = true;
                 lastScrollY = y;
                 lastScrollX = x;
@@ -1952,7 +1949,6 @@ public class Component implements Animation, StyleListener {
             // we drag inversly to get a feel of grabbing a physical screen
             // and pulling it in the reverse direction of the drag
             if (isScrollableY()) {
-                System.out.println("isScrollableY");
                 //here happens scrolling
                 int tl;
                 if(getTensileLength() > -1) {
@@ -1966,12 +1962,10 @@ public class Component implements Animation, StyleListener {
                 int scroll = getScrollY() + (lastScrollY - y);
                 if(isAlwaysTensile() && getScrollDimension().getHeight() <= getHeight()) {
                     if (scroll >= -tl && scroll < getHeight() + tl) {
-                        System.out.println("first setScrollY");
                         setScrollY(scroll);
                     }
                 } else {
                     if (scroll >= -tl && scroll < getScrollDimension().getHeight() - getHeight() + tl) {
-                        System.out.println("second setScrollY");
                         setScrollY(scroll);
                     }
                 }
@@ -1994,7 +1988,6 @@ public class Component implements Animation, StyleListener {
             lastScrollY = y;
             lastScrollX = x;
         } else {
-            System.out.println("finding scrollable parent");
             //try to find a scrollable element until you reach the Form
             Component parent = getParent();
             if (!(parent instanceof Form)) {

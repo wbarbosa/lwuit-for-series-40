@@ -726,7 +726,6 @@ public class Container extends Component {
         if(enableLayoutOnPaint) {
             layoutContainer();
         }
-        System.out.println("Container painting.");
         g.translate(getX(), getY());
         int size = components.size();
         LWUITImplementation impl = Display.getInstance().getImplementation();
