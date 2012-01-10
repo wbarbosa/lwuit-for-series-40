@@ -437,6 +437,8 @@ public class MenuBar extends Container implements ActionListener {
             }
         }
         updateTitleCommandPlacement();
+        // 'back' gets special treatment so update softkey actions
+        updateCommands();
     }
 
     /**
@@ -474,61 +476,146 @@ public class MenuBar extends Container implements ActionListener {
      * Updates the command mapping to the softbuttons
      */
     private void updateCommands() {
-        int commandBehavior = getCommandBehavior();
-        if(commandBehavior == Display.COMMAND_BEHAVIOR_NATIVE) {
-            Display.getInstance().getImplementation().setNativeCommands(commands);
-            return;
+        int commandCount = getCommandCount();
+        
+        // first we build an array of all the commands that are *not* the
+        // back command. We can then pick from this array for the rest of
+        // the softkeys without danger of picking the back command again.
+        Command commandsWithoutBack[] = new Command[commandCount];
+        for (int i = 0, j = 0; i < commandCount; ++i) {
+            Command c = getCommand(i);
+            if (c != backCommand) {
+                commandsWithoutBack[j++] = c;
+            }
         }
-        if(commandBehavior >= Display.COMMAND_BEHAVIOR_BUTTON_BAR) {
-            return;
+        
+        // Reset all softkeys, remove titles, commands and icons.
+        // This way we don't have to care about the unused keys in cases
+        // where we have more softkeys than commands.
+        for (int i = 0; i < soft.length; ++i) {
+            soft[i].setText("");
+            soft[i].setIcon(null);
+            softCommand[i] = null;
         }
-        if (soft.length > 1) {
-            soft[0].setText("");
-            soft[1].setText("");
-            soft[0].setIcon(null);
-            soft[1].setIcon(null);
-            int commandSize = getCommandCount();
-            if (soft.length > 2) {
-                soft[2].setText("");
-                if (commandSize > 2) {
-                    if (commandSize > 3) {
-                        softCommand[2] = menuCommand;
-                    } else {
-                        softCommand[2] = getCommand(getCommandCount() - 3);
+        
+        /* We do different things for different softkey layouts. Three button
+         * case first:
+         */
+        if (soft.length == 3) {
+            /* For three softkeys we would like to put the default or preferred
+             * or most-used command on the middle. We really have no way of
+             * definitively knowing which one that is however, so we hazard a
+             * guess and pick the first one.
+             * 
+             * The back or exit command always goes on the right, and then
+             * we fill the left softkey with the second action added.
+             */
+            System.out.println("Three softkeys");
+            // First off handle the 'back' command because we always know
+            // what to do with that.
+            if (backCommand != null) {
+                // There is a back command so put it on the right
+                softCommand[2] = backCommand;
+            }
+            // Then do the rest
+            if (commandCount > 3) {
+                // Too many commands to fit all softkeys so put menu on the left
+                softCommand[1] = menuCommand;
+                // Put the first command in the middle
+                softCommand[0] = commandsWithoutBack[0];
+                if (backCommand == null) {
+                    // No back command defined, so second on the right.
+                    softCommand[2] = commandsWithoutBack[1];
+                }
+            } else if (commandCount == 3) {
+                // Command for each softkey
+                if (backCommand == null) {
+                    softCommand[2] = commandsWithoutBack[2];
+                }
+                // First in the middle, second on the left
+                softCommand[1] = commandsWithoutBack[1];
+                softCommand[0] = commandsWithoutBack[0];
+            } else if (commandCount > 1) { // Don't do anything for zero cmds
+                // Less commands than keys
+                if (backCommand != null) {
+                    // there was a back command, is there another command?
+                    if (commandCount > 1) {
+                        // yes, put it on lsk
+                        softCommand[1] = commandsWithoutBack[0];
                     }
-                    soft[2].setText(softCommand[2].getCommandName());
-                    soft[2].setIcon(softCommand[2].getIcon());
                 } else {
-                    softCommand[2] = null;
-                }
-            }
-            if (commandSize > 0) {
-                softCommand[0] = getCommand(getCommandCount() - 1);
-                soft[0].setText(softCommand[0].getCommandName());
-                soft[0].setIcon(softCommand[0].getIcon());
-                if (commandSize > 1) {
-                    if (soft.length == 2 && commandSize > 2) {
-                        softCommand[1] = menuCommand;
-                    } else {
-                        softCommand[1] = getCommand(getCommandCount() - 2);
+                    // no back command, put first command on lsk
+                    softCommand[1] = commandsWithoutBack[0];
+                    if (commandCount > 1) {
+                        // two commands; second on rsk
+                        softCommand[2] = commandsWithoutBack[1];
                     }
-                    soft[1].setText(softCommand[1].getCommandName());
-                    soft[1].setIcon(softCommand[1].getIcon());
-                } else {
-                    softCommand[1] = null;
-                }
-            } else {
-                softCommand[0] = null;
-                softCommand[1] = null;
-            }
-
-            // we need to add the menu bar to an already visible form
-            if (commandSize == 1) {
-                if (parent.isVisible()) {
-                    parent.revalidate();
                 }
             }
-            repaint();
+        } else if (soft.length == 2) {
+            /* For two softkeys we put back on the rsk, and either
+             * a) menu on the lsk if there are more than 2 commands
+             * b) the other command on the lsk if there are 2
+             */
+            System.out.println("Two softkeys");
+            if (backCommand != null) {
+                // There is a back command so put it on the rsk
+                System.out.println("Back command '" + backCommand.getCommandName() + "' to RSK");
+                softCommand[1] = backCommand;
+            }
+            if (commandCount > 2) {
+                // Too many commands for softkeys, menu on lsk
+                System.out.println("Menu command on LSK");
+                softCommand[0] = menuCommand;
+            } else if (commandCount == 2) {
+                System.out.println("Two commands");
+                // All commands fit on softkeys. Was there a back command?
+                if (backCommand == null) {
+                    // No, so put second command on rsk
+                    System.out.println("Second '" + commandsWithoutBack[1].getCommandName() + "' to RSK");
+                    softCommand[1] = commandsWithoutBack[1];
+                }
+                // First command on lsk
+                System.out.println("First '" + commandsWithoutBack[0].getCommandName() + "' to LSK");
+                softCommand[0] = commandsWithoutBack[0];
+            } else if (commandCount == 1) {
+                // Fewer than 2 commands -- only possibility is 1, don't do
+                // anything for zero commands.
+                if (backCommand == null) {
+                    // The command is not back so put it on lsk
+                    System.out.println("Only command '" + commandsWithoutBack[0].getCommandName() + "' to LSK");
+                    softCommand[0] = commandsWithoutBack[0];
+                } // if the only command was back, it's handled already.
+                else {
+                    System.out.println("Back was only command");
+                }
+            }
+        } else if (soft.length == 1) {
+            /* For single softkey situations (probably not even possible but
+             * let's handle it anyway) we prefer menu instead of back.
+             */
+            System.out.println("One softkey");
+            if (commandCount > 1) {
+                // menu on only key
+                softCommand[0] = menuCommand;
+            } else if (commandCount == 1) {
+                // If it was back, it was handled already
+                if (backCommand != null) {
+                    // But it wasn't, so add it to the key
+                    softCommand[0] = commandsWithoutBack[0];
+                }
+            }
+        } else {
+            throw new RuntimeException("Can't handle " + soft.length + " softkeys");
+        }
+        
+        /* Then set texts and icons for all softkeys
+         */
+        for (int i = 0; i < soft.length; ++i) {
+            if (softCommand[i] != null) {
+                soft[i].setText(softCommand[i].getCommandName());
+                soft[i].setIcon(softCommand[i].getIcon());
+            }
         }
     }
 
@@ -981,6 +1068,17 @@ public class MenuBar extends Container implements ActionListener {
             }
         }
         updateCommands();
+        
+        // If this was the first command we added, we apparently need to
+        // trigger a repaint on the parent to make the menubar visible.
+        // This used to be at the end of updateCommands() but I really 
+        // think the more proper place is here.
+        if (getCommandCount() == 1) {
+            if (parent.isVisible()) {
+                parent.revalidate();
+            }
+        }
+        repaint();
     }
 
     /**
