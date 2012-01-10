@@ -1509,18 +1509,7 @@ public class TextArea extends Component implements TextEditorListener {
     public void setY(int y) {
         super.setY(y);
         textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
-    }
-
-    protected void setScrollX(int scrollX) {
-        super.setScrollX(scrollX);
-        textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
-    }
-
-    protected void setScrollY(int scrollY) {
-        super.setScrollY(scrollY);
-        textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
-    }
-    
+    }    
 
     public void setHeight(int height) {
         //height = calculateCorrectHeight(height);
