@@ -964,15 +964,24 @@ public class TextArea extends Component implements TextEditorListener {
      */
     public void paint(Graphics g) {
         //fix texteditor position if ie. scrolling occurs
-        System.out.println("getAbsoluteY:" + getAbsoluteY());
+        
+        paintHint(g);
+    }
+
+    /**
+     * overriden from Component class. This positions the textEditor to 
+     * proper place.
+     */
+    protected void updateCanvasItemPosition() {
+        System.out.println("painting textEditor");
         if(getAbsoluteX() != textEditor.getPositionX()) {
             textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
         }
         if(getAbsoluteY() != textEditor.getPositionY()) {
             textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
         }
-        paintHint(g);
     }
+    
     
     /**
      * @inheritDoc
