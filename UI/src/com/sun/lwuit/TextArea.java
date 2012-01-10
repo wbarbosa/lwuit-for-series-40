@@ -963,8 +963,8 @@ public class TextArea extends Component implements TextEditorListener {
      * @inheritDoc
      */
     public void paint(Graphics g) {
-        
         //fix texteditor position if ie. scrolling occurs
+        System.out.println("getAbsoluteY:" + getAbsoluteY());
         if(getAbsoluteX() != textEditor.getPositionX()) {
             textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
         }
@@ -1476,6 +1476,10 @@ public class TextArea extends Component implements TextEditorListener {
            f.findNextFocusUp().requestFocus();
 
        }
+       if((actions&TextEditorListener.ACTION_PAINT_REQUEST) != 0) {
+           repaint();
+           //Display.getInstance().getImplementation().
+       }
        this.text = textEditor.getContent();
        if(tal != null) {
                tal.inputActionReceived(actions);
@@ -1506,6 +1510,17 @@ public class TextArea extends Component implements TextEditorListener {
         super.setY(y);
         textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
     }
+
+    protected void setScrollX(int scrollX) {
+        super.setScrollX(scrollX);
+        textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
+    }
+
+    protected void setScrollY(int scrollY) {
+        super.setScrollY(scrollY);
+        textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
+    }
+    
 
     public void setHeight(int height) {
         //height = calculateCorrectHeight(height);
