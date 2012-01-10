@@ -481,8 +481,10 @@ public class MenuBar extends Container implements ActionListener {
         // first we build an array of all the commands that are *not* the
         // back command. We can then pick from this array for the rest of
         // the softkeys without danger of picking the back command again.
+        // Also we iterate over the commands in reverse because
+        // Form.addCommand always adds commands to the beginning.
         Command commandsWithoutBack[] = new Command[commandCount];
-        for (int i = 0, j = 0; i < commandCount; ++i) {
+        for (int i = commandCount-1, j = 0; i >= 0; --i) {
             Command c = getCommand(i);
             if (c != backCommand) {
                 commandsWithoutBack[j++] = c;
