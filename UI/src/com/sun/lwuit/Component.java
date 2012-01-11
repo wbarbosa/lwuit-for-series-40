@@ -926,6 +926,7 @@ public class Component implements Animation, StyleListener {
                 canvasItem.setVisible(true);
             }
             g.clipRect(getX(), getY(), getWidth(), getHeight());
+            
             paintBackground(g);
 
             if (isScrollable()) {

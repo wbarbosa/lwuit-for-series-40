@@ -217,6 +217,8 @@ public class TextArea extends Component implements TextEditorListener {
      */
     private TextEditor textEditor;
     
+    private boolean dontWaitForKeyRelease = false;
+    
     int leftPadding;
     int rightPadding;
     int topPadding;
@@ -1475,17 +1477,25 @@ public class TextArea extends Component implements TextEditorListener {
        if((actions&TextEditorListener.ACTION_TRAVERSE_NEXT) != 0) {
            //focus to next element
            Form f = getComponentForm();
-           f.findNextFocusDown().requestFocus();
+           Component c = f.findNextFocusDown();
+           if(c instanceof TextArea) {
+               ((TextArea)c).setFocusNativeEditorImmediately(true);
+           }
+           c.requestFocus();
        }
        if((actions&TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
            //focus previous element
            Form f = getComponentForm();
-           f.findNextFocusUp().requestFocus();
+           Component c = f.findNextFocusUp();
+           if(c instanceof TextArea) {
+               ((TextArea)c).setFocusNativeEditorImmediately(true);
+           }
+           c.requestFocus();
 
        }
        if((actions&TextEditorListener.ACTION_PAINT_REQUEST) != 0) {
            repaint();
-           //Display.getInstance().getImplementation().
+           
        }
        this.text = textEditor.getContent();
        if(tal != null) {
@@ -1497,6 +1507,10 @@ public class TextArea extends Component implements TextEditorListener {
     public void setFocus(boolean focused) {
         super.setFocus(focused);
         setText(textEditor.getContent());
+        if(dontWaitForKeyRelease) {
+            dontWaitForKeyRelease = false;
+            textEditor.setFocus(focused);
+        }
         if(!focused) {
             if(tal != null)
                 tal.debugMsg("removing focus from editor.");
@@ -1544,6 +1558,10 @@ public class TextArea extends Component implements TextEditorListener {
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         textEditor.setVisible(visible);
+    }
+    
+    private void setFocusNativeEditorImmediately(boolean flag) {
+        dontWaitForKeyRelease = flag;
     }
     
     public static interface TextAreaListener {
