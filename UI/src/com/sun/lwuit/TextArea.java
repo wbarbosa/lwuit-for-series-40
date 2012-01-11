@@ -218,8 +218,6 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      */
     private TextEditor textEditor;
     
-    private boolean dontWaitForKeyRelease = false;
-    
     int leftPadding;
     int rightPadding;
     int topPadding;
