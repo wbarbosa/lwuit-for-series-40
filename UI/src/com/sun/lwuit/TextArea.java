@@ -337,6 +337,7 @@ public class TextArea extends Component implements TextEditorListener {
         System.out.println("Rows:" + rows);
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
         textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
+        
         setCanvasItem(textEditor);
         if(rows == 1) {
             textEditor.setMultiline(false);

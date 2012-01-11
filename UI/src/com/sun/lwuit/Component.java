@@ -23,7 +23,6 @@
  */
 package com.sun.lwuit;
 
-import com.nokia.mid.ui.CanvasGraphicsItem;
 import com.nokia.mid.ui.CanvasItem;
 import com.sun.lwuit.util.EventDispatcher;
 import com.sun.lwuit.geom.Rectangle;
@@ -922,6 +921,10 @@ public class Component implements Animation, StyleListener {
         int oHeight = g.getClipHeight();
         updateCanvasItemPosition();
         if (bounds.intersects(oX, oY, oWidth, oHeight)) {
+            //make sure canvasitem is visible if such exists
+            if(canvasItem != null) {
+                canvasItem.setVisible(true);
+            }
             g.clipRect(getX(), getY(), getWidth(), getHeight());
             paintBackground(g);
 
@@ -947,6 +950,11 @@ public class Component implements Animation, StyleListener {
             }
 
             g.setClip(oX, oY, oWidth, oHeight);
+        }else {
+            //component is not visible so we must hide the canvasItem
+            if(canvasItem != null) {
+                canvasItem.setVisible(false);
+            }
         }
     }
 
