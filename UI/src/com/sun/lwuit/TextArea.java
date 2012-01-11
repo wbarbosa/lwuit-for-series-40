@@ -27,6 +27,7 @@ import com.nokia.mid.ui.TextEditor;
 import com.nokia.mid.ui.TextEditorListener;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
+import com.sun.lwuit.events.FocusListener;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.geom.Rectangle;
 import com.sun.lwuit.plaf.LookAndFeel;
@@ -43,7 +44,7 @@ import java.util.Vector;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component implements TextEditorListener {
+public class TextArea extends Component implements TextEditorListener, FocusListener {
     private static int defaultValign = TOP;
 
     /**
@@ -359,6 +360,7 @@ public class TextArea extends Component implements TextEditorListener {
         javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
         textEditor.setFont(nativeFont); 
         textEditor.setTextEditorListener(this);
+        addFocusListener(this);
         setGrowByContent(false);
         
     }
@@ -521,12 +523,7 @@ public class TextArea extends Component implements TextEditorListener {
      * @inheritDoc
      */
     public void keyReleased(int keyCode) {
-        //wait for keyreleased before focusing so that lwuit won't lose the released event
-        if(hasFocus() && !textEditor.hasFocus()) {
-            if(tal != null)
-                tal.debugMsg("setting texteditor focus.");
-            textEditor.setFocus(true);
-        }
+        
         int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
         if(isEditable()){
             // this works around a bug where fire is also a softkey on devices such as newer Nokia
@@ -568,12 +565,7 @@ public class TextArea extends Component implements TextEditorListener {
         } else {
             Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
         }*/
-        focusTextEditor(true);
-        
-    }
-    private void focusTextEditor(boolean focused) {
-        textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
-        textEditor.setFocus(focused);
+       
         
     }
 
@@ -1478,18 +1470,12 @@ public class TextArea extends Component implements TextEditorListener {
            //focus to next element
            Form f = getComponentForm();
            Component c = f.findNextFocusDown();
-           if(c instanceof TextArea) {
-               ((TextArea)c).setFocusNativeEditorImmediately(true);
-           }
            c.requestFocus();
        }
        if((actions&TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
            //focus previous element
            Form f = getComponentForm();
            Component c = f.findNextFocusUp();
-           if(c instanceof TextArea) {
-               ((TextArea)c).setFocusNativeEditorImmediately(true);
-           }
            c.requestFocus();
 
        }
@@ -1507,15 +1493,6 @@ public class TextArea extends Component implements TextEditorListener {
     public void setFocus(boolean focused) {
         super.setFocus(focused);
         setText(textEditor.getContent());
-        if(dontWaitForKeyRelease) {
-            dontWaitForKeyRelease = false;
-            textEditor.setFocus(focused);
-        }
-        if(!focused) {
-            if(tal != null)
-                tal.debugMsg("removing focus from editor.");
-            textEditor.setFocus(focused);
-        }
     }    
     
     public boolean isNativeTextEditorVisible() {
@@ -1559,10 +1536,16 @@ public class TextArea extends Component implements TextEditorListener {
         super.setVisible(visible);
         textEditor.setVisible(visible);
     }
-    
-    private void setFocusNativeEditorImmediately(boolean flag) {
-        dontWaitForKeyRelease = flag;
+
+    public void focusGained(Component cmp) {
+        textEditor.setFocus(true);
     }
+
+    public void focusLost(Component cmp) {
+        textEditor.setFocus(false);
+    }
+    
+    
     
     public static interface TextAreaListener {
         public void inputActionReceived(int action);
