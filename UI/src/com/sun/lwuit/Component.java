@@ -1932,6 +1932,7 @@ public class Component implements Animation, StyleListener {
         }
         if (isScrollable() && isSmoothScrolling()) {
             if (!dragActivated) {
+                System.out.println("drag activated");
                 dragActivated = true;
                 lastScrollY = y;
                 lastScrollX = x;
@@ -1961,10 +1962,12 @@ public class Component implements Animation, StyleListener {
                 if(isAlwaysTensile() && getScrollDimension().getHeight() <= getHeight()) {
                     if (scroll >= -tl && scroll < getHeight() + tl) {
                         setScrollY(scroll);
+                        System.out.println("set scroll 1");
                     }
                 } else {
                     if (scroll >= -tl && scroll < getScrollDimension().getHeight() - getHeight() + tl) {
                         setScrollY(scroll);
+                        System.out.println("set scroll 2");
                     }
                 }
             }

@@ -335,7 +335,6 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         this.columns = columns;
         LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
-        System.out.println("Rows:" + rows);
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
         textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
         
@@ -541,7 +540,9 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @inheritDoc
      */
     public boolean isScrollableY() {
-        return isFocusable() && getScrollDimension().getHeight() > getHeight();
+        return false;
+        //we will always scroll using texteditor so this should return false
+        //return isFocusable() && getScrollDimension().getHeight() > getHeight();
     }
 
         
@@ -967,9 +968,14 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * proper place.
      */
     protected void updateCanvasItemPosition() {
+        System.out.print("Y:" + getY());
+        System.out.print(" parent Y:" + getParent().getY());
+        System.out.print(" scroll Y:" + getScrollY());
+        System.out.println(" abs Y:" + getAbsoluteY());
         if(getAbsoluteX() != textEditor.getPositionX()) {
             textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
         }
+        
         if(getAbsoluteY() != textEditor.getPositionY()) {
             textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
         }
@@ -1481,6 +1487,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
        }
        if((actions&TextEditorListener.ACTION_PAINT_REQUEST) != 0) {
+           System.out.println("paint request");
            repaint();
            
        }
@@ -1507,6 +1514,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
     public void setY(int y) {
         super.setY(y);
+        System.out.println("setY");
         textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
     }    
 
