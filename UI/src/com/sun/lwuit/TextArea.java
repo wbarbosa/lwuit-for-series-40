@@ -412,6 +412,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         }
         if(!textEditor.getContent().equals(text)) {
             textEditor.setContent(text);
+            textEditor.setCaret(text.length());
         }
         repaint();
     }
@@ -968,10 +969,6 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * proper place.
      */
     protected void updateCanvasItemPosition() {
-        System.out.print("Y:" + getY());
-        System.out.print(" parent Y:" + getParent().getY());
-        System.out.print(" scroll Y:" + getScrollY());
-        System.out.println(" abs Y:" + getAbsoluteY());
         if(getAbsoluteX() != textEditor.getPositionX()) {
             textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
         }
@@ -1514,7 +1511,6 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
     public void setY(int y) {
         super.setY(y);
-        System.out.println("setY");
         textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
     }    
 
