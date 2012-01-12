@@ -955,7 +955,10 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     /**
      * @inheritDoc
      */
-    public void paint(Graphics g) {        
+    public void paint(Graphics g) { 
+        if(!hasFocus()) {
+            UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
+        }
         paintHint(g);
     }
 
@@ -1532,15 +1535,17 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
     public void setVisible(boolean visible) {
         super.setVisible(visible);
-        textEditor.setVisible(visible);
+        
     }
 
     public void focusGained(Component cmp) {
         textEditor.setFocus(true);
+        textEditor.setVisible(true);
     }
 
     public void focusLost(Component cmp) {
         textEditor.setFocus(false);
+        textEditor.setVisible(false);
     }
     
     
