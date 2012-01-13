@@ -577,7 +577,6 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @inheritDoc
      */
     public void pointerHover(int[] x, int[] y) {
-        requestFocus();
     }
 
     /**
