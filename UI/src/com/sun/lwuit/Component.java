@@ -1932,7 +1932,6 @@ public class Component implements Animation, StyleListener {
         }
         if (isScrollable() && isSmoothScrolling()) {
             if (!dragActivated) {
-                System.out.println("drag activated");
                 dragActivated = true;
                 lastScrollY = y;
                 lastScrollX = x;

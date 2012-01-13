@@ -217,6 +217,10 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * In place texteditor
      */
     private TextEditor textEditor;
+    /**
+     * The y position of the text in native TextEditor
+     */
+    private int visibleContentPosition;
     
     int leftPadding;
     int rightPadding;
@@ -1488,6 +1492,11 @@ public class TextArea extends Component implements TextEditorListener, FocusList
            repaint();
            
        }
+       if((actions&TextEditorListener.ACTION_SCROLLBAR_CHANGED) != 0) {
+           visibleContentPosition = textEditor.getVisibleContentPosition();
+           System.out.println("Visible Content Position:"+ visibleContentPosition);
+           //Visible Congtent Position shows how far the y is from the textEditor Y position
+       }
        this.text = textEditor.getContent();
        if(tal != null) {
                tal.inputActionReceived(actions);
@@ -1552,7 +1561,9 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         textEditor.setVisible(false);
     }
     
-    
+    public int getVisibleContentPosition() {
+        return visibleContentPosition;
+    }
     
     public static interface TextAreaListener {
         public void inputActionReceived(int action);

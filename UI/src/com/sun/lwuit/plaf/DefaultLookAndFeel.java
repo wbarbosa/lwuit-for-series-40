@@ -545,7 +545,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         
         for (int i = 0; i < line; i++) {
             int x = ta.getX() + leftPadding;
-            int y = ta.getY() +  topPadding +
+            int y = (ta.getY() - ta.getVisibleContentPosition()) +  topPadding +
                     (ta.getRowsGap() + fontHeight) * i;
             if(Rectangle.intersects(x, y, ta.getWidth(), fontHeight, oX, oY, oWidth, oHeight)) {
                 
