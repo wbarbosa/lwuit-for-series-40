@@ -630,15 +630,17 @@ public class TextArea extends Component implements TextEditorListener, FocusList
                 }
             }
         }
-        if((constraint & TextField.UNEDITABLE) == 0) {//TEST THIS
-            textEditor.setVisible(true);
+        if (textEditorEnabled) {
+            if ((constraint & TextField.UNEDITABLE) == 0) {
+                textEditor.setVisible(true);
+            }
         }
     }
 
     public void pointerDragged(int x, int y) {
         super.pointerDragged(x, y);
         if(textEditor.isVisible()) {
-            if(!text.equals(textEditor.getContent()))   {//TEST THIS
+            if(!text.equals(textEditor.getContent()))   {
                 setText(textEditor.getContent());
             }
             textEditor.setVisible(false);
