@@ -356,7 +356,13 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         topPadding = getStyle().getPadding(false, Component.TOP);
         
         textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
-        textEditor.setVisible(true);
+        System.out.println("constraint:" + (constraint & TextField.UNEDITABLE));
+       
+        if((constraint & TextField.UNEDITABLE) == 0) {
+            textEditor.setVisible(true);
+        }else {
+            textEditor.setVisible(false);
+        }
         setText(text);
         javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
         textEditor.setFont(nativeFont); 
@@ -599,8 +605,22 @@ public class TextArea extends Component implements TextEditorListener, FocusList
                 onClick();
             }
         }
-
+        if((constraint & TextField.UNEDITABLE) == 0) {//TEST THIS
+            textEditor.setVisible(true);
+        }
     }
+
+    public void pointerDragged(int x, int y) {
+        super.pointerDragged(x, y);
+        if(textEditor.isVisible()) {
+            if(!text.equals(textEditor.getContent()))   {//TEST THIS
+                setText(textEditor.getContent());
+            }
+            textEditor.setVisible(false);
+        }
+    }
+    
+    
 
     /**
      * @inheritDoc
@@ -961,7 +981,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @inheritDoc
      */
     public void paint(Graphics g) { 
-        if(!hasFocus()) {
+        if(!hasFocus() || !textEditor.isVisible()) {
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
         paintHint(g);
@@ -1552,12 +1572,19 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
     public void focusGained(Component cmp) {
         textEditor.setFocus(true);
-        textEditor.setVisible(true);
+        if((constraint & TextArea.UNEDITABLE) == 0) {
+            textEditor.setVisible(true);
+        }
     }
 
     public void focusLost(Component cmp) {
         textEditor.setFocus(false);
         textEditor.setVisible(false);
+        if((constraint & TextArea.UNEDITABLE) == 0) {
+            if(!text.equals(textEditor.getContent())) {
+                setText(textEditor.getContent());
+            }
+        }
     }
     
     public int getVisibleContentPosition() {
