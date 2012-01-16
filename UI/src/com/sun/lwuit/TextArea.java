@@ -332,8 +332,6 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         setUIID("TextArea");
         setSelectCommandText(UIManager.getInstance().localize("edit", "Edit"));
         this.maxSize = maxSize;
-        
-        setConstraint(constraint);
         if(rows <= 0){
             throw new IllegalArgumentException("rows must be positive");
         }
@@ -374,6 +372,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         textEditor.setTextEditorListener(this);
         addFocusListener(this);
         setGrowByContent(false);
+        setConstraint(constraint);
         
     }
 
@@ -405,6 +404,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      */
     public void setWidth(int width) {
         super.setWidth(width);
+        System.out.println("textEditor null?" + textEditor == null);
         textEditor.setSize(width, textEditor.getHeight());
         getRowStrings();
     }
@@ -1621,6 +1621,10 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     
     public void setTextEditorEnabled(boolean enable) {
         textEditorEnabled = enable;
+        if(!enable) {
+            setText(textEditor.getContent());
+            textEditor.setVisible(false);
+        }
     }
     
     public boolean getTextEditorEnabled() {
