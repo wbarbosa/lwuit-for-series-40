@@ -222,6 +222,11 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      */
     private int visibleContentPosition;
     
+    /**
+     * Flag to indicate if textEditor is enabled or not
+     */
+    private boolean textEditorEnabled = true;
+    
     int leftPadding;
     int rightPadding;
     int topPadding;
@@ -381,6 +386,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      */
     public void setConstraint(int constraint) {
         this.constraint = constraint;
+        textEditor.setConstraints(constraint);
     }
 
 
@@ -451,6 +457,8 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @param b true is text are is editable; otherwise false
      */
     public void setEditable(boolean b) {
+        constraint = constraint | TextArea.UNEDITABLE;
+        setConstraint(constraint);
         editable = b;
     }
 
@@ -551,9 +559,12 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @inheritDoc
      */
     public boolean isScrollableY() {
-        return false;
-        //we will always scroll using texteditor so this should return false
-        //return isFocusable() && getScrollDimension().getHeight() > getHeight();
+        if(textEditorEnabled) {
+            return false;
+        }else {
+            return isFocusable() && getScrollDimension().getHeight() > getHeight();
+        }
+        
     }
 
         
@@ -564,25 +575,29 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     }
         
     void editString() {
-        /*if(autoDegradeMaxSize && (!hadSuccessfulEdit) && (maxSize > 1024)) {
-            try {
+        if (!textEditorEnabled) {
+            if (autoDegradeMaxSize && (!hadSuccessfulEdit) && (maxSize > 1024)) {
+                try {
+                    Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
+                } catch (IllegalArgumentException err) {
+                    maxSize -= 1024;
+                    setDefaultMaxSize(maxSize);
+                    editString();
+                }
+            } else {
                 Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
-            } catch(IllegalArgumentException err) {
-                maxSize -= 1024;
-                setDefaultMaxSize(maxSize);
-                editString();
             }
-        } else {
-            Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
-        }*/
-       
-        
+
+        }
     }
 
     /**
      * @inheritDoc
      */
     public void pointerHover(int[] x, int[] y) {
+        if(!textEditorEnabled) {
+            requestFocus();
+        }
     }
 
     /**
@@ -602,7 +617,17 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         } else {
             super.pointerReleased(x, y);
             if (isEditable() && isEnabled() && !isCellRenderer()) {
-                onClick();
+                if(textEditorEnabled) {  
+                    onClick();
+                }else {
+                    if (Display.getInstance().isTouchScreenDevice()) {
+                        if (!Display.getInstance().isVirtualKeyboardShowing()) {
+                            Display.getInstance().setShowVirtualKeyboard(true);
+                        }
+                    } else {
+                        onClick();
+                    }
+                }
             }
         }
         if((constraint & TextField.UNEDITABLE) == 0) {//TEST THIS
@@ -981,7 +1006,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @inheritDoc
      */
     public void paint(Graphics g) { 
-        if(!hasFocus() || !textEditor.isVisible()) {
+        if(!textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
         paintHint(g);
@@ -1525,7 +1550,9 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
     public void setFocus(boolean focused) {
         super.setFocus(focused);
-        setText(textEditor.getContent());
+        if(textEditorEnabled) {
+            setText(textEditor.getContent());
+        }
     }    
     
     public boolean isNativeTextEditorVisible() {
@@ -1542,13 +1569,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
     }    
 
-    public void setHeight(int height) {
-        //height = calculateCorrectHeight(height);
-        super.setHeight(height);
-    }
-
     public void setSize(Dimension d) {
-        //d.setHeight(calculateCorrectHeight(d.getHeight()));
         super.setSize(d);
         textEditor.setSize(d.getWidth(), textEditor.getHeight());
     }
@@ -1562,6 +1583,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     protected void deinitialize() {
         super.deinitialize();
         textEditor.setVisible(false);
+        textEditor = null;
         
     }
 
@@ -1571,24 +1593,36 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     }
 
     public void focusGained(Component cmp) {
-        textEditor.setFocus(true);
-        if((constraint & TextArea.UNEDITABLE) == 0) {
-            textEditor.setVisible(true);
+        if (textEditorEnabled) {
+            textEditor.setFocus(true);
+            if ((constraint & TextArea.UNEDITABLE) == 0) {
+                textEditor.setVisible(true);
+            }
         }
     }
 
     public void focusLost(Component cmp) {
-        textEditor.setFocus(false);
-        textEditor.setVisible(false);
-        if((constraint & TextArea.UNEDITABLE) == 0) {
-            if(!text.equals(textEditor.getContent())) {
-                setText(textEditor.getContent());
+        if (textEditorEnabled) {
+            textEditor.setFocus(false);
+            textEditor.setVisible(false);
+            if ((constraint & TextArea.UNEDITABLE) == 0) {
+                if (!text.equals(textEditor.getContent())) {
+                    setText(textEditor.getContent());
+                }
             }
         }
     }
     
     public int getVisibleContentPosition() {
         return visibleContentPosition;
+    }
+    
+    public void setTextEditorEnabled(boolean enable) {
+        textEditorEnabled = enable;
+    }
+    
+    public boolean getTextEditorEnabled() {
+        return textEditorEnabled;
     }
     
     public static interface TextAreaListener {
