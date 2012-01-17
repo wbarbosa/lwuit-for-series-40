@@ -1934,6 +1934,17 @@ public class GameCanvasImplementation extends LWUITImplementation {
         return ret;
     }
 
+    public boolean isNativeInputSupported() {
+        boolean ret = true;
+        try {
+            Class.forName("com.nokia.mid.ui.TextEditor");            
+        }catch(ClassNotFoundException cnfe) {
+            System.out.println("Native Input not supported.");
+            ret = false;
+        }
+        return ret;
+    }
+
     
     
 }

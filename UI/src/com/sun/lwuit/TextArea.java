@@ -405,7 +405,9 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     public void setWidth(int width) {
         super.setWidth(width);
         System.out.println("textEditor null?" + textEditor == null);
-        textEditor.setSize(width, textEditor.getHeight());
+        if(textEditor != null) {
+            textEditor.setSize(width, textEditor.getHeight());
+        }
         getRowStrings();
     }
 
@@ -1019,12 +1021,17 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * proper place.
      */
     protected void updateCanvasItemPosition() {
-        if(getAbsoluteX() != textEditor.getPositionX()) {
-            textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
-        }
-        
-        if(getAbsoluteY() != textEditor.getPositionY()) {
-            textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
+        System.out.println("What am I:" + this.toString());
+        System.out.println("Who is my parent:" + getParent().toString());
+        System.out.println("IS NULL:" + (textEditor == null));
+        if (textEditor != null) {
+            if (getAbsoluteX() != textEditor.getPositionX()) {
+                textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
+            }
+
+            if (getAbsoluteY() != textEditor.getPositionY()) {
+                textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
+            }
         }
     }
     
