@@ -1021,9 +1021,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * proper place.
      */
     protected void updateCanvasItemPosition() {
-        System.out.println("What am I:" + this.toString());
-        System.out.println("Who is my parent:" + getParent().toString());
-        System.out.println("IS NULL:" + (textEditor == null));
+        
         if (textEditor != null) {
             if (getAbsoluteX() != textEditor.getPositionX()) {
                 textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
@@ -1570,17 +1568,23 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
     public void setX(int x) {
         super.setX(x);
-        textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
+        if(textEditor != null) {
+            textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
+        }
     }
 
     public void setY(int y) {
         super.setY(y);
-        textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
+        if(textEditor != null) {
+            textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
+        }
     }    
 
     public void setSize(Dimension d) {
         super.setSize(d);
-        textEditor.setSize(d.getWidth(), textEditor.getHeight());
+        if(textEditor != null) {
+            textEditor.setSize(d.getWidth(), textEditor.getHeight());
+        }
     }
     
     private TextAreaListener  tal;
@@ -1591,7 +1595,9 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
     protected void deinitialize() {
         super.deinitialize();
-        textEditor.setVisible(false);
+        if(textEditor != null) {
+            textEditor.setVisible(false);
+        }
         textEditor = null;
         
     }
@@ -1630,7 +1636,9 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         textEditorEnabled = enable;
         if(!enable) {
             setText(textEditor.getContent());
-            textEditor.setVisible(false);
+            if(textEditor != null) {
+                textEditor.setVisible(false);
+            }
         }
     }
     

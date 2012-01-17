@@ -177,7 +177,10 @@ public class VirtualKeyboard extends Dialog implements VirtualKeyboardInterface{
     static class InputField extends TextField {
         private TextArea field;
         InputField(TextArea field) {
+            this.setTextEditorEnabled(false);
+            field.setTextEditorEnabled(false);
             this.field = field;
+            
             setInputMode(field.getInputMode());
             setConstraint(field.getConstraint());
         }
