@@ -428,9 +428,11 @@ public class TextArea extends Component implements TextEditorListener, FocusList
             //zero the vector inorder to initialize it on the next paint
             rowStrings=null; 
         }
-        if(!textEditor.getContent().equals(text)) {
-            textEditor.setContent(text);
-            textEditor.setCaret(text.length());
+        if (textEditor != null) {
+            if (!textEditor.getContent().equals(text)) {
+                textEditor.setContent(text);
+                textEditor.setCaret(text.length());
+            }
         }
         repaint();
     }
