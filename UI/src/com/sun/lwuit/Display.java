@@ -34,6 +34,7 @@ import com.sun.lwuit.impl.LWUITImplementation;
 import com.sun.lwuit.impl.VirtualKeyboardInterface;
 import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.util.EventDispatcher;
+import com.sun.lwuit.util.Resources;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -460,6 +461,12 @@ public final class Display {
             themeprops.put("fgColor", Integer.toHexString(fg));
             themeprops.put("sel#fgColor", Integer.toHexString(fg_hi));
             uim.setThemeProps(themeprops);
+	    try {
+                Resources themeres = Resources.open("/nokia_theme.res");
+                uim.addThemeProps(themeres.getTheme("NokiaTheme"));
+	    } catch (IOException e) {
+                throw new RuntimeException("Can't load Nokia Theme");
+            }
             // end hackety hack
             
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
