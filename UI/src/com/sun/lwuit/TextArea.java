@@ -359,7 +359,6 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         topPadding = getStyle().getPadding(false, Component.TOP);
         
         textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
-        System.out.println("constraint:" + (constraint & TextField.UNEDITABLE));
        
         if((constraint & TextField.UNEDITABLE) == 0) {
             textEditor.setVisible(true);
@@ -404,7 +403,6 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      */
     public void setWidth(int width) {
         super.setWidth(width);
-        System.out.println("textEditor null?" + textEditor == null);
         if(textEditor != null) {
             textEditor.setSize(width, textEditor.getHeight());
         }
@@ -634,7 +632,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
                 }
             }
         }
-        if (textEditorEnabled) {
+        if (textEditor != null && textEditorEnabled) {
             if ((constraint & TextField.UNEDITABLE) == 0) {
                 textEditor.setVisible(true);
             }
@@ -643,7 +641,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
     public void pointerDragged(int x, int y) {
         super.pointerDragged(x, y);
-        if(textEditor.isVisible()) {
+        if(textEditor != null && textEditor.isVisible()) {
             if(!text.equals(textEditor.getContent()))   {
                 setText(textEditor.getContent());
             }
@@ -1012,9 +1010,13 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @inheritDoc
      */
     public void paint(Graphics g) { 
-        if(!textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {
+        System.out.print("TextEditor == null:" + (textEditor == null));
+        System.out.print("  textEditorEnabled:" + textEditorEnabled);
+        System.out.println("    hasFocus:" + hasFocus());
+        if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
+
         paintHint(g);
     }
 
@@ -1236,6 +1238,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @param singleLineTextArea set to true to force a single line text
      */
     public void setSingleLineTextArea(boolean singleLineTextArea) {
+        
         this.singleLineTextArea = singleLineTextArea;
     }
 
@@ -1541,14 +1544,13 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
        }
        if((actions&TextEditorListener.ACTION_PAINT_REQUEST) != 0) {
-           System.out.println("paint request");
            repaint();
            
        }
        if((actions&TextEditorListener.ACTION_SCROLLBAR_CHANGED) != 0) {
-           visibleContentPosition = textEditor.getVisibleContentPosition();
-           System.out.println("Visible Content Position:"+ visibleContentPosition);
            //Visible Congtent Position shows how far the y is from the textEditor Y position
+           visibleContentPosition = textEditor.getVisibleContentPosition();
+           
        }
        this.text = textEditor.getContent();
        if(tal != null) {
@@ -1560,12 +1562,17 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     public void setFocus(boolean focused) {
         super.setFocus(focused);
         if(textEditorEnabled) {
-            setText(textEditor.getContent());
+            if(textEditor != null) {
+                setText(textEditor.getContent());
+            }
         }
     }    
     
     public boolean isNativeTextEditorVisible() {
-        return textEditor.isVisible();
+        if(textEditor != null) {
+            return textEditor.isVisible();
+        }
+        return false;
     }
 
     public void setX(int x) {
@@ -1600,7 +1607,6 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         if(textEditor != null) {
             textEditor.setVisible(false);
         }
-        textEditor = null;
         
     }
 
@@ -1610,7 +1616,8 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     }
 
     public void focusGained(Component cmp) {
-        if (textEditorEnabled) {
+        System.out.println("Focus Gained");
+        if (textEditor != null && textEditorEnabled) {
             textEditor.setFocus(true);
             if ((constraint & TextArea.UNEDITABLE) == 0) {
                 textEditor.setVisible(true);
@@ -1619,7 +1626,8 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     }
 
     public void focusLost(Component cmp) {
-        if (textEditorEnabled) {
+        System.out.println("focus lost");
+        if (textEditor != null && textEditorEnabled) {
             textEditor.setFocus(false);
             textEditor.setVisible(false);
             if ((constraint & TextArea.UNEDITABLE) == 0) {
@@ -1637,8 +1645,8 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     public void setTextEditorEnabled(boolean enable) {
         textEditorEnabled = enable;
         if(!enable) {
-            setText(textEditor.getContent());
             if(textEditor != null) {
+                setText(textEditor.getContent());
                 textEditor.setVisible(false);
             }
         }
