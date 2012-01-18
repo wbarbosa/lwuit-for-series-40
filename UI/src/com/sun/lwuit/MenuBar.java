@@ -1498,38 +1498,15 @@ public class MenuBar extends Container implements ActionListener {
             menu.setScrollableY(true);
             for (int iter = 0; iter < commands.size(); iter++) {
                 Command c = (Command)commands.elementAt(iter);
-                menu.addComponent(createTouchCommandButton(c));
-            }
-            if(!UIManager.getInstance().isThemeConstant("touchCommandFlowBool", false)) {
-                int cols = calculateTouchCommandGridColumns(menu);
-                if(cols > getCommandCount()) {
-                    cols = getCommandCount();
+                if (c != backCommand) {
+                    menu.addComponent(createTouchCommandButton(c));
                 }
-                int rows = Math.max(1, getCommandCount() / cols + (getCommandCount() % cols != 0 ? 1 : 0) );
-                if(rows > 1) {
-                    // try to prevent too many columns concentraiting within a single row
-                    int remainingColumns = (rows * cols) % getCommandCount();
-                    int newCols = cols;
-                    int newRows = rows;
-                    while(remainingColumns != 0 && remainingColumns > 1 && newCols >= 2) {
-                        newCols--;
-                        newRows = Math.max(1, getCommandCount() / newCols + (getCommandCount() % newCols != 0 ? 1 : 0) );
-                        if(newRows != rows) {
-                            break;
-                        }
-                        remainingColumns = (newRows * newCols) % getCommandCount();
-                    }
-                    if(newRows == rows) {
-                        cols = newCols;
-                        rows = newRows;
-                    }
-                }
-                GridLayout g = new GridLayout(rows, cols);
-                g.setFillLastRow(UIManager.getInstance().isThemeConstant("touchCommandFillBool", true));
-                menu.setLayout(g);
-            } else {
-                ((FlowLayout)menu.getLayout()).setFillRows(true);
             }
+            // S40 always has only 1 column in the menu
+            int cols = 1;
+            int rows = backCommand == null ? commands.size() : commands.size() - 1;
+            GridLayout g = new GridLayout(rows, cols);
+            menu.setLayout(g);
             menu.setPreferredW(Display.getInstance().getDisplayWidth());
             return menu;
         }
