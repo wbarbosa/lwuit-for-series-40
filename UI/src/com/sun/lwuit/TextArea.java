@@ -227,6 +227,8 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      */
     private boolean textEditorEnabled = true;
     
+    private boolean dontWaitForKeyReleased = false;
+    
     int leftPadding;
     int rightPadding;
     int topPadding;
@@ -487,7 +489,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      */
     public void keyPressed(int keyCode) {
         super.keyPressed(keyCode);
-        
+        System.out.println("keypressed, " + textEditorEnabled);
         int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
 
         // this works around a bug where fire is also a softkey on devices such as newer Nokia
@@ -541,7 +543,12 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @inheritDoc
      */
     public void keyReleased(int keyCode) {
-        
+        if(textEditor != null && textEditorEnabled && !dontWaitForKeyReleased) {
+            if ((constraint & TextArea.UNEDITABLE) == 0) {
+                textEditor.setVisible(true);
+            }
+            textEditor.setFocus(true);
+        }
         int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
         if(isEditable()){
             // this works around a bug where fire is also a softkey on devices such as newer Nokia
@@ -1534,12 +1541,20 @@ public class TextArea extends Component implements TextEditorListener, FocusList
            //focus to next element
            Form f = getComponentForm();
            Component c = f.findNextFocusDown();
+           if(c instanceof TextArea) {
+               TextArea t = (TextArea) c;
+               t.dontWaitForKeyReleased = true;
+           }
            c.requestFocus();
        }
        if((actions&TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
            //focus previous element
            Form f = getComponentForm();
            Component c = f.findNextFocusUp();
+           if(c instanceof TextArea) {
+               TextArea t = (TextArea) c;
+               t.dontWaitForKeyReleased = true;
+           }
            c.requestFocus();
 
        }
@@ -1552,6 +1567,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
            visibleContentPosition = textEditor.getVisibleContentPosition();
            
        }
+       
        this.text = textEditor.getContent();
        if(tal != null) {
                tal.inputActionReceived(actions);
@@ -1617,11 +1633,12 @@ public class TextArea extends Component implements TextEditorListener, FocusList
 
     public void focusGained(Component cmp) {
         System.out.println("Focus Gained");
-        if (textEditor != null && textEditorEnabled) {
-            textEditor.setFocus(true);
+        if (textEditor != null && textEditorEnabled && dontWaitForKeyReleased) {
+            dontWaitForKeyReleased = false;
             if ((constraint & TextArea.UNEDITABLE) == 0) {
                 textEditor.setVisible(true);
             }
+            textEditor.setFocus(true);
         }
     }
 
@@ -1646,6 +1663,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         textEditorEnabled = enable;
         if(!enable) {
             if(textEditor != null) {
+                textEditor.setFocus(false); 
                 setText(textEditor.getContent());
                 textEditor.setVisible(false);
             }
