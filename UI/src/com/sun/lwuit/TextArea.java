@@ -1256,6 +1256,9 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @return  true if this is a single line text area
      */
     public boolean isSingleLineTextArea() {
+        if(textEditor != null && textEditorEnabled) {
+            return false;
+        }
         return singleLineTextArea;
     }
 
