@@ -51,6 +51,18 @@ public abstract class TextEditorProvider {
     public abstract int size();
     
     
+    public static TextEditorProvider createTextEditor() {
+        TextEditorProvider provider = null;
+        try {
+            Class.forName("com.nokia.mid.ui.TextEditor");
+            Class c = Class.forName("com.nokia.lwuit.TextEditorProviderImpl");
+            provider = (TextEditorProvider)c.newInstance();
+        }catch(Exception cnfe) {
+            System.out.println("No native TextEditor supported.");
+        }
+        return provider;
+    }
+    
     public static interface TextEditorListener {
         public void inputAction(TextEditorProvider textEditor, int actions);
     }
