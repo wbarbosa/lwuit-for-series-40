@@ -135,7 +135,7 @@ public class MenuBar extends Container implements ActionListener {
         LookAndFeel lf = UIManager.getInstance().getLookAndFeel();
         menuStyle = UIManager.getInstance().getComponentStyle("Menu");
         setUIID("SoftButton");
-        menuCommand = new Command(UIManager.getInstance().localize("menu", "Menu"), lf.getMenuIcons()[2]);
+        menuCommand = new Command(UIManager.getInstance().localize("menu", "Options"), lf.getMenuIcons()[2]);
         // use the slide transition by default
         if (lf.getDefaultMenuTransitionIn() != null || lf.getDefaultMenuTransitionOut() != null) {
             transitionIn = lf.getDefaultMenuTransitionIn();
