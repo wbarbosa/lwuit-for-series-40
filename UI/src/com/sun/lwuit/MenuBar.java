@@ -1501,7 +1501,8 @@ public class MenuBar extends Container implements ActionListener {
                 menu.addComponent(createTouchCommandButton(c));
             }
             if(!UIManager.getInstance().isThemeConstant("touchCommandFlowBool", false)) {
-                int cols = calculateTouchCommandGridColumns(menu);
+                // S40 always has only 1 column in the menu
+                int cols = 1; //calculateTouchCommandGridColumns(menu);
                 if(cols > getCommandCount()) {
                     cols = getCommandCount();
                 }
