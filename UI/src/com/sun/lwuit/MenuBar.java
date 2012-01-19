@@ -130,12 +130,12 @@ public class MenuBar extends Container implements ActionListener {
      */
     protected void initMenuBar(Form parent) {
         this.parent = parent;
-        selectMenuItem = createMenuSelectCommand();
-        cancelMenuItem = createMenuCancelCommand();
+        //selectMenuItem = createMenuSelectCommand();
+        //cancelMenuItem = createMenuCancelCommand();
         LookAndFeel lf = UIManager.getInstance().getLookAndFeel();
         menuStyle = UIManager.getInstance().getComponentStyle("Menu");
         setUIID("SoftButton");
-        menuCommand = new Command(UIManager.getInstance().localize("menu", "Menu"), lf.getMenuIcons()[2]);
+        menuCommand = new Command(UIManager.getInstance().localize("menu", "Options"), lf.getMenuIcons()[2]);
         // use the slide transition by default
         if (lf.getDefaultMenuTransitionIn() != null || lf.getDefaultMenuTransitionOut() != null) {
             transitionIn = lf.getDefaultMenuTransitionIn();
@@ -145,8 +145,8 @@ public class MenuBar extends Container implements ActionListener {
             transitionOut = CommonTransitions.createSlide(CommonTransitions.SLIDE_VERTICAL, false, 300, true);
         }
         menuCellRenderer = lf.getMenuRenderer();
-        softkeyCount = Display.getInstance().getImplementation().getSoftkeyCount();
-        thirdSoftButton = Display.getInstance().isThirdSoftButton();
+        softkeyCount = 3; //Display.getInstance().getImplementation().getSoftkeyCount();
+        thirdSoftButton = true; //Display.getInstance().isThirdSoftButton();
 
         int commandBehavior = getCommandBehavior();
         if (softkeyCount > 1 && commandBehavior < Display.COMMAND_BEHAVIOR_BUTTON_BAR) {
@@ -219,6 +219,9 @@ public class MenuBar extends Container implements ActionListener {
         }
 
         softCommand = new Command[soft.length];
+
+        setHeight(57); // hardcoded height for nokia style
+        setPreferredH(57); // hardcoded height for nokia style
     }
 
     private int getCommandBehavior() {
@@ -478,16 +481,18 @@ public class MenuBar extends Container implements ActionListener {
     private void updateCommands() {
         int commandCount = getCommandCount();
         
-        // first we build an array of all the commands that are *not* the
-        // back command. We can then pick from this array for the rest of
-        // the softkeys without danger of picking the back command again.
-        // Also we iterate over the commands in reverse because
-        // Form.addCommand always adds commands to the beginning.
-        Command commandsWithoutBack[] = new Command[commandCount];
+        // first we build an array of all the commands that are *not* the back
+        // or default command. We can then pick from this array for the rest of
+        // the softkeys without danger of picking the back command again.  Also
+        // we iterate over the commands in reverse because Form.addCommand
+        // always adds commands to the beginning.
+        int numberOfMiscCommands = 0;
+        Command commandsWithoutBackOrDefault[] = new Command[commandCount];
         for (int i = commandCount-1, j = 0; i >= 0; --i) {
             Command c = getCommand(i);
-            if (c != backCommand) {
-                commandsWithoutBack[j++] = c;
+            if (c != backCommand && c != defaultCommand) {
+                commandsWithoutBackOrDefault[j++] = c;
+                numberOfMiscCommands++;
             }
         }
         
@@ -517,42 +522,18 @@ public class MenuBar extends Container implements ActionListener {
             // what to do with that.
             if (backCommand != null) {
                 // There is a back command so put it on the right
+                System.out.println(backCommand.getCommandName() + " as back on RSK");
                 softCommand[2] = backCommand;
             }
-            // Then do the rest
-            if (commandCount > 3) {
-                // Too many commands to fit all softkeys so put menu on the left
+            // If there's a default command, stick it on the middle
+            if (defaultCommand != null) {
+                System.out.println(defaultCommand.getCommandName() + " as default on MSK");
+                softCommand[0] = defaultCommand;
+            }
+            // If there are any more commands, put them in options
+            if (numberOfMiscCommands > 0) {
+                System.out.println(menuCommand.getCommandName() + " as menu on LSK");
                 softCommand[1] = menuCommand;
-                // Put the first command in the middle
-                softCommand[0] = commandsWithoutBack[0];
-                if (backCommand == null) {
-                    // No back command defined, so second on the right.
-                    softCommand[2] = commandsWithoutBack[1];
-                }
-            } else if (commandCount == 3) {
-                // Command for each softkey
-                if (backCommand == null) {
-                    softCommand[2] = commandsWithoutBack[2];
-                }
-                // First in the middle, second on the left
-                softCommand[1] = commandsWithoutBack[1];
-                softCommand[0] = commandsWithoutBack[0];
-            } else if (commandCount > 1) { // Don't do anything for zero cmds
-                // Less commands than keys
-                if (backCommand != null) {
-                    // there was a back command, is there another command?
-                    if (commandCount > 1) {
-                        // yes, put it on lsk
-                        softCommand[1] = commandsWithoutBack[0];
-                    }
-                } else {
-                    // no back command, put first command on lsk
-                    softCommand[1] = commandsWithoutBack[0];
-                    if (commandCount > 1) {
-                        // two commands; second on rsk
-                        softCommand[2] = commandsWithoutBack[1];
-                    }
-                }
             }
         } else if (soft.length == 2) {
             /* For two softkeys we put back on the rsk, and either
@@ -574,19 +555,19 @@ public class MenuBar extends Container implements ActionListener {
                 // All commands fit on softkeys. Was there a back command?
                 if (backCommand == null) {
                     // No, so put second command on rsk
-                    System.out.println("Second '" + commandsWithoutBack[1].getCommandName() + "' to RSK");
-                    softCommand[1] = commandsWithoutBack[1];
+                    System.out.println("Second '" + commandsWithoutBackOrDefault[1].getCommandName() + "' to RSK");
+                    softCommand[1] = commandsWithoutBackOrDefault[1];
                 }
                 // First command on lsk
-                System.out.println("First '" + commandsWithoutBack[0].getCommandName() + "' to LSK");
-                softCommand[0] = commandsWithoutBack[0];
+                System.out.println("First '" + commandsWithoutBackOrDefault[0].getCommandName() + "' to LSK");
+                softCommand[0] = commandsWithoutBackOrDefault[0];
             } else if (commandCount == 1) {
                 // Fewer than 2 commands -- only possibility is 1, don't do
                 // anything for zero commands.
                 if (backCommand == null) {
                     // The command is not back so put it on lsk
-                    System.out.println("Only command '" + commandsWithoutBack[0].getCommandName() + "' to LSK");
-                    softCommand[0] = commandsWithoutBack[0];
+                    System.out.println("Only command '" + commandsWithoutBackOrDefault[0].getCommandName() + "' to LSK");
+                    softCommand[0] = commandsWithoutBackOrDefault[0];
                 } // if the only command was back, it's handled already.
                 else {
                     System.out.println("Back was only command");
@@ -604,7 +585,7 @@ public class MenuBar extends Container implements ActionListener {
                 // If it was back, it was handled already
                 if (backCommand != null) {
                     // But it wasn't, so add it to the key
-                    softCommand[0] = commandsWithoutBack[0];
+                    softCommand[0] = commandsWithoutBackOrDefault[0];
                 }
             }
         } else {
@@ -763,17 +744,17 @@ public class MenuBar extends Container implements ActionListener {
         }
         d.getContentPane().getStyle().setMargin(0, 0, 0, 0);
         d.addComponent(BorderLayout.CENTER, ((Form) d).getMenuBar().commandList);
-        if (thirdSoftButton) {
-            d.addCommand(selectMenuItem);
-            d.addCommand(cancelMenuItem);
-        } else {
-            d.addCommand(cancelMenuItem);
-            if (soft.length > 1) {
-                d.addCommand(selectMenuItem);
-            }
-        }
-        d.setClearCommand(cancelMenuItem);
-        d.setBackCommand(cancelMenuItem);
+        //if (thirdSoftButton) {
+            //d.addCommand(selectMenuItem);
+            //d.addCommand(cancelMenuItem);
+        //} else {
+            //d.addCommand(cancelMenuItem);
+            //if (soft.length > 1) {
+                //d.addCommand(selectMenuItem);
+            //}
+        //}
+        //d.setClearCommand(cancelMenuItem);
+        //d.setBackCommand(cancelMenuItem);
 
         if (((Form) d).getMenuBar().commandList instanceof List) {
             ((List) ((Form) d).getMenuBar().commandList).addActionListener(((Form) d).getMenuBar());
@@ -1498,7 +1479,7 @@ public class MenuBar extends Container implements ActionListener {
             menu.setScrollableY(true);
             for (int iter = 0; iter < commands.size(); iter++) {
                 Command c = (Command)commands.elementAt(iter);
-                if (c != backCommand) {
+                if (c != backCommand && c != defaultCommand) {
                     menu.addComponent(createTouchCommandButton(c));
                 }
             }
