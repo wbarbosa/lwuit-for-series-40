@@ -641,6 +641,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
         if (textEditor != null && textEditorEnabled) {
             if ((constraint & TextField.UNEDITABLE) == 0) {
+                dontWaitForKeyReleased = true;
                 textEditor.setVisible(true);
             }
         }
@@ -654,15 +655,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             }
             textEditor.setVisible(false);
         }
-    }
-
-    public void pointerPressed(int x, int y) {
-        dontWaitForKeyReleased = true;
-        super.pointerPressed(x, y);
-        
-        
-    }
-    
+    }    
     
 
     /**
@@ -1639,6 +1632,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     public void focusGained(Component cmp) {
         System.out.println("Focus Gained");
+        System.out.print("dontwaitforkeyreleased:" + dontWaitForKeyReleased);
+        System.out.print(" textEditor null:" + (textEditor == null));
+        System.out.println(" textEditorEnabled:" + textEditorEnabled);
         if (textEditor != null && textEditorEnabled && dontWaitForKeyReleased) {
             dontWaitForKeyReleased = false;
             if ((constraint & TextArea.UNEDITABLE) == 0) {
