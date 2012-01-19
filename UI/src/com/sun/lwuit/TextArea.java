@@ -543,12 +543,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void keyReleased(int keyCode) {
-        if(textEditor != null && textEditorEnabled && !dontWaitForKeyReleased) {
-            if ((constraint & TextArea.UNEDITABLE) == 0) {
-                textEditor.setVisible(true);
-            }
-            textEditor.setFocus(true);
-        }
+        focusTextEditor();
         int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
         if(isEditable()){
             // this works around a bug where fire is also a softkey on devices such as newer Nokia
@@ -639,12 +634,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 }
             }
         }
-        if (textEditor != null && textEditorEnabled) {
-            if ((constraint & TextField.UNEDITABLE) == 0) {
-                dontWaitForKeyReleased = true;
-                textEditor.setVisible(true);
-            }
-        }
+        focusTextEditor();
     }
 
     public void pointerDragged(int x, int y) {
@@ -655,7 +645,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             }
             textEditor.setVisible(false);
         }
-    }    
+    }
     
 
     /**
@@ -1631,11 +1621,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     public void focusGained(Component cmp) {
-        System.out.println("Focus Gained");
-        System.out.print("dontwaitforkeyreleased:" + dontWaitForKeyReleased);
-        System.out.print(" textEditor null:" + (textEditor == null));
-        System.out.println(" textEditorEnabled:" + textEditorEnabled);
-        if (textEditor != null && textEditorEnabled && dontWaitForKeyReleased) {
+        if(dontWaitForKeyReleased) {
+            focusTextEditor();
+        }
+    }
+    private void focusTextEditor() {
+        if (textEditor != null && textEditorEnabled) {
             dontWaitForKeyReleased = false;
             if ((constraint & TextArea.UNEDITABLE) == 0) {
                 textEditor.setVisible(true);
