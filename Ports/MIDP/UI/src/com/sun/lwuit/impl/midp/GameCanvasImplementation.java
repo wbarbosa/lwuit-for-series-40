@@ -1930,10 +1930,12 @@ public class GameCanvasImplementation extends LWUITImplementation {
      */
     public TextEditorProvider requestNewNativeTextEditor(int maxSize, int constraints, int width, int rows) {
         TextEditorProvider ret = TextEditorProvider.createTextEditor();
-        ret.setMaxSize(maxSize);
-        ret.setConstraints(constraints);
-        ret.setSize(width, (ret.getFont().getHeight() + ret.getLineMarginHeight()) * rows);
-        ret.setParent(canvas);
+        if(ret != null) {
+            ret.setMaxSize(maxSize);
+            ret.setConstraints(constraints);
+            ret.setSize(width, (ret.getFont().getHeight() + ret.getLineMarginHeight()) * rows);
+            ret.setParent(canvas);
+        }
         return ret;
     }
 

@@ -845,10 +845,12 @@ public class UIManager {
             byte[] marginUnit = (byte[])themeProps.get(id + Style.MARGIN_UNIT);
 
             if (bgColor != null) {
-                style.setBgColor(Integer.valueOf(bgColor, 16).intValue());
+                long l = Long.parseLong(bgColor, 16);
+                style.setBgColor((int)l);
             }
             if (fgColor != null) {
-                style.setFgColor(Integer.valueOf(fgColor, 16).intValue());
+                long l = Long.parseLong(fgColor, 16);
+                style.setFgColor((int) l);
             }
             if (transperency != null) {
                 style.setBgTransparency(Integer.valueOf(transperency).intValue());

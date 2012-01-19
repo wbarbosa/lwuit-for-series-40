@@ -386,7 +386,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void setConstraint(int constraint) {
         this.constraint = constraint;
-        textEditor.setConstraints(constraint);
+        if(textEditor != null) {
+            textEditor.setConstraints(constraint);
+        }
     }
 
 
