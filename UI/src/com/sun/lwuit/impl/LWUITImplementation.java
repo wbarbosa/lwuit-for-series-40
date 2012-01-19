@@ -23,7 +23,7 @@
  */
 package com.sun.lwuit.impl;
 
-import com.nokia.mid.ui.TextEditor;
+import com.nokia.lwuit.TextEditorProvider;
 import com.sun.lwuit.*;
 import com.sun.lwuit.animations.Animation;
 import com.sun.lwuit.geom.Dimension;
@@ -3167,7 +3167,7 @@ public abstract class LWUITImplementation {
      * Base implementation returns null.
      * @return TextEditor class
      */
-     public TextEditor requestNewNativeTextEditor(int maxSize, int constraints, int width, int rows) {
+     public TextEditorProvider requestNewNativeTextEditor(int maxSize, int constraints, int width, int rows) {
          
          return null;
      }

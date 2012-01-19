@@ -23,7 +23,6 @@
  */
 package com.sun.lwuit;
 
-import com.nokia.mid.ui.CanvasItem;
 import com.sun.lwuit.util.EventDispatcher;
 import com.sun.lwuit.geom.Rectangle;
 import com.sun.lwuit.geom.Dimension;
@@ -225,9 +224,6 @@ public class Component implements Animation, StyleListener {
     private boolean dropTarget;
     private Image dragImage;
     private Component dropTargetComponent;
-    
-    private CanvasItem canvasItem;
-
 
     boolean isDragAndDropInitialized() {
         return dragAndDropInitialized;
@@ -916,7 +912,7 @@ public class Component implements Animation, StyleListener {
         int oY = g.getClipY();
         int oWidth = g.getClipWidth();
         int oHeight = g.getClipHeight();
-        updateCanvasItemPosition();
+        updateNativeComponentPosition();
         if (bounds.intersects(oX, oY, oWidth, oHeight)) {
             
             g.clipRect(getX(), getY(), getWidth(), getHeight());
@@ -3816,21 +3812,12 @@ public class Component implements Animation, StyleListener {
         public void paint(Graphics g) {
         }
     }
-    
-    public CanvasItem getCanvasItem() {
-        return canvasItem;
-    }
 
-    public void setCanvasItem(CanvasItem CanvasItem) {
-        this.canvasItem = CanvasItem;
-    }
     /**
      * Positions the canvasitem to the same place as the component.
      * If other position is required, this method should be subclassed.
      */
-    protected void updateCanvasItemPosition() {
-        if(canvasItem != null) {
-            this.canvasItem.setPosition(getAbsoluteX(), getAbsoluteY());
-        }
+    protected void updateNativeComponentPosition() {
+        
     }
 }

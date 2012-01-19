@@ -23,8 +23,7 @@
  */
 package com.sun.lwuit;
 
-import com.nokia.mid.ui.TextEditor;
-import com.nokia.mid.ui.TextEditorListener;
+import com.nokia.lwuit.TextEditorProvider;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.events.FocusListener;
@@ -44,7 +43,7 @@ import java.util.Vector;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component implements TextEditorListener, FocusListener {
+public class TextArea extends Component implements TextEditorProvider.TextEditorListener, FocusListener {
     private static int defaultValign = TOP;
 
     /**
@@ -216,7 +215,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
     /**
      * In place texteditor
      */
-    private TextEditor textEditor;
+    private TextEditorProvider textEditor;
     /**
      * The y position of the text in native TextEditor
      */
@@ -346,31 +345,32 @@ public class TextArea extends Component implements TextEditorListener, FocusList
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
         textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
-        
-        setCanvasItem(textEditor);
-        if(rows == 1) {
-            textEditor.setMultiline(false);
-        }else if(rows > 1){
-            textEditor.setMultiline(true); 
-        }
-        textEditor.setForegroundColor(0xFF000000);
-        
-        //these are from DefaultLookAndFeel.drawTextArea to help position texteditor
-        leftPadding = getStyle().getPadding(isRTL(), Component.LEFT);
-        rightPadding = getStyle().getPadding(isRTL(), Component.RIGHT);
-        topPadding = getStyle().getPadding(false, Component.TOP);
-        
-        textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
-       
-        if((constraint & TextField.UNEDITABLE) == 0) {
-            textEditor.setVisible(true);
-        }else {
-            textEditor.setVisible(false);
+        if (textEditor != null) {
+            if (rows == 1) {
+                textEditor.setMultiline(false);
+            } else if (rows > 1) {
+                textEditor.setMultiline(true);
+            }
+            textEditor.setForegroundColor(0xFF000000);
+
+            //these are from DefaultLookAndFeel.drawTextArea to help position texteditor
+            leftPadding = getStyle().getPadding(isRTL(), Component.LEFT);
+            rightPadding = getStyle().getPadding(isRTL(), Component.RIGHT);
+            topPadding = getStyle().getPadding(false, Component.TOP);
+
+            textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
+
+            if ((constraint & TextField.UNEDITABLE) == 0) {
+                textEditor.setVisible(true);
+            } else {
+                textEditor.setVisible(false);
+            }
+
+            javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
+            textEditor.setFont(nativeFont);
+            textEditor.setTextEditorListener(this);
         }
         setText(text);
-        javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
-        textEditor.setFont(nativeFont); 
-        textEditor.setTextEditorListener(this);
         addFocusListener(this);
         setGrowByContent(false);
         setConstraint(constraint);
@@ -1031,7 +1031,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * overriden from Component class. This positions the textEditor to 
      * proper place.
      */
-    protected void updateCanvasItemPosition() {
+    protected void updateNativeComponentPosition() {
         
         if (textEditor != null) {
             if (getAbsoluteX() != textEditor.getPositionX()) {
@@ -1539,8 +1539,8 @@ public class TextArea extends Component implements TextEditorListener, FocusList
      * @param textEditor
      * @param actions 
      */
-    public void inputAction(TextEditor textEditor, int actions) {
-       if((actions&TextEditorListener.ACTION_TRAVERSE_NEXT) != 0) {
+    public void inputAction(TextEditorProvider textEditor, int actions) {
+       if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_NEXT) != 0) {
            //focus to next element
            Form f = getComponentForm();
            Component c = f.findNextFocusDown();
@@ -1550,7 +1550,7 @@ public class TextArea extends Component implements TextEditorListener, FocusList
            }
            c.requestFocus();
        }
-       if((actions&TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
+       if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
            //focus previous element
            Form f = getComponentForm();
            Component c = f.findNextFocusUp();
@@ -1561,11 +1561,10 @@ public class TextArea extends Component implements TextEditorListener, FocusList
            c.requestFocus();
 
        }
-       if((actions&TextEditorListener.ACTION_PAINT_REQUEST) != 0) {
+       if((actions&TextEditorProvider.TextEditorListener.ACTION_PAINT_REQUEST) != 0) {
            repaint();
-           
        }
-       if((actions&TextEditorListener.ACTION_SCROLLBAR_CHANGED) != 0) {
+       if((actions&TextEditorProvider.TextEditorListener.ACTION_SCROLLBAR_CHANGED) != 0) {
            //Visible Congtent Position shows how far the y is from the textEditor Y position
            visibleContentPosition = textEditor.getVisibleContentPosition();
            

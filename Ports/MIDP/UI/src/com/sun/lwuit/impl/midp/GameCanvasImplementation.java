@@ -23,7 +23,7 @@
  */
 package com.sun.lwuit.impl.midp;
 
-import com.nokia.mid.ui.TextEditor;
+import com.nokia.lwuit.TextEditorProvider;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
@@ -1928,8 +1928,11 @@ public class GameCanvasImplementation extends LWUITImplementation {
      * @param rows
      * @return 
      */
-    public TextEditor requestNewNativeTextEditor(int maxSize, int constraints, int width, int rows) {
-        TextEditor ret = TextEditor.createTextEditor(maxSize, constraints, width, rows);
+    public TextEditorProvider requestNewNativeTextEditor(int maxSize, int constraints, int width, int rows) {
+        TextEditorProvider ret = TextEditorProvider.createTextEditor();
+        ret.setMaxSize(maxSize);
+        ret.setConstraints(constraints);
+        ret.setSize(width, (ret.getFont().getHeight() + ret.getLineMarginHeight()) * rows);
         ret.setParent(canvas);
         return ret;
     }

@@ -20,6 +20,7 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
     
         //create some default values just so that we can instantiate the actual class
         editor = TextEditor.createTextEditor("", 500, 0, 100, 100);
+        
 
     }
     public void delete(int offset, int length) {
@@ -172,6 +173,26 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
     public int size() {
         return editor.size();
     }
+    public boolean isVisible() {
+        return editor.isVisible();
+    }
+
+    public int getHeight() {
+        return editor.getHeight();
+    }
+
+    public int getPositionX() {
+        return editor.getPositionX();
+    }
+
+    public int getPositionY() {
+        return editor.getPositionY();
+    }
+
+    public int getWidth() {
+        return editor.getWidth();
+    }
+    
 
     public void inputAction(TextEditor textEditor, int actions) {
         if(internalListener != null) {
