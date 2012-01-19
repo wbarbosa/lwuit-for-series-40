@@ -655,6 +655,13 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             textEditor.setVisible(false);
         }
     }
+
+    public void pointerPressed(int x, int y) {
+        dontWaitForKeyReleased = true;
+        super.pointerPressed(x, y);
+        
+        
+    }
     
     
 
@@ -1017,9 +1024,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void paint(Graphics g) { 
-        System.out.print("TextEditor == null:" + (textEditor == null));
-        System.out.print("  textEditorEnabled:" + textEditorEnabled);
-        System.out.println("    hasFocus:" + hasFocus());
         if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
