@@ -27,6 +27,7 @@ import com.sun.lwuit.*;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.util.EventDispatcher;
+import com.sun.lwuit.util.Resources;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -46,7 +47,7 @@ public class UIManager {
     private Hashtable selectedStyles = new Hashtable();
     private Hashtable themeProps;
     private Hashtable themeConstants = new Hashtable();
-    static UIManager instance = new UIManager();
+    static UIManager instance; // = new UIManager();
     private Style defaultStyle = new Style();
     private Style defaultSelectedStyle = new Style();
     /**
@@ -78,7 +79,6 @@ public class UIManager {
     private EventDispatcher themelisteners;
 
     UIManager() {
-        resetThemeProps(null);
     }
 
     /**
@@ -87,6 +87,10 @@ public class UIManager {
      * @return Instance of the ui manager
      */
     public static UIManager getInstance() {
+        if (instance == null) {
+            instance = new UIManager();
+            instance.resetThemeProps(null);
+        }
         return instance;
     }
 
@@ -649,6 +653,15 @@ public class UIManager {
         themeProps.put("AdsComponent#derive", "Container");
         themeProps.put("WebBrowser#derive", "Container");
 
+        // Load default Nokia Theme on top
+        try {
+            System.out.println("Loading Nokia Theme!");
+            Resources themeres = Resources.open("/nokia_theme.res");
+            buildTheme(themeres.getTheme("NokiaTheme"));
+            current.refreshTheme();
+        } catch (IOException e) {
+            throw new RuntimeException("Can't load Nokia Theme");
+        }
     }
 
     /**

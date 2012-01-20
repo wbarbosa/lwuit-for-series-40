@@ -446,30 +446,6 @@ public final class Display {
                 INSTANCE.edt.start();
             }
             
-            // hackety hack: set basic colors from system theme
-            UIManager uim = UIManager.getInstance();
-            // Problem: this causes NumberFormatExceptions on some Nokias...
-            //javax.microedition.lcdui.Display d = javax.microedition.lcdui.Display.getDisplay((MIDlet)m);
-            //int bg = d.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND);
-            //int border = d.getColor(javax.microedition.lcdui.Display.COLOR_BORDER);
-            //int fg = d.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND);
-            //int bg_hi = d.getColor(javax.microedition.lcdui.Display.COLOR_HIGHLIGHTED_BACKGROUND);
-            //int border_hi = d.getColor(javax.microedition.lcdui.Display.COLOR_HIGHLIGHTED_BORDER);
-            //int fg_hi = d.getColor(javax.microedition.lcdui.Display.COLOR_HIGHLIGHTED_FOREGROUND);
-            //Hashtable themeprops = new Hashtable();
-            //themeprops.put("bgColor", Integer.toHexString(bg));
-            //themeprops.put("sel#bgColor", Integer.toHexString(bg_hi));
-            //themeprops.put("fgColor", Integer.toHexString(fg));
-            //themeprops.put("sel#fgColor", Integer.toHexString(fg_hi));
-            //uim.setThemeProps(themeprops);
-	    try {
-                Resources themeres = Resources.open("/nokia_theme.res");
-                uim.addThemeProps(themeres.getTheme("NokiaTheme"));
-	    } catch (IOException e) {
-                throw new RuntimeException("Can't load Nokia Theme");
-            }
-            // end hackety hack
-            
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
             INSTANCE.registerVirtualKeyboard(vkb);
         }else{
