@@ -38,24 +38,29 @@ public class Main extends MIDlet {
         f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
         final Label l = new Label();
         l.setFocusable(false);
-        /*TextArea multi = new TextArea(3,3,TextArea.ANY);
-        TextArea area3 = new TextArea(1, 3, TextArea.EMAILADDR | TextArea.UNEDITABLE);
-        area3.setText("lolo@mail.com");
-        TextArea area = new TextArea(1,3, TextArea.NUMERIC);        
-        TextArea area6 = new TextArea(1,3, TextArea.ANY | TextArea.PASSWORD);
-        
-        f.addComponent(new Label("Scroll down to see buttons."));
-        f.addComponent(new Label("Multiline"));
-        f.addComponent(multi);
-        f.addComponent(new Button("Push me"));
-        f.addComponent(new Label("Email"));
-        f.addComponent(area3);
-        
-        f.addComponent(new Label("Numberic"));
-        f.addComponent(area);
-        
-        f.addComponent(new Label("password | any"));
-        f.addComponent(area6);*/
+        Button themeSwitch = new Button("Change theme");
+        themeSwitch.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent evt) {
+                    try {
+                        System.out.println("Theme name:" + UIManager.getInstance().getThemeName());
+                        String name = UIManager.getInstance().getThemeName();
+                        if(name.equals("NokiaTheme")) {
+                            Resources theme = Resources.open("/woody.res");
+                            UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
+                        }else {
+                            Resources theme = Resources.open("/nokia_theme.res");
+                            UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
+                        }
+                        Display.getInstance().getCurrent().refreshTheme();
+                        //f.refreshTheme();
+                        f.revalidate();
+                    }catch(Exception e) {
+                        
+                    }
+                }
+            });
+        f.addComponent(themeSwitch);
         f.addComponent(new Label("original area"));
         TextArea area7 = new TextArea(2,3,TextArea.ANY);
         area7.setTextEditorEnabled(false);

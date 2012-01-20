@@ -173,6 +173,12 @@
             <equals arg1="${deployment.number}" arg2="" trim="true"/>
         </condition>
         <fail if="application.version.invalid" message="Property deployment.number must not be empty and must contain version in format %d.%d.%d!"/>
+        <condition property="sign.jar.trigger" value="true">
+            <and>
+                <isset property="cdc-platform.trigger"/>
+                <istrue value="${sign.enabled}"/>
+            </and>
+        </condition>
     </target>
     <!--ricoh-init-->
     <target name="ricoh-pre-init" if="cdc-platform.trigger">
@@ -294,6 +300,13 @@
         </condition>
     </target>
     <target name="sjmc-init" depends="sjmc-pre-init" if="sjmc-platform.trigger"/>
+    <!--ojec-init-->
+    <target name="ojec-pre-init" if="cdc-platform.trigger">
+        <condition property="ojec-platform.trigger">
+            <equals arg1="ojec" arg2="${platform.type}" casesensitive="false"/>
+        </condition>
+    </target>
+    <target name="ojec-init" depends="ojec-pre-init" if="ojec-platform.trigger"/>
     <!--cdc-hi-init-->
     <target name="cdc-hi-pre-init" if="cdc-platform.trigger">
         <condition property="cdc-hi-platform.trigger">
@@ -336,7 +349,7 @@
     <!--init-->
     <target name="pre-init"/>
     <target name="post-init"/>
-    <target name="init" depends="pre-init,load-properties,basic-init,cldc-init,cdc-init,ricoh-init,semc-init,savaje-init,sjmc-init,cdc-hi-init,nokiaS80-init,nsicom-init,post-init"/>
+    <target name="init" depends="pre-init,load-properties,basic-init,cldc-init,cdc-init,ricoh-init,semc-init,savaje-init,sjmc-init,ojec-init,cdc-hi-init,nokiaS80-init,nsicom-init,post-init"/>
     <!--conditional clean-->
     <target name="conditional-clean-init">
         <uptodate property="no.clean.before.build" targetfile="${build.dir}/.timestamp">
@@ -575,9 +588,10 @@
     <target name="do-extra-libs" if="extra.classpath">
         <property name="dist.lib.dir" value="${dist.dir}/lib"/>
         <mkdir dir="${dist.lib.dir}"/>
-        <copypath destdir="${dist.lib.dir}" path="${extra.classpath}">
+        <copy todir="${dist.lib.dir}">
+            <path path="${extra.classpath}"/>
             <flattenmapper/>
-        </copypath>
+        </copy>
     </target>
     <!--nokiaS80-manifest-->
     <target name="nokiaS80-prepare-j9" if="nokiaS80-platform.trigger">
@@ -675,6 +689,9 @@
     <!--update-jad-->
     <target name="update-jad" if="cldc-platform.trigger">
         <nb-jad jadfile="${dist.dir}/${dist.jad}" jarfile="${dist.dir}/${dist.jar}" url="${dist.jar}" sign="${sign.enabled}" keystore="${sign.keystore}" keystorepassword="${sign.keystore.password}" alias="${sign.alias}" aliaspassword="${sign.alias.password}" encoding="UTF-8"/>
+    </target>
+    <target name="sign-jar" if="sign.jar.trigger">
+        <signjar jar="${dist.dir}/${dist.jar}" alias="${sign.alias}" keystore="${sign.keystore}" storepass="${sign.keystore.password}" keypass="${sign.alias.password}"/>
     </target>
     <!--ricoh-init-dalp-->
     <target name="ricoh-init-dalp" if="ricoh-platform.trigger">
@@ -782,7 +799,7 @@
     <!--jar-->
     <target name="pre-jar"/>
     <target name="post-jar"/>
-    <target name="jar" depends="preverify,pre-jar,set-password,create-jad,do-extra-libs,nokiaS80-create-manifest,jad-jsr211-properties,semc-build-j9,do-jar,nsicom-create-manifest,do-jar-no-manifest,update-jad,ricoh-build-dalp,savaje-build-jnlp,post-jar" description="Build jar and application descriptor."/>
+    <target name="jar" depends="preverify,pre-jar,set-password,create-jad,do-extra-libs,nokiaS80-create-manifest,jad-jsr211-properties,semc-build-j9,do-jar,nsicom-create-manifest,do-jar-no-manifest,update-jad,sign-jar,ricoh-build-dalp,savaje-build-jnlp,post-jar" description="Build jar and application descriptor."/>
     <!--override-jad-->
     <target name="override-jad" if="override.jarurl.trigger">
         <property name="deployment.jarurl" value="${dist.jar}"/>
@@ -967,6 +984,15 @@
             </fileset>
         </sjmcEmulatorExec>
     </target>
+    <!--ojec-run-->
+    <target name="ojec-run" if="ojec-platform.trigger">
+        <taskdef name="ojecEmulatorExec" classname="org.netbeans.modules.j2me.cdc.project.ojec.OJECToolkitEmulatorExecTask" classpath="${libs.ojec-ant-utils.classpath}"/>
+        <ojecEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.cmd.options}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}">
+            <fileset dir="${dist.dir}">
+                <exclude name="javadoc/**"/>
+            </fileset>
+        </ojecEmulatorExec>
+    </target>
     <!--nokiaS80-run-->
     <target name="nokiaS80-run" if="nokiaS80-platform.trigger">
         <mkdir dir="${platform.home}/epoc32/wins/c/PP_Applications"/>
@@ -989,6 +1015,11 @@
     <!--cdc-hi-run-->
     <target name="-pre-cdc-hi-run" if="cdc-hi-platform.trigger"/>
     <target name="-cdc-hi-run" if="cdc-hi-platform.trigger">
+        <fail message="Main class is not set!">
+            <condition>
+                <equals arg1="${main.class}" arg2=""/>
+            </condition>
+        </fail>
         <exec executable="${platform.home}/bin/emulator">
             <arg value="-cp"/>
             <arg value="${basedir}/${dist.dir}/${dist.jar}"/>
@@ -1017,8 +1048,8 @@
     </target>
     <!--run-->
     <target name="pre-run"/>
-    <target name="run" depends="jar,pre-run,open-netmon,cldc-run,ricoh-run,semc-run,savaje-run,sjmc-run,nokiaS80-run,nsicom-run,cdc-hi-run,open-profiler" description="Run MIDlet suite."/>
-    <target name="run-no-build" depends="init,pre-run,open-netmon,cldc-run,ricoh-run,semc-run,savaje-run,sjmc-run,nokiaS80-run,nsicom-run,cdc-hi-run,open-profiler" description="Quick Run already built MIDlet suite."/>
+    <target name="run" depends="jar,pre-run,open-netmon,cldc-run,ricoh-run,semc-run,savaje-run,sjmc-run,ojec-run,nokiaS80-run,nsicom-run,cdc-hi-run,open-profiler" description="Run MIDlet suite."/>
+    <target name="run-no-build" depends="init,pre-run,open-netmon,cldc-run,ricoh-run,semc-run,savaje-run,sjmc-run,ojec-run,nokiaS80-run,nsicom-run,cdc-hi-run,open-profiler" description="Quick Run already built MIDlet suite."/>
     <!--cldc-debug-->
     <target name="cldc-debug" if="cldc-platform.trigger">
         <parallel>
@@ -1100,6 +1131,21 @@
             </sequential>
         </parallel>
     </target>
+    <!--ojec-debug-->
+    <target name="ojec-debug" if="ojec-platform.trigger">
+        <taskdef name="ojecEmulatorExec" classname="org.netbeans.modules.j2me.cdc.project.ojec.OJECToolkitEmulatorExecTask" classpath="${libs.ojec-ant-utils.classpath}"/>
+        <parallel>
+            <ojecEmulatorExec home="${platform.home}" mainclass="${main.class}" args="${application.args}" jvmargs="${run.cmd.options}" device="${platform.device}" profile="${platform.profile}" xlet="${main.class.xlet}" applet="${main.class.applet}" debug="true" debuggeraddressproperty="jpda.port">
+                <fileset dir="${dist.dir}">
+                    <exclude name="javadoc/**"/>
+                </fileset>
+            </ojecEmulatorExec>
+            <sequential>
+                <sleep seconds="1"/>
+                <antcall target="nbdebug"/>
+            </sequential>
+        </parallel>
+    </target>
     <!--cdc-hi-debug-->
     <target name="-pre-cdc-hi-debug" if="cdc-hi-platform.trigger"/>
     <target name="-cdc-hi-debug" if="cdc-hi-platform.trigger">
@@ -1147,7 +1193,7 @@
         <delete file="$/.timestamp"/>
     </target>
     <target name="pre-debug"/>
-    <target name="debug" description="Debug project." depends="clean,jar,remove-timestamp,pre-debug,cldc-debug,ricoh-debug,semc-debug,savaje-debug,sjmc-debug,cdc-hi-debug,nokiaS80-debug,nsicom-debug"/>
+    <target name="debug" description="Debug project." depends="clean,jar,remove-timestamp,pre-debug,cldc-debug,ricoh-debug,semc-debug,savaje-debug,sjmc-debug,ojec-debug,cdc-hi-debug,nokiaS80-debug,nsicom-debug"/>
     <target name="nbdebug" description="Start NetBeans debugger" if="netbeans.home">
         <property name="debug.delay" value="5000"/>
         <nb-mobility-debug address="${jpda.port}" name="${app.codename}" delay="${debug.delay}" timeout="${debug.timeout}" period="2000"/>
@@ -1167,6 +1213,11 @@
     <target name="cldc-debug-run" if="cldc-platform.trigger" depends="-pre-cldc-debug-run, -cldc-debug-run, -post-cldc-debug-run"/>
     <target name="-pre-cdc-hi-debug-run" if="cdc-hi-platform.trigger"/>
     <target name="-cdc-hi-debug-run" depends="init,jar" if="cdc-hi-platform.trigger">
+        <fail message="Main class is not set!">
+            <condition>
+                <equals arg1="${main.class}" arg2=""/>
+            </condition>
+        </fail>
         <echo> Starting emulator with port number ${active.debug.port} </echo>
         <exec executable="${platform.home}/bin/emulator">
             <arg value="-cp"/>
@@ -1260,6 +1311,9 @@
     <target name="clean-sjmc" if="sjmc-platform.trigger">
         <delete dir="${dist.dir}/lib"/>
     </target>
+    <target name="clean-ojec" if="ojec-platform.trigger">
+        <delete dir="${dist.dir}/lib"/>
+    </target>
     <!--clean-->
     <target name="pre-clean"/>
     <target name="post-clean"/>
@@ -1312,7 +1366,7 @@
         <delete dir="build" quiet="true"/>
         <delete dir="dist" quiet="true"/>
     </target>
-    <target name="do-clean" depends="pre-clean,clean-timestamp,clean-preprocessed,clean-classes,clean-obfuscated,clean-preverified,clean-manifest,clean-jar,clean-jad,clean-javadoc,clean-j9,clean-ricoh,clean-semc,clean-savaje,clean-sjmc,-clean-default-configuration-root,-clean-configuration-root,-clean-completely,post-clean"/>
+    <target name="do-clean" depends="pre-clean,clean-timestamp,clean-preprocessed,clean-classes,clean-obfuscated,clean-preverified,clean-manifest,clean-jar,clean-jad,clean-javadoc,clean-j9,clean-ricoh,clean-semc,clean-savaje,clean-sjmc,clean-ojec,-clean-default-configuration-root,-clean-configuration-root,-clean-completely,post-clean"/>
     <target name="clean" depends="conditional-clean" if="no.clean.before.build" description="Clean build products.">
         <antcall target="do-clean" inheritall="true" inheritrefs="true"/>
     </target>
