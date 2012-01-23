@@ -231,6 +231,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     int leftPadding;
     int rightPadding;
     int topPadding;
+    int bottomPadding;
     /**
      * Creates an area with the given rows and columns
      * 
@@ -357,6 +358,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             leftPadding = getStyle().getPadding(isRTL(), Component.LEFT);
             rightPadding = getStyle().getPadding(isRTL(), Component.RIGHT);
             topPadding = getStyle().getPadding(false, Component.TOP);
+            bottomPadding = getStyle().getPadding(false, Component.BOTTOM);
 
             textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
 
@@ -408,7 +410,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     public void setWidth(int width) {
         super.setWidth(width);
         if(textEditor != null) {
-            textEditor.setSize(width, textEditor.getHeight());
+            textEditor.setSize(width - leftPadding - rightPadding, textEditor.getHeight());
         }
         getRowStrings();
     }
@@ -491,7 +493,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void keyPressed(int keyCode) {
         super.keyPressed(keyCode);
-        System.out.println("keypressed, " + textEditorEnabled);
         int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
 
         // this works around a bug where fire is also a softkey on devices such as newer Nokia
@@ -1012,7 +1013,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
-
         paintHint(g);
     }
 
@@ -1021,16 +1021,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * proper place.
      */
     protected void updateNativeComponentPosition() {
-        
-        if (textEditor != null) {
-            if (getAbsoluteX() != textEditor.getPositionX()) {
-                textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
-            }
-
-            if (getAbsoluteY() != textEditor.getPositionY()) {
-                textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
-            }
-        }
+        updateTextEditorPosition();
     }
     
     
@@ -1584,22 +1575,19 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     public void setX(int x) {
         super.setX(x);
-        if(textEditor != null) {
-            textEditor.setPosition(getAbsoluteX() + leftPadding, textEditor.getPositionY());
-        }
+        updateTextEditorPosition(); 
     }
 
     public void setY(int y) {
         super.setY(y);
-        if(textEditor != null) {
-            textEditor.setPosition(textEditor.getPositionX(), getAbsoluteY() + topPadding);
-        }
+        updateTextEditorPosition();
     }    
 
     public void setSize(Dimension d) {
         super.setSize(d);
         if(textEditor != null) {
-            textEditor.setSize(d.getWidth(), textEditor.getHeight());
+            textEditor.setSize(d.getWidth() - leftPadding - rightPadding, 
+                                textEditor.getHeight());
         }
     }
     
@@ -1653,7 +1641,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     public int getVisibleContentPosition() {
         return visibleContentPosition;
     }
-    
+    /**
+     * Enable or disable the native TextEditor
+     * @param enable 
+     */
     public void setTextEditorEnabled(boolean enable) {
         textEditorEnabled = enable;
         if(!enable) {
@@ -1667,6 +1658,26 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     
     public boolean getTextEditorEnabled() {
         return textEditorEnabled;
+    }
+
+    private void updateTextEditorPosition() {
+        updatePaddings();
+        int x = getAbsoluteX() + leftPadding;
+        int y = getAbsoluteY() + topPadding;
+        if(textEditor != null) {
+            textEditor.setPosition(x,y); 
+        }
+    }
+    /**
+     * Refreshes padding variables so that they reflect the current theme
+     *
+     */
+    private void updatePaddings() {
+        //update the theme values since theme might have changed
+        leftPadding = this.getStyle().getPadding(this.isRTL(), Component.LEFT);
+        rightPadding = this.getStyle().getPadding(this.isRTL(), Component.RIGHT); 
+        topPadding = this.getStyle().getPadding(false, Component.TOP);
+        bottomPadding = getStyle().getPadding(false, Component.BOTTOM);
     }
     
     public static interface TextAreaListener {
