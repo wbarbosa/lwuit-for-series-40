@@ -232,6 +232,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     int rightPadding;
     int topPadding;
     int bottomPadding;
+    
+    private Command clearCommand;
+    private Command previousClearCommand;
     /**
      * Creates an area with the given rows and columns
      * 
@@ -371,6 +374,17 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
             textEditor.setFont(nativeFont);
             textEditor.setTextEditorListener(this);
+            
+            clearCommand = new Command("Clear") {
+
+                public void actionPerformed(ActionEvent evt) {
+                    super.actionPerformed(evt);
+                    int c = textEditor.getCaretPosition();
+                    if(c != 0) {
+                        textEditor.delete(c - 1, 1);
+                    }
+                }
+            };
         }
         setText(text);
         addFocusListener(this);
@@ -1619,11 +1633,18 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     private void focusTextEditor() {
         if (textEditor != null && textEditorEnabled) {
-            dontWaitForKeyReleased = false;
-            if ((constraint & TextArea.UNEDITABLE) == 0) {
-                textEditor.setVisible(true);
-            }
-            textEditor.setFocus(true);
+           dontWaitForKeyReleased = false;
+			if ((constraint & TextArea.UNEDITABLE) == 0) {
+				textEditor.setVisible(true);
+			}
+			textEditor.setFocus(true);
+			System.out.println("Adding clearcommand");
+			Form p = Display.getInstance().getCurrent();
+			if ((constraint & TextArea.UNEDITABLE) == 0) {
+				previousClearCommand = p.getBackCommand();
+				p.addCommand(clearCommand);
+				p.setBackCommand(clearCommand);
+			}
         }
     }
 
@@ -1637,6 +1658,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     setText(textEditor.getContent());
                 }
             }
+			Form p = Display.getInstance().getCurrent();
+			if(p.getBackCommand() == clearCommand) {
+				p.setBackCommand(previousClearCommand);
+			}
+			
         }
     }
     
