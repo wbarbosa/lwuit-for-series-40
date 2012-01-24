@@ -33,6 +33,13 @@ public class Main extends MIDlet {
     public void startApp() {
         try {
         Display.init(Main.this);
+        try {
+            Resources theme = Resources.open("/woody.res");
+            UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
+                        
+        }catch(Exception e) {
+
+        }
         final Form f = new Form();
         f.setTitle("TextArea test");
         f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
