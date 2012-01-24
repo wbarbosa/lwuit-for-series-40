@@ -1638,7 +1638,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 				textEditor.setVisible(true);
 			}
 			textEditor.setFocus(true);
-			System.out.println("Adding clearcommand");
 			Form p = Display.getInstance().getCurrent();
 			if ((constraint & TextArea.UNEDITABLE) == 0) {
 				previousClearCommand = p.getBackCommand();
@@ -1661,6 +1660,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 			Form p = Display.getInstance().getCurrent();
 			if(p.getBackCommand() == clearCommand) {
 				p.setBackCommand(previousClearCommand);
+				p.removeCommand(clearCommand);
 			}
 			
         }
