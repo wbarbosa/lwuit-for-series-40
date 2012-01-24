@@ -1664,7 +1664,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     private void updateTextEditorPosition() {
         updatePaddings();
-        int x = getAbsoluteX() + leftPadding;
+        int x = getAbsoluteX() + leftPadding - 1;
         int y = getAbsoluteY() + topPadding;
         if(textEditor != null) {
             textEditor.setPosition(x,y); 
