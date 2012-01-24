@@ -352,8 +352,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             } else if (rows > 1) {
                 textEditor.setMultiline(true);
             }
-            textEditor.setForegroundColor(0xFF000000);
-
+            int color = 0xFF000000 | getStyle().getFgColor();
+            textEditor.setForegroundColor(color);
             //these are from DefaultLookAndFeel.drawTextArea to help position texteditor
             leftPadding = getStyle().getPadding(isRTL(), Component.LEFT);
             rightPadding = getStyle().getPadding(isRTL(), Component.RIGHT);
