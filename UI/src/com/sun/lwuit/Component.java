@@ -701,7 +701,8 @@ public class Component implements Animation, StyleListener {
         focusListeners.fireFocus(cmp);
         focusGainedInternal();
         focusGained();
-        if (isSelectableInteraction()) {
+        // Don't perform select command adding for touch-screen devices
+        if ((!Display.getInstance().isTouchScreenDevice()) && isSelectableInteraction()) {
             Form f = getComponentForm();
             if (f != null) {
                 f.getMenuBar().addSelectCommand(getSelectCommandText());
