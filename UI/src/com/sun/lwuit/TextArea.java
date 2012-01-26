@@ -235,6 +235,16 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     
     private Command clearCommand;
     private Command previousClearCommand;
+	
+	/**
+	 * Used to listen dragevents from parent form.
+	 */
+	private ActionListener dragListener = new ActionListener() {
+
+		public void actionPerformed(ActionEvent evt) {
+			hideTextEditor();
+		}
+	};
     /**
      * Creates an area with the given rows and columns
      * 
@@ -1558,7 +1568,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
            
        }
 	   if((actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
-		   System.out.println("Content change event");
 		   int h = textEditor.getContentHeight();
 		   if( h > textEditor.getHeight()) {
 			   int c = textEditor.getCaretPosition();
@@ -1566,7 +1575,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 			   //if caret at the end of the content, scroll the text to same place
 			   if(c == s) {
 				   visibleContentPosition = h - textEditor.getHeight();
-				   System.out.println("visibleContentPosition:" + visibleContentPosition);
 			   }
 		   }
 	   }
@@ -1716,6 +1724,16 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         topPadding = this.getStyle().getPadding(false, Component.TOP);
         bottomPadding = getStyle().getPadding(false, Component.BOTTOM);
     }
+
+	void setParent(Container parent) {
+		super.setParent(parent);
+		if(parent.getParent() instanceof Form) {
+			Form f = (Form) parent.getParent();
+			f.addPointerDraggedListener(dragListener);
+		}
+	}
+
+	
     
     public static interface TextAreaListener {
         public void inputActionReceived(int action);
