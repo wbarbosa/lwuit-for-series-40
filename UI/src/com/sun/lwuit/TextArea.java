@@ -656,13 +656,16 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     public void pointerDragged(int x, int y) {
         super.pointerDragged(x, y);
-        if(textEditor != null && textEditor.isVisible()) {
-			textEditor.setVisible(false);
-			setText(textEditor.getContent());
-            
-        }
+		System.out.println("drag");
+        hideTextEditor();
     }
     
+	private void hideTextEditor() {
+		if(textEditor != null && textEditor.isVisible()) {
+			textEditor.setVisible(false);
+			setText(textEditor.getContent());
+        }
+	}
 
     /**
      * @inheritDoc
@@ -1232,17 +1235,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     public static char getWidestChar() {
         return widestChar;
     }
-
-    /**
-     * Indicates whether this is a single line text area, in which case "growing" won't
-     * work as expected.
-     *
-     * @param singleLineTextArea set to true to force a single line text
-     */
-    public void setSingleLineTextArea(boolean singleLineTextArea) {
-        
-        this.singleLineTextArea = singleLineTextArea;
-    }
+	
+	public void setSingleLineTextArea(boolean singleLineTextArea) {
+		this.singleLineTextArea = singleLineTextArea;
+	}
 
     /**
      * Indicates whether this is a single line text area, in which case "growing" won't
@@ -1251,10 +1247,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @return  true if this is a single line text area
      */
     public boolean isSingleLineTextArea() {
-        if(textEditor != null && textEditorEnabled) {
-            return false;
-        }
-        return singleLineTextArea;
+        return rows == 1;
     }
 
     /**
