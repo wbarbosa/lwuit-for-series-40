@@ -1565,6 +1565,20 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
            visibleContentPosition = textEditor.getVisibleContentPosition();
            
        }
+	   if((actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
+		   System.out.println("Content change event");
+		   int h = textEditor.getContentHeight();
+		   if( h > textEditor.getHeight()) {
+			   int c = textEditor.getCaretPosition();
+			   int s = textEditor.size();
+			   //if caret at the end of the content, scroll the text to same place
+			   if(c == s) {
+				   visibleContentPosition = h - textEditor.getHeight();
+				   System.out.println("visibleContentPosition:" + visibleContentPosition);
+			   }
+		   }
+	   }
+	   
        
        this.text = textEditor.getContent();
        if(tal != null) {
@@ -1690,6 +1704,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     private void updateTextEditorPosition() {
         updatePaddings();
+		//the -1 is necessary because otherwise when focusing, we would see the textArea text
+		//behind the textEditor. Adding the -1 makes sure the textEditor is exactly at the same place
+		//as the textArea text
         int x = getAbsoluteX() + leftPadding - 1;
         int y = getAbsoluteY() + topPadding;
         if(textEditor != null) {

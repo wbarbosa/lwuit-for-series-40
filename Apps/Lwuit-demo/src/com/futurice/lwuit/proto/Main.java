@@ -69,8 +69,8 @@ public class Main extends MIDlet {
             });
         f.addComponent(themeSwitch);
         f.addComponent(new Label("original area"));
-        TextArea area7 = new TextArea(2,3,TextArea.ANY);
-        area7.setTextEditorEnabled(false);
+        TextArea area7 = new TextArea(4,3,TextArea.ANY);
+        
         f.addComponent(area7);
         f.addComponent(new Label("textfield"));
         f.addComponent(TextField.create());
