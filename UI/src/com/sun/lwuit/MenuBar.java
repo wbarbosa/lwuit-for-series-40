@@ -1501,7 +1501,12 @@ public class MenuBar extends Container implements ActionListener {
             menu.setScrollableY(true);
             for (int iter = 0; iter < commands.size(); iter++) {
                 Command c = (Command)commands.elementAt(iter);
-                if (c != backCommand && c != defaultCommand) {
+                // Only add to menu if:
+                //  a) it's not the back command or the default command, and
+                //  b) it's not the MSK command on a 3-button layout
+                //  (essentially an automagically set 'default command').
+                if (!(c == backCommand || c == defaultCommand) &&
+                        !(soft.length == 3 && c == softCommand[0])) {
                     menu.addComponent(createTouchCommandButton(c));
                 }
             }
