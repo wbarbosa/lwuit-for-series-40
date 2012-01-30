@@ -9,6 +9,7 @@ import com.sun.lwuit.Command;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
 import com.sun.lwuit.Label;
+import com.sun.lwuit.Slider;
 import com.sun.lwuit.TextArea;
 import com.sun.lwuit.TextField;
 import com.sun.lwuit.layouts.BoxLayout;
@@ -16,6 +17,7 @@ import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.util.Resources;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
+import com.sun.lwuit.spinner.Spinner;
 import javax.microedition.midlet.*;
 
 /**
@@ -68,8 +70,12 @@ public class Main extends MIDlet {
                 }
             });
         f.addComponent(themeSwitch);
-        f.addComponent(new Label("original area"));
-        TextArea area7 = new TextArea(4,3,TextArea.ANY);
+		Spinner spinner = Spinner.create(0, 100, 20, 1);
+		f.addComponent(spinner);
+		Slider slider = new Slider();
+		
+		f.addComponent(slider);
+        TextArea area7 = new TextArea(2,3,TextArea.ANY);
         
         f.addComponent(area7);
         f.addComponent(new Label("textfield"));
