@@ -138,10 +138,10 @@ public class Main extends MIDlet {
          * Create the 'editor' type form here *
          **************************************/
 
-        Form editorForm = new Form("Contacts");
+        final Form editorForm = new Form("Contacts");
         // Button to access editor
         b = new Button("Editor test");
-        b.addActionListened(new ActionListener() {
+        b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 editorForm.show();
             }

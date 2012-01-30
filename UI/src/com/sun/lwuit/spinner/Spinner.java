@@ -489,6 +489,8 @@ public class Spinner extends List {
         g.setColor(o);
         int paddingTop = getStyle().getPadding(false, Component.TOP);
         int paddingBottom =  getStyle().getPadding(false, Component.BOTTOM);
+        System.out.println("paddingBottom:" + paddingBottom);
+        System.out.println("borderImageBottom:" + getBorder().getBorderImages()[2].getHeight());
         int paddingLeft = getStyle().getPadding(false, Component.LEFT);
         int paddingRight = getStyle().getPadding(false, Component.RIGHT);
         int clipHeight = getHeight() - paddingTop - paddingBottom;
