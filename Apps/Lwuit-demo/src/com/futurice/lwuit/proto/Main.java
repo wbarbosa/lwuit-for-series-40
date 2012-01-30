@@ -128,6 +128,35 @@ public class Main extends MIDlet {
         });
         f.addComponent(b);
         
+        /**************************************
+         * Create the 'editor' type form here *
+         **************************************/
+
+        Form editorForm = new Form("Contacts");
+        // Button to access editor
+        b = new Button("Editor test");
+        b.addActionListened(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                editorForm.show();
+            }
+        });
+        f.addComponent(b);
+        // Commands for the editor form:
+        // (we're emulating the contacts app here)
+        Command editorBack = new Command("Back");
+        Command editorClear = new Command("Clear");
+        Command editorViewAll = new Command("View All");
+        Command editorSearch = new Command("Search");
+        Command editorDummy1 = new Command("Foo");
+        Command editorDummy2 = new Command("Bar");
+        // At first there's options, search and back
+        editorForm.addCommand(editorBack);
+        editorForm.setBackCommand(editorBack);
+
+        /**************************************
+         *     End of 'editor' type form      *
+         **************************************/
+
         f.show();
         }catch(Exception e) {
             e.printStackTrace();
