@@ -483,7 +483,22 @@ public class Spinner extends List {
      * @inheritDoc
      */
     public void paint(Graphics g) {
+        int o = g.getColor();
+        g.setColor(0x00FF00);
+        g.drawRect(getX(), getY(), getWidth()-1, getHeight()-1);
+        g.setColor(o);
+        int paddingTop = getStyle().getPadding(false, Component.TOP);
+        int paddingBottom =  getStyle().getPadding(false, Component.BOTTOM);
+        int paddingLeft = getStyle().getPadding(false, Component.LEFT);
+        int paddingRight = getStyle().getPadding(false, Component.RIGHT);
+        int clipHeight = getHeight() - paddingTop - paddingBottom;
+        int clipWidth = getWidth() - paddingLeft - paddingRight;
+        g.setClip(getX() + paddingLeft, getY() + paddingTop, clipWidth , clipHeight );
         super.paint(g);
+        int c = g.getColor();
+        g.setColor(0xFF0000);
+        g.drawRect(g.getClipX(), g.getClipY(), g.getClipWidth()-1, g.getClipHeight()-1);
+        g.setColor(c);
         if(overlayStyle.getBorder() != null) {
             overlayStyle.getBorder().paintBorderBackground(g, this);
             overlayStyle.getBorder().paint(g, this);
@@ -574,4 +589,5 @@ public class Spinner extends List {
     public static void setInputSkipDelay(int aInputSkipDelay) {
         inputSkipDelay = aInputSkipDelay;
     }
+    
 }
