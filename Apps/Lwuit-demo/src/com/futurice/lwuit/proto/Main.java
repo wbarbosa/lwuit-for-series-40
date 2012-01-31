@@ -31,147 +31,127 @@ public class Main extends MIDlet {
     };
     int nextCommand = 0;
     Command backCommand = new Command("Back");
-    
+
     public void startApp() {
         try {
-        Display.init(Main.this);
-        try {
-            Resources theme = Resources.open("/woody.res");
-            UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
-                        
-        }catch(Exception e) {
+            Display.init(Main.this);
+            final Form f = new Form();
+            f.setTitle("TextArea test");
+            f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+            final Label l = new Label();
+            Spinner spinner = Spinner.create(0, 100, 20, 1);
+            f.addComponent(spinner);
+            Slider slider = new Slider();
+            slider.setMaxValue(10);
+            slider.setMinValue(0);
+            
+            slider.setEditable(true);
+            f.addComponent(slider);
+            TextArea area7 = new TextArea(2, 3, TextArea.ANY);
 
-        }
-        final Form f = new Form();
-        f.setTitle("TextArea test");
-        f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
-        final Label l = new Label();
-        l.setFocusable(false);
-        Button themeSwitch = new Button("Change theme");
-        themeSwitch.addActionListener(new ActionListener() {
+            f.addComponent(area7);
+            f.addComponent(new Label("textfield"));
+            f.addComponent(TextField.create());
+            f.addComponent(new Label("with create method"));
+            f.addComponent(TextField.create());
+
+            // Print something for all commands
+            f.addCommandListener(new ActionListener() {
 
                 public void actionPerformed(ActionEvent evt) {
-                    try {
-                        System.out.println("Theme name:" + UIManager.getInstance().getThemeName());
-                        String name = UIManager.getInstance().getThemeName();
-                        if(name.equals("NokiaTheme")) {
-                            Resources theme = Resources.open("/woody.res");
-                            UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
-                        }else {
-                            Resources theme = Resources.open("/nokia_theme.res");
-                            UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
-                        }
-                        Display.getInstance().getCurrent().refreshTheme();
-                        //f.refreshTheme();
-                        f.revalidate();
-                    }catch(Exception e) {
-                        
+                    System.out.println("actionPerformed: " + evt.getCommand().getCommandName());
+                }
+            });
+
+            // Button for adding commands
+            Button b = new Button("+button");
+            b.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent evt) {
+                    System.out.println(nextCommand + " < " + commands.length + "?");
+                    if (nextCommand < commands.length) {
+                        f.addCommand(commands[nextCommand++]);
                     }
                 }
             });
-        f.addComponent(themeSwitch);
-		Spinner spinner = Spinner.create(0, 100, 20, 1);
-		f.addComponent(spinner);
-		Slider slider = new Slider();
-		
-		f.addComponent(slider);
-        TextArea area7 = new TextArea(2,3,TextArea.ANY);
-        
-        f.addComponent(area7);
-        f.addComponent(new Label("textfield"));
-        f.addComponent(TextField.create());
-        f.addComponent(new Label("with create method"));
-        f.addComponent(TextField.create());
-        
-        // Print something for all commands
-        f.addCommandListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                System.out.println("actionPerformed: " + evt.getCommand().getCommandName());
-            }
-        });
-        
-        // Button for adding commands
-        Button b = new Button("+button");
-        b.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                System.out.println(nextCommand + " < " + commands.length + "?");
-                if (nextCommand < commands.length) {
-                    f.addCommand(commands[nextCommand++]);
+            f.addComponent(b);
+
+            // Button for removing commands
+            b = new Button("-button");
+            b.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent evt) {
+                    if (nextCommand > 0) {
+                        f.removeCommand(commands[nextCommand - 1]);
+                        nextCommand--;
+                    }
                 }
-            }
-        });
-        f.addComponent(b);
-        
-        // Button for removing commands
-        b = new Button("-button");
-        b.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (nextCommand > 0) {
-                    f.removeCommand(commands[nextCommand-1]);
-                    nextCommand--;
+            });
+            f.addComponent(b);
+
+            // Button for adding the back command
+            b = new Button("+back");
+            b.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent evt) {
+                    f.addCommand(backCommand);
+                    f.setBackCommand(backCommand);
                 }
-            }
-        });
-        f.addComponent(b);
-        
-        // Button for adding the back command
-        b = new Button("+back");
-        b.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                f.addCommand(backCommand);
-                f.setBackCommand(backCommand);
-            }
-        });
-        f.addComponent(b);
-        
-        // Button for removing the back command
-        b = new Button("-back");
-        b.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                f.removeCommand(backCommand);
-                f.setBackCommand(null);
-            }
-        });
-        f.addComponent(b);
-        
-        /**************************************
-         * Create the 'editor' type form here *
-         **************************************/
+            });
+            f.addComponent(b);
 
-        final Form editorForm = new Form("Contacts");
-        // Button to access editor
-        b = new Button("Editor test");
-        b.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                editorForm.show();
-            }
-        });
-        f.addComponent(b);
-        // Commands for the editor form:
-        // (we're emulating the contacts app here)
-        Command editorBack = new Command("Back");
-        Command editorClear = new Command("Clear");
-        Command editorViewAll = new Command("View All");
-        Command editorSearch = new Command("Search");
-        Command editorDummy1 = new Command("Foo");
-        Command editorDummy2 = new Command("Bar");
-        // At first there's options, search and back
-        editorForm.addCommand(editorBack);
-        editorForm.setBackCommand(editorBack);
+            // Button for removing the back command
+            b = new Button("-back");
+            b.addActionListener(new ActionListener() {
 
-        /**************************************
-         *     End of 'editor' type form      *
-         **************************************/
+                public void actionPerformed(ActionEvent evt) {
+                    f.removeCommand(backCommand);
+                    f.setBackCommand(null);
+                }
+            });
+            f.addComponent(b);
 
-        f.show();
-        }catch(Exception e) {
+            /**
+             * ************************************
+             * Create the 'editor' type form here *
+         *************************************
+             */
+            final Form editorForm = new Form("Contacts");
+            // Button to access editor
+            b = new Button("Editor test");
+            b.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent e) {
+                    editorForm.show();
+                }
+            });
+            f.addComponent(b);
+            // Commands for the editor form:
+            // (we're emulating the contacts app here)
+            Command editorBack = new Command("Back");
+            Command editorClear = new Command("Clear");
+            Command editorViewAll = new Command("View All");
+            Command editorSearch = new Command("Search");
+            Command editorDummy1 = new Command("Foo");
+            Command editorDummy2 = new Command("Bar");
+            // At first there's options, search and back
+            editorForm.addCommand(editorBack);
+            editorForm.setBackCommand(editorBack);
+
+            /**
+             * ************************************
+             * End of 'editor' type form *
+         *************************************
+             */
+            f.show();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void pauseApp() {
     }
-    
+
     public void destroyApp(boolean unconditional) {
     }
 }
