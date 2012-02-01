@@ -28,7 +28,7 @@ else
 fi
 
 # prompt for okay
-	git --no-pager log --oneline $firstrev^..$lastrev
+git --no-pager log --oneline $firstrev^..$lastrev
 echo "Push these revisions for review?"
 select yesno in "Yes" "No"; do
 	case $yesno in
