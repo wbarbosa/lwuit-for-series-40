@@ -111,11 +111,9 @@ public class Main extends MIDlet {
             });
             f.addComponent(b);
 
-            /**
-             * ************************************
+            /**************************************
              * Create the 'editor' type form here *
-         *************************************
-             */
+             **************************************/
             final Form editorForm = new Form("Contacts");
             // Button to access editor
             b = new Button("Editor test");
@@ -128,7 +126,11 @@ public class Main extends MIDlet {
             f.addComponent(b);
             // Commands for the editor form:
             // (we're emulating the contacts app here)
-            Command editorBack = new Command("Back");
+            Command editorBack = new Command("Back") {
+                public void actionPerformed(ActionEvent e) {
+                    f.showBack();
+                }
+            };
             Command editorClear = new Command("Clear");
             Command editorViewAll = new Command("View All");
             Command editorSearch = new Command("Search");
@@ -138,11 +140,9 @@ public class Main extends MIDlet {
             editorForm.addCommand(editorBack);
             editorForm.setBackCommand(editorBack);
 
-            /**
-             * ************************************
-             * End of 'editor' type form *
-         *************************************
-             */
+            /**************************************
+             *     End of 'editor' type form      *
+             **************************************/
             f.show();
         } catch (Exception e) {
             e.printStackTrace();
