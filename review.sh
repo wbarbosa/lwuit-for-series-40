@@ -71,11 +71,14 @@ done
 # update the review remote
 git fetch review || die "Could not update 'review' remote" 42
 
-# if revargs not given, use review/master and master
+# determine current branch
+branch="$(git symbolic-ref HEAD 2>/dev/null | sed 's/.*\///')" || die "You must be on a branch" 9
+
+# if revargs not given, use difference between current branch and review
 if [ -z "$revarg" ]; then
 	# get changesets
 	read lastrev firstrev \
-		<<< $(git log --format=format:%H review/master..master|tr "\\n" " ")
+		<<< $(git log --format=format:%H review/$branch..$branch|tr "\\n" " ")
 
 	if [ -z "$firstrev" ]; then
 		firstrev=$(git rev-parse $lastrev^)
@@ -98,8 +101,8 @@ select yesno in "Yes" "No"; do
 	esac
 done
 
-# push to review
-git push review master || die "Git push failed" 6
+# push branch to review
+git push review $branch || die "Git push failed" 6
 
 # post review
 post-review --guess-summary --guess-description $@ $revarg || \
