@@ -9,9 +9,11 @@ import com.sun.lwuit.Command;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
 import com.sun.lwuit.Label;
+import com.sun.lwuit.List;
 import com.sun.lwuit.Slider;
 import com.sun.lwuit.TextArea;
 import com.sun.lwuit.TextField;
+import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.util.Resources;
@@ -23,7 +25,7 @@ import javax.microedition.midlet.*;
 /**
  * @author tkor
  */
-public class Main extends MIDlet {
+public class Main extends MIDlet implements ActionListener {
 
     final static Command[] commands = {
         new Command("First"), new Command("Second"), new Command("Third"),
@@ -32,10 +34,58 @@ public class Main extends MIDlet {
     int nextCommand = 0;
     Command backCommand = new Command("Back");
 
+    // The default form, shown at start
+    Form f = null;
+
+    // Editor form
+    Form editorForm = null;
+    // Commands for the editor form
+    Command editorExit = null;
+    Command editorClear = null;
+    Command editorViewAll = null;
+    Command editorBack = null;
+    Command editorSearch = null;
+    Command editorDummy1 = null;
+    Command editorDummy2 = null;
+    // 'search' field for editor form
+    TextArea searchField = null;
+
+    public void actionPerformed(ActionEvent e) {
+        Command c = e.getCommand();
+        if (c == editorExit) {
+            f.showBack();
+        } else if (c == editorBack) {
+            // Replace default command like in default contacts app
+            editorForm.removeCommand(editorViewAll);
+            editorForm.addCommand(editorSearch);
+            editorForm.setDefaultCommand(editorSearch);
+            editorForm.getContentPane().removeComponent(searchField);
+            // Replace back with exit
+            editorForm.removeCommand(editorBack);
+            editorForm.addCommand(editorExit);
+            editorForm.setBackCommand(editorExit);
+            // Redisplay
+            editorForm.revalidate();
+        } else if (c == editorSearch) {
+            // Replace default command like in default contacts app
+            editorForm.removeCommand(editorSearch);
+            editorForm.addCommand(editorViewAll);
+            editorForm.setDefaultCommand(editorViewAll);
+            // show a search field
+            editorForm.getContentPane().addComponent(BorderLayout.SOUTH, searchField);
+            // Replace 'exit' with back
+            editorForm.removeCommand(editorExit);
+            editorForm.addCommand(editorBack);
+            editorForm.setBackCommand(editorBack);
+            // Redisplay
+            editorForm.revalidate();
+        }
+    }
+
     public void startApp() {
         try {
             Display.init(Main.this);
-            final Form f = new Form();
+            f = new Form();
             f.setTitle("TextArea test");
             f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
             final Label l = new Label();
@@ -44,7 +94,7 @@ public class Main extends MIDlet {
             Slider slider = new Slider();
             slider.setMaxValue(10);
             slider.setMinValue(0);
-            
+
             slider.setEditable(true);
             f.addComponent(slider);
             TextArea area7 = new TextArea(2, 3, TextArea.ANY);
@@ -114,31 +164,41 @@ public class Main extends MIDlet {
             /**************************************
              * Create the 'editor' type form here *
              **************************************/
-            final Form editorForm = new Form("Contacts");
+            editorForm = new Form("Contacts");
+            editorForm.getContentPane().setLayout(new BorderLayout());
             // Button to access editor
             b = new Button("Editor test");
             b.addActionListener(new ActionListener() {
-
                 public void actionPerformed(ActionEvent e) {
                     editorForm.show();
                 }
             });
             f.addComponent(b);
-            // Commands for the editor form:
-            // (we're emulating the contacts app here)
-            Command editorBack = new Command("Back") {
-                public void actionPerformed(ActionEvent e) {
-                    f.showBack();
-                }
+            // List of things
+            final String items[] = {
+                "Item 1", "Item 2", "Item 3", "Item 4"
             };
-            Command editorClear = new Command("Clear");
-            Command editorViewAll = new Command("View All");
-            Command editorSearch = new Command("Search");
-            Command editorDummy1 = new Command("Foo");
-            Command editorDummy2 = new Command("Bar");
-            // At first there's options, search and back
-            editorForm.addCommand(editorBack);
-            editorForm.setBackCommand(editorBack);
+            final List list = new List(items);
+            editorForm.getContentPane().addComponent(BorderLayout.CENTER, list);
+            searchField = TextField.create();
+            // Creat commands for the editor form:
+            // (we're emulating the contacts app here)
+            editorExit = new Command("Exit");
+            editorClear = new Command("Clear");
+            editorViewAll = new Command("View All");
+            editorBack = new Command("Back");
+            editorSearch = new Command("Search");
+            editorDummy1 = new Command("Foo");
+            editorDummy2 = new Command("Bar");
+            // All commands go through this
+            editorForm.addCommandListener(this);
+            // At first there's options, search and exit
+            editorForm.addCommand(editorExit);
+            editorForm.setBackCommand(editorExit);
+            editorForm.addCommand(editorSearch);
+            editorForm.setDefaultCommand(editorSearch);
+            editorForm.addCommand(editorDummy1);
+            editorForm.addCommand(editorDummy2);
 
             /**************************************
              *     End of 'editor' type form      *
