@@ -1647,20 +1647,20 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     private void focusTextEditor() {
         if (textEditor != null && textEditorEnabled) {
-           dontWaitForKeyReleased = false;
-			if ((constraint & TextArea.UNEDITABLE) == 0) {
-				textEditor.setVisible(true);
-			}
-			textEditor.setFocus(true);
-			Form p = Display.getInstance().getCurrent();
-			if ((constraint & TextArea.UNEDITABLE) == 0) {
-				previousClearCommand = p.getBackCommand();
-				p.addCommand(clearCommand);
-				p.setBackCommand(clearCommand);
-			}
+            dontWaitForKeyReleased = false;
+            if ((constraint & TextArea.UNEDITABLE) == 0) {
+                textEditor.setVisible(true);
+            }
+            textEditor.setFocus(true);
+            Form p = Display.getInstance().getCurrent();
+            if ((constraint & TextArea.UNEDITABLE) == 0) {
+                previousClearCommand = p.getBackCommand();
+                p.addCommand(clearCommand);
+                p.setBackCommand(clearCommand);
+            }
         }
     }
-
+    
     public void focusLost(Component cmp) {
         System.out.println("focus lost");
         if (textEditor != null && textEditorEnabled) {
@@ -1671,12 +1671,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     setText(textEditor.getContent());
                 }
             }
-			Form p = Display.getInstance().getCurrent();
-			if(p.getBackCommand() == clearCommand) {
-				p.setBackCommand(previousClearCommand);
-				p.removeCommand(clearCommand);
-			}
-			
+            Form p = Display.getInstance().getCurrent();
+            if (p.getBackCommand() == clearCommand) {
+                p.setBackCommand(previousClearCommand);
+                p.removeCommand(clearCommand);
+            }
+
         }
     }
     
