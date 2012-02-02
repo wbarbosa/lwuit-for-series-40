@@ -58,7 +58,7 @@ while [ ! -z "$1" ]; do
 			else
 				# only single rev
 				gitrevarg="$1^..$1"
-				revarg="$1"
+				revarg="--revision-range=$(git rev-parse $1^):$1"
 			fi
 			;;
 		*)
@@ -78,12 +78,10 @@ if [ -z "$revarg" ]; then
 		<<< $(git log --format=format:%H review/master..master|tr "\\n" " ")
 
 	if [ -z "$firstrev" ]; then
-		revarg="$lastrev"
-		gitrevarg="$lastrev^..$lastrev"
-	else
-		revarg="--revision-range=$firstrev:$lastrev"
-		gitrevarg="$firstrev..$lastrev"
+		firstrev=$(git rev-parse $lastrev^)
 	fi
+	revarg="--revision-range=$firstrev:$lastrev"
+	gitrevarg="$firstrev..$lastrev"
 fi
 
 # prompt for okay
