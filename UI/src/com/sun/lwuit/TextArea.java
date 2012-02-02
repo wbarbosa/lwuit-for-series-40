@@ -1726,11 +1726,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
 	void setParent(Container parent) {
-		super.setParent(parent);
-		if(parent.getParent() instanceof Form) {
-			Form f = (Form) parent.getParent();
-			f.addPointerDraggedListener(dragListener);
-		}
+            super.setParent(parent);
+            if (parent != null && parent.getParent() instanceof Form) {
+                Form f = (Form) parent.getParent();
+                f.addPointerDraggedListener(dragListener);
+            }
 	}
 
 	
