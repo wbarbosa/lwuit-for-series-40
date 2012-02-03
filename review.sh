@@ -37,10 +37,11 @@ usage() {
 [ -n "$(git config reviewboard.url)" ] || \
 	die "reviewboard.url not set in git config" 3
 [ -f ".reviewboardrc" ] || die ".reviewboardrc file not found" 4
+remote="$(git config reviewboard.remote)" || remote="review"
 
-# check for 'review' remote
-git remote|grep -q review || \
-	die "Please add git remote for reviewboard as 'review'" 5
+# check for remote
+git remote|grep -q $remote || \
+	die "Git config 'reviewboard.remote' not set and remote 'review' not found." 5
 
 # read options
 while [ ! -z "$1" ]; do
@@ -69,7 +70,7 @@ while [ ! -z "$1" ]; do
 done
 
 # update the review remote
-git fetch review || die "Could not update 'review' remote" 42
+git fetch $remote || die "Could not update remote '$remote'" 42
 
 # determine current branch
 branch="$(git symbolic-ref HEAD 2>/dev/null | sed 's/.*\///')" || die "You must be on a branch" 9
@@ -78,7 +79,7 @@ branch="$(git symbolic-ref HEAD 2>/dev/null | sed 's/.*\///')" || die "You must 
 if [ -z "$revarg" ]; then
 	# get changesets
 	read lastrev firstrev \
-		<<< $(git log --format=format:%H review/$branch..$branch|tr "\\n" " ")
+		<<< $(git log --format=format:%H $remote/$branch..$branch|tr "\\n" " ")
 
 	if [ -z "$firstrev" ]; then
 		firstrev=$(git rev-parse $lastrev^)
@@ -102,7 +103,7 @@ select yesno in "Yes" "No"; do
 done
 
 # push branch to review
-git push review $branch || die "Git push failed" 6
+git push $remote $branch || die "Git push failed" 6
 
 # post review
 post-review --guess-summary --guess-description $@ $revarg || \
