@@ -15,8 +15,6 @@ import com.sun.lwuit.TextArea;
 import com.sun.lwuit.TextField;
 import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.BoxLayout;
-import com.sun.lwuit.plaf.UIManager;
-import com.sun.lwuit.util.Resources;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.spinner.Spinner;
@@ -54,7 +52,7 @@ public class Main extends MIDlet implements ActionListener {
         Command c = e.getCommand();
         if (c == editorExit) {
             f.showBack();
-        } else if (c == editorBack) {
+        } else if (c == editorBack || c == editorViewAll) {
             // Replace default command like in default contacts app
             editorForm.removeCommand(editorViewAll);
             editorForm.addCommand(editorSearch);
