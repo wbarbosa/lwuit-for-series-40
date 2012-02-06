@@ -30,15 +30,13 @@ public class Main extends MIDlet implements ActionListener {
         new Command("Fourth"), new Command("Fifth")
     };
     int nextCommand = 0;
-    Command backCommand = new Command("Back");
-
+    // Generic 'back' used in every form
+    Command backCommand = null;
     // The default form, shown at start
-    Form f = null;
-
+    Form mainForm = null;
     // Editor form
     Form editorForm = null;
     // Commands for the editor form
-    Command editorExit = null;
     Command editorClear = null;
     Command editorViewAll = null;
     Command editorBack = null;
@@ -47,21 +45,27 @@ public class Main extends MIDlet implements ActionListener {
     Command editorDummy2 = null;
     // 'search' field for editor form
     TextArea searchField = null;
+    // Spinner demo form
+    Form spinnerForm = null;
+    // Slider demo form
+    Form sliderForm = null;
+    // Text field demo form
+    Form textfieldForm = null;
+    // Softkey action demo form
+    Form softkeyForm = null;
 
     public void actionPerformed(ActionEvent e) {
         Command c = e.getCommand();
-        if (c == editorExit) {
-            f.showBack();
-        } else if (c == editorBack || c == editorViewAll) {
+        if (c == editorBack || c == editorViewAll) {
             // Replace default command like in default contacts app
             editorForm.removeCommand(editorViewAll);
             editorForm.addCommand(editorSearch);
             editorForm.setDefaultCommand(editorSearch);
             editorForm.getContentPane().removeComponent(searchField);
-            // Replace back with exit
+            // Replace our back with generic back
             editorForm.removeCommand(editorBack);
-            editorForm.addCommand(editorExit);
-            editorForm.setBackCommand(editorExit);
+            editorForm.addCommand(backCommand);
+            editorForm.setBackCommand(backCommand);
             // Redisplay
             editorForm.revalidate();
         } else if (c == editorSearch) {
@@ -71,8 +75,8 @@ public class Main extends MIDlet implements ActionListener {
             editorForm.setDefaultCommand(editorViewAll);
             // show a search field
             editorForm.getContentPane().addComponent(BorderLayout.SOUTH, searchField);
-            // Replace 'exit' with back
-            editorForm.removeCommand(editorExit);
+            // Replace generic back with our back
+            editorForm.removeCommand(backCommand);
             editorForm.addCommand(editorBack);
             editorForm.setBackCommand(editorBack);
             // Redisplay
@@ -81,130 +85,143 @@ public class Main extends MIDlet implements ActionListener {
     }
 
     public void startApp() {
-        try {
-            Display.init(Main.this);
-            f = new Form();
-            f.setTitle("TextArea test");
-            f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
-            final Label l = new Label();
-            Spinner spinner = Spinner.create(0, 100, 20, 1);
-            f.addComponent(spinner);
-            Slider slider = new Slider();
-            slider.setMaxValue(10);
-            slider.setMinValue(0);
+        Display.init(Main.this);
+        mainForm = new Form();
+        mainForm.setTitle("LWUIT Demos");
+        mainForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        mainForm.addComponent(new Button(new Command("Spinner demo") {
+            public void actionPerformed(ActionEvent e) {
+                spinnerForm.show();
+            }
+        }));
+        mainForm.addComponent(new Button(new Command("Slider demo") {
+            public void actionPerformed(ActionEvent e) {
+                sliderForm.show();
+            }
+        }));
+        mainForm.addComponent(new Button(new Command("Textfield demo") {
+            public void actionPerformed(ActionEvent e) {
+                textfieldForm.show();
+            }
+        }));
+        mainForm.addComponent(new Button(new Command("Editor demo") {
+            public void actionPerformed(ActionEvent e) {
+                editorForm.show();
+            }
+        }));
+        backCommand = new Command("Back") {
+            public void actionPerformed(ActionEvent evt) {
+                mainForm.showBack();
+            }
+        };
+        
+        /****************************
+         * Create spinner demo form *
+         ****************************/
+        spinnerForm = new Form("Spinner demo");
+        spinnerForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        Spinner spinner = Spinner.create(0, 100, 20, 1);
+        spinnerForm.addComponent(spinner);
+        spinnerForm.addCommand(backCommand);
+        spinnerForm.setBackCommand(backCommand);
 
-            slider.setEditable(true);
-            f.addComponent(slider);
-            TextArea area7 = new TextArea(2, 3, TextArea.ANY);
+        /***************************
+         * Create slider demo form *
+         ***************************/
+        sliderForm = new Form("Slider demo");
+        sliderForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        Slider slider = new Slider();
+        slider.setMaxValue(10);
+        slider.setMinValue(0);
+        slider.setEditable(true);
+        sliderForm.addComponent(slider);
+        sliderForm.addCommand(backCommand);
+        sliderForm.setBackCommand(backCommand);
+        
+        /******************************
+         * Create textfield demo form *
+         ******************************/
+        textfieldForm = new Form("Textfield demo");
+        textfieldForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        textfieldForm.addComponent(new Label("text area"));
+        textfieldForm.addComponent(new TextArea(2, 3, TextArea.ANY));
+        textfieldForm.addComponent(new Label("textfield"));
+        textfieldForm.addComponent(TextField.create());
+        textfieldForm.addComponent(new Label("with create method"));
+        textfieldForm.addComponent(TextField.create());
+        textfieldForm.addCommand(backCommand);
+        textfieldForm.setBackCommand(backCommand);
 
-            f.addComponent(area7);
-            f.addComponent(new Label("textfield"));
-            f.addComponent(TextField.create());
-            f.addComponent(new Label("with create method"));
-            f.addComponent(TextField.create());
-
-            // Print something for all commands
-            f.addCommandListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent evt) {
-                    System.out.println("actionPerformed: " + evt.getCommand().getCommandName());
+        /****************************
+         * Create softkey demo form *
+         ****************************/
+        softkeyForm = new Form("Softkey demo");
+        softkeyForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        softkeyForm.addComponent(new Button(new Command("+button") {
+            public void actionPerformed(ActionEvent evt) {
+                System.out.println(nextCommand + " < " + commands.length + "?");
+                if (nextCommand < commands.length) {
+                    mainForm.addCommand(commands[nextCommand++]);
                 }
-            });
-
-            // Button for adding commands
-            Button b = new Button("+button");
-            b.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent evt) {
-                    System.out.println(nextCommand + " < " + commands.length + "?");
-                    if (nextCommand < commands.length) {
-                        f.addCommand(commands[nextCommand++]);
-                    }
+            }
+        }));
+        softkeyForm.addComponent(new Button(new Command("-button") {
+            public void actionPerformed(ActionEvent evt) {
+                if (nextCommand > 0) {
+                    mainForm.removeCommand(commands[nextCommand - 1]);
+                    nextCommand--;
                 }
-            });
-            f.addComponent(b);
+            }
+        }));
+        softkeyForm.addComponent(new Button(new Command("+back") {
+            public void actionPerformed(ActionEvent evt) {
+                mainForm.addCommand(backCommand);
+                mainForm.setBackCommand(backCommand);
+            }
+        }));
+        softkeyForm.addComponent(new Button(new Command("-back") {
+            public void actionPerformed(ActionEvent evt) {
+                mainForm.removeCommand(backCommand);
+                mainForm.setBackCommand(null);
+            }
+        }));
+        softkeyForm.addCommand(backCommand);
+        softkeyForm.setBackCommand(backCommand);
 
-            // Button for removing commands
-            b = new Button("-button");
-            b.addActionListener(new ActionListener() {
+        /**************************************
+         * Create the 'editor' type form here *
+         **************************************/
+        editorForm = new Form("Contacts");
+        editorForm.getContentPane().setLayout(new BorderLayout());
+        // List of things
+        final String items[] = {
+            "Item 1", "Item 2", "Item 3", "Item 4"
+        };
+        final List list = new List(items);
+        editorForm.getContentPane().addComponent(BorderLayout.CENTER, list);
+        searchField = TextField.create();
+        // Creat commands for the editor form:
+        // (we're emulating the contacts app here)
+        editorClear = new Command("Clear");
+        editorViewAll = new Command("View All");
+        editorBack = new Command("Back");
+        editorSearch = new Command("Search");
+        editorDummy1 = new Command("Foo");
+        editorDummy2 = new Command("Bar");
+        // All commands go through this
+        editorForm.addCommandListener(this);
+        // At first there's options, search and exit
+        editorForm.addCommand(backCommand);
+        editorForm.setBackCommand(backCommand);
+        editorForm.addCommand(editorSearch);
+        editorForm.setDefaultCommand(editorSearch);
+        editorForm.addCommand(editorDummy1);
+        editorForm.addCommand(editorDummy2);
 
-                public void actionPerformed(ActionEvent evt) {
-                    if (nextCommand > 0) {
-                        f.removeCommand(commands[nextCommand - 1]);
-                        nextCommand--;
-                    }
-                }
-            });
-            f.addComponent(b);
-
-            // Button for adding the back command
-            b = new Button("+back");
-            b.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent evt) {
-                    f.addCommand(backCommand);
-                    f.setBackCommand(backCommand);
-                }
-            });
-            f.addComponent(b);
-
-            // Button for removing the back command
-            b = new Button("-back");
-            b.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent evt) {
-                    f.removeCommand(backCommand);
-                    f.setBackCommand(null);
-                }
-            });
-            f.addComponent(b);
-
-            /**************************************
-             * Create the 'editor' type form here *
-             **************************************/
-            editorForm = new Form("Contacts");
-            editorForm.getContentPane().setLayout(new BorderLayout());
-            // Button to access editor
-            b = new Button("Editor test");
-            b.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    editorForm.show();
-                }
-            });
-            f.addComponent(b);
-            // List of things
-            final String items[] = {
-                "Item 1", "Item 2", "Item 3", "Item 4"
-            };
-            final List list = new List(items);
-            editorForm.getContentPane().addComponent(BorderLayout.CENTER, list);
-            searchField = TextField.create();
-            // Creat commands for the editor form:
-            // (we're emulating the contacts app here)
-            editorExit = new Command("Exit");
-            editorClear = new Command("Clear");
-            editorViewAll = new Command("View All");
-            editorBack = new Command("Back");
-            editorSearch = new Command("Search");
-            editorDummy1 = new Command("Foo");
-            editorDummy2 = new Command("Bar");
-            // All commands go through this
-            editorForm.addCommandListener(this);
-            // At first there's options, search and exit
-            editorForm.addCommand(editorExit);
-            editorForm.setBackCommand(editorExit);
-            editorForm.addCommand(editorSearch);
-            editorForm.setDefaultCommand(editorSearch);
-            editorForm.addCommand(editorDummy1);
-            editorForm.addCommand(editorDummy2);
-
-            /**************************************
-             *     End of 'editor' type form      *
-             **************************************/
-            f.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        /**************************************
+         *     End of 'editor' type form      *
+         **************************************/
+        mainForm.show();
     }
 
     public void pauseApp() {
