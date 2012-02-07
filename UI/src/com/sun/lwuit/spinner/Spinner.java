@@ -489,21 +489,26 @@ public class Spinner extends List {
         int paddingLeft = getStyle().getPadding(false, Component.LEFT);
         int paddingRight = getStyle().getPadding(false, Component.RIGHT);
         
+        int clipX = g.getClipX();
+        int clipY = g.getClipY();
+        int originalClipWidth = g.getClipWidth();
+        int originalClipHeight = g.getClipHeight();
+        
         //calculate the area where the content is allowed to draw
-        int clipHeight = getHeight() - paddingTop - paddingBottom;
-        int clipWidth = getWidth() - paddingLeft - paddingRight;
+        int clipHeight = originalClipHeight - paddingTop - paddingBottom;
+        int clipWidth = originalClipWidth - paddingLeft - paddingRight;
         
-        int oldClipX = g.getClipX();
-        int oldClipY = g.getClipY();
-        int oldClipWidth = g.getClipWidth();
-        int oldClipHeight = g.getClipHeight();
-        
-        g.setClip(getX() + paddingLeft, getY() + paddingTop, clipWidth , clipHeight );
+        //g.setClip(clipX + paddingLeft, clipY + paddingTop, clipWidth , clipHeight );
         
         super.paint(g);
         
-        g.setClip(oldClipX, oldClipY, oldClipWidth, oldClipHeight);
-        
+        //g.setClip(clipX, clipY, originalClipWidth, originalClipHeight);
+        /*int c = g.getColor();
+        g.setColor(0xFF0000);
+        g.drawRect(getX(), getY() + paddingTop, clipWidth, getHeight() - paddingTop - paddingBottom);
+        g.setColor(c);
+        * 
+        */
         if(overlayStyle.getBorder() != null) {
             overlayStyle.getBorder().paintBorderBackground(g, this);
             overlayStyle.getBorder().paint(g, this);
