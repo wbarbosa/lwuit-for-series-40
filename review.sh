@@ -55,7 +55,7 @@ while [ ! -z "$1" ]; do
 			if echo "$1"|grep -q ':'; then
 				# two revs were given
 				gitrevarg=$(echo "$1"|awk -F: '{print $1 "^.." $2}')
-				revarg="--revision-range=$1"
+				revarg="--revision-range=$(echo $1|awk -F: '{print $1 "^"}'|xargs git rev-parse):$(echo $1|awk -F: '{print $2}')"
 			else
 				# only single rev
 				gitrevarg="$1^..$1"
@@ -81,11 +81,14 @@ if [ -z "$revarg" ]; then
 	read lastrev firstrev \
 		<<< $(git log --format=format:%H $remote/$branch..$branch|tr "\\n" " ")
 
+	# 'back up' first rev 1 step to catch all changes
 	if [ -z "$firstrev" ]; then
-		firstrev=$(git rev-parse $lastrev)
+		firstrev=$(git rev-parse $lastrev^)
+	else
+		firstrev=$(git rev-parse $firstrev^)
 	fi
 	revarg="--revision-range=$firstrev:$lastrev"
-	gitrevarg="$firstrev^..$lastrev"
+	gitrevarg="$firstrev..$lastrev"
 fi
 
 # prompt for okay
