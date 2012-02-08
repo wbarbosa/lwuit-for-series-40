@@ -17,7 +17,10 @@ import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
+import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.spinner.Spinner;
+import com.sun.lwuit.util.Resources;
+import java.io.IOException;
 import javax.microedition.midlet.*;
 
 /**
@@ -86,6 +89,12 @@ public class Main extends MIDlet implements ActionListener {
 
     public void startApp() {
         Display.init(Main.this);
+        /*try {
+            Resources res = Resources.open("/woody.res");
+            UIManager.getInstance().setThemeProps(res.getTheme("Theme 1"));
+        }catch(IOException err) {
+            err.printStackTrace();
+        }*/
         mainForm = new Form();
         mainForm.setTitle("LWUIT Demos");
         mainForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
@@ -120,8 +129,11 @@ public class Main extends MIDlet implements ActionListener {
          ****************************/
         spinnerForm = new Form("Spinner demo");
         spinnerForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
-        Spinner spinner = Spinner.create(0, 100, 20, 1);
+        Spinner spinner = Spinner.create(0, 3, 1, 1);
         spinnerForm.addComponent(spinner);
+        for(int i = 0; i < 10; i++) {
+            spinnerForm.addComponent(new Label("A label component"));
+        }
         spinnerForm.addCommand(backCommand);
         spinnerForm.setBackCommand(backCommand);
 
