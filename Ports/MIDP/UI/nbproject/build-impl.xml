@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- *** GENERATED FROM project.xml - DO NOT EDIT *** -->
-<project name="UI_MIDP-impl" default="jar" basedir="..">
+<project name="UI-MIDP-impl" default="jar" basedir="..">
     <!--load-properties-->
     <target name="pre-load-properties">
         <property file="nbproject/private/private.properties"/>

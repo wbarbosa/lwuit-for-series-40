@@ -1334,26 +1334,21 @@ public class List extends Component {
         cmp.setX(x + left);
         cmp.setY(y + top);
 
-        
         int oX = g.getClipX();
         int oY = g.getClipY();
         int oWidth = g.getClipWidth();
         int oHeight = g.getClipHeight();
-        String label = (cmp instanceof Label) ? ((Label) cmp).getText() : "null";
-        //System.out.println("oX:" + oX + " oY:" + oY + " comp.X:" + cmp.getX() + " comp.Y:" +cmp.getY() + " label:" + label);
-        //System.out.println("Width:" + oWidth + " oHeight:" + oHeight);
+        
         int paddingTop = getStyle().getPadding(false, Component.TOP);
         int paddingBottom =  getStyle().getPadding(false, Component.BOTTOM);
-        int c = g.getColor();
-        g.setColor(0x00FF00);
-        int greenline = oY + oHeight - paddingBottom;
-        g.drawLine(oX, greenline, oWidth, greenline);
-        g.setColor(c);
+
+        int bottomLimit = oY + oHeight - paddingBottom;
+        //calculate proper clipping area that checks that the listitem isn't drawn over the padding
+        //fixes issues with spinner component
         if(cmp.getY() < oY + paddingTop) {
             g.clipRect(cmp.getX(), oY + paddingTop, cmp.getWidth(), cmp.getHeight() - (oY - cmp.getY()));
         }else if((cmp.getY() + cmp.getHeight()) > ((oY + oHeight) - paddingBottom)) {
-            System.out.println("Component out of clip in bottom:" + label);
-            g.clipRect(cmp.getX(), cmp.getY(), cmp.getWidth(), greenline - cmp.getY());
+            g.clipRect(cmp.getX(), cmp.getY(), cmp.getWidth(), bottomLimit - cmp.getY());
         }else {
             g.clipRect(cmp.getX(), cmp.getY(), cmp.getWidth(), cmp.getHeight());
         }
