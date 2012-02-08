@@ -655,7 +655,6 @@ public class UIManager {
 
         // Load default Nokia Theme on top
         try {
-            System.out.println("Loading Nokia Theme!");
             Resources themeres = Resources.open("/nokia_theme.res");
             buildTheme(themeres.getTheme("NokiaTheme"));
             current.refreshTheme();

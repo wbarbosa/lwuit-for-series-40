@@ -207,7 +207,8 @@ public class Main extends MIDlet implements ActionListener {
         editorForm.getContentPane().setLayout(new BorderLayout());
         // List of things
         final String items[] = {
-            "Item 1", "Item 2", "Item 3", "Item 4"
+            "Item 1", "Item 2", "Item 3", "Item 4", "Item 5",
+            "Item 6", "Item 7", "Item 8", "Item 9"
         };
         final List list = new List(items);
         editorForm.getContentPane().addComponent(BorderLayout.CENTER, list);
@@ -232,7 +233,7 @@ public class Main extends MIDlet implements ActionListener {
 
         /**************************************
          *     End of 'editor' type form      *
-         **************************************/
+         **************************************/        
         mainForm.show();
     }
 

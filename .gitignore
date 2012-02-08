@@ -5,4 +5,4 @@ includefiles
 tags
 *.swp
 .reviewboardrc
-/Ports/MIDP/IO_MIDP/nbproject/private/
+nbproject
