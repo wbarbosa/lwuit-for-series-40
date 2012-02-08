@@ -54,7 +54,7 @@ while [ ! -z "$1" ]; do
 			[ -n "$1" ] || usage "-r needs an argument" 1
 			if echo "$1"|grep -q ':'; then
 				# two revs were given
-				gitrevarg=$(echo "$1"|awk -F: '{print $1 ".." $2}')
+				gitrevarg=$(echo "$1"|awk -F: '{print $1 "^.." $2}')
 				revarg="--revision-range=$1"
 			else
 				# only single rev
@@ -82,10 +82,10 @@ if [ -z "$revarg" ]; then
 		<<< $(git log --format=format:%H $remote/$branch..$branch|tr "\\n" " ")
 
 	if [ -z "$firstrev" ]; then
-		firstrev=$(git rev-parse $lastrev^)
+		firstrev=$(git rev-parse $lastrev)
 	fi
 	revarg="--revision-range=$firstrev:$lastrev"
-	gitrevarg="$firstrev..$lastrev"
+	gitrevarg="$firstrev^..$lastrev"
 fi
 
 # prompt for okay
