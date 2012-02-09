@@ -163,6 +163,7 @@ public class Button extends Label {
      */
     void focusLostInternal() {
         super.focusLostInternal();
+        System.out.println("focuslost internal");
         state = STATE_DEFAULT;
     }
     
@@ -446,10 +447,15 @@ public class Button extends Label {
         requestFocus();
     }
 
+    
+    int pressedX = -1;
+    int pressedY = -1;
     /**
      * @inheritDoc
      */
     public void pointerPressed(int x, int y) {
+        pressedX = x;
+        pressedY = y;
         clearDrag();
         setDragActivated(false);
         pressed();
@@ -469,11 +475,11 @@ public class Button extends Label {
      * @inheritDoc
      */
     protected void dragInitiated() {
-        if(Display.getInstance().shouldRenderSelection(this)) {
+        /*if(Display.getInstance().shouldRenderSelection(this)) {
             state=STATE_ROLLOVER;
         } else {
             state=STATE_DEFAULT;
-        }
+        }*/
         repaint();
     }
 
@@ -481,15 +487,24 @@ public class Button extends Label {
      * @inheritDoc
      */
     public void pointerDragged(int x, int y) {
-        if(Display.getInstance().shouldRenderSelection(this)) {
-            if(state != STATE_ROLLOVER) {
-                state=STATE_ROLLOVER;
+        final int threshold = 10;
+        if (x > pressedX + threshold || x < pressedX - threshold || y > pressedY + threshold || y < pressedY - threshold) {
+            pressedX = x;
+            pressedY = y;
+
+            if (Display.getInstance().shouldRenderSelection(this)) {
+                if (state != STATE_ROLLOVER) {
+                    state = STATE_ROLLOVER;
+                    System.out.println("state changed to rollover");
+                    repaint();
+                }
+            } else {
+                state = STATE_DEFAULT;
+                System.out.println("state changed to STATE DEFAULT");
                 repaint();
             }
-        } else {
-            state = STATE_DEFAULT;
-            repaint();
         }
+        
         super.pointerDragged(x, y);
     }
 

@@ -1688,7 +1688,6 @@ public class Form extends Container {
             }
             return;
         }
-        //scrolling related is here
         if (y >= contentPane.getY()) {
             
             Component cmp = contentPane.getComponentAt(x, y);
