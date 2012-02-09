@@ -71,6 +71,12 @@ public class Button extends Label {
 
     private boolean toggle;
     
+    /**
+     * variables to hold the current press coordinate
+     */
+    private int pressedX = -1;
+    private int pressedY = -1;
+    
     /** 
      * Constructs a button with an empty string for its text.
      */
@@ -163,7 +169,6 @@ public class Button extends Label {
      */
     void focusLostInternal() {
         super.focusLostInternal();
-        System.out.println("focuslost internal");
         state = STATE_DEFAULT;
     }
     
@@ -448,8 +453,7 @@ public class Button extends Label {
     }
 
     
-    int pressedX = -1;
-    int pressedY = -1;
+    
     /**
      * @inheritDoc
      */
