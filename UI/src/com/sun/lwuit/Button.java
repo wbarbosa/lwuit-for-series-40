@@ -499,12 +499,10 @@ public class Button extends Label {
             if (Display.getInstance().shouldRenderSelection(this)) {
                 if (state != STATE_ROLLOVER) {
                     state = STATE_ROLLOVER;
-                    System.out.println("state changed to rollover");
                     repaint();
                 }
             } else {
                 state = STATE_DEFAULT;
-                System.out.println("state changed to STATE DEFAULT");
                 repaint();
             }
         }

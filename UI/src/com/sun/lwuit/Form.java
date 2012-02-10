@@ -1806,9 +1806,8 @@ public class Form extends Container {
             dragged.pointerDragged(x, y);
             return;
         }
-
         Component cmp = contentPane.getComponentAt(x, y);
-        if (cmp != null) {
+        if (cmp != null) {            
             if (cmp.isFocusable() && cmp.isEnabled()) {
                 setFocused(cmp);
             }
