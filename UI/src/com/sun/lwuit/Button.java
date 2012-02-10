@@ -375,7 +375,6 @@ public class Button extends Label {
      */
     public void pressed(){
         state=STATE_PRESSED;
-        System.out.println("pressed");
         repaint();
     }
     
@@ -383,7 +382,6 @@ public class Button extends Label {
      * Invoked to change the state of the button to the released state
      */
     public void released() {
-        System.out.println("released");
         released(-1, -1);
     }
     

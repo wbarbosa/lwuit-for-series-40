@@ -1801,7 +1801,14 @@ public class Form extends Container {
         if(pointerDraggedListeners != null) {
             pointerDraggedListeners.fireActionEvent(new ActionEvent(this, x, y));
         }
-
+        //check if the drag is relevant to the menu bar.
+        if (menuBar.contains(x, y)) {
+            Component cmp = menuBar.getComponentAt(x, y);
+            if (cmp != null && cmp.isEnabled()) {
+                cmp.pointerDragged(x, y);
+            }
+            return;
+        }
         if (dragged != null) {
             dragged.pointerDragged(x, y);
             return;
@@ -2473,5 +2480,7 @@ public class Form extends Container {
         this.focusScrolling = focusScrolling;
     }
     
-   
+    public String toString() {
+        return "Form";
+    }
 }

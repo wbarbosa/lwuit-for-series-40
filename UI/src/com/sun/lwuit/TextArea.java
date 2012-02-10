@@ -666,16 +666,15 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     public void pointerDragged(int x, int y) {
         super.pointerDragged(x, y);
-		System.out.println("drag");
         hideTextEditor();
     }
     
-	private void hideTextEditor() {
-		if(textEditor != null && textEditor.isVisible()) {
-			textEditor.setVisible(false);
-			setText(textEditor.getContent());
+    private void hideTextEditor() {
+        if (textEditor != null && textEditor.isVisible()) {
+            textEditor.setVisible(false);
+            setText(textEditor.getContent());
         }
-	}
+    }
 
     /**
      * @inheritDoc
