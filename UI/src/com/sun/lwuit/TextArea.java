@@ -1579,11 +1579,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 	   }
 	   
        
-       this.text = textEditor.getContent();
-       if(tal != null) {
-               tal.inputActionReceived(actions);
-       }
-       
+       this.text = textEditor.getContent();       
     }
 
     public void setFocus(boolean focused) {
@@ -1618,12 +1614,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             textEditor.setSize(d.getWidth() - leftPadding - rightPadding, 
                                 textEditor.getHeight());
         }
-    }
-    
-    private TextAreaListener  tal;
-    
-    public void setTextAreaListener(TextAreaListener l) {
-        tal = l;
     }
 
     protected void deinitialize() {
@@ -1731,12 +1721,5 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 f.addPointerDraggedListener(dragListener);
             }
 	}
-
-	
-    
-    public static interface TextAreaListener {
-        public void inputActionReceived(int action);
-        public void debugMsg(String msg);
-    }
     
 }
