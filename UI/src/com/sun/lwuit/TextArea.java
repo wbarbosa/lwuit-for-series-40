@@ -1036,7 +1036,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void paint(Graphics g) { 
         Style s = getStyle();
-        textEditor.setForegroundColor(0xFF000000 | s.getFgColor());
+        if(textEditor != null) {
+            textEditor.setForegroundColor(0xFF000000 | s.getFgColor());
+        }
         if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
