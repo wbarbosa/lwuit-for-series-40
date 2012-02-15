@@ -220,8 +220,8 @@ public class MenuBar extends Container implements ActionListener {
 
         softCommand = new Command[soft.length];
 
-        setHeight(57); // hardcoded height for nokia style
-        setPreferredH(57); // hardcoded height for nokia style
+        setHeight(49); // hardcoded height for nokia style
+        setPreferredH(49); // hardcoded height for nokia style
     }
 
     private int getCommandBehavior() {
