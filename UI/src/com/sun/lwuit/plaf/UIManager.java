@@ -653,14 +653,6 @@ public class UIManager {
         themeProps.put("AdsComponent#derive", "Container");
         themeProps.put("WebBrowser#derive", "Container");
 
-        // Load default Nokia Theme on top
-        try {
-            Resources themeres = Resources.open("/nokia_theme.res");
-            buildTheme(themeres.getTheme("NokiaTheme"));
-            current.refreshTheme();
-        } catch (IOException e) {
-            throw new RuntimeException("Can't load Nokia Theme");
-        }
     }
 
     /**

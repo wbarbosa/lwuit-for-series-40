@@ -477,11 +477,11 @@ public class Button extends Label {
      * @inheritDoc
      */
     protected void dragInitiated() {
-        /*if(Display.getInstance().shouldRenderSelection(this)) {
+        if(Display.getInstance().shouldRenderSelection(this)) {
             state=STATE_ROLLOVER;
         } else {
             state=STATE_DEFAULT;
-        }*/
+        }
         repaint();
     }
 
@@ -504,7 +504,6 @@ public class Button extends Label {
                 repaint();
             }
         }
-        
         super.pointerDragged(x, y);
     }
 

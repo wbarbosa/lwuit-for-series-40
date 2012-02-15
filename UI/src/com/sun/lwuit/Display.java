@@ -446,6 +446,14 @@ public final class Display {
                 INSTANCE.edt.start();
             }
             
+            // Load default Nokia Theme on top
+            try {
+            Resources themeres = Resources.open("/nokia_theme.res");
+            UIManager.getInstance().setThemeProps(themeres.getTheme("NokiaTheme"));
+            
+            } catch (IOException e) {
+                throw new RuntimeException("Can't load Nokia Theme");
+            }
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
             INSTANCE.registerVirtualKeyboard(vkb);
         }else{

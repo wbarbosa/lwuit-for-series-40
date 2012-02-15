@@ -19,9 +19,9 @@
                 </properties>
             </reference>
             <reference>
-                <foreign-project>UI_MIDP</foreign-project>
+                <foreign-project>UI-MIDP</foreign-project>
                 <artifact-type>jar</artifact-type>
-                <script>${project.UI_MIDP}/build.xml</script>
+                <script>${project.UI-MIDP}/build.xml</script>
                 <target>jar</target>
                 <clean-target>clean</clean-target>
                 <id>jar</id>

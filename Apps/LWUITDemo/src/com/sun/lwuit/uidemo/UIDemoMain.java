@@ -91,6 +91,7 @@ public class UIDemoMain  implements ActionListener {
             // can throw a security exception in an applet
         }
         try {
+            
             //set the theme
             if(Display.getInstance().hasNativeTheme()) {
                 Display.getInstance().installNativeTheme();
@@ -220,6 +221,7 @@ public class UIDemoMain  implements ActionListener {
             });
         } else {
             main = new Form("LWUIT Demo");
+            
             uiContent = main.getContentPane();
         }
         if(mainMenu != null){
