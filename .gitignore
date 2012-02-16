@@ -5,4 +5,4 @@ includefiles
 tags
 *.swp
 .reviewboardrc
-nbproject
+private
