@@ -570,18 +570,21 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void keyReleased(int keyCode) {
+        System.out.println("keyreleased");
         focusTextEditor();
-        int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
-        if(isEditable()){
-            // this works around a bug where fire is also a softkey on devices such as newer Nokia
-            // series 40's
-            if (triggerClose && (action == Display.GAME_FIRE || isEnterKey(keyCode))) {
-                triggerClose = false;
-                onClick();
-                return;
-            }
-            if(action == 0 && keyCode > 0) {
-                Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText(), keyCode);
+        if (!textEditorEnabled) {
+            int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
+            if (isEditable()) {
+                // this works around a bug where fire is also a softkey on devices such as newer Nokia
+                // series 40's
+                if (triggerClose && (action == Display.GAME_FIRE || isEnterKey(keyCode))) {
+                    triggerClose = false;
+                    onClick();
+                    return;
+                }
+                if (action == 0 && keyCode > 0) {
+                    Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText(), keyCode);
+                }
             }
         }
     }
@@ -1035,16 +1038,30 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void paint(Graphics g) { 
+        ensureTextEditorIsShown();
+        
         Style s = getStyle();
         if(textEditor != null) {
             textEditor.setForegroundColor(0xFF000000 | s.getFgColor());
         }
+        
+        System.out.println("textEditorEnabled:" + textEditorEnabled + " " + "hasFocus():" + hasFocus() + " editor.isVisible:" +textEditor.isVisible());
         if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
         paintHint(g);
     }
 
+    /**
+     * Makes sure that if textArea has focus that textEditor is shown
+     * Fixes issues with going back and fort between forms that have textareas
+     */
+    private void ensureTextEditorIsShown() {
+        if(textEditor != null && textEditorEnabled && hasFocus() && !textEditor.isVisible()) {
+            textEditor.setVisible(true);
+            textEditor.setFocus(true);
+        }
+    }
     /**
      * overriden from Component class. This positions the textEditor to 
      * proper place.
@@ -1585,6 +1602,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     public void setFocus(boolean focused) {
+        System.out.println("setFocus");
         super.setFocus(focused);
         if(textEditorEnabled) {
             if(textEditor != null) {
@@ -1632,6 +1650,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     public void focusGained(Component cmp) {
+        System.out.println("focusGained");
         if(dontWaitForKeyReleased) {
             focusTextEditor();
         }
