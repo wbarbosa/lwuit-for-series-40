@@ -236,15 +236,23 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private Command clearCommand;
     private Command previousClearCommand;
 	
-	/**
-	 * Used to listen dragevents from parent form.
-	 */
-	private ActionListener dragListener = new ActionListener() {
+    /**
+     * Used to listen dragevents from parent form.
+     */
+    private ActionListener dragListener = new ActionListener() {
 
-		public void actionPerformed(ActionEvent evt) {
-			hideTextEditor();
-		}
-	};
+        public void actionPerformed(ActionEvent evt) {
+            hideTextEditor();
+        }
+    };
+    
+    private ActionListener showListener = new ActionListener() {
+        
+        public void actionPerformed(ActionEvent evt) {
+            ensureTextEditorIsShown();
+        }
+    };
+    
     /**
      * Creates an area with the given rows and columns
      * 
@@ -1038,30 +1046,18 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void paint(Graphics g) { 
-        ensureTextEditorIsShown();
+        
         
         Style s = getStyle();
         if(textEditor != null) {
             textEditor.setForegroundColor(0xFF000000 | s.getFgColor());
         }
-        
-        System.out.println("textEditorEnabled:" + textEditorEnabled + " " + "hasFocus():" + hasFocus() + " editor.isVisible:" +textEditor.isVisible());
         if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
         paintHint(g);
     }
 
-    /**
-     * Makes sure that if textArea has focus that textEditor is shown
-     * Fixes issues with going back and fort between forms that have textareas
-     */
-    private void ensureTextEditorIsShown() {
-        if(textEditor != null && textEditorEnabled && hasFocus() && !textEditor.isVisible()) {
-            textEditor.setVisible(true);
-            textEditor.setFocus(true);
-        }
-    }
     /**
      * overriden from Component class. This positions the textEditor to 
      * proper place.
@@ -1740,7 +1736,18 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             if (parent != null && parent.getParent() instanceof Form) {
                 Form f = (Form) parent.getParent();
                 f.addPointerDraggedListener(dragListener);
+                f.addShowListener(showListener);
             }
 	}
-    
+
+    /**
+     * Makes sure that if textArea has focus that textEditor is shown
+     * Fixes issues with going back and fort between forms that have textareas
+     */
+    private void ensureTextEditorIsShown() {
+        if(textEditor != null && textEditorEnabled && hasFocus() && !textEditor.isVisible()) {
+            textEditor.setVisible(true);
+            textEditor.setFocus(true);
+        }
+    }
 }

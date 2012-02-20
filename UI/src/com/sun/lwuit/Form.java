@@ -1433,7 +1433,6 @@ public class Form extends Container {
      */
     public void setFocused(Component focused) {
         if (this.focused == focused && focused != null) {
-            System.out.println("doing only repaint");
             this.focused.repaint();
             return;
         }
