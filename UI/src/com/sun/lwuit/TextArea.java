@@ -758,7 +758,15 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     void initComponentImpl() {
+        System.out.println("initComponentImpl in Texarea");
         getRowStrings();
+        Container parent = getParent();
+        if (parent != null && parent.getParent() instanceof Form) {
+                System.out.println("set listeners to parent form");
+                Form f = (Form) parent.getParent();
+                f.addPointerDraggedListener(dragListener);
+                f.addShowListener(showListener);
+            }
         super.initComponentImpl();
     }
     
@@ -1634,8 +1642,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     protected void deinitialize() {
         super.deinitialize();
+        System.out.println("deinitializing textarea");
         Container parent = getParent();
         if (parent != null && parent.getParent() instanceof Form) {
+            System.out.println("removing textarea listeners in deinitialize");
                 Form f = (Form) parent.getParent();
                 f.removePointerDraggedListener(dragListener);
                 f.removeShowListener(showListener);
@@ -1736,16 +1746,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         topPadding = this.getStyle().getPadding(false, Component.TOP);
         bottomPadding = getStyle().getPadding(false, Component.BOTTOM);
     }
-
-	void setParent(Container parent) {
-            super.setParent(parent);
-            if (parent != null && parent.getParent() instanceof Form) {
-                Form f = (Form) parent.getParent();
-                f.addPointerDraggedListener(dragListener);
-                f.addShowListener(showListener);
-            }
-	}
-
     /**
      * Makes sure that if textArea has focus that textEditor is shown
      * Fixes issues with going back and fort between forms that have textareas
