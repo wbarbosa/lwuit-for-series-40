@@ -1634,6 +1634,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     protected void deinitialize() {
         super.deinitialize();
+        Container parent = getParent();
+        if (parent != null && parent.getParent() instanceof Form) {
+                Form f = (Form) parent.getParent();
+                f.removePointerDraggedListener(dragListener);
+                f.removeShowListener(showListener);
+        }
         if(textEditor != null) {
             textEditor.setVisible(false);
         }
