@@ -617,7 +617,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
         
     void editString() {
-        if (!textEditorEnabled) {
+        System.out.println("editString");
+        if (textEditor == null) {
             if (autoDegradeMaxSize && (!hadSuccessfulEdit) && (maxSize > 1024)) {
                 try {
                     Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
