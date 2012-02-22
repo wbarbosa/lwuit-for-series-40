@@ -672,7 +672,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 }
             }
         }
-        focusTextEditor();
+        if(isInitialized()) {
+            focusTextEditor();
+        }
     }
 
     public void pointerDragged(int x, int y) {
