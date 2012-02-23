@@ -683,12 +683,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         hideTextEditor();
     }
     
-    private void hideTextEditor() {
-        if (textEditor != null && textEditor.isVisible()) {
-            textEditor.setVisible(false);
-            setText(textEditor.getContent());
-        }
-    }
 
     /**
      * @inheritDoc
@@ -1677,12 +1671,24 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 textEditor.setVisible(true);
             }
             textEditor.setFocus(true);
-            Form p = Display.getInstance().getCurrent();
-            if ((constraint & TextArea.UNEDITABLE) == 0) {
-                previousClearCommand = p.getBackCommand();
-                p.addCommand(clearCommand);
-                p.setBackCommand(clearCommand);
-            }
+            addClearCommandToForm();
+        }
+    }
+    
+    private void hideTextEditor() {
+        if (textEditor != null && textEditor.isVisible()) {
+            textEditor.setVisible(false);
+            setText(textEditor.getContent());
+            removeClearCommandFromForm();
+        }
+    }
+    
+    private void addClearCommandToForm() {
+        Form p = Display.getInstance().getCurrent();
+        if ((constraint & TextArea.UNEDITABLE) == 0) {
+            previousClearCommand = p.getBackCommand();
+            p.addCommand(clearCommand);
+            p.setBackCommand(clearCommand);
         }
     }
     
@@ -1696,12 +1702,15 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     setText(textEditor.getContent());
                 }
             }
-            Form p = Display.getInstance().getCurrent();
-            if (p.getBackCommand() == clearCommand) {
-                p.setBackCommand(previousClearCommand);
-                p.removeCommand(clearCommand);
-            }
+            removeClearCommandFromForm();
 
+        }
+    }
+    private void removeClearCommandFromForm() {
+        Form p = Display.getInstance().getCurrent();
+        if (p.getBackCommand() == clearCommand) {
+            p.setBackCommand(previousClearCommand);
+            p.removeCommand(clearCommand);
         }
     }
     
