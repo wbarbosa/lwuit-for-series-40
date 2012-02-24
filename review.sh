@@ -43,6 +43,8 @@ remote="$(git config reviewboard.remote)" || remote="review"
 git remote|grep -q $remote || \
 	die "Git config 'reviewboard.remote' not set and remote 'review' not found." 5
 
+passthru_args=""
+
 # read options
 while [ ! -z "$1" ]; do
 	case "$1" in
@@ -63,7 +65,7 @@ while [ ! -z "$1" ]; do
 			fi
 			;;
 		*)
-			break
+			passthru_args="$passthru_args \"$1\""
 			;;
 	esac
 	shift
@@ -109,7 +111,7 @@ done
 git push $remote $branch || die "Git push failed" 6
 
 # post review
-post-review --guess-summary --guess-description $@ $revarg || \
+post-review --guess-summary --guess-description $passthru_args $revarg || \
 	die "post-review failed" 7
 
 echo
