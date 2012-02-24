@@ -519,12 +519,12 @@ public class MenuBar extends Container implements ActionListener {
              * The back or exit command always goes on the right, and then
              * we fill the left softkey with the second action added.
              */
-            System.out.println("Three softkeys");
+            //System.out.println("Three softkeys");
 
             // First handle RSK: put back there if defined
             if (backCommand != null) {
                 // There is a back command so put it on the right
-                System.out.println(backCommand.getCommandName() + " as back on RSK");
+                //System.out.println(backCommand.getCommandName() + " as back on RSK");
                 softCommand[2] = backCommand;
             }
 
@@ -534,7 +534,7 @@ public class MenuBar extends Container implements ActionListener {
                 softCommand[0] = defaultCommand;
                 freeButtons--;
             } else if (numberOfMiscCommands > 0) { // if not, use the first added cmd for msk
-                System.out.println(commandsWithoutBackOrDefault[0].getCommandName() + " on MSK");
+                //System.out.println(commandsWithoutBackOrDefault[0].getCommandName() + " on MSK");
                 softCommand[0] = commandsWithoutBackOrDefault[0];
                 freeButtons--;
                 unassignedMiscCommands--;
@@ -543,7 +543,7 @@ public class MenuBar extends Container implements ActionListener {
             // else add options menu
             if (unassignedMiscCommands == 1) {
                 Command cmd = commandsWithoutBackOrDefault[numberOfMiscCommands-1];
-                System.out.println(cmd.getCommandName() + " on LSK");
+                //System.out.println(cmd.getCommandName() + " on LSK");
                 softCommand[1] = cmd;
             } else if (unassignedMiscCommands > 1) {
                 System.out.println(menuCommand.getCommandName() + " as menu on LSK");

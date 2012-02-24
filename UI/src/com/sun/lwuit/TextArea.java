@@ -755,11 +755,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     void initComponentImpl() {
-        System.out.println("initComponentImpl in Texarea");
         getRowStrings();
         Container parent = getParent();
         if (parent != null && parent.getParent() instanceof Form) {
-                System.out.println("set listeners to parent form");
                 Form f = (Form) parent.getParent();
                 f.addPointerDraggedListener(dragListener);
                 f.addShowListener(showListener);
@@ -1639,10 +1637,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     protected void deinitialize() {
         super.deinitialize();
-        System.out.println("deinitializing textarea");
         Container parent = getParent();
         if (parent != null && parent.getParent() instanceof Form) {
-            System.out.println("removing textarea listeners in deinitialize");
                 Form f = (Form) parent.getParent();
                 f.removePointerDraggedListener(dragListener);
                 f.removeShowListener(showListener);
@@ -1686,9 +1682,14 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private void addClearCommandToForm() {
         Form p = Display.getInstance().getCurrent();
         if ((constraint & TextArea.UNEDITABLE) == 0) {
-            previousClearCommand = p.getBackCommand();
-            p.addCommand(clearCommand);
-            p.setBackCommand(clearCommand);
+            if(p.getBackCommand() != clearCommand) {
+                previousClearCommand = p.getBackCommand();
+            }
+            if(previousClearCommand != clearCommand) {
+                System.out.println("add clearcommand");
+                p.addCommand(clearCommand);
+                p.setBackCommand(clearCommand);
+            }
         }
     }
     
@@ -1708,7 +1709,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     private void removeClearCommandFromForm() {
         Form p = Display.getInstance().getCurrent();
+        System.out.println("current backcommand:" + p.getBackCommand().hashCode());
+        System.out.println("own clear:" + clearCommand.hashCode());
         if (p.getBackCommand() == clearCommand) {
+            System.out.println("removing clearcommand");
             p.setBackCommand(previousClearCommand);
             p.removeCommand(clearCommand);
         }
@@ -1763,9 +1767,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * Fixes issues with going back and fort between forms that have textareas
      */
     private void ensureTextEditorIsShown() {
-        if(textEditor != null && textEditorEnabled && hasFocus() && !textEditor.isVisible()) {
-            textEditor.setVisible(true);
-            textEditor.setFocus(true);
+        if(hasFocus()) {
+            focusTextEditor();
         }
     }
 }
