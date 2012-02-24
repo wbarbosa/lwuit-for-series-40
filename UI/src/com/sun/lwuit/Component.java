@@ -31,6 +31,7 @@ import com.sun.lwuit.animations.Animation;
 import com.sun.lwuit.animations.Motion;
 import com.sun.lwuit.events.FocusListener;
 import com.sun.lwuit.events.StyleListener;
+import com.sun.lwuit.impl.LWUITImplementation;
 import com.sun.lwuit.plaf.Border;
 import com.sun.lwuit.plaf.LookAndFeel;
 import com.sun.lwuit.plaf.UIManager;
@@ -706,8 +707,16 @@ public class Component implements Animation, StyleListener {
         if (Display.getInstance().getKeyboardType() != Display.KEYBOARD_TYPE_VIRTUAL && isSelectableInteraction()) {
             Form f = getComponentForm();
             if (f != null) {
-                f.getMenuBar().addSelectCommand(getSelectCommandText());
-                f.restoreMenu();
+                if((cmp instanceof TextArea)) {
+                    //we only want to show edit if native input is not supported
+                    if(!Display.getInstance().getImplementation().isNativeInputSupported()) {
+                        f.getMenuBar().addSelectCommand(getSelectCommandText());
+                        f.restoreMenu();
+                    }
+                }else {
+                    f.getMenuBar().addSelectCommand(getSelectCommandText());
+                    f.restoreMenu();
+                }
             }
         }
     }
