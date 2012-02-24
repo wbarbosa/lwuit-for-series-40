@@ -707,6 +707,7 @@ public class Component implements Animation, StyleListener {
             Form f = getComponentForm();
             if (f != null) {
                 f.getMenuBar().addSelectCommand(getSelectCommandText());
+                f.restoreMenu();
             }
         }
     }
