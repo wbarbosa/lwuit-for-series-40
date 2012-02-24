@@ -65,7 +65,7 @@ while [ ! -z "$1" ]; do
 			fi
 			;;
 		*)
-			passthru_args="$passthru_args \"$1\""
+			passthru_args="$passthru_args $1"
 			;;
 	esac
 	shift
