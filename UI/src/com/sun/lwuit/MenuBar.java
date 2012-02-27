@@ -539,13 +539,8 @@ public class MenuBar extends Container implements ActionListener {
                 freeButtons--;
                 unassignedMiscCommands--;
             }
-            // If there is now only 1 misc command left, put it on LSK,
-            // else add options menu
-            if (unassignedMiscCommands == 1) {
-                Command cmd = commandsWithoutBackOrDefault[numberOfMiscCommands-1];
-                //System.out.println(cmd.getCommandName() + " on LSK");
-                softCommand[1] = cmd;
-            } else if (unassignedMiscCommands > 1) {
+            // If there are more commands left, show a menu
+            if (unassignedMiscCommands > 0) {
                 System.out.println(menuCommand.getCommandName() + " as menu on LSK");
                 softCommand[1] = menuCommand;
             }
