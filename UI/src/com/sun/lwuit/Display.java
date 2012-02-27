@@ -448,9 +448,13 @@ public final class Display {
             
             // Load default Nokia Theme on top
             try {
-            Resources themeres = Resources.open("/nokia_theme.res");
-            UIManager.getInstance().setThemeProps(themeres.getTheme("NokiaTheme"));
-            
+                Resources themeres = null;
+                if (INSTANCE.touchScreen) {
+                    themeres = Resources.open("/nokia_theme.res");
+                } else {
+                    themeres = Resources.open("/nokia_non_touch_theme.res");
+                }
+                UIManager.getInstance().setThemeProps(themeres.getTheme("NokiaTheme"));
             } catch (IOException e) {
                 throw new RuntimeException("Can't load Nokia Theme");
             }
