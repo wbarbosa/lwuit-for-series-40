@@ -711,12 +711,11 @@ public class Component implements Animation, StyleListener {
                     //we only want to show edit if native input is not supported
                     if(!Display.getInstance().getImplementation().isNativeInputSupported()) {
                         f.getMenuBar().addSelectCommand(getSelectCommandText());
-                        f.restoreMenu();
                     }
                 }else {
                     f.getMenuBar().addSelectCommand(getSelectCommandText());
-                    f.restoreMenu();
                 }
+                f.restoreMenu();
             }
         }
     }
