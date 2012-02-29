@@ -1173,7 +1173,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @param growByContent true if the text component should grow and false otherwise
      */
     public void setGrowByContent(boolean growByContent) {
-        this.growByContent = growByContent;
+        //if nativeinput is supported we can't support growByContent
+        if(!Display.getInstance().getImplementation().isNativeInputSupported()) {
+            this.growByContent = growByContent;
+        }
     }
     
     /**

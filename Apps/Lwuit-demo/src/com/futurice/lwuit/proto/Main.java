@@ -13,6 +13,7 @@ import com.sun.lwuit.List;
 import com.sun.lwuit.Slider;
 import com.sun.lwuit.TextArea;
 import com.sun.lwuit.TextField;
+import com.sun.lwuit.animations.CommonTransitions;
 import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.events.ActionEvent;
@@ -96,6 +97,8 @@ public class Main extends MIDlet implements ActionListener {
             err.printStackTrace();
         }*/
         mainForm = new Form();
+        mainForm.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, true, 1000));
+        mainForm.setTransitionOutAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, false, 1000));
         mainForm.setTitle("LWUIT Demos");
         mainForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
         mainForm.addComponent(new Button(new Command("Spinner demo") {
