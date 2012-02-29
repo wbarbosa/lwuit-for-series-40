@@ -1168,6 +1168,7 @@ public class MenuBar extends Container implements ActionListener {
             }
             return;
         }
+        commands.removeElement(cmd);
         backStack.removeElement(cmd);
         updateCommands();
     }
