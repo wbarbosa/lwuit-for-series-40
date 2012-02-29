@@ -36,6 +36,7 @@ import com.sun.lwuit.list.ListCellRenderer;
 import com.sun.lwuit.plaf.LookAndFeel;
 import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
+import java.util.Stack;
 import java.util.Vector;
 
 /**
@@ -116,7 +117,8 @@ public class MenuBar extends Container implements ActionListener {
     private Form parent;
     private int softkeyCount;
     private boolean thirdSoftButton;
-
+    
+    private Stack backStack = new Stack();
     /**
      * Empty Constructor
      */
@@ -429,7 +431,20 @@ public class MenuBar extends Container implements ActionListener {
      * @param backCommand the command to treat as the back Command
      */
     public void setBackCommand(Command backCommand) {
+        /**
+         * The backstack is used to hold previous command that were backcommands.
+         * The current backCommand is always in the backCommand-variable and the rest 
+         * are in the stack.
+         */
+        if(this.backCommand != null) {
+            backStack.push(this.backCommand);
+        }
+        else if(backStack.contains(backCommand)) {
+            backStack.removeElement(backCommand);
+        }
+        
         this.backCommand = backCommand;
+        
         if(getCommandBehavior() == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK) {
             int i = commands.indexOf(backCommand);
             if(i > -1) {
@@ -524,7 +539,7 @@ public class MenuBar extends Container implements ActionListener {
             // First handle RSK: put back there if defined
             if (backCommand != null) {
                 // There is a back command so put it on the right
-                //System.out.println(backCommand.getCommandName() + " as back on RSK");
+                System.out.println(backCommand.getCommandName() + " as back on RSK");
                 softCommand[2] = backCommand;
             }
 
@@ -534,10 +549,12 @@ public class MenuBar extends Container implements ActionListener {
                 softCommand[0] = defaultCommand;
                 freeButtons--;
             } else if (numberOfMiscCommands > 0) { // if not, use the first added cmd for msk
-                //System.out.println(commandsWithoutBackOrDefault[0].getCommandName() + " on MSK");
-                softCommand[0] = commandsWithoutBackOrDefault[0];
-                freeButtons--;
-                unassignedMiscCommands--;
+                if (!backStack.contains(commandsWithoutBackOrDefault[0])) {
+                    System.out.println(commandsWithoutBackOrDefault[0].getCommandName() + " on MSK");
+                    softCommand[0] = commandsWithoutBackOrDefault[0];
+                    freeButtons--;
+                    unassignedMiscCommands--;
+                }
             }
             // If there are more commands left, show a menu
             if (unassignedMiscCommands > 0) {
@@ -1151,7 +1168,7 @@ public class MenuBar extends Container implements ActionListener {
             }
             return;
         }
-        commands.removeElement(cmd);
+        backStack.removeElement(cmd);
         updateCommands();
     }
 
