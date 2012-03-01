@@ -4,15 +4,7 @@
  */
 package com.futurice.lwuit.proto;
 
-import com.sun.lwuit.Button;
-import com.sun.lwuit.Command;
-import com.sun.lwuit.Display;
-import com.sun.lwuit.Form;
-import com.sun.lwuit.Label;
-import com.sun.lwuit.List;
-import com.sun.lwuit.Slider;
-import com.sun.lwuit.TextArea;
-import com.sun.lwuit.TextField;
+import com.sun.lwuit.*;
 import com.sun.lwuit.animations.CommonTransitions;
 import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.BoxLayout;
@@ -57,6 +49,8 @@ public class Main extends MIDlet implements ActionListener {
     Form textfieldForm = null;
     // Softkey action demo form
     Form softkeyForm = null;
+    // tab demo form
+    Form tabForm = null;
 
     public void actionPerformed(ActionEvent e) {
         Command c = e.getCommand();
@@ -119,6 +113,11 @@ public class Main extends MIDlet implements ActionListener {
         mainForm.addComponent(new Button(new Command("Editor demo") {
             public void actionPerformed(ActionEvent e) {
                 editorForm.show();
+            }
+        }));
+        mainForm.addComponent(new Button(new Command("Tab demo") {
+            public void actionPerformed(ActionEvent evt) {
+                tabForm.show();
             }
         }));
         backCommand = new Command("Back") {
@@ -234,9 +233,20 @@ public class Main extends MIDlet implements ActionListener {
         editorForm.addCommand(editorDummy1);
         editorForm.addCommand(editorDummy2);
 
-        /**************************************
-         *     End of 'editor' type form      *
-         **************************************/        
+        /*****************
+         * Tab demo form *
+         *****************/
+        tabForm = new Form("Tabs");
+        tabForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        Tabs tabs = new Tabs();
+        tabs.addTab("First", new Label("First"));
+        tabs.addTab("Second", new Label("Second"));
+        tabs.addTab("Third", new Label("Third"));
+        tabForm.addComponent(tabs);
+        tabForm.addCommand(backCommand);
+        tabForm.setBackCommand(backCommand);
+        
+        
         mainForm.show();
     }
 
