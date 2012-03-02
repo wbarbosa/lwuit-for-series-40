@@ -157,12 +157,41 @@ public class Main extends MIDlet implements ActionListener {
          ******************************/
         textfieldForm = new Form("Textfield demo");
         textfieldForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
-        textfieldForm.addComponent(new Label("text area"));
-        textfieldForm.addComponent(new TextArea(2, 3, TextArea.ANY));
-        textfieldForm.addComponent(new Label("textfield"));
-        textfieldForm.addComponent(TextField.create());
-        textfieldForm.addComponent(new Label("with create method"));
-        textfieldForm.addComponent(TextField.create());
+        final ComponentGroup cg = new ComponentGroup();
+        
+        cg.addComponent(new Label("text area"));
+        cg.addComponent(new TextArea(2, 3, TextArea.ANY));
+        cg.addComponent(new Label("textfield"));
+        cg.addComponent(TextField.create());
+        cg.addComponent(new Label("with create method"));
+        final TextArea tf = TextField.create();
+        cg.addComponent(tf);
+        final Label lb = new Label("Replaced!");
+        Button b = new Button("animate");
+        cg.addComponent(b);
+        b.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent evt) {
+                if(tf.getComponentForm() != null) {
+                cg.replaceAndWait(tf, lb,
+                            CommonTransitions.createSlide(
+                                CommonTransitions.SLIDE_VERTICAL, 
+                                true, 
+                                500), 
+                            1000);
+                }else if(lb.getComponentForm() != null) {
+                   cg.replaceAndWait(lb, tf,
+                            CommonTransitions.createSlide(
+                                CommonTransitions.SLIDE_VERTICAL, 
+                                true, 
+                                500), 
+                            1000); 
+                }
+            }
+        });
+        
+                     
+        textfieldForm.addComponent(cg);
         textfieldForm.addCommand(backCommand);
         textfieldForm.setBackCommand(backCommand);
 
