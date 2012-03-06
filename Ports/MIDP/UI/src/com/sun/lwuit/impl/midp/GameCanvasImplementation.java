@@ -78,8 +78,8 @@ public class GameCanvasImplementation extends LWUITImplementation {
     private static int[] portableKeyCodeValues;
     private int alpha = 255;
     private int[] rgbArr;
-
-    private Canvas canvas;
+    private final C canvas = new C();
+        
     private class C extends GameCanvas implements CommandListener, Runnable {
         private boolean done;
         private Command[] currentCommands;
@@ -276,6 +276,7 @@ public class GameCanvasImplementation extends LWUITImplementation {
      * @return the canvas implementation
      */
     protected Canvas createCanvas() {
+       
         return new C();
     }
 
@@ -322,7 +323,8 @@ public class GameCanvasImplementation extends LWUITImplementation {
      * @inheritDoc
      */
     public void init(Object m) {
-        canvas = createCanvas();
+        
+        
         canvas.setTitle(null);
         canvas.setFullScreenMode(!com.sun.lwuit.Display.getInstance().isNativeCommands());
 
@@ -634,9 +636,9 @@ public class GameCanvasImplementation extends LWUITImplementation {
         // from clearing the media and producing flickering
         Form current = getCurrentForm();
         if (!flushGraphicsBug || (current != null && current.hasMedia())) {
-            ((C) canvas).flushGraphics(x, y, width, height);
+            canvas.flushGraphics(x, y, width, height);
         } else {
-            ((C) canvas).flushGraphics();
+            canvas.flushGraphics();
         }
 
     }
@@ -645,7 +647,7 @@ public class GameCanvasImplementation extends LWUITImplementation {
      * @inheritDoc
      */
     public void flushGraphics() {
-        ((C) canvas).flushGraphics();
+        canvas.flushGraphics();
     }
 
     /**
@@ -1128,7 +1130,7 @@ public class GameCanvasImplementation extends LWUITImplementation {
     /**
      * @inheritDoc
      */
-    public void drawString(Object graphics, String str, int x, int y) {
+    public void drawString(final Object graphics, final String str, final int x, final int y) {
         javax.microedition.lcdui.Graphics nativeGraphics = (javax.microedition.lcdui.Graphics) graphics;
         nativeGraphics.drawString(str, x, y, javax.microedition.lcdui.Graphics.TOP | javax.microedition.lcdui.Graphics.LEFT);
     }
@@ -1152,7 +1154,7 @@ public class GameCanvasImplementation extends LWUITImplementation {
     /**
      * @inheritDoc
      */
-    public void drawRGB(Object graphics, int[] rgbData, int offset, int x, int y, int w, int h, boolean processAlpha) {
+    public void drawRGB(final Object graphics, final int[] rgbData, int offset, final int x, final int y, final int w, final int h, final boolean processAlpha) {
         javax.microedition.lcdui.Graphics nativeGraphics = (javax.microedition.lcdui.Graphics) graphics;
         int rgbX = x;
         int rgbY = y;
@@ -1267,7 +1269,7 @@ public class GameCanvasImplementation extends LWUITImplementation {
      * @inheritDoc
      */
     public Object getNativeGraphics() {
-        return ((C) canvas).getGraphics();
+        return canvas.getGraphics();
     }
 
     /**
