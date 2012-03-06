@@ -1712,8 +1712,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     private void removeClearCommandFromForm() {
         Form p = Display.getInstance().getCurrent();
-        System.out.println("current backcommand:" + p.getBackCommand().hashCode());
-        System.out.println("own clear:" + clearCommand.hashCode());
         if (p.getBackCommand() == clearCommand) {
             System.out.println("removing clearcommand");
             p.setBackCommand(previousClearCommand);
