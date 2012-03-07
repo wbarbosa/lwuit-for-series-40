@@ -44,10 +44,6 @@ public class BrowserMIDlet extends javax.microedition.midlet.MIDlet {
 
             checkAppDescriptors();
 
-            //set the theme
-            Resources theme = Resources.open("/LWUITtheme.res");
-            UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
-
             // Launch the form on the EDT
             Display.getInstance().callSerially(new Runnable() {
                 public void run() {

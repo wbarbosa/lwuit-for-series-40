@@ -7,6 +7,7 @@ import com.sun.lwuit.Button;
 import com.sun.lwuit.Container;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Image;
+import com.sun.lwuit.TextArea;
 import com.sun.lwuit.TextField;
 import com.sun.lwuit.animations.Motion;
 import com.sun.lwuit.events.ActionEvent;
@@ -61,7 +62,7 @@ public class BrowserToolbar extends Container implements ActionListener {
 
     Button[] navButtons = new Button[imgFiles.length];
     Image[] buttonsImages = new Image[imgFiles.length];
-    TextField address;
+    TextArea address;
     HTMLComponent htmlC;
     Vector back=new Vector();
     Vector forward=new Vector();

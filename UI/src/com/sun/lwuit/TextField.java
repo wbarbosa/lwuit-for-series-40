@@ -1438,12 +1438,15 @@ public class TextField extends TextArea {
      * @inheritDoc
      */
     public void paint(Graphics g) {
-        UIManager.getInstance().getLookAndFeel().drawTextField(g, this);
-        
-        if (drawCursor && hasFocus() && isEditable()) {
-            UIManager.getInstance().getLookAndFeel().drawTextFieldCursor(g, this);
+        if (Display.getInstance().getImplementation().isNativeInputSupported()) {
+            super.paint(g);
+        } else {
+            UIManager.getInstance().getLookAndFeel().drawTextField(g, this);
+
+            if (drawCursor && hasFocus() && isEditable()) {
+                UIManager.getInstance().getLookAndFeel().drawTextFieldCursor(g, this);
+            }
         }
-        
         paintHint(g);
     }
 
