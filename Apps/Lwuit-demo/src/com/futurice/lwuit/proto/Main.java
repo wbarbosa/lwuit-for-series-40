@@ -238,8 +238,9 @@ public class Main extends MIDlet implements ActionListener {
         editorForm.getContentPane().setLayout(new BorderLayout());
         // List of things
         final String items[] = {
-            "Item 1", "Item 2", "Item 3", "Item 4", "Item 5",
-            "Item 6", "Item 7", "Item 8", "Item 9"
+            "Johann Gambolputty", "Eric Praline", "Spiny Norman", "Luigi Vercotti",
+            "Ron Obvious", "Doug Piranha", "Dinsdale Piranha", "Harry Organs",
+            "Mr. Anemone"
         };
         final List list = new List(items);
         editorForm.getContentPane().addComponent(BorderLayout.CENTER, list);
