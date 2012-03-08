@@ -4,17 +4,26 @@
  */
 package com.futurice.lwuit.proto;
 
-import com.sun.lwuit.*;
+import com.sun.lwuit.Button;
+import com.sun.lwuit.Command;
+import com.sun.lwuit.ComponentGroup;
+import com.sun.lwuit.Display;
+import com.sun.lwuit.Form;
+import com.sun.lwuit.Label;
+import com.sun.lwuit.List;
+import com.sun.lwuit.Slider;
+import com.sun.lwuit.Tabs;
+import com.sun.lwuit.TextArea;
+import com.sun.lwuit.TextField;
 import com.sun.lwuit.animations.CommonTransitions;
-import com.sun.lwuit.layouts.BorderLayout;
-import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
-import com.sun.lwuit.plaf.UIManager;
+import com.sun.lwuit.layouts.BorderLayout;
+import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.spinner.Spinner;
-import com.sun.lwuit.util.Resources;
-import java.io.IOException;
-import javax.microedition.midlet.*;
+import javax.microedition.midlet.MIDlet;
+
+
 
 /**
  * @author tkor
@@ -83,7 +92,7 @@ public class Main extends MIDlet implements ActionListener {
     }
 
     public void startApp() {
-        Display.init(Main.this);
+        Display.init(this);
         /*try {
             Resources res = Resources.open("/woody.res");
             UIManager.getInstance().setThemeProps(res.getTheme("Theme 1"));
@@ -93,7 +102,7 @@ public class Main extends MIDlet implements ActionListener {
         mainForm = new Form();
         mainForm.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, true, 1000));
         mainForm.setTransitionOutAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, false, 1000));
-        mainForm.setTitle("LWUIT Demos");
+        mainForm.setTitle("LWUIT DemoS");
         mainForm.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
         mainForm.addComponent(new Button(new Command("Spinner demo") {
             public void actionPerformed(ActionEvent e) {
