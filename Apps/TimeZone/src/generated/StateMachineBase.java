@@ -1,4 +1,4 @@
-/**
+/** 
  * This class contains generated code from the LWUIT resource editor, DO NOT MODIFY!
  * This class is designed for subclassing that way the code generator can overwrite it
  * anytime without erasing your changes which should exist in a subclass!
