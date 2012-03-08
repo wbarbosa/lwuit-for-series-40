@@ -387,4 +387,17 @@ public class StateMachine extends StateMachineBase {
         save();
         return val;
     }
+
+    protected void onMain_ButtonAction(Component c, ActionEvent event) {
+        // If the resource file changes the names of components this call will break notifying you that you should fix the code
+        super.onMain_ButtonAction(c, event);
+    
+    }
+
+    protected boolean onMainCurrency() {
+        // If the resource file changes the names of components this call will break notifying you that you should fix the code
+        boolean val = super.onMainCurrency();
+        
+        return val;
+    }
 }

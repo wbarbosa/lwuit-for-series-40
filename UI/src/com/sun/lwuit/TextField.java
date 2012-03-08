@@ -1125,6 +1125,7 @@ public class TextField extends TextArea {
      * @inheritDoc
      */
     protected void deinitialize() {
+        super.deinitialize();
         getComponentForm().deregisterAnimated(this);
         // if the text field is removed without restoring the commands we need to restore them
         if(handlesInput()) {

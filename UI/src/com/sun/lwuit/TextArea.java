@@ -756,9 +756,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     
     void initComponentImpl() {
         getRowStrings();
-        Container parent = getParent();
-        if (parent != null && parent.getParent() instanceof Form) {
-                Form f = (Form) parent.getParent();
+        Form f = getComponentForm();
+        if (f != null) {
                 f.addPointerDraggedListener(dragListener);
                 f.addShowListener(showListener);
             }
@@ -1640,12 +1639,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     protected void deinitialize() {
         super.deinitialize();
-        Container parent = getParent();
-        if (parent != null && parent.getParent() instanceof Form) {
-                Form f = (Form) parent.getParent();
+        Form f = getComponentForm();
+        if (f != null) {
                 f.removePointerDraggedListener(dragListener);
                 f.removeShowListener(showListener);
         }
+        System.out.println("Deinitializing textarea");
         if(textEditor != null) {
             textEditor.setVisible(false);
         }
