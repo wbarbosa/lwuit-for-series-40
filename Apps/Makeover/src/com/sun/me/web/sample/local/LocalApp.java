@@ -108,12 +108,12 @@ public class LocalApp {
             // show your LWUIT form here e.g.: new MyForm().show();
             // this is a good place to set your default theme using
             // the UIManager class e.g.:
-            try {
+            /*try {
                 com.sun.lwuit.util.Resources res = com.sun.lwuit.util.Resources.open("/theme.res");
                 com.sun.lwuit.plaf.UIManager.getInstance().setThemeProps(res.getTheme(res.getThemeResourceNames()[0]));
             } catch(java.io.IOException err) {
                  err.printStackTrace();
-            }
+            }*/
             showMainForm();
         }
     }
