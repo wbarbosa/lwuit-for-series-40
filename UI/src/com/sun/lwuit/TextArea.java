@@ -383,12 +383,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
             textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
 
-            if ((constraint & TextField.UNEDITABLE) == 0) {
-                textEditor.setVisible(true);
-            } else {
-                textEditor.setVisible(false);
-            }
-
             javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
             textEditor.setFont(nativeFont);
             textEditor.setTextEditorListener(this);
