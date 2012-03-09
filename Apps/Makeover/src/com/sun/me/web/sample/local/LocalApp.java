@@ -35,6 +35,8 @@ import com.sun.lwuit.list.DefaultListCellRenderer;
 import com.sun.lwuit.list.ListModel;
 import com.sun.lwuit.plaf.Border;
 import com.sun.lwuit.plaf.Style;
+import com.sun.lwuit.plaf.UIManager;
+import com.sun.lwuit.util.Resources;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Enumeration;
@@ -77,7 +79,19 @@ public class LocalApp {
     
     private Command javaThemeCommand = new Command("LWUIT Theme") {
         public void actionPerformed(ActionEvent ev) {
-            setTheme("/LWUITtheme.res");
+            try {
+                Resources themeres = null;
+                
+                if (Display.getInstance().isTouchScreenDevice()) {
+                    themeres = Resources.open("/nokia_theme.res");
+                } else {
+                    themeres = Resources.open("/nokia_non_touch_theme.res");
+                }
+                UIManager.getInstance().setThemeProps(themeres.getTheme("NokiaTheme"));
+                Display.getInstance().getCurrent().refreshTheme();
+            } catch (IOException e) {
+                throw new RuntimeException("Can't load Nokia Theme");
+            }
         }
     };
 
