@@ -93,12 +93,12 @@ public class UIDemoMain  implements ActionListener {
         try {
             
             //set the theme
-//            if(Display.getInstance().hasNativeTheme()) {
-//                Display.getInstance().installNativeTheme();
-//            } else {
-//                Resources theme = Resources.open("/TimelineTheme.res");
-//                UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
-//            }
+            /*if(Display.getInstance().hasNativeTheme()) {
+                Display.getInstance().installNativeTheme();
+            } else {
+                Resources theme = Resources.open("/TimelineTheme.res");
+                UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
+            }*/
             //open the resources file that contains all the fonts
             res = Resources.open("/resources.res");
 
