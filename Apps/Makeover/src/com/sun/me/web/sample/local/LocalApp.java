@@ -388,7 +388,12 @@ public class LocalApp {
             SliderBridge b = new SliderBridge(new ConnectionRequest[]{ con, img });
             progress.addComponent(b);
             NetworkManager.getInstance().addToQueue(con);
-            progress.showPacked(BorderLayout.CENTER, true);
+            
+            if(isLWUITTheme()) {
+                progress.show();
+            }else {
+                progress.showPacked(BorderLayout.CENTER, true);
+            }
             final Form map = createForm("Map");
             map.setScrollableX(true);
             map.setScrollableY(true);
