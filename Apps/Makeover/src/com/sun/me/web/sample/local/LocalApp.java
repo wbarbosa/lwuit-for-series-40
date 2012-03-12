@@ -378,7 +378,9 @@ public class LocalApp {
             con.addArgument("image_width", Integer.toString((int)(Display.getInstance().getDisplayWidth() * 1.5)));
             con.addArgument("zoom", Integer.toString(zoom));
 
-            progress.getDialogStyle().setBorder(Border.createRoundBorder(6, 6, 0xe3ef5a));
+            if(!isLWUITTheme()) {
+                progress.getDialogStyle().setBorder(Border.createRoundBorder(6, 6, 0xe3ef5a));
+            }
             progress.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_VERTICAL, true, 400));
             progress.setTransitionOutAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_VERTICAL, false, 400));
             ((FlowLayout)progress.getLayout()).setValign(Component.CENTER);
@@ -424,6 +426,9 @@ public class LocalApp {
         } else {
             Dialog.show("Please Wait", "Please wait for download to complete", "OK", null);
         }
+    }
+    private boolean isLWUITTheme() {
+        return UIManager.getInstance().getThemeName().equalsIgnoreCase("NokiaTheme");
     }
     
     protected void pauseApp() {
