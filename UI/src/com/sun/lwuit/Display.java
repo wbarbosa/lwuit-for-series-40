@@ -384,6 +384,8 @@ public final class Display {
     private static Hashtable virtualKeyboards = new Hashtable();
 
     private boolean dropEvents;
+    
+    private boolean hideMenu = false;
 
     /**
      * Private constructor to prevent instanciation
@@ -2538,4 +2540,13 @@ public final class Display {
     public boolean isTablet() {
         return impl.isTablet();
     }
+    
+    public void setHideMenu(boolean value) {
+        hideMenu = value;
+    }
+    
+    public boolean shouldHideMenu() {
+        return hideMenu;
+    }
+    
 }

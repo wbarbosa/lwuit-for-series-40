@@ -150,7 +150,7 @@ public class Form extends Container {
     int initialPressY;
 
     private EventDispatcher orientationListener;
-
+    
     /**
      * Default constructor creates a simple form
      */

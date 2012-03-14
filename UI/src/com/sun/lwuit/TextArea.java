@@ -1676,15 +1676,17 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     private void addClearCommandToForm() {
-        Form p = Display.getInstance().getCurrent();
-        if ((constraint & TextArea.UNEDITABLE) == 0) {
-            if(p.getBackCommand() != clearCommand) {
-                previousClearCommand = p.getBackCommand();
-            }
-            if(previousClearCommand != clearCommand) {
-                System.out.println("add clearcommand");
-                p.addCommand(clearCommand);
-                p.setBackCommand(clearCommand);
+        if (!Display.getInstance().shouldHideMenu()) {
+            Form p = Display.getInstance().getCurrent();
+            if ((constraint & TextArea.UNEDITABLE) == 0) {
+                if (p.getBackCommand() != clearCommand) {
+                    previousClearCommand = p.getBackCommand();
+                }
+                if (previousClearCommand != clearCommand) {
+                    System.out.println("add clearcommand");
+                    p.addCommand(clearCommand);
+                    p.setBackCommand(clearCommand);
+                }
             }
         }
     }

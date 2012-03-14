@@ -1099,15 +1099,17 @@ public class MenuBar extends Container implements ActionListener {
      * Adds the MenuBar on the parent Form
      */
     protected void installMenuBar() {
-        if (getParent() == null) {
-            int type = Display.getInstance().getCommandBehavior();
-            if(type == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_RIGHT) {
-                parent.getTitleArea().addComponent(BorderLayout.EAST, this);
-                return;
-            }
-            if(softkeyCount > 1 || type == Display.COMMAND_BEHAVIOR_BUTTON_BAR ||
-                    type == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK) {
-                parent.addComponentToForm(BorderLayout.SOUTH, this);
+        if (!Display.getInstance().shouldHideMenu()) {
+            if (getParent() == null) {
+                int type = Display.getInstance().getCommandBehavior();
+                if (type == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_RIGHT) {
+                    parent.getTitleArea().addComponent(BorderLayout.EAST, this);
+                    return;
+                }
+                if (softkeyCount > 1 || type == Display.COMMAND_BEHAVIOR_BUTTON_BAR
+                        || type == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK) {
+                    parent.addComponentToForm(BorderLayout.SOUTH, this);
+                }
             }
         }
     }
