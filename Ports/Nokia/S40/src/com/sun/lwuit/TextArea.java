@@ -29,9 +29,11 @@ import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.events.FocusListener;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.geom.Rectangle;
+import com.sun.lwuit.impl.s40.S40Implementation;
 import com.sun.lwuit.plaf.LookAndFeel;
 import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
+import com.sun.lwuit.Display;
 import java.util.Vector;
 
 /**
@@ -366,7 +368,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
-        textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
+        if(Display.getInstance().getImplementation() instanceof S40Implementation) {
+            System.out.println("S40 Implementation present");
+            S40Implementation impl = (S40Implementation) Display.getInstance().getImplementation();
+            textEditor = impl.requestNewNativeTextEditor(maxSize, constraint, 100, rows);
+        }
         if (textEditor != null) {
             if (rows == 1) {
                 textEditor.setMultiline(false);
@@ -1676,7 +1682,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     private void addClearCommandToForm() {
-        if (!Display.getInstance().shouldHideMenu()) {
+        if (!Display.getInstance().shouldHideMenu()) { 
             Form p = Display.getInstance().getCurrent();
             if ((constraint & TextArea.UNEDITABLE) == 0) {
                 if (p.getBackCommand() != clearCommand) {
