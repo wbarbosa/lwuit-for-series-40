@@ -1756,13 +1756,5 @@ public class Border {
                 }
             }
         }
-    } 
-    
-    /*
-     * Returns image-pieces used by this border. Image pieces are in this
-     * order: {top, bottom, left, right, topLeft, topRight, bottomLeft, bottomRight, background};
-     */
-    public Image[] getBorderImages() {
-        return images;
-    }
+    }    
 }

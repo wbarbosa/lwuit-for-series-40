@@ -31,7 +31,6 @@ import com.sun.lwuit.animations.Animation;
 import com.sun.lwuit.animations.Motion;
 import com.sun.lwuit.events.FocusListener;
 import com.sun.lwuit.events.StyleListener;
-import com.sun.lwuit.impl.LWUITImplementation;
 import com.sun.lwuit.plaf.Border;
 import com.sun.lwuit.plaf.LookAndFeel;
 import com.sun.lwuit.plaf.UIManager;
@@ -702,20 +701,10 @@ public class Component implements Animation, StyleListener {
         focusListeners.fireFocus(cmp);
         focusGainedInternal();
         focusGained();
-        // Don't perform select command adding for devices that *don't*
-        // have a keyboard. We *do* want it for t&t though.
-        if (Display.getInstance().getKeyboardType() != Display.KEYBOARD_TYPE_VIRTUAL && isSelectableInteraction()) {
+        if (isSelectableInteraction()) {
             Form f = getComponentForm();
             if (f != null) {
-                if((cmp instanceof TextArea)) {
-                    //we only want to show edit if native input is not supported
-                    if(!Display.getInstance().getImplementation().isNativeInputSupported()) {
-                        f.getMenuBar().addSelectCommand(getSelectCommandText());
-                    }
-                }else {
-                    f.getMenuBar().addSelectCommand(getSelectCommandText());
-                }
-                f.restoreMenu();
+                f.getMenuBar().addSelectCommand(getSelectCommandText());
             }
         }
     }
@@ -923,11 +912,8 @@ public class Component implements Animation, StyleListener {
         int oY = g.getClipY();
         int oWidth = g.getClipWidth();
         int oHeight = g.getClipHeight();
-        updateNativeComponentPosition();
         if (bounds.intersects(oX, oY, oWidth, oHeight)) {
-            
             g.clipRect(getX(), getY(), getWidth(), getHeight());
-            
             paintBackground(g);
 
             if (isScrollable()) {
@@ -1954,7 +1940,6 @@ public class Component implements Animation, StyleListener {
             // we drag inversly to get a feel of grabbing a physical screen
             // and pulling it in the reverse direction of the drag
             if (isScrollableY()) {
-                //here happens scrolling
                 int tl;
                 if(getTensileLength() > -1) {
                     tl = getTensileLength();
@@ -1968,12 +1953,10 @@ public class Component implements Animation, StyleListener {
                 if(isAlwaysTensile() && getScrollDimension().getHeight() <= getHeight()) {
                     if (scroll >= -tl && scroll < getHeight() + tl) {
                         setScrollY(scroll);
-                        
                     }
                 } else {
                     if (scroll >= -tl && scroll < getScrollDimension().getHeight() - getHeight() + tl) {
                         setScrollY(scroll);
-                        
                     }
                 }
             }
@@ -2430,7 +2413,6 @@ public class Component implements Animation, StyleListener {
         Form rootForm = getComponentForm();
         if (rootForm != null) {
             rootForm.requestFocus(this);
-            
         }
     }
 
@@ -3394,7 +3376,7 @@ public class Component implements Animation, StyleListener {
         return false;
     }
 
-     void paintHint(Graphics g) {
+    void paintHint(Graphics g) {
         Label hintLabel = getHintLabelImpl();
         if (hintLabel != null && shouldShowHint()) {
             hintLabel.setX(getX());
@@ -3822,13 +3804,5 @@ public class Component implements Animation, StyleListener {
 
         public void paint(Graphics g) {
         }
-    }
-
-    /**
-     * Positions the canvasitem to the same place as the component.
-     * If other position is required, this method should be subclassed.
-     */
-    protected void updateNativeComponentPosition() {
-        
     }
 }

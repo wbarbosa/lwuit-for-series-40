@@ -23,10 +23,8 @@
  */
 package com.sun.lwuit;
 
-import com.nokia.lwuit.TextEditorProvider;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
-import com.sun.lwuit.events.FocusListener;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.geom.Rectangle;
 import com.sun.lwuit.plaf.LookAndFeel;
@@ -43,7 +41,7 @@ import java.util.Vector;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component implements TextEditorProvider.TextEditorListener, FocusListener {
+public class TextArea extends Component {
     private static int defaultValign = TOP;
 
     /**
@@ -211,48 +209,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private int currentRowWidth;
     
     private Label hintLabel;
-    
-    /**
-     * In place texteditor
-     */
-    private TextEditorProvider textEditor;
-    /**
-     * The y position of the text in native TextEditor
-     */
-    private int visibleContentPosition;
-    
-    /**
-     * Flag to indicate if textEditor is enabled or not
-     */
-    private boolean textEditorEnabled = true;
-    
-    private boolean dontWaitForKeyReleased = false;
-    
-    int leftPadding;
-    int rightPadding;
-    int topPadding;
-    int bottomPadding;
-    
-    private Command clearCommand;
-    private Command previousClearCommand;
-	
-    /**
-     * Used to listen dragevents from parent form.
-     */
-    private ActionListener dragListener = new ActionListener() {
 
-        public void actionPerformed(ActionEvent evt) {
-            hideTextEditor();
-        }
-    };
-    
-    private ActionListener showListener = new ActionListener() {
-        
-        public void actionPerformed(ActionEvent evt) {
-            ensureTextEditorIsShown();
-        }
-    };
-    
     /**
      * Creates an area with the given rows and columns
      * 
@@ -355,6 +312,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         setUIID("TextArea");
         setSelectCommandText(UIManager.getInstance().localize("edit", "Edit"));
         this.maxSize = maxSize;
+        setText(text);
+        setConstraint(constraint);
         if(rows <= 0){
             throw new IllegalArgumentException("rows must be positive");
         }
@@ -365,44 +324,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         this.columns = columns;
         LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
-        //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
-        textEditor = Display.getInstance().getImplementation().requestNewNativeTextEditor(maxSize, constraint, 100, rows);
-        if (textEditor != null) {
-            if (rows == 1) {
-                textEditor.setMultiline(false);
-            } else if (rows > 1) {
-                textEditor.setMultiline(true);
-            }
-            int color = 0xFF000000 | getStyle().getFgColor();
-            textEditor.setForegroundColor(color);
-            //these are from DefaultLookAndFeel.drawTextArea to help position texteditor
-            leftPadding = getStyle().getPadding(isRTL(), Component.LEFT);
-            rightPadding = getStyle().getPadding(isRTL(), Component.RIGHT);
-            topPadding = getStyle().getPadding(false, Component.TOP);
-            bottomPadding = getStyle().getPadding(false, Component.BOTTOM);
-
-            textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
-
-            javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
-            textEditor.setFont(nativeFont);
-            textEditor.setTextEditorListener(this);
-            
-            clearCommand = new Command("Clear") {
-
-                public void actionPerformed(ActionEvent evt) {
-                    super.actionPerformed(evt);
-                    int c = textEditor.getCaretPosition();
-                    if(c != 0) {
-                        textEditor.delete(c - 1, 1);
-                    }
-                }
-            };
-        }
-        setText(text);
-        addFocusListener(this);
-        setGrowByContent(false);
-        setConstraint(constraint);
-        
     }
 
     /**
@@ -414,9 +335,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void setConstraint(int constraint) {
         this.constraint = constraint;
-        if(textEditor != null) {
-            textEditor.setConstraints(constraint);
-        }
     }
 
 
@@ -435,9 +353,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void setWidth(int width) {
         super.setWidth(width);
-        if(textEditor != null) {
-            textEditor.setSize(width - leftPadding - rightPadding, textEditor.getHeight());
-        }
         getRowStrings();
     }
 
@@ -457,12 +372,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         synchronized(this) {
             //zero the vector inorder to initialize it on the next paint
             rowStrings=null; 
-        }
-        if (textEditor != null) {
-            if (!textEditor.getContent().equals(text)) {
-                textEditor.setContent(text);
-                textEditor.setCaret(text.length());
-            }
         }
         repaint();
     }
@@ -491,8 +400,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @param b true is text are is editable; otherwise false
      */
     public void setEditable(boolean b) {
-        constraint = constraint | TextArea.UNEDITABLE;
-        setConstraint(constraint);
         editable = b;
     }
 
@@ -519,6 +426,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void keyPressed(int keyCode) {
         super.keyPressed(keyCode);
+        
         int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
 
         // this works around a bug where fire is also a softkey on devices such as newer Nokia
@@ -572,21 +480,17 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void keyReleased(int keyCode) {
-        System.out.println("keyreleased");
-        focusTextEditor();
-        if (!textEditorEnabled) {
-            int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
-            if (isEditable()) {
-                // this works around a bug where fire is also a softkey on devices such as newer Nokia
-                // series 40's
-                if (triggerClose && (action == Display.GAME_FIRE || isEnterKey(keyCode))) {
-                    triggerClose = false;
-                    onClick();
-                    return;
-                }
-                if (action == 0 && keyCode > 0) {
-                    Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText(), keyCode);
-                }
+        int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
+        if(isEditable()){
+            // this works around a bug where fire is also a softkey on devices such as newer Nokia
+            // series 40's
+            if (triggerClose && (action == Display.GAME_FIRE || isEnterKey(keyCode))) {
+                triggerClose = false;
+                onClick();
+                return;
+            }
+            if(action == 0 && keyCode > 0) {
+                Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText(), keyCode);
             }
         }
     }
@@ -595,12 +499,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public boolean isScrollableY() {
-        if(textEditorEnabled) {
-            return false;
-        }else {
-            return isFocusable() && getScrollDimension().getHeight() > getHeight();
-        }
-        
+        return isFocusable() && getScrollDimension().getHeight() > getHeight();
     }
 
         
@@ -611,20 +510,16 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
         
     void editString() {
-        System.out.println("editString");
-        if (textEditor == null) {
-            if (autoDegradeMaxSize && (!hadSuccessfulEdit) && (maxSize > 1024)) {
-                try {
-                    Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
-                } catch (IllegalArgumentException err) {
-                    maxSize -= 1024;
-                    setDefaultMaxSize(maxSize);
-                    editString();
-                }
-            } else {
+        if(autoDegradeMaxSize && (!hadSuccessfulEdit) && (maxSize > 1024)) {
+            try {
                 Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
+            } catch(IllegalArgumentException err) {
+                maxSize -= 1024;
+                setDefaultMaxSize(maxSize);
+                editString();
             }
-
+        } else {
+            Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
         }
     }
 
@@ -632,9 +527,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void pointerHover(int[] x, int[] y) {
-        if(!textEditorEnabled) {
-            requestFocus();
-        }
+        requestFocus();
     }
 
     /**
@@ -654,29 +547,17 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         } else {
             super.pointerReleased(x, y);
             if (isEditable() && isEnabled() && !isCellRenderer()) {
-                if(textEditorEnabled) {  
-                    onClick();
-                }else {
-                    if (Display.getInstance().isTouchScreenDevice()) {
-                        if (!Display.getInstance().isVirtualKeyboardShowing()) {
-                            Display.getInstance().setShowVirtualKeyboard(true);
-                        }
-                    } else {
-                        onClick();
+                if (Display.getInstance().isTouchScreenDevice()) {
+                    if (!Display.getInstance().isVirtualKeyboardShowing()) {
+                        Display.getInstance().setShowVirtualKeyboard(true);
                     }
+                } else {
+                    onClick();
                 }
             }
         }
-        if(isInitialized()) {
-            focusTextEditor();
-        }
-    }
 
-    public void pointerDragged(int x, int y) {
-        super.pointerDragged(x, y);
-        hideTextEditor();
     }
-    
 
     /**
      * @inheritDoc
@@ -743,18 +624,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     public void setRows(int rows) {
         setShouldCalcPreferredSize(true);
         this.rows = rows;
-        if(rows == 1) {
-            textEditor.setMultiline(false);
-        }
     }
     
     void initComponentImpl() {
         getRowStrings();
-        Form f = getComponentForm();
-        if (f != null) {
-                f.addPointerDraggedListener(dragListener);
-                f.addShowListener(showListener);
-            }
         super.initComponentImpl();
     }
     
@@ -1041,45 +914,24 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     /**
      * @inheritDoc
      */
-    public void paint(Graphics g) { 
-        
-        
-        Style s = getStyle();
-        if(textEditor != null) {
-            textEditor.setForegroundColor(0xFF000000 | s.getFgColor());
-        }
-        if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
-            UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
-        }
+    public void paint(Graphics g) {
+        UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         paintHint(g);
     }
-
-    /**
-     * overriden from Component class. This positions the textEditor to 
-     * proper place.
-     */
-    protected void updateNativeComponentPosition() {
-        updateTextEditorPosition();
-    }
-    
     
     /**
      * @inheritDoc
      */
     protected Dimension calcPreferredSize(){
-        Dimension ret;
-        
         if(shouldShowHint()) {
             Label l = getHintLabelImpl();
             if(l != null) {
                 Dimension d1 = UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
                 Dimension d2 = l.getPreferredSize();
-                ret = new Dimension(d1.getWidth() + d2.getWidth(), d1.getHeight() + d2.getHeight());
-                return ret;
+                return new Dimension(d1.getWidth() + d2.getWidth(), d1.getHeight() + d2.getHeight());
             }
         }
-        ret = UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
-        return ret;
+        return UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
     }
         
     /**
@@ -1166,10 +1018,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @param growByContent true if the text component should grow and false otherwise
      */
     public void setGrowByContent(boolean growByContent) {
-        //if nativeinput is supported we can't support growByContent
-        if(!Display.getInstance().getImplementation().isNativeInputSupported()) {
-            this.growByContent = growByContent;
-        }
+        this.growByContent = growByContent;
     }
     
     /**
@@ -1258,10 +1107,16 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     public static char getWidestChar() {
         return widestChar;
     }
-	
-	public void setSingleLineTextArea(boolean singleLineTextArea) {
-		this.singleLineTextArea = singleLineTextArea;
-	}
+
+    /**
+     * Indicates whether this is a single line text area, in which case "growing" won't
+     * work as expected.
+     *
+     * @param singleLineTextArea set to true to force a single line text
+     */
+    public void setSingleLineTextArea(boolean singleLineTextArea) {
+        this.singleLineTextArea = singleLineTextArea;
+    }
 
     /**
      * Indicates whether this is a single line text area, in which case "growing" won't
@@ -1270,7 +1125,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @return  true if this is a single line text area
      */
     public boolean isSingleLineTextArea() {
-        return rows == 1;
+        return singleLineTextArea;
     }
 
     /**
@@ -1542,229 +1397,5 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public int getVerticalAlignment(){
         return valign;
-    }
-    
-    /**
-     * Get events from the textEditor. Add content from texteditor to text variable every
-     * time there is some change in the editor.
-     * @param textEditor
-     * @param actions 
-     */
-    public void inputAction(TextEditorProvider textEditor, int actions) {
-       if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_NEXT) != 0) {
-           //focus to next element
-           Form f = getComponentForm();
-           Component c = f.findNextFocusDown();
-           if(c instanceof TextArea) {
-               TextArea t = (TextArea) c;
-               t.dontWaitForKeyReleased = true;
-           }
-           c.requestFocus();
-       }
-       if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
-           //focus previous element
-           Form f = getComponentForm();
-           Component c = f.findNextFocusUp();
-           if(c instanceof TextArea) {
-               TextArea t = (TextArea) c;
-               t.dontWaitForKeyReleased = true;
-           }
-           c.requestFocus();
-
-       }
-       if((actions&TextEditorProvider.TextEditorListener.ACTION_PAINT_REQUEST) != 0) {
-           repaint();
-       }
-       if((actions&TextEditorProvider.TextEditorListener.ACTION_SCROLLBAR_CHANGED) != 0) {
-           //Visible Congtent Position shows how far the y is from the textEditor Y position
-           visibleContentPosition = textEditor.getVisibleContentPosition();
-           
-       }
-	   if((actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
-		   int h = textEditor.getContentHeight();
-		   if( h > textEditor.getHeight()) {
-			   int c = textEditor.getCaretPosition();
-			   int s = textEditor.size();
-			   //if caret at the end of the content, scroll the text to same place
-			   if(c == s) {
-				   visibleContentPosition = h - textEditor.getHeight();
-			   }
-		   }
-	   }
-	   
-       
-       this.text = textEditor.getContent();       
-    }
-
-    public void setFocus(boolean focused) {
-        System.out.println("setFocus");
-        super.setFocus(focused);
-        if(textEditorEnabled) {
-            if(textEditor != null) {
-                setText(textEditor.getContent());
-            }
-        }
-    }    
-    
-    public boolean isNativeTextEditorVisible() {
-        if(textEditor != null) {
-            return textEditor.isVisible();
-        }
-        return false;
-    }
-
-    public void setX(int x) {
-        super.setX(x);
-        updateTextEditorPosition(); 
-    }
-
-    public void setY(int y) {
-        super.setY(y);
-        updateTextEditorPosition();
-    }    
-
-    public void setSize(Dimension d) {
-        super.setSize(d);
-        if(textEditor != null) {
-            textEditor.setSize(d.getWidth() - leftPadding - rightPadding, 
-                                textEditor.getHeight());
-        }
-    }
-
-    protected void deinitialize() {
-        super.deinitialize();
-        Form f = getComponentForm();
-        if (f != null) {
-                f.removePointerDraggedListener(dragListener);
-                f.removeShowListener(showListener);
-        }
-        System.out.println("Deinitializing textarea");
-        if(textEditor != null) {
-            textEditor.setVisible(false);
-        }
-        
-    }
-
-    public void setVisible(boolean visible) {
-        super.setVisible(visible);
-        
-    }
-
-    public void focusGained(Component cmp) {
-        System.out.println("focusGained");
-        if(dontWaitForKeyReleased) {
-            focusTextEditor();
-        }
-    }
-    private void focusTextEditor() {
-        if (textEditor != null && textEditorEnabled) {
-            dontWaitForKeyReleased = false;
-            if ((constraint & TextArea.UNEDITABLE) == 0) {
-                textEditor.setVisible(true);
-            }
-            textEditor.setFocus(true);
-            addClearCommandToForm();
-        }
-    }
-    
-    private void hideTextEditor() {
-        if (textEditor != null && textEditor.isVisible()) {
-            textEditor.setVisible(false);
-            setText(textEditor.getContent());
-            removeClearCommandFromForm();
-        }
-    }
-    
-    private void addClearCommandToForm() {
-        if (!Display.getInstance().shouldHideMenu()) {
-            Form p = Display.getInstance().getCurrent();
-            if ((constraint & TextArea.UNEDITABLE) == 0) {
-                if (p.getBackCommand() != clearCommand) {
-                    previousClearCommand = p.getBackCommand();
-                }
-                if (previousClearCommand != clearCommand) {
-                    System.out.println("add clearcommand");
-                    p.addCommand(clearCommand);
-                    p.setBackCommand(clearCommand);
-                }
-            }
-        }
-    }
-    
-    public void focusLost(Component cmp) {
-        System.out.println("focus lost");
-        if (textEditor != null && textEditorEnabled) {
-            textEditor.setFocus(false);
-            textEditor.setVisible(false);
-            if ((constraint & TextArea.UNEDITABLE) == 0) {
-                if (!text.equals(textEditor.getContent())) {
-                    setText(textEditor.getContent());
-                }
-            }
-            removeClearCommandFromForm();
-
-        }
-    }
-    private void removeClearCommandFromForm() {
-        Form p = Display.getInstance().getCurrent();
-        if (p.getBackCommand() == clearCommand) {
-            System.out.println("removing clearcommand");
-            p.setBackCommand(previousClearCommand);
-            p.removeCommand(clearCommand);
-        }
-    }
-    
-    public int getVisibleContentPosition() {
-        return visibleContentPosition;
-    }
-    /**
-     * Enable or disable the native TextEditor
-     * @param enable 
-     */
-    public void setTextEditorEnabled(boolean enable) {
-        textEditorEnabled = enable;
-        if(!enable) {
-            if(textEditor != null) {
-                textEditor.setFocus(false); 
-                setText(textEditor.getContent());
-                textEditor.setVisible(false);
-            }
-        }
-    }
-    
-    public boolean getTextEditorEnabled() {
-        return textEditorEnabled;
-    }
-
-    private void updateTextEditorPosition() {
-        updatePaddings();
-		//the -1 is necessary because otherwise when focusing, we would see the textArea text
-		//behind the textEditor. Adding the -1 makes sure the textEditor is exactly at the same place
-		//as the textArea text
-        int x = getAbsoluteX() + leftPadding - 1;
-        int y = getAbsoluteY() + topPadding;
-        if(textEditor != null) {
-            textEditor.setPosition(x,y); 
-        }
-    }
-    /**
-     * Refreshes padding variables so that they reflect the current theme
-     *
-     */
-    private void updatePaddings() {
-        //update the theme values since theme might have changed
-        leftPadding = this.getStyle().getPadding(this.isRTL(), Component.LEFT);
-        rightPadding = this.getStyle().getPadding(this.isRTL(), Component.RIGHT); 
-        topPadding = this.getStyle().getPadding(false, Component.TOP);
-        bottomPadding = getStyle().getPadding(false, Component.BOTTOM);
-    }
-    /**
-     * Makes sure that if textArea has focus that textEditor is shown
-     * Fixes issues with going back and fort between forms that have textareas
-     */
-    private void ensureTextEditorIsShown() {
-        if(hasFocus()) {
-            focusTextEditor();
-        }
     }
 }

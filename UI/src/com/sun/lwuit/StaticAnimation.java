@@ -539,8 +539,7 @@ public class StaticAnimation extends IndexedImage implements Animation {
         }
         
         private byte[] getModifiedRow(int row) {
-            int l = modifiedRowOffsets.length;
-            for(int iter = 0 ; iter < l ; iter++) {
+            for(int iter = 0 ; iter < modifiedRowOffsets.length ; iter++) {
                 if(modifiedRowOffsets[iter] == row) {
                     return modifiedRows[iter];
                 }

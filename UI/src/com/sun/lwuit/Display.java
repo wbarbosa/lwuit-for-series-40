@@ -34,13 +34,11 @@ import com.sun.lwuit.impl.LWUITImplementation;
 import com.sun.lwuit.impl.VirtualKeyboardInterface;
 import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.util.EventDispatcher;
-import com.sun.lwuit.util.Resources;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
-import javax.microedition.midlet.MIDlet;
 
 /**
  * Central class for the API that manages rendering/events and is used to place top
@@ -384,8 +382,6 @@ public final class Display {
     private static Hashtable virtualKeyboards = new Hashtable();
 
     private boolean dropEvents;
-    
-    private boolean hideMenu = false;
 
     /**
      * Private constructor to prevent instanciation
@@ -447,19 +443,7 @@ public final class Display {
                 INSTANCE.edt.setPriority(Thread.NORM_PRIORITY + 1);
                 INSTANCE.edt.start();
             }
-            
-            // Load default Nokia Theme on top
-            try {
-                Resources themeres = null;
-                if (INSTANCE.touchScreen) {
-                    themeres = Resources.open("/nokia_theme.res");
-                } else {
-                    themeres = Resources.open("/nokia_non_touch_theme.res");
-                }
-                UIManager.getInstance().setThemeProps(themeres.getTheme("NokiaTheme"));
-            } catch (IOException e) {
-                throw new RuntimeException("Can't load Nokia Theme");
-            }
+            UIManager.getInstance();
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
             INSTANCE.registerVirtualKeyboard(vkb);
         }else{
@@ -831,9 +815,6 @@ public final class Display {
                 // paint transition or intro animations and don't do anything else if such
                 // animations are in progress...
                 paintTransitionAnimation();
-                /*synchronized(lock) {
-                    lock.wait(Math.max(1, framerateLock - time));
-                }*/
                 return;
             }
         } catch(Exception ignor) {
@@ -2540,13 +2521,4 @@ public final class Display {
     public boolean isTablet() {
         return impl.isTablet();
     }
-    
-    public void setHideMenu(boolean value) {
-        hideMenu = value;
-    }
-    
-    public boolean shouldHideMenu() {
-        return hideMenu;
-    }
-    
 }

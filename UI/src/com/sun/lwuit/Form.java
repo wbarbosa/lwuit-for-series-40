@@ -150,7 +150,7 @@ public class Form extends Container {
     int initialPressY;
 
     private EventDispatcher orientationListener;
-    
+
     /**
      * Default constructor creates a simple form
      */
@@ -170,7 +170,7 @@ public class Form extends Container {
 
         title.setEndsWith3Points(false);
         titleArea.addComponent(BorderLayout.CENTER, title);
-        titleArea.setUIID("TitleArea");        
+        titleArea.setUIID("TitleArea");
         addComponentToForm(BorderLayout.NORTH, titleArea);
         addComponentToForm(BorderLayout.CENTER, contentPane);
         
@@ -1688,8 +1688,8 @@ public class Form extends Container {
             }
             return;
         }
+
         if (y >= contentPane.getY()) {
-            
             Component cmp = contentPane.getComponentAt(x, y);
             if(cmp != null) {
                 cmp.initDragAndDrop(x, y);
@@ -1702,7 +1702,6 @@ public class Form extends Container {
                     }
                     leadParent.repaint();
                     setFocused(leadParent);
-                    
                     cmp.getLeadComponent().pointerPressed(x, y);
                 } else {
                     if(cmp.isEnabled()) {
@@ -1801,20 +1800,14 @@ public class Form extends Container {
         if(pointerDraggedListeners != null) {
             pointerDraggedListeners.fireActionEvent(new ActionEvent(this, x, y));
         }
-        //check if the drag is relevant to the menu bar.
-        if (menuBar.contains(x, y)) {
-            Component cmp = menuBar.getComponentAt(x, y);
-            if (cmp != null && cmp.isEnabled()) {
-                cmp.pointerDragged(x, y);
-            }
-            return;
-        }
+
         if (dragged != null) {
             dragged.pointerDragged(x, y);
             return;
         }
+
         Component cmp = contentPane.getComponentAt(x, y);
-        if (cmp != null) {            
+        if (cmp != null) {
             if (cmp.isFocusable() && cmp.isEnabled()) {
                 setFocused(cmp);
             }
@@ -2480,7 +2473,5 @@ public class Form extends Container {
         this.focusScrolling = focusScrolling;
     }
     
-    public String toString() {
-        return "Form";
-    }
+   
 }

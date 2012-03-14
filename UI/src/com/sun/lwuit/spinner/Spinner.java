@@ -483,32 +483,7 @@ public class Spinner extends List {
      * @inheritDoc
      */
     public void paint(Graphics g) {
-        
-        int paddingTop = getStyle().getPadding(false, Component.TOP);
-        int paddingBottom =  getStyle().getPadding(false, Component.BOTTOM);
-        int paddingLeft = getStyle().getPadding(false, Component.LEFT);
-        int paddingRight = getStyle().getPadding(false, Component.RIGHT);
-        
-        int clipX = g.getClipX();
-        int clipY = g.getClipY();
-        int originalClipWidth = g.getClipWidth();
-        int originalClipHeight = g.getClipHeight();
-        
-        //calculate the area where the content is allowed to draw
-        int clipHeight = originalClipHeight - paddingTop - paddingBottom;
-        int clipWidth = originalClipWidth - paddingLeft - paddingRight;
-        
-        //g.setClip(clipX + paddingLeft, clipY + paddingTop, clipWidth , clipHeight );
-        
         super.paint(g);
-        
-        //g.setClip(clipX, clipY, originalClipWidth, originalClipHeight);
-        /*int c = g.getColor();
-        g.setColor(0xFF0000);
-        g.drawRect(getX(), getY() + paddingTop, clipWidth, getHeight() - paddingTop - paddingBottom);
-        g.setColor(c);
-        * 
-        */
         if(overlayStyle.getBorder() != null) {
             overlayStyle.getBorder().paintBorderBackground(g, this);
             overlayStyle.getBorder().paint(g, this);
@@ -599,5 +574,4 @@ public class Spinner extends List {
     public static void setInputSkipDelay(int aInputSkipDelay) {
         inputSkipDelay = aInputSkipDelay;
     }
-    
 }

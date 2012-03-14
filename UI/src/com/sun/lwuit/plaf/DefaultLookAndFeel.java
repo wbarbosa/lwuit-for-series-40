@@ -529,27 +529,24 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
      */
     public void drawTextArea(Graphics g, TextArea ta) {
         setFG(g, ta);
-        
+        int line = ta.getLines();
+        int oX = g.getClipX();
+        int oY = g.getClipY();
+        int oWidth = g.getClipWidth();
+        int oHeight = g.getClipHeight();
+        Font f = ta.getStyle().getFont();
+        int fontHeight = f.getHeight();
+
+        int align = reverseAlignForBidi(ta);
+
         int leftPadding = ta.getStyle().getPadding(ta.isRTL(), Component.LEFT);
         int rightPadding = ta.getStyle().getPadding(ta.isRTL(), Component.RIGHT);
         int topPadding = ta.getStyle().getPadding(false, Component.TOP);
-        int bottomPadding = ta.getStyle().getPadding(false, Component.BOTTOM);
-        
-        int line = ta.getLines();
-        int oX = g.getClipX();
-        int oY = g.getClipY() + topPadding;
-        int oWidth = g.getClipWidth();
-        int oHeight = g.getClipHeight() - topPadding - bottomPadding;
-        Font f = ta.getStyle().getFont();
-        int fontHeight = f.getHeight();
-        int align = reverseAlignForBidi(ta);
-
-        
         boolean shouldBreak = false;
         
         for (int i = 0; i < line; i++) {
             int x = ta.getX() + leftPadding;
-            int y = (ta.getY() - ta.getVisibleContentPosition()) +  topPadding +
+            int y = ta.getY() +  topPadding +
                     (ta.getRowsGap() + fontHeight) * i;
             if(Rectangle.intersects(x, y, ta.getWidth(), fontHeight, oX, oY, oWidth, oHeight)) {
                 
@@ -572,8 +569,8 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                         x+= (ta.getWidth()-leftPadding-rightPadding-f.stringWidth(displayText))/2;
                         break;
                 }
+            
                 g.drawString(displayText, x, y ,ta.getStyle().getTextDecoration());
-                
                 shouldBreak = true;
             }else{
                 if(shouldBreak){

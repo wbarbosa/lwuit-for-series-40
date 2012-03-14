@@ -121,7 +121,4 @@ public class M3G {
      */
     public static interface Callback {
     }
-    public javax.microedition.m3g.Image2D createImage2D(int type, Image img) {
-        return null;
-    }
 }

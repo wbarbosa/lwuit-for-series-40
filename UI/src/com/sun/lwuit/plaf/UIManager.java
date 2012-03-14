@@ -27,7 +27,6 @@ import com.sun.lwuit.*;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.util.EventDispatcher;
-import com.sun.lwuit.util.Resources;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -47,7 +46,7 @@ public class UIManager {
     private Hashtable selectedStyles = new Hashtable();
     private Hashtable themeProps;
     private Hashtable themeConstants = new Hashtable();
-    static UIManager instance; // = new UIManager();
+    static UIManager instance = new UIManager();
     private Style defaultStyle = new Style();
     private Style defaultSelectedStyle = new Style();
     /**
@@ -79,6 +78,7 @@ public class UIManager {
     private EventDispatcher themelisteners;
 
     UIManager() {
+        resetThemeProps(null);
     }
 
     /**
@@ -87,10 +87,6 @@ public class UIManager {
      * @return Instance of the ui manager
      */
     public static UIManager getInstance() {
-        if (instance == null) {
-            instance = new UIManager();
-            instance.resetThemeProps(null);
-        }
         return instance;
     }
 
@@ -849,11 +845,9 @@ public class UIManager {
             byte[] marginUnit = (byte[])themeProps.get(id + Style.MARGIN_UNIT);
 
             if (bgColor != null) {
-                
                 style.setBgColor(Integer.valueOf(bgColor, 16).intValue());
             }
             if (fgColor != null) {
-                
                 style.setFgColor(Integer.valueOf(fgColor, 16).intValue());
             }
             if (transperency != null) {

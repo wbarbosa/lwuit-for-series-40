@@ -1338,20 +1338,9 @@ public class List extends Component {
         int oY = g.getClipY();
         int oWidth = g.getClipWidth();
         int oHeight = g.getClipHeight();
-        
-        int paddingTop = getStyle().getPadding(false, Component.TOP);
-        int paddingBottom =  getStyle().getPadding(false, Component.BOTTOM);
 
-        int bottomLimit = oY + oHeight - paddingBottom;
-        //calculate proper clipping area that checks that the listitem isn't drawn over the padding
-        //fixes issues with spinner component
-        if(cmp.getY() < oY + paddingTop) {
-            g.clipRect(cmp.getX(), oY + paddingTop, cmp.getWidth(), cmp.getHeight() - (oY - cmp.getY()));
-        }else if((cmp.getY() + cmp.getHeight()) > ((oY + oHeight) - paddingBottom)) {
-            g.clipRect(cmp.getX(), cmp.getY(), cmp.getWidth(), bottomLimit - cmp.getY());
-        }else {
-            g.clipRect(cmp.getX(), cmp.getY(), cmp.getWidth(), cmp.getHeight());
-        }
+        g.clipRect(cmp.getX(), cmp.getY(), cmp.getWidth(), cmp.getHeight());
+
         cmp.paint(g);
         Border b = s.getBorder();
         if(b != null && !b.isBackgroundPainter()) {

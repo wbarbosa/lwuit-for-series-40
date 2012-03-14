@@ -71,12 +71,6 @@ public class Button extends Label {
 
     private boolean toggle;
     
-    /**
-     * variables to hold the current press coordinate
-     */
-    private int pressedX = -1;
-    private int pressedY = -1;
-    
     /** 
      * Constructs a button with an empty string for its text.
      */
@@ -450,14 +444,10 @@ public class Button extends Label {
         requestFocus();
     }
 
-    
-    
     /**
      * @inheritDoc
      */
     public void pointerPressed(int x, int y) {
-        pressedX = x;
-        pressedY = y;
         clearDrag();
         setDragActivated(false);
         pressed();
@@ -489,20 +479,14 @@ public class Button extends Label {
      * @inheritDoc
      */
     public void pointerDragged(int x, int y) {
-        final int threshold = 10;
-        if (x > pressedX + threshold || x < pressedX - threshold || y > pressedY + threshold || y < pressedY - threshold) {
-            pressedX = x;
-            pressedY = y;
-
-            if (Display.getInstance().shouldRenderSelection(this)) {
-                if (state != STATE_ROLLOVER) {
-                    state = STATE_ROLLOVER;
-                    repaint();
-                }
-            } else {
-                state = STATE_DEFAULT;
+        if(Display.getInstance().shouldRenderSelection(this)) {
+            if(state != STATE_ROLLOVER) {
+                state=STATE_ROLLOVER;
                 repaint();
             }
+        } else {
+            state = STATE_DEFAULT;
+            repaint();
         }
         super.pointerDragged(x, y);
     }
