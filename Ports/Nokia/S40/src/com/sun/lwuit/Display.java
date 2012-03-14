@@ -2548,5 +2548,5 @@ public final class Display {
     public boolean shouldHideMenu() {
         return hideMenu;
     }
-    
+
 }
