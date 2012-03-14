@@ -831,9 +831,9 @@ public final class Display {
                 // paint transition or intro animations and don't do anything else if such
                 // animations are in progress...
                 paintTransitionAnimation();
-                /*synchronized(lock) {
+                synchronized(lock) {
                     lock.wait(Math.max(1, framerateLock - time));
-                }*/
+                }
                 return;
             }
         } catch(Exception ignor) {
