@@ -23,13 +23,11 @@
  */
 package com.sun.lwuit.impl.midp;
 
-import com.nokia.lwuit.TextEditorProvider;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
-import com.sun.lwuit.PeerComponent;
 import com.sun.lwuit.TextArea;
-    import com.sun.lwuit.VideoComponent;
+import com.sun.lwuit.VideoComponent;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.impl.LWUITImplementation;

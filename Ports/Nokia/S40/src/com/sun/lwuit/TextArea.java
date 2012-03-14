@@ -372,6 +372,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             System.out.println("S40 Implementation present");
             S40Implementation impl = (S40Implementation) Display.getInstance().getImplementation();
             textEditor = impl.requestNewNativeTextEditor(maxSize, constraint, 100, rows);
+        }else {
+            System.out.println("impl:" + Display.getInstance().getImplementation().toString());
         }
         if (textEditor != null) {
             if (rows == 1) {
