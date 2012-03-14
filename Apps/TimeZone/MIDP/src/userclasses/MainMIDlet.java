@@ -15,6 +15,7 @@ import javax.microedition.midlet.*;
 public class MainMIDlet extends MIDlet implements Runnable {
     public void startApp() {
         Display.init(this);
+        Display.getInstance().setHideMenu(true);
         Display.getInstance().callSerially(this);
     }
 
