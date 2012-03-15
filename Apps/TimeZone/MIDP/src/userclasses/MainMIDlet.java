@@ -5,6 +5,8 @@
 package userclasses;
 
 import com.sun.lwuit.Display;
+import com.sun.lwuit.impl.LWUITImplementation;
+import com.sun.lwuit.impl.s40.S40Implementation;
 import javax.microedition.midlet.*;
 
 /**
@@ -15,7 +17,10 @@ import javax.microedition.midlet.*;
 public class MainMIDlet extends MIDlet implements Runnable {
     public void startApp() {
         Display.init(this);
-        Display.getInstance().setHideMenu(true);
+        LWUITImplementation impl = Display.getInstance().getImplementation();
+        if(impl instanceof S40Implementation) {
+            ((S40Implementation)impl).setHideMenu(true);
+        }
         Display.getInstance().callSerially(this);
     }
 
