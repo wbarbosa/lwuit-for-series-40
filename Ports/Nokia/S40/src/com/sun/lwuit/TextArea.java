@@ -34,6 +34,7 @@ import com.sun.lwuit.plaf.LookAndFeel;
 import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.Display;
+import com.sun.lwuit.impl.LWUITImplementation;
 import java.util.Vector;
 
 /**
@@ -355,6 +356,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     private TextArea(String text, int maxSize, int rows, int columns, int constraint){
         setUIID("TextArea");
+        System.out.println("LOLOLO");
         setSelectCommandText(UIManager.getInstance().localize("edit", "Edit"));
         this.maxSize = maxSize;
         if(rows <= 0){
@@ -1684,16 +1686,19 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     private void addClearCommandToForm() {
-        if (!Display.getInstance().shouldHideMenu()) { 
-            Form p = Display.getInstance().getCurrent();
-            if ((constraint & TextArea.UNEDITABLE) == 0) {
-                if (p.getBackCommand() != clearCommand) {
-                    previousClearCommand = p.getBackCommand();
-                }
-                if (previousClearCommand != clearCommand) {
-                    System.out.println("add clearcommand");
-                    p.addCommand(clearCommand);
-                    p.setBackCommand(clearCommand);
+        LWUITImplementation impl = Display.getInstance().getImplementation();
+        if (impl instanceof S40Implementation) {
+            if (!((S40Implementation) impl).shouldHideMenu()) {
+                Form p = Display.getInstance().getCurrent();
+                if ((constraint & TextArea.UNEDITABLE) == 0) {
+                    if (p.getBackCommand() != clearCommand) {
+                        previousClearCommand = p.getBackCommand();
+                    }
+                    if (previousClearCommand != clearCommand) {
+                        System.out.println("add clearcommand");
+                        p.addCommand(clearCommand);
+                        p.setBackCommand(clearCommand);
+                    }
                 }
             }
         }

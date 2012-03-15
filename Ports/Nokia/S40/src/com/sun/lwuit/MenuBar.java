@@ -28,6 +28,8 @@ import com.sun.lwuit.animations.Transition;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.geom.Dimension;
+import com.sun.lwuit.impl.LWUITImplementation;
+import com.sun.lwuit.impl.s40.S40Implementation;
 import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.layouts.FlowLayout;
@@ -1099,16 +1101,19 @@ public class MenuBar extends Container implements ActionListener {
      * Adds the MenuBar on the parent Form
      */
     protected void installMenuBar() {
-        if (!Display.getInstance().shouldHideMenu()) {
-            if (getParent() == null) {
-                int type = Display.getInstance().getCommandBehavior();
-                if (type == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_RIGHT) {
-                    parent.getTitleArea().addComponent(BorderLayout.EAST, this);
-                    return;
-                }
-                if (softkeyCount > 1 || type == Display.COMMAND_BEHAVIOR_BUTTON_BAR
-                        || type == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK) {
-                    parent.addComponentToForm(BorderLayout.SOUTH, this);
+        LWUITImplementation impl = Display.getInstance().getImplementation();
+        if (impl instanceof S40Implementation) {
+            if (!((S40Implementation) impl).shouldHideMenu()) {
+                if (getParent() == null) {
+                    int type = Display.getInstance().getCommandBehavior();
+                    if (type == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_RIGHT) {
+                        parent.getTitleArea().addComponent(BorderLayout.EAST, this);
+                        return;
+                    }
+                    if (softkeyCount > 1 || type == Display.COMMAND_BEHAVIOR_BUTTON_BAR
+                            || type == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK) {
+                        parent.addComponentToForm(BorderLayout.SOUTH, this);
+                    }
                 }
             }
         }

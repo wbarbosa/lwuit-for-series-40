@@ -13,7 +13,8 @@ import com.sun.lwuit.impl.midp.GameCanvasImplementation;
  */
 public class S40Implementation extends GameCanvasImplementation{
     
-    
+        
+    private boolean hideMenu = false;
     /**
      * overriden form the baseclass. This version creates a Nokia TextEditor and sets the canvas 
      * as the parent.
@@ -44,4 +45,14 @@ public class S40Implementation extends GameCanvasImplementation{
         }
         return ret;
     }
+    
+    
+    public void setHideMenu(boolean value) {
+        hideMenu = value;
+    }
+    
+    public boolean shouldHideMenu() {
+        return hideMenu;
+    }
+
 }
