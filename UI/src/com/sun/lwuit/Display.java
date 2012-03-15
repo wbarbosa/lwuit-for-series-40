@@ -505,7 +505,7 @@ public final class Display {
         getImplementation().setDragStartPercentage(dragStartPercentage);
     }
 
-    LWUITImplementation getImplementation() {
+    public LWUITImplementation getImplementation() {
         return impl;
     }
 

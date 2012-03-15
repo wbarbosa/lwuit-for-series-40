@@ -146,6 +146,7 @@ public class M3G {
         return new Image2D(type, img.getImage());
     }
 
+
     /**
      * Callback interface that allows rendering of 3D graphics on top/bellow the 
      * current form. This interface is invoked as a result of a renderM3G call
