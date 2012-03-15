@@ -318,7 +318,7 @@
         <ant target="jar" inheritall="false" antfile="${project.Makeover}/build.xml">
             <property name="config.active" value=""/>
         </ant>
-        <ant target="jar" inheritall="false" antfile="${project.UI_MIDP}/build.xml">
+        <ant target="jar" inheritall="false" antfile="${project.S40}/build.xml">
             <property name="config.active" value=""/>
         </ant>
     </target>
