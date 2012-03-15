@@ -24,6 +24,7 @@ public class TestMidlet extends MIDlet {
     private List contactList = null;
     private Form form;
     private PIM pim = null;
+    private Command clearCommand;
     
     public void startApp() {
         Display.init(this);
@@ -53,6 +54,14 @@ public class TestMidlet extends MIDlet {
             }
         });
         populateContactList(searchField.getText());
+        
+        clearCommand = new Command("Clear") {
+            public void actionPerformed(ActionEvent evt) {
+                searchField.setText("");
+                populateContactList("");
+            }
+        };
+        form.addCommand(clearCommand);
         
         form.show();
     }
