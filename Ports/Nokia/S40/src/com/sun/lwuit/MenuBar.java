@@ -493,6 +493,12 @@ public class MenuBar extends Container implements ActionListener {
      * Updates the command mapping to the softbuttons
      */
     private void updateCommands() {
+        int commandBehavior = getCommandBehavior();
+        if(commandBehavior == Display.COMMAND_BEHAVIOR_NATIVE) {
+            System.out.println("updateCommands is native setting nativecommands");
+            Display.getInstance().getImplementation().setNativeCommands(commands);
+            return;
+        }
         int commandCount = getCommandCount();
         
         // first we build an array of all the commands that are *not* the back

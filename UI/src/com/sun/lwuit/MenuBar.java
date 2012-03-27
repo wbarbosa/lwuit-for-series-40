@@ -437,6 +437,7 @@ public class MenuBar extends Container implements ActionListener {
             }
         }
         updateTitleCommandPlacement();
+        updateCommands();
     }
 
     /**

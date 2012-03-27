@@ -103,11 +103,15 @@ public class GameCanvasImplementation extends LWUITImplementation {
             currentCommands = new Command[v.size()];
             com.sun.lwuit.Command backCommand = null;
             if(Display.getInstance().getCurrent() != null) {
+                
+                System.out.println("setting backcommand in implementation for form:" + Display.getInstance().getCurrent().toString());
                 backCommand = Display.getInstance().getCurrent().getBackCommand();
+                System.out.println("backcommands:" + backCommand);
             }
             for(int iter = 0 ; iter < currentCommands.length ; iter++) {
                 com.sun.lwuit.Command current = (com.sun.lwuit.Command)v.elementAt(iter);
                 if(current == backCommand) {
+                    System.out.println("Back command:" + backCommand.getCommandName());
                     currentCommands[iter] = new MIDP2LWUITCommand(current, Command.BACK, iter + 1);
                 } else {
                     if(iter == 0) {
@@ -1692,6 +1696,7 @@ public class GameCanvasImplementation extends LWUITImplementation {
      * @inheritDoc
      */
     public void setNativeCommands(Vector commands) {
+        System.out.println("setNativeCommands");
         canvas.setFullScreenMode(!com.sun.lwuit.Display.getInstance().isNativeCommands());
         ((C)canvas).setCommands(commands);
     }
