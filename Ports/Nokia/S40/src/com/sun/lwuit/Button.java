@@ -624,4 +624,15 @@ public class Button extends Label {
     public boolean isOppositeSide() {
         return false;
     }
+    
+    /**
+     * This method is an ugly hack to allow one to reset the button's state
+     * from the outside. The practical use case for this is to allow a button
+     * to be brought back from the pressed state without triggering its action
+     * when the finger is dragged away from the button.
+     */
+    public void resetState() {
+        state = STATE_DEFAULT;
+        repaint();
+    }
 }

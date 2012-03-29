@@ -152,6 +152,13 @@ public class Form extends Container {
     private EventDispatcher orientationListener;
     
     /**
+     * If there is a pointer press on top of the menu bar, we store the
+     * pressed component here. This is so that we can properly release
+     * the component from the pressed state in some special circumstances.
+     */
+    private Component menuBarPressedComponent = null;
+    
+    /**
      * Default constructor creates a simple form
      */
     public Form() {
@@ -1683,6 +1690,7 @@ public class Form extends Container {
         if (menuBar.contains(x, y)) {
             Component cmp = menuBar.getComponentAt(x, y);
             if (cmp != null && cmp.isEnabled()) {
+                menuBarPressedComponent = cmp;
                 cmp.pointerPressed(x, y);
                 tactileTouchVibe(x, y, cmp);
             }
@@ -1916,6 +1924,9 @@ public class Form extends Container {
             pointerReleasedListeners.fireActionEvent(new ActionEvent(this, x, y));
         }
         if (dragged == null) {
+            // Reset this property, we only care in the dragged case.
+            
+            menuBarPressedComponent = null;
             //if the pointer was released on the menu invoke the appropriate
             //soft button.
             if (menuBar.contains(x, y)) {
@@ -1925,7 +1936,7 @@ public class Form extends Container {
                 }
                 return;
             }
-
+            
             if (y >= contentPane.getY()) {
                 Component cmp = contentPane.getComponentAt(x, y);
                 if(cmp != null && cmp.isEnabled()) {
@@ -1959,9 +1970,13 @@ public class Form extends Container {
                 dragged.dragFinished(x, y);
                 dragged = null;
             } else {
+                if (menuBarPressedComponent != null && menuBarPressedComponent instanceof Button) {
+                    ((Button)menuBarPressedComponent).resetState();
+                }
                 dragged.pointerReleased(x, y);
                 dragged = null;
             }
+            menuBarPressedComponent = null;
         }
     }
 
