@@ -456,6 +456,7 @@ public final class Display {
                     themeres = Resources.open("/nokia_non_touch_theme.res");
                 }
                 UIManager.getInstance().setThemeProps(themeres.getTheme("NokiaTheme"));
+                System.out.println("loaded nokia theme.");
             } catch (IOException e) {
                 throw new RuntimeException("Can't load Nokia Theme");
             }

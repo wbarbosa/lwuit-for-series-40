@@ -103,14 +103,14 @@
         <mkdir dir="build/classes/GeneratedProject" />
         <copydir src="../GeneratedProject" dest="build/classes/GeneratedProject" forceoverwrite="true" />
         <ant antfile="../../Ports/MIDP/UI/build.xml" target="rebuild" inheritall="false" inheritrefs="false" />
-        <ant antfile="../../Ports/RIM/UI_RIM/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
+        <!--<ant antfile="../../Ports/RIM/UI_RIM/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
             <property name="config.active" value=""/>
             <property name="config.active.name" value="DefaultConfiguration"/>
-        </ant>
-        <ant antfile="../../Ports/RIM/UI_RIM/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
+        </ant>-->
+        <!--<ant antfile="../../Ports/RIM/UI_RIM/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
             <property name="config.active" value="NewOS"/>
             <property name="config.active.name" value="NewOS"/>
-        </ant>
+        </ant>-->
         <ant antfile="../../Ports/MIDP/IO_MIDP/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
             <property name="config.active" value=""/>
             <property name="config.active.name" value="DefaultConfiguration"/>
@@ -121,28 +121,29 @@
         <ant antfile="../../Ports/SE/IO_SE/build.xml" target="jar" inheritall="false" inheritrefs="false" />
         <ant antfile="../../Ports/SE/UI_SE/build.xml" target="clean" inheritall="false" inheritrefs="false" />
         <ant antfile="../../Ports/SE/UI_SE/build.xml" target="jar" inheritall="false" inheritrefs="false" />
-        <ant antfile="../PreviewMIDlet/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
+        <!--<ant antfile="../PreviewMIDlet/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
             <property name="config.active" value=""/>
             <property name="config.active.name" value="DefaultConfiguration"/>
-        </ant>
-        <ant antfile="../PreviewMIDlet/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
+        </ant>-->
+        <!--<ant antfile="../PreviewMIDlet/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
             <property name="config.active" value="Blackberry"/>
             <property name="config.active.name" value="Blackberry"/>
-        </ant>
+        </ant>-->
         <copy file="../../Ports/MIDP/UI/dist/UI.jar" todir="build/classes/GeneratedProject" overwrite="true" />
         <copy file="../../Ports/MIDP/IO_MIDP/dist/IO.jar" todir="build/classes/GeneratedProject" overwrite="true" />
-        <copy file="../../Ports/RIM/UI_RIM/dist/UI_RIM.jar" tofile="build/classes/GeneratedProject/UI_RIM.jar" overwrite="true" />
+        <!--<copy file="../../Ports/RIM/UI_RIM/dist/UI_RIM.jar" tofile="build/classes/GeneratedProject/UI_RIM.jar" overwrite="true" />
         <copy file="../../Ports/RIM/UI_RIM/dist/NewOS/UI_RIM.jar" tofile="build/classes/GeneratedProject/UI_RIM_Touch.jar" overwrite="true" />
+        -->
         <copy file="../../Ports/SE/UI_SE/dist/UI_SE.jar" todir="build/classes/GeneratedProject" overwrite="true" />
         <copy file="../../Ports/SE/IO_SE/dist/IO_SE.jar" todir="build/classes/GeneratedProject" overwrite="true" />
-        <ant antfile="../PreviewMIDlet/build.xml" target="build" inheritall="false" inheritrefs="false" />
+        <!--<ant antfile="../PreviewMIDlet/build.xml" target="build" inheritall="false" inheritrefs="false" />
         <copy file="../PreviewMIDlet/dist/PreviewMIDlet.jad" todir="build/classes" overwrite="true" />
         <copy file="../PreviewMIDlet/dist/PreviewMIDlet.jar" todir="build/classes" overwrite="true" />
-        <mkdir dir="build/classes/bb" />
-        <copy file="../PreviewMIDlet/dist/Blackberry/PreviewMIDlet.jad" todir="build/classes/bb" overwrite="true" />
+        <mkdir dir="build/classes/bb" />-->
+        <!--<copy file="../PreviewMIDlet/dist/Blackberry/PreviewMIDlet.jad" todir="build/classes/bb" overwrite="true" />
         <copy file="../PreviewMIDlet/dist/Blackberry/PreviewMIDlet.jar" todir="build/classes/bb" overwrite="true" />
-
-        <copy file="../PreviewActivity/src/com/oracle/lwuit/preview/PreviewActivity.java" todir="build/classes" overwrite="true" />
+        -->
+        <!--<copy file="../PreviewActivity/src/com/oracle/lwuit/preview/PreviewActivity.java" todir="build/classes" overwrite="true" />-->
         <!-- copy file="../../Ports/Android/UI_DeviceX/dist/UI_DeviceX.jar" todir="build/classes/GeneratedProject/LWUITApp/lib" overwrite="true" />
         <copy file="../../Ports/DeviceX/IO_DeviceX/dist/IO_DeviceX.jar" todir="build/classes/GeneratedProject/LWUITApp/lib" overwrite="true" />
         <copy file="../PreviewActivity/DeviceXManifest.xml" todir="build/classes" overwrite="true" / -->

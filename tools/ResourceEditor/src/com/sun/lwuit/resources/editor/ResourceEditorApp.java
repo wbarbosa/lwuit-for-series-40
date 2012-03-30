@@ -25,7 +25,7 @@
 package com.sun.lwuit.resources.editor;
 
 import com.sun.lwuit.Display;
-import com.sun.lwuit.io.NetworkManager;
+import com.sun.lwuit.io.NetworkManager; 
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
