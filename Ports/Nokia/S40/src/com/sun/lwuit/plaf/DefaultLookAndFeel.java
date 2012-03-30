@@ -439,7 +439,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             Component cmp = renderer.getListCellRendererComponent(cb, value, model.getSelectedIndex(), cb.hasFocus());
             cmp.setX(cellX);
             cmp.setY(cb.getY() + style.getPadding(false, Component.TOP));
-            cmp.setWidth(cb.getWidth() - comboImageWidth - 2 * rightPadding - leftPadding);
+            cmp.setWidth(cb.getWidth() - comboImageWidth - rightPadding - leftPadding);
             cmp.setHeight(cb.getHeight() - style.getPadding(false, Component.TOP) - style.getPadding(false, Component.BOTTOM));
             cmp.paint(g);
         }
@@ -549,7 +549,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         
         for (int i = 0; i < line; i++) {
             int x = ta.getX() + leftPadding;
-            int y = (ta.getY() - ta.getVisibleContentPosition()) +  topPadding +
+            int y = (ta.getY() - ta.getVisibleContentPosition()) +  topPadding + 
                     (ta.getRowsGap() + fontHeight) * i;
             if(Rectangle.intersects(x, y, ta.getWidth(), fontHeight, oX, oY, oWidth, oHeight)) {
                 
