@@ -170,6 +170,7 @@ public class Main extends MIDlet implements ActionListener {
         cg.addComponent(new Label("with create method"));
         final TextArea tf = TextField.create();
         cg.addComponent(tf);
+        
         final Label lb = new Label("Replaced!");
         Button b = new Button("animate");
         cg.addComponent(b);

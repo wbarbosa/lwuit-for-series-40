@@ -4,8 +4,11 @@
  */
 package com.nokia.lwuit;
 
+import com.nokia.mid.ui.S40TextEditor;
 import com.nokia.mid.ui.TextEditor;
+import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Font;
+import javax.microedition.lcdui.Image;
 
 /**
  *
@@ -20,7 +23,6 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
     
         //create some default values just so that we can instantiate the actual class
         editor = TextEditor.createTextEditor("", 500, 0, 100, 100);
-        
 
     }
     public void delete(int offset, int length) {
@@ -193,11 +195,43 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
         return editor.getWidth();
     }
     
+    public Image[] getInputIndicators() {
+        Image [] imgs = new Image[0];
+        try {
+                S40TextEditor s40editor = (S40TextEditor) editor;
+                imgs = s40editor.getIndicatorIcons();
+                
+            }catch(ClassCastException se) {
+                System.out.println("sec error:" + se.getMessage());
+            }
+        
+        return imgs;
+    }
+    public int getInputMode() {
+        int ret = 0;
+        try {
+            S40TextEditor s40editor = (S40TextEditor) editor;
+            ret = s40editor.getInputMode();
+        }catch(ClassCastException se) {
+            System.out.println("sec error:" + se.getMessage());
+        }
+        
+        return ret;
+    }
+    
 
     public void inputAction(TextEditor textEditor, int actions) {
         if(internalListener != null) {
             internalListener.inputAction(this, actions);
         }
+    }
+
+    public void setIndicatorVisibility(boolean visible) {
+        editor.setIndicatorVisibility(visible);
+    }
+
+    public void setIndicatorLocation(int x, int y) {
+        editor.setIndicatorLocation(x, y);
     }
     
     

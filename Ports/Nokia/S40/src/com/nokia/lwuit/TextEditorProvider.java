@@ -1,5 +1,7 @@
 package com.nokia.lwuit;
 
+import javax.microedition.lcdui.Image;
+
 /**
  * This class hides away the actual Nokia texteditor implementation. Making it possible to run lwuit in
  * devices that doesn't support Nokia UI API. The methods are mirrored from the actual TextEditor class so
@@ -50,6 +52,10 @@ public abstract class TextEditorProvider {
     public abstract int getWidth();
     public abstract int getPositionX();
     public abstract int getPositionY();
+    public abstract Image[] getInputIndicators();
+    public abstract int getInputMode();
+    public abstract void setIndicatorVisibility(boolean visible);
+    public abstract void setIndicatorLocation(int x, int y);
     
     
     public static TextEditorProvider createTextEditor() {

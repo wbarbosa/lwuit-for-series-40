@@ -24,6 +24,7 @@
 package com.sun.lwuit;
 
 import com.nokia.lwuit.TextEditorProvider;
+import com.nokia.mid.ui.S40TextEditor;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.events.FocusListener;
@@ -356,7 +357,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     private TextArea(String text, int maxSize, int rows, int columns, int constraint){
         setUIID("TextArea");
-        System.out.println("LOLOLO");
         setSelectCommandText(UIManager.getInstance().localize("edit", "Edit"));
         this.maxSize = maxSize;
         if(rows <= 0){
@@ -1052,11 +1052,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void paint(Graphics g) { 
-        
-        
         Style s = getStyle();
         if(textEditor != null) {
             textEditor.setForegroundColor(0xFF000000 | s.getFgColor());
+            
         }
         if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
@@ -1590,19 +1589,22 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
            visibleContentPosition = textEditor.getVisibleContentPosition();
            
        }
-	   if((actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
-		   int h = textEditor.getContentHeight();
-		   if( h > textEditor.getHeight()) {
-			   int c = textEditor.getCaretPosition();
-			   int s = textEditor.size();
-			   //if caret at the end of the content, scroll the text to same place
-			   if(c == s) {
-				   visibleContentPosition = h - textEditor.getHeight();
-			   }
-		   }
-	   }
-	   
-       
+        if ((actions & TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
+            int h = textEditor.getContentHeight();
+            if (h > textEditor.getHeight()) {
+                int c = textEditor.getCaretPosition();
+                int s = textEditor.size();
+                //if caret at the end of the content, scroll the text to same place
+                if (c == s) {
+                    visibleContentPosition = h - textEditor.getHeight();
+                }
+            }
+        }
+        if((actions & TextEditorProvider.TextEditorListener.ACTION_INPUT_MODE_CHANGE) != 0) {
+            int mode = textEditor.getInputMode();
+            System.out.println("Mode" + mode);
+        }
+
        this.text = textEditor.getContent();       
     }
 
