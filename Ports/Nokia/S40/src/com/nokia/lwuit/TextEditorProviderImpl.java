@@ -6,6 +6,7 @@ package com.nokia.lwuit;
 
 import com.nokia.mid.ui.S40TextEditor;
 import com.nokia.mid.ui.TextEditor;
+import com.sun.lwuit.Dialog;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Image;
@@ -201,8 +202,8 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
                 S40TextEditor s40editor = (S40TextEditor) editor;
                 imgs = s40editor.getIndicatorIcons();
                 
-            }catch(ClassCastException se) {
-                System.out.println("sec error:" + se.getMessage());
+            }catch(Exception se) {
+                Dialog.show("Error", se.toString(), "Ok", "Cancel");
             }
         
         return imgs;
@@ -212,8 +213,8 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
         try {
             S40TextEditor s40editor = (S40TextEditor) editor;
             ret = s40editor.getInputMode();
-        }catch(ClassCastException se) {
-            System.out.println("sec error:" + se.getMessage());
+        }catch(Exception se) {
+            Dialog.show("Error", se.toString(), "Ok", "Cancel");
         }
         
         return ret;

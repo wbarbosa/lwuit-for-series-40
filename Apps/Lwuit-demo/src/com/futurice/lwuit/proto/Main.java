@@ -177,7 +177,7 @@ public class Main extends MIDlet implements ActionListener {
         b.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent evt) {
-                if(tf.getComponentForm() != null) {
+                if(tf.getComponentForm() != null) { 
                 cg.replaceAndWait(tf, lb,
                             CommonTransitions.createSlide(
                                 CommonTransitions.SLIDE_VERTICAL, 
@@ -194,8 +194,10 @@ public class Main extends MIDlet implements ActionListener {
                 }
             }
         });
-        
-                     
+        final Label debuglb = new Label("mode:");
+        TextArea area = new TextArea();
+        cg.addComponent(area);
+        cg.addComponent(debuglb);
         textfieldForm.addComponent(cg);
         textfieldForm.addCommand(backCommand);
         textfieldForm.setBackCommand(backCommand);

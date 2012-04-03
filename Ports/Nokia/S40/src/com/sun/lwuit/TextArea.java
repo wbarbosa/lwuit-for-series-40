@@ -1589,21 +1589,17 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
            visibleContentPosition = textEditor.getVisibleContentPosition();
            
        }
-        if ((actions & TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
-            int h = textEditor.getContentHeight();
-            if (h > textEditor.getHeight()) {
-                int c = textEditor.getCaretPosition();
-                int s = textEditor.size();
-                //if caret at the end of the content, scroll the text to same place
-                if (c == s) {
-                    visibleContentPosition = h - textEditor.getHeight();
-                }
-            }
-        }
-        if((actions & TextEditorProvider.TextEditorListener.ACTION_INPUT_MODE_CHANGE) != 0) {
-            int mode = textEditor.getInputMode();
-            System.out.println("Mode" + mode);
-        }
+	   if((actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
+		   int h = textEditor.getContentHeight();
+		   if( h > textEditor.getHeight()) {
+			   int c = textEditor.getCaretPosition();
+			   int s = textEditor.size();
+			   //if caret at the end of the content, scroll the text to same place
+			   if(c == s) {
+				   visibleContentPosition = h - textEditor.getHeight();
+			   }
+		   }
+	   }
 
        this.text = textEditor.getContent();       
     }
