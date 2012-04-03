@@ -202,8 +202,8 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
                 S40TextEditor s40editor = (S40TextEditor) editor;
                 imgs = s40editor.getIndicatorIcons();
                 
-            }catch(Exception se) {
-                Dialog.show("Error", se.toString(), "Ok", "Cancel");
+            }catch(ClassCastException se) {
+                System.out.println("getting input indicators not supported.");
             }
         
         return imgs;
@@ -213,8 +213,8 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
         try {
             S40TextEditor s40editor = (S40TextEditor) editor;
             ret = s40editor.getInputMode();
-        }catch(Exception se) {
-            Dialog.show("Error", se.toString(), "Ok", "Cancel");
+        }catch(ClassCastException se) {
+            System.out.println("getting input mode is not supported.");
         }
         
         return ret;

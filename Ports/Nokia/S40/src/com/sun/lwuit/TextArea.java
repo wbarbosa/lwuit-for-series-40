@@ -240,6 +240,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private Command clearCommand;
     private Command previousClearCommand;
 	
+    private javax.microedition.lcdui.Image[] indicatorImages;
     /**
      * Used to listen dragevents from parent form.
      */
@@ -407,6 +408,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     }
                 }
             };
+            indicatorImages = textEditor.getInputIndicators();
         }
         setText(text);
         addFocusListener(this);
@@ -1056,7 +1058,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         if(textEditor != null) {
             textEditor.setForegroundColor(0xFF000000 | s.getFgColor());
             
-        }
+         }
         if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
