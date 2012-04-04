@@ -1064,11 +1064,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
         paintHint(g);
         if (indicatorImages != null && indicatorImages.length > 0) {
-                Image ind = Image.createImage(indicatorImages[1]);
+                Image ind = Image.createImage(indicatorImages[0]);
                 //add RTL support
                 g.drawImage(ind, 
                         getX() + (getWidth() - leftPadding - rightPadding - ind.getWidth()), 
-                        getY() - topPadding);
+                        getY() + topPadding + ind.getHeight());
         }
     }
 
