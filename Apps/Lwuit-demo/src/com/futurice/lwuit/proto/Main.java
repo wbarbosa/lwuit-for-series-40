@@ -4,17 +4,7 @@
  */
 package com.futurice.lwuit.proto;
 
-import com.sun.lwuit.Button;
-import com.sun.lwuit.Command;
-import com.sun.lwuit.ComponentGroup;
-import com.sun.lwuit.Display;
-import com.sun.lwuit.Form;
-import com.sun.lwuit.Label;
-import com.sun.lwuit.List;
-import com.sun.lwuit.Slider;
-import com.sun.lwuit.Tabs;
-import com.sun.lwuit.TextArea;
-import com.sun.lwuit.TextField;
+import com.sun.lwuit.*;
 import com.sun.lwuit.animations.CommonTransitions;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
@@ -127,6 +117,11 @@ public class Main extends MIDlet implements ActionListener {
         mainForm.addComponent(new Button(new Command("Tab demo") {
             public void actionPerformed(ActionEvent evt) {
                 tabForm.show();
+            }
+        }));
+        mainForm.addComponent(new Button(new Command("Show dialog") {
+            public void actionPerformed(ActionEvent evt) {
+                Dialog.show("Moro", "Tere", "OK", "Cancel");
             }
         }));
         backCommand = new Command("Back") {
