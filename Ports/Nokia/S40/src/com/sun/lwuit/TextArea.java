@@ -240,7 +240,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private Command clearCommand;
     private Command previousClearCommand;
 	
-    private javax.microedition.lcdui.Image[] indicatorImages;
+    protected javax.microedition.lcdui.Image[] indicatorImages;
     /**
      * Used to listen dragevents from parent form.
      */
@@ -1063,6 +1063,13 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
         paintHint(g);
+        if (indicatorImages != null && indicatorImages.length > 0) {
+                Image ind = Image.createImage(indicatorImages[1]);
+                //add RTL support
+                g.drawImage(ind, 
+                        getX() + (getWidth() - leftPadding - rightPadding - ind.getWidth()), 
+                        getY() - topPadding);
+        }
     }
 
     /**
@@ -1591,19 +1598,25 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
            visibleContentPosition = textEditor.getVisibleContentPosition();
            
        }
-	   if((actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
-		   int h = textEditor.getContentHeight();
-		   if( h > textEditor.getHeight()) {
-			   int c = textEditor.getCaretPosition();
-			   int s = textEditor.size();
-			   //if caret at the end of the content, scroll the text to same place
-			   if(c == s) {
-				   visibleContentPosition = h - textEditor.getHeight();
-			   }
-		   }
-	   }
+       
+        if ((actions & TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
+            int h = textEditor.getContentHeight();
+            if (h > textEditor.getHeight()) {
+                int c = textEditor.getCaretPosition();
+                int s = textEditor.size();
+                //if caret at the end of the content, scroll the text to same place
+                if (c == s) {
+                    visibleContentPosition = h - textEditor.getHeight();
+                }
+            }
+        }
 
-       this.text = textEditor.getContent();       
+       this.text = textEditor.getContent();   
+       
+       indicatorImages = textEditor.getInputIndicators();
+       if(indicatorImages != null) {
+           repaint();
+       }
     }
 
     public void setFocus(boolean focused) {
@@ -1779,5 +1792,5 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         if(hasFocus()) {
             focusTextEditor();
         }
-    }
+    }    
 }

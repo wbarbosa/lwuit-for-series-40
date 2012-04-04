@@ -195,9 +195,11 @@ public class Main extends MIDlet implements ActionListener {
             }
         });
         final Label debuglb = new Label("mode:");
+        final Label indicator = new Label("");
         TextArea area = new TextArea();
         cg.addComponent(area);
         cg.addComponent(debuglb);
+        cg.addComponent(indicator);
         textfieldForm.addComponent(cg);
         textfieldForm.addCommand(backCommand);
         textfieldForm.setBackCommand(backCommand);
