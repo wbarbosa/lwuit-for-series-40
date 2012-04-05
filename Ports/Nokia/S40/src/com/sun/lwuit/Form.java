@@ -1353,9 +1353,9 @@ public class Form extends Container {
     void showDialog(boolean modal, boolean reverse) {
         int h = Display.getInstance().getDisplayHeight() - menuBar.getPreferredH() - title.getPreferredH();
         int w = Display.getInstance().getDisplayWidth();
-        int topSpace = h / 100 * 20;
-        int bottomSpace = h / 100 * 10;
-        int sideSpace = w / 100 * 20;
+        int topSpace = h / 100 * 5;
+        int bottomSpace = h / 100 * 5;
+        int sideSpace = w / 100 * 5;
         showModal(topSpace, bottomSpace, sideSpace, sideSpace, true, modal, reverse);
     }
 
