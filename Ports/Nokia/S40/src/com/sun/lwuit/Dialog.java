@@ -189,7 +189,7 @@ public class Dialog extends Form {
      * Places commands as buttons at the bottom of the standard static dialogs rather than
      * as softbuttons. This is especially appropriate for devices such as touch devices and
      * devices without the common softbuttons (e.g. blackberries). 
-     * The default value is false
+     * The default value is false, except for full touch S40 devices.
      */
     private static boolean commandsAsButtons;
 
@@ -219,6 +219,8 @@ public class Dialog extends Form {
     Dialog(String dialogUIID, String dialogTitleUIID) {
         super();
 
+        commandsAsButtons = Display.getInstance().isPureTouch();
+        
         if(dialogTitleCompatibilityMode) {
             getContentPane().setUIID(dialogUIID);
             getTitleComponent().setUIID(dialogTitleUIID);
@@ -915,6 +917,7 @@ public class Dialog extends Form {
             buttonArea = new Container(new FlowLayout(CENTER));
         }
         buttonArea.setUIID("DialogCommandArea");
+        buttonArea.setWidth(getWidth());
         if(dialogTitleCompatibilityMode) {
             addComponent(BorderLayout.SOUTH, buttonArea);
         } else {
@@ -1054,15 +1057,19 @@ public class Dialog extends Form {
         // one on top of the other
         setDisposed(false);
         if(top > -1) {
+            System.out.println("[DIALOG] top > -1");
             show(top, bottom, left, right, includeTitle, modal);
         } else {
             if(modal) {
                 if(getDialogPosition() == null) {
+                    System.out.println("[DIALOG] modal, no position");
                     super.showModal(reverse);
                 } else {
+                    System.out.println("[DIALOG] modal, position " + getDialogPosition());
                     showPacked(getDialogPosition(), true);
                 }
             } else {
+                System.out.println("[DIALOG] non-modal");
                 showModeless();
             }
         }
@@ -1550,12 +1557,16 @@ public class Dialog extends Form {
      * Places commands as buttons at the bottom of the standard static dialogs rather than
      * as softbuttons. This is especially appropriate for devices such as touch devices and
      * devices without the common softbuttons (e.g. blackberries).
-     * The default value is false
+     * The default value is true except on full-touch devices.
+     * 
+     * This operation does nothing on a full-touch device.
      *
      * @param c true to place commands as buttons and not as softbutton keys
      */
     public static void setCommandsAsButtons(boolean c) {
-        commandsAsButtons = c;
+        if (!Display.getInstance().isPureTouch()) {
+            commandsAsButtons = c;
+        }
     }
 
     /**
