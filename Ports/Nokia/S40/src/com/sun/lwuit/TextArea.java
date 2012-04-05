@@ -1817,8 +1817,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 x = getAbsoluteX();
                 for(int i = 0; i < indicatorImages.length; i++) {
                     img = Image.createImage(indicatorImages[i]);
-                    x += img.getWidth();
                     g.drawImage(img, x, getAbsoluteY() - img.getHeight());
+                    x += img.getWidth();
                 }
             } else {
                 for (int i = indicatorImages.length - 1; i >= 0; i--) {
