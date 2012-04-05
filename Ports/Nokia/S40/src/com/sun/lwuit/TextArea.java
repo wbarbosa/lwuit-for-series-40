@@ -241,6 +241,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private Command previousClearCommand;
 	
     protected javax.microedition.lcdui.Image[] indicatorImages;
+    protected IndicatorPainter indicatorPainter = new IndicatorPainter();
     /**
      * Used to listen dragevents from parent form.
      */
@@ -408,7 +409,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     }
                 }
             };
-            indicatorImages = textEditor.getInputIndicators();
+            
         }
         setText(text);
         addFocusListener(this);
@@ -1063,14 +1064,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
         paintHint(g);
-        if (indicatorImages != null && indicatorImages.length > 0) {
-                Image ind = Image.createImage(indicatorImages[0]);
-                //add RTL support
-                g.drawImage(ind, 
-                        getX() + (getWidth() - leftPadding - rightPadding - ind.getWidth()), 
-                        getY() + topPadding + ind.getHeight());
+        if (hasFocus()) {
+            //paintIndicator(g);
         }
     }
+    
 
     /**
      * overriden from Component class. This positions the textEditor to 
@@ -1615,7 +1613,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
        
        indicatorImages = textEditor.getInputIndicators();
        if(indicatorImages != null) {
-           repaint();
+           Form f = getComponentForm();
+           f.repaint();
        }
     }
 
@@ -1687,6 +1686,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             }
             textEditor.setFocus(true);
             addClearCommandToForm();
+            Form f = getComponentForm();
+            if(f != null) {
+                f.setGlassPane(indicatorPainter);
+                f.repaint();
+            }
         }
     }
     
@@ -1695,6 +1699,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             textEditor.setVisible(false);
             setText(textEditor.getContent());
             removeClearCommandFromForm();
+            Form f = getComponentForm();
+            if(f != null) {
+                f.setGlassPane(null);
+                f.repaint();
+            }
         }
     }
     
@@ -1792,5 +1801,44 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         if(hasFocus()) {
             focusTextEditor();
         }
-    }    
+    }
+
+    void paintGlassImpl(Graphics g) {
+        super.paintGlassImpl(g);
+        
+    }
+    
+    private void paintIndicator(Graphics g) {
+//        int c = g.getColor();
+//        g.setColor(0xFF0000);
+//        g.drawRect(getAbsoluteX() + (getWidth()/2), getAbsoluteY() - 20, 20, 20);
+//        g.setColor(c);
+        if (indicatorImages != null && indicatorImages.length > 0) {
+            Image img;
+            int x = getAbsoluteX() + getWidth();
+            for(int i = indicatorImages.length - 1; i >= 0; i--) {
+                img = Image.createImage(indicatorImages[i]);
+                x -= img.getWidth();
+                g.drawImage(img, x, getAbsoluteY() - img.getHeight());
+            }
+            
+//                Image ind = Image.createImage(indicatorImages[1]);
+//                
+//                //add RTL support
+//                g.drawImage(ind,
+//                        getAbsoluteX() + (getWidth() - ind.getWidth()),
+//                        getAbsoluteY() + -ind.getHeight());
+//                        
+            }
+    }
+    
+    private class IndicatorPainter implements Painter {
+
+        public void paint(Graphics g, Rectangle rect) {
+            paintIndicator(g);
+        }
+        
+    }
+
+    
 }
