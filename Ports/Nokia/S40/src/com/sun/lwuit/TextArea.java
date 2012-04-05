@@ -1809,27 +1809,26 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     private void paintIndicator(Graphics g) {
-//        int c = g.getColor();
-//        g.setColor(0xFF0000);
-//        g.drawRect(getAbsoluteX() + (getWidth()/2), getAbsoluteY() - 20, 20, 20);
-//        g.setColor(c);
+
         if (indicatorImages != null && indicatorImages.length > 0) {
             Image img;
             int x = getAbsoluteX() + getWidth();
-            for(int i = indicatorImages.length - 1; i >= 0; i--) {
-                img = Image.createImage(indicatorImages[i]);
-                x -= img.getWidth();
-                g.drawImage(img, x, getAbsoluteY() - img.getHeight());
+            if (isRTL()) {
+                x = getAbsoluteX();
+                for(int i = 0; i < indicatorImages.length; i++) {
+                    img = Image.createImage(indicatorImages[i]);
+                    x += img.getWidth();
+                    g.drawImage(img, x, getAbsoluteY() - img.getHeight());
+                }
+            } else {
+                for (int i = indicatorImages.length - 1; i >= 0; i--) {
+                    img = Image.createImage(indicatorImages[i]);
+                    x -= img.getWidth();
+                    g.drawImage(img, x, getAbsoluteY() - img.getHeight());
+                }
             }
-            
-//                Image ind = Image.createImage(indicatorImages[1]);
-//                
-//                //add RTL support
-//                g.drawImage(ind,
-//                        getAbsoluteX() + (getWidth() - ind.getWidth()),
-//                        getAbsoluteY() + -ind.getHeight());
-//                        
-            }
+     
+        }
     }
     
     private class IndicatorPainter implements Painter {
