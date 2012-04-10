@@ -32,6 +32,7 @@ import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.impl.ImplementationFactory;
 import com.sun.lwuit.impl.LWUITImplementation;
 import com.sun.lwuit.impl.VirtualKeyboardInterface;
+import com.sun.lwuit.impl.s40.S40Implementation;
 import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.util.EventDispatcher;
 import com.sun.lwuit.util.Resources;
@@ -464,6 +465,13 @@ public final class Display {
             }
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
             INSTANCE.registerVirtualKeyboard(vkb);
+            
+            if(INSTANCE.isPureTouch()) {
+                INSTANCE.setCommandBehavior(Display.COMMAND_BEHAVIOR_NATIVE);
+                if(INSTANCE.impl instanceof S40Implementation) {
+                    ((S40Implementation) INSTANCE.impl).setHideMenu(true);
+                }
+            }
         }else{
             INSTANCE.impl.confirmControlView();
         }
