@@ -76,10 +76,10 @@ public class GenerateHelper {
         "/GeneratedProject/MIDP/nbproject/private",
         "/GeneratedProject/MIDP/src/userclasses",
         "/GeneratedProject/nbproject/private",
-        "/GeneratedProject/RIM/nbproject",
-        "/GeneratedProject/RIM/src",
-        "/GeneratedProject/RIM/nbproject/private",
-        "/GeneratedProject/RIM/src/userclasses",
+//        "/GeneratedProject/RIM/nbproject",
+//        "/GeneratedProject/RIM/src",
+//        "/GeneratedProject/RIM/nbproject/private",
+//        "/GeneratedProject/RIM/src/userclasses",
         "/GeneratedProject/src/generated",
         "/GeneratedProject/src/userclasses",
     };
@@ -90,8 +90,8 @@ public class GenerateHelper {
         "/GeneratedProject/README.TXT",
         "/GeneratedProject/UI.jar",
         "/GeneratedProject/S40.jar",
-        "/GeneratedProject/UI_RIM.jar",
-        "/GeneratedProject/UI_RIM_Touch.jar",
+//        "/GeneratedProject/UI_RIM.jar",
+//        "/GeneratedProject/UI_RIM_Touch.jar",
         "/GeneratedProject/UI_SE.jar",
         /*"/GeneratedProject/DeviceX/DeviceXManifest.xml",
         "/GeneratedProject/DeviceX/build.properties",
@@ -125,12 +125,12 @@ public class GenerateHelper {
         "/GeneratedProject/nbproject/genfiles.properties",
         "/GeneratedProject/nbproject/project.properties",
         "/GeneratedProject/nbproject/project.xml",
-        "/GeneratedProject/RIM/build.xml",
-        "/GeneratedProject/RIM/nbproject/build-impl.xml",
-        "/GeneratedProject/RIM/nbproject/genfiles.properties",
-        "/GeneratedProject/RIM/nbproject/project.properties",
-        "/GeneratedProject/RIM/nbproject/project.xml",
-        "/GeneratedProject/RIM/src/userclasses/MainMIDlet.java",
+//        "/GeneratedProject/RIM/build.xml",
+//        "/GeneratedProject/RIM/nbproject/build-impl.xml",
+//        "/GeneratedProject/RIM/nbproject/genfiles.properties",
+//        "/GeneratedProject/RIM/nbproject/project.properties",
+//        "/GeneratedProject/RIM/nbproject/project.xml",
+//        "/GeneratedProject/RIM/src/userclasses/MainMIDlet.java",
         "/GeneratedProject/src/userclasses/StateMachine.java"
     };
 
@@ -194,8 +194,8 @@ public class GenerateHelper {
                 File midletFolder = new File(destFolder, "MIDP");
                 File midletUserclassesDir = new File(midletFolder, "src/userclasses");
 
-                File rimFolder = new File(destFolder, "RIM");
-                File rimUserclassesDir = new File(rimFolder, "src/userclasses");
+//                File rimFolder = new File(destFolder, "RIM");
+//                File rimUserclassesDir = new File(rimFolder, "src/userclasses");
 
                 if(loadedFile == null) {
                     loadedFile = new File(srcDir, ResourceEditorView.normalizeFormName(projectName.getText()) + ".res");
@@ -256,26 +256,25 @@ public class GenerateHelper {
                         new File(destFolder, "MIDP/nbproject/project.properties"),
                         new File(destFolder, "MIDP/nbproject/project.xml"));
 
-                replaceStringInFiles("RIMGenerated", projectName.getText() + "_RIM", new File(destFolder, "RIM/build.xml"),
-                        new File(destFolder, "RIM/nbproject/build-impl.xml"),
-                        new File(destFolder, "RIM/nbproject/project.properties"),
-                        new File(destFolder, "RIM/nbproject/project.xml"));
+//                replaceStringInFiles("RIMGenerated", projectName.getText() + "_RIM", new File(destFolder, "RIM/build.xml"),
+//                        new File(destFolder, "RIM/nbproject/build-impl.xml"),
+//                        new File(destFolder, "RIM/nbproject/project.properties"),
+//                        new File(destFolder, "RIM/nbproject/project.xml"));
 
-                replaceStringInFiles("GeneratedProject", projectName.getText(), new File(destFolder, "RIM/build.xml"),
-                        new File(destFolder, "RIM/nbproject/build-impl.xml"),
-                        new File(destFolder, "RIM/nbproject/project.properties"),
-                        new File(destFolder, "RIM/nbproject/project.xml"));
+//                replaceStringInFiles("GeneratedProject", projectName.getText(), new File(destFolder, "RIM/build.xml"),
+//                        new File(destFolder, "RIM/nbproject/build-impl.xml"),
+//                        new File(destFolder, "RIM/nbproject/project.properties"),
+//                        new File(destFolder, "RIM/nbproject/project.xml"));
 
-                replaceStringInFiles("res_file.res", loadedFile.getName(), new File(midletUserclassesDir, "MainMIDlet.java"),
-                        new File(rimUserclassesDir, "MainMIDlet.java"),
+                replaceStringInFiles("res_file.res", loadedFile.getName(), 
+                        new File(midletUserclassesDir, "MainMIDlet.java"),
+//                        new File(rimUserclassesDir, "MainMIDlet.java"),
                         //new File(destFolder, "DeviceX/src/com/mycompany/MainActivity.java"),
                         new File(destFolder, "Desktop/src/desktop/Main.java"),
                         new File(destFolder, "Desktop/src/desktop/LWUITApplet.java"));
 
-                ResourceEditorView.openInIDE(rimFolder, -1);
                 ResourceEditorView.openInIDE(midletFolder, -1);
                 ResourceEditorView.openInIDE(new File(destFolder, "Desktop"), -1);
-                //ResourceEditorView.openInIDE(new File(destFolder, "DeviceX"), -1);
                 ResourceEditorView.openInIDE(destFolder, -1);
                 return projectGeneratorSettings;
             }
