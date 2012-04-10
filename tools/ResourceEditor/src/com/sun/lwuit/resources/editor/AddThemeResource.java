@@ -89,7 +89,7 @@ public class AddThemeResource extends javax.swing.JDialog {
         jLabel2.setText("Template");
         jLabel2.setName("jLabel2"); // NOI18N
 
-        template.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blank", "LWUIT_Touch", "LWUIT_Feature", "tzone_theme", "tipster_theme", "Blackberry", "LWUIT_Classic_Theme", "Wood", "Accessability_Big_Theme", "Accessability_Black_Theme", "Accessability_White_Theme", "Accessability_Yellow_Theme" }));
+        template.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blank", "Nokia non-touch theme", "Nokia Touch & Type theme", "LWUIT_Touch", "LWUIT_Feature", "tzone_theme", "tipster_theme", "Blackberry", "LWUIT_Classic_Theme", "Wood", "Accessability_Big_Theme", "Accessability_Black_Theme", "Accessability_White_Theme", "Accessability_Yellow_Theme" }));
         template.setName("template"); // NOI18N
         template.addActionListener(formListener);
 
@@ -124,7 +124,7 @@ public class AddThemeResource extends javax.swing.JDialog {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel1)
@@ -133,7 +133,7 @@ public class AddThemeResource extends javax.swing.JDialog {
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(template, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 332, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(name, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 332, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
