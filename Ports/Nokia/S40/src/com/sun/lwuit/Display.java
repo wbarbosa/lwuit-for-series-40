@@ -390,6 +390,8 @@ public final class Display {
      * Private constructor to prevent instanciation
      */
     private Display() {
+        pureTouch = System.getProperty("com.nokia.keyboard.type").equals("None");
+        System.out.println("[DISPLAY] set pureTouch to " + pureTouch);
     }
 
     Vector getAnimationQueue() {
@@ -2123,7 +2125,7 @@ public final class Display {
      * @param pureTouch the value for pureTouch
      */
     public void setPureTouch(boolean pureTouch) {
-        this.pureTouch = pureTouch;
+        System.out.println("[DISPLAY] Warning: setPureTouch is disabled!");
     }
 
     /**
