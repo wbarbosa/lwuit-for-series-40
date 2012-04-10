@@ -89,6 +89,7 @@ public class GenerateHelper {
         "/GeneratedProject/IO_SE.jar",
         "/GeneratedProject/README.TXT",
         "/GeneratedProject/UI.jar",
+        "/GeneratedProject/S40.jar",
         "/GeneratedProject/UI_RIM.jar",
         "/GeneratedProject/UI_RIM_Touch.jar",
         "/GeneratedProject/UI_SE.jar",

@@ -103,6 +103,7 @@
         <mkdir dir="build/classes/GeneratedProject" />
         <copydir src="../GeneratedProject" dest="build/classes/GeneratedProject" forceoverwrite="true" />
         <ant antfile="../../Ports/MIDP/UI/build.xml" target="rebuild" inheritall="false" inheritrefs="false" />
+        <ant antfile="../../Ports/Nokia/S40/build.xml" target="rebuild" inheritall="false" inheritrefs="false" />
         <!--<ant antfile="../../Ports/RIM/UI_RIM/build.xml" target="rebuild" inheritall="false" inheritrefs="false">
             <property name="config.active" value=""/>
             <property name="config.active.name" value="DefaultConfiguration"/>
@@ -129,7 +130,8 @@
             <property name="config.active" value="Blackberry"/>
             <property name="config.active.name" value="Blackberry"/>
         </ant>-->
-        <copy file="../../Ports/MIDP/UI/dist/UI.jar" todir="build/classes/GeneratedProject" overwrite="true" />
+        <copy file="../../Ports/Nokia/S40/dist/S40.jar" todir="build/classes/GeneratedProject" overwrite="true" />
+        <!--<copy file="../../Ports/MIDP/UI/dist/UI.jar" todir="build/classes/GeneratedProject" overwrite="true" />-->
         <copy file="../../Ports/MIDP/IO_MIDP/dist/IO.jar" todir="build/classes/GeneratedProject" overwrite="true" />
         <!--<copy file="../../Ports/RIM/UI_RIM/dist/UI_RIM.jar" tofile="build/classes/GeneratedProject/UI_RIM.jar" overwrite="true" />
         <copy file="../../Ports/RIM/UI_RIM/dist/NewOS/UI_RIM.jar" tofile="build/classes/GeneratedProject/UI_RIM_Touch.jar" overwrite="true" />
