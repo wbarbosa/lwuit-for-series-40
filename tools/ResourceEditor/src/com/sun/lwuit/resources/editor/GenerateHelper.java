@@ -64,7 +64,7 @@ public class GenerateHelper {
         "/GeneratedProject/Desktop",
         "/GeneratedProject/MIDP",
         "/GeneratedProject/nbproject",
-        "/GeneratedProject/RIM",
+//        "/GeneratedProject/RIM",
         "/GeneratedProject/src",
         "/GeneratedProject/Desktop/nbproject",
         "/GeneratedProject/Desktop/src",
