@@ -82,7 +82,7 @@ public class Main extends MIDlet implements ActionListener {
     }
 
     public void startApp() {
-        Display.init(this);
+        Display.init(this);     
         /*try {
             Resources res = Resources.open("/woody.res");
             UIManager.getInstance().setThemeProps(res.getTheme("Theme 1"));

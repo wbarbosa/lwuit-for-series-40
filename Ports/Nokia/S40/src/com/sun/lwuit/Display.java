@@ -391,7 +391,8 @@ public final class Display {
      * Private constructor to prevent instanciation
      */
     private Display() {
-        pureTouch = System.getProperty("com.nokia.keyboard.type").equals("None");
+        String p = System.getProperty("com.nokia.keyboard.type");
+        pureTouch = (p != null) ? p.equals("None") : false;
         System.out.println("[DISPLAY] set pureTouch to " + pureTouch);
     }
 
@@ -410,12 +411,10 @@ public final class Display {
             INSTANCE.lwuitRunning = true;
             INSTANCE.displayInitTime = System.currentTimeMillis();
             INSTANCE.impl = ImplementationFactory.getInstance().createImplementation();
-
             INSTANCE.impl.setDisplayLock(lock);
             INSTANCE.impl.init(m);
             INSTANCE.lwuitGraphics = new Graphics(INSTANCE.impl.getNativeGraphics());
             INSTANCE.impl.setLWUITGraphics(INSTANCE.lwuitGraphics);
-
             // only enable but never disable the third softbutton
             if(INSTANCE.impl.isThirdSoftButton()) {
                 INSTANCE.thirdSoftButton = true;
@@ -449,7 +448,6 @@ public final class Display {
                 INSTANCE.edt.setPriority(Thread.NORM_PRIORITY + 1);
                 INSTANCE.edt.start();
             }
-            
             // Load default Nokia Theme on top
             try {
                 Resources themeres = null;
@@ -465,13 +463,13 @@ public final class Display {
             }
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
             INSTANCE.registerVirtualKeyboard(vkb);
-            
             if(INSTANCE.isPureTouch()) {
                 INSTANCE.setCommandBehavior(Display.COMMAND_BEHAVIOR_NATIVE);
                 if(INSTANCE.impl instanceof S40Implementation) {
                     ((S40Implementation) INSTANCE.impl).setHideMenu(true);
                 }
             }
+            
         }else{
             INSTANCE.impl.confirmControlView();
         }
