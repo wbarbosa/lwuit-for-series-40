@@ -11,6 +11,7 @@ import com.sun.lwuit.TextArea;
 import com.sun.lwuit.VideoComponent;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.geom.Dimension;
+import com.sun.lwuit.impl.LWUITImplementation;
 import com.sun.lwuit.impl.midp.GameCanvasImplementation;
 import com.sun.lwuit.impl.midp.MMAPIPlayer;
 import com.sun.lwuit.plaf.UIManager;
@@ -32,7 +33,7 @@ import javax.microedition.midlet.MIDlet;
  *
  * @author tkor
  */
-public class S40Implementation extends GameCanvasImplementation{
+public class S40Implementation extends LWUITImplementation {
     
         
     private boolean hideMenu = false;
@@ -102,6 +103,7 @@ public class S40Implementation extends GameCanvasImplementation{
     private class C extends GameCanvas implements CommandListener, Runnable {
         private boolean done;
         private Command[] currentCommands;
+        
         class MIDP2LWUITCommand extends Command {
             com.sun.lwuit.Command internal;
             public MIDP2LWUITCommand(com.sun.lwuit.Command c, int offset) {
