@@ -104,13 +104,13 @@ public class S40Implementation extends LWUITImplementation {
         private boolean done;
         private Command[] currentCommands;
         
-        class MIDP2LWUITCommand extends Command {
+        class MIDPCommandWrapper extends Command {
             com.sun.lwuit.Command internal;
-            public MIDP2LWUITCommand(com.sun.lwuit.Command c, int offset) {
+            public MIDPCommandWrapper(com.sun.lwuit.Command c, int offset) {
                 super(c.getCommandName(), Command.SCREEN, offset);
                 internal = c;
             }
-            public MIDP2LWUITCommand(com.sun.lwuit.Command c, int type, int offset) {
+            public MIDPCommandWrapper(com.sun.lwuit.Command c, int type, int offset) {
                 super(c.getCommandName(), type, offset);
                 internal = c;
             }
@@ -135,12 +135,12 @@ public class S40Implementation extends LWUITImplementation {
                 com.sun.lwuit.Command current = (com.sun.lwuit.Command)v.elementAt(iter);
                 if(current == backCommand) {
                     System.out.println("Back command:" + backCommand.getCommandName());
-                    currentCommands[iter] = new S40Implementation.C.MIDP2LWUITCommand(current, Command.BACK, iter + 1);
+                    currentCommands[iter] = new S40Implementation.C.MIDPCommandWrapper(current, Command.BACK, iter + 1);
                 } else {
                     if(iter == 0) {
-                        currentCommands[iter] = new S40Implementation.C.MIDP2LWUITCommand(current, Command.OK, iter + 1);
+                        currentCommands[iter] = new S40Implementation.C.MIDPCommandWrapper(current, Command.OK, iter + 1);
                     } else {
-                        currentCommands[iter] = new S40Implementation.C.MIDP2LWUITCommand(current, iter + 1);
+                        currentCommands[iter] = new S40Implementation.C.MIDPCommandWrapper(current, iter + 1);
                     }
                 }
                 addCommand(currentCommands[iter]);
@@ -179,8 +179,8 @@ public class S40Implementation extends LWUITImplementation {
                 currentTextBox = null;
                 ((S40Implementation.C)canvas).setDone(true);
             } else {
-                if(c instanceof S40Implementation.C.MIDP2LWUITCommand) {
-                    final com.sun.lwuit.Command cmd = ((S40Implementation.C.MIDP2LWUITCommand)c).internal;
+                if(c instanceof S40Implementation.C.MIDPCommandWrapper) {
+                    final com.sun.lwuit.Command cmd = ((S40Implementation.C.MIDPCommandWrapper)c).internal;
                     Display.getInstance().callSerially(new Runnable() {
                         public void run() {
                             Display.getInstance().getCurrent().dispatchCommand(cmd, new ActionEvent(cmd));
