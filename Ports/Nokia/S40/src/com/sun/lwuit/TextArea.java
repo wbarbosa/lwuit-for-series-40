@@ -24,6 +24,7 @@
 package com.sun.lwuit;
 
 import com.nokia.lwuit.TextEditorProvider;
+import com.nokia.mid.ui.KeyboardVisibilityListener;
 import com.nokia.mid.ui.S40TextEditor;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
@@ -37,7 +38,8 @@ import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.impl.LWUITImplementation;
 import java.util.Vector;
-
+import com.nokia.mid.ui.VirtualKeyboard;
+import com.nokia.mid.ui.VirtualKeyboardVisibilityListener;
 /**
  * An optionally multi-line editable region that can display text and allow a user to edit it.
  * Depending on the platform editing might occur in a new screen. Notice that when creating
@@ -47,9 +49,9 @@ import java.util.Vector;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component implements TextEditorProvider.TextEditorListener, FocusListener {
+public class TextArea extends Component implements TextEditorProvider.TextEditorListener, FocusListener, KeyboardVisibilityListener {
     private static int defaultValign = TOP;
-
+    
     /**
      * Indicates the defaut vertical alignment for a text field, only applies to single line text fields
      * @return the defaultValign
@@ -409,7 +411,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     }
                 }
             };
-            
+            VirtualKeyboard.setVisibilityListener(this);
         }
         setText(text);
         addFocusListener(this);
@@ -1691,6 +1693,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 f.setGlassPane(indicatorPainter);
                 f.repaint();
             }
+            
         }
     }
     
@@ -1830,6 +1833,29 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      
         }
     }
+
+    /**
+     * show event for virtualkeyboard
+     * @param keyboardCategory
+     */
+    public void showNotify(int keyboardCategory) {
+        System.out.println("showing keyboard");
+        int y = VirtualKeyboard.getYPosition() - getHeight(); //the correct y-position
+        int y_now = getY();
+        
+        Form f = getComponentForm();
+        f.setScrollY(getY() + (y_now - y));
+    }
+
+    /**
+     * hide event for virtualkeyboard
+     * @param keyboardCategory
+     */
+    public void hideNotify(int keyboardCategory) {
+        System.out.println("hiding keyboard");
+    }
+
+    
     
     private class IndicatorPainter implements Painter {
 
