@@ -5,6 +5,7 @@
 package com.sun.lwuit.impl.s40;
 
 import com.nokia.lwuit.TextEditorProvider;
+import com.nokia.mid.ui.IconCommand;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.TextArea;
@@ -115,7 +116,60 @@ public class S40Implementation extends LWUITImplementation {
                 internal = c;
             }
         }
+        
+        class MIDPIconCommandWrapper extends IconCommand {
+            com.sun.lwuit.Command internal;
+            public MIDPIconCommandWrapper(com.sun.lwuit.Command c, int offset) {
+                super(c.getCommandName(),
+                        (Image)c.getIcon().getImage(),
+                        (Image)c.getIcon().getImage(),
+                        Command.SCREEN, offset);
+                internal = c;
+            }
+            public MIDPIconCommandWrapper(com.sun.lwuit.Command c, int type, int offset) {
+                super(c.getCommandName(),
+                        (Image)c.getIcon().getImage(),
+                        (Image)c.getIcon().getImage(),
+                        type, offset);
+                internal = c;
+            }
+        }
 
+        /**
+         * Wrap a LWUIT command with a wrapper that inherits from LCDUI command.
+         * The wrapper will be either a Command or an IconCommand based on
+         * whether the LWUIT Command had an icon.
+         * 
+         * @param c LWUIT command.
+         * @param offset
+         * @return 
+         */
+        Command wrapLWUITCommand(com.sun.lwuit.Command c, int offset) {
+            if (c.getIcon() != null) {
+                return new MIDPIconCommandWrapper(c, offset);
+            } else {
+                return new MIDPCommandWrapper(c, offset);
+            }
+        }
+        
+        /**
+         * Wrap a LWUIT command with a wrapper that inherits from LCDUI command.
+         * The wrapper will be either a Command or an IconCommand based on
+         * whether the LWUIT Command had an icon.
+         * 
+         * @param c LWUIT command.
+         * @param type
+         * @param offset
+         * @return 
+         */
+        Command wrapLWUITCommand(com.sun.lwuit.Command c, int type, int offset) {
+            if (c.getIcon() != null) {
+                return new MIDPIconCommandWrapper(c, type, offset);
+            } else {
+                return new MIDPCommandWrapper(c, type, offset);
+            }
+        }
+        
         public void setCommands(Vector v) {
             if(currentCommands != null) {
                 for(int iter = 0 ; iter < currentCommands.length ; iter++) {
@@ -135,12 +189,12 @@ public class S40Implementation extends LWUITImplementation {
                 com.sun.lwuit.Command current = (com.sun.lwuit.Command)v.elementAt(iter);
                 if(current == backCommand) {
                     System.out.println("Back command:" + backCommand.getCommandName());
-                    currentCommands[iter] = new S40Implementation.C.MIDPCommandWrapper(current, Command.BACK, iter + 1);
+                    currentCommands[iter] = wrapLWUITCommand(current, Command.BACK, iter + 1);
                 } else {
                     if(iter == 0) {
-                        currentCommands[iter] = new S40Implementation.C.MIDPCommandWrapper(current, Command.OK, iter + 1);
+                        currentCommands[iter] = wrapLWUITCommand(current, Command.OK, iter + 1);
                     } else {
-                        currentCommands[iter] = new S40Implementation.C.MIDPCommandWrapper(current, iter + 1);
+                        currentCommands[iter] = wrapLWUITCommand(current, iter + 1);
                     }
                 }
                 addCommand(currentCommands[iter]);
@@ -181,6 +235,13 @@ public class S40Implementation extends LWUITImplementation {
             } else {
                 if(c instanceof S40Implementation.C.MIDPCommandWrapper) {
                     final com.sun.lwuit.Command cmd = ((S40Implementation.C.MIDPCommandWrapper)c).internal;
+                    Display.getInstance().callSerially(new Runnable() {
+                        public void run() {
+                            Display.getInstance().getCurrent().dispatchCommand(cmd, new ActionEvent(cmd));
+                        }
+                    });
+                } else if (c instanceof S40Implementation.C.MIDPIconCommandWrapper) {
+                    final com.sun.lwuit.Command cmd = ((S40Implementation.C.MIDPIconCommandWrapper)c).internal;
                     Display.getInstance().callSerially(new Runnable() {
                         public void run() {
                             Display.getInstance().getCurrent().dispatchCommand(cmd, new ActionEvent(cmd));
