@@ -411,7 +411,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     }
                 }
             };
-            VirtualKeyboard.setVisibilityListener(this);
         }
         setText(text);
         addFocusListener(this);
@@ -1681,6 +1680,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
     }
     private void focusTextEditor() {
+        VirtualKeyboard.setVisibilityListener(this);
         if (textEditor != null && textEditorEnabled) {
             dontWaitForKeyReleased = false;
             if ((constraint & TextArea.UNEDITABLE) == 0) {
@@ -1840,11 +1840,21 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void showNotify(int keyboardCategory) {
         System.out.println("showing keyboard");
-        int y = VirtualKeyboard.getYPosition() - getHeight(); //the correct y-position
-        int y_now = getY();
-        
-        Form f = getComponentForm();
-        f.setScrollY(getY() + (y_now - y));
+        try {
+            int y = VirtualKeyboard.getYPosition() - getHeight(); //the correct y-position
+            System.out.println("y:" + y);
+            int y_now = getY();
+            System.out.println("y_now:" + y_now);
+            Form f = getComponentForm();
+            System.out.println("after form.");
+            if(f != null) { 
+                f.setScrollY(getY() + (y_now - y));
+            }else {
+                System.out.println("FORM null");
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
