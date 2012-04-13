@@ -1843,14 +1843,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         try {
             int y = VirtualKeyboard.getYPosition() - getHeight(); //the correct y-position
             System.out.println("y:" + y);
-            int y_now = getY();
+            int y_now = getAbsoluteY();
             System.out.println("y_now:" + y_now);
             Form f = getComponentForm();
-            System.out.println("after form.");
             if(f != null) { 
                 f.setScrollY(getY() + (y_now - y));
-            }else {
-                System.out.println("FORM null");
             }
         }catch(Exception e) {
             e.printStackTrace();
