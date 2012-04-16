@@ -24,8 +24,6 @@
 package com.sun.lwuit;
 
 import com.nokia.lwuit.TextEditorProvider;
-import com.nokia.mid.ui.KeyboardVisibilityListener;
-import com.nokia.mid.ui.S40TextEditor;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.events.FocusListener;
@@ -35,11 +33,8 @@ import com.sun.lwuit.impl.s40.S40Implementation;
 import com.sun.lwuit.plaf.LookAndFeel;
 import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
-import com.sun.lwuit.Display;
 import com.sun.lwuit.impl.LWUITImplementation;
 import java.util.Vector;
-import com.nokia.mid.ui.VirtualKeyboard;
-import com.nokia.mid.ui.VirtualKeyboardVisibilityListener;
 /**
  * An optionally multi-line editable region that can display text and allow a user to edit it.
  * Depending on the platform editing might occur in a new screen. Notice that when creating
@@ -49,7 +44,7 @@ import com.nokia.mid.ui.VirtualKeyboardVisibilityListener;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component implements TextEditorProvider.TextEditorListener, FocusListener, KeyboardVisibilityListener {
+public class TextArea extends Component implements TextEditorProvider.TextEditorListener, FocusListener {
     private static int defaultValign = TOP;
     
     /**
@@ -1680,7 +1675,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
     }
     private void focusTextEditor() {
-        VirtualKeyboard.setVisibilityListener(this);
         if (textEditor != null && textEditorEnabled) {
             dontWaitForKeyReleased = false;
             if ((constraint & TextArea.UNEDITABLE) == 0) {
@@ -1834,36 +1828,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
     }
 
-    /**
-     * show event for virtualkeyboard
-     * @param keyboardCategory
-     */
-    public void showNotify(int keyboardCategory) {
-        System.out.println("showing keyboard");
-        try {
-            int y = VirtualKeyboard.getYPosition() - getHeight(); //the correct y-position
-            System.out.println("y:" + y);
-            int y_now = getAbsoluteY();
-            System.out.println("y_now:" + y_now);
-            Form f = getComponentForm();
-            if(f != null) { 
-                f.setScrollY(getY() + (y_now - y));
-            }
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * hide event for virtualkeyboard
-     * @param keyboardCategory
-     */
-    public void hideNotify(int keyboardCategory) {
-        System.out.println("hiding keyboard");
-    }
-
-    
-    
     private class IndicatorPainter implements Painter {
 
         public void paint(Graphics g, Rectangle rect) {

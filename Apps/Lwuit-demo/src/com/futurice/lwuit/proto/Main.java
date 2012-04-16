@@ -83,12 +83,7 @@ public class Main extends MIDlet implements ActionListener {
 
     public void startApp() {
         Display.init(this);     
-        /*try {
-            Resources res = Resources.open("/woody.res");
-            UIManager.getInstance().setThemeProps(res.getTheme("Theme 1"));
-        }catch(IOException err) {
-            err.printStackTrace();
-        }*/
+        
         mainForm = new Form();
         mainForm.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, true, 1000));
         mainForm.setTransitionOutAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, false, 1000));
@@ -164,7 +159,7 @@ public class Main extends MIDlet implements ActionListener {
         final ComponentGroup cg = new ComponentGroup();
         
         cg.addComponent(new Label("text area"));
-        cg.addComponent(new TextArea(2, 3, TextArea.ANY));
+        cg.addComponent(new TextArea(2, 3, TextArea.ANY)); 
         cg.addComponent(new Label("textfield"));
         cg.addComponent(TextField.create());
         cg.addComponent(new Label("with create method"));

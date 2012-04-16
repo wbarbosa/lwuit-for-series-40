@@ -322,6 +322,7 @@ public class Form extends Container {
         setShouldCalcPreferredSize(true);
         doLayout();
         repaint();
+        this.scrollComponentToVisible(focused);
     }
 
     /**

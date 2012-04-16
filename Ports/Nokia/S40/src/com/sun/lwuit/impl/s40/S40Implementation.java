@@ -1999,5 +1999,5 @@ public class S40Implementation extends LWUITImplementation {
     public int getVolume() {
         return MMAPIPlayer.getVolume();
     }
-
+    
 }
