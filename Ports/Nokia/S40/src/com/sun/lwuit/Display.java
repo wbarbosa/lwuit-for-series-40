@@ -1196,7 +1196,6 @@ public final class Display {
         }
         lastKeyPressed = 0;
         previousKeyPressed = 0;
-        System.out.println("REMOVE ME:Calling menusetting in the correct place");
         if(Display.getInstance().isNativeCommands()) {
             Display.getInstance().getImplementation().setNativeCommands(newForm.getMenuBar().getCommands());
         }

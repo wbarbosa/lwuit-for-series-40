@@ -1183,10 +1183,6 @@ public class Form extends Container {
         if(title.getText() != null && title.shouldTickerStart()) {
             title.startTicker(lf.getTickerSpeed(), true);
         }
-        if(Display.getInstance().isNativeCommands()) {
-            System.out.println("initComponentImpl setNativeCommands");
-            Display.getInstance().getImplementation().setNativeCommands(menuBar.getCommands());
-        }
         if(getParent() != null) {
             getParent().getComponentForm().registerAnimated(this);
         }
