@@ -433,6 +433,7 @@ public class MenuBar extends Container implements ActionListener {
      * @param backCommand the command to treat as the back Command
      */
     public void setBackCommand(Command backCommand) {
+        System.out.println("menubar setbackcommand");
         /**
          * The backstack is used to hold previous command that were backcommands.
          * The current backCommand is always in the backCommand-variable and the rest 
@@ -495,6 +496,7 @@ public class MenuBar extends Container implements ActionListener {
     private void updateCommands() {
         int commandBehavior = getCommandBehavior();
         if(commandBehavior == Display.COMMAND_BEHAVIOR_NATIVE) {
+            System.out.println("LOLO");
             System.out.println("updateCommands is native setting nativecommands");
             Display.getInstance().getImplementation().setNativeCommands(commands);
             return;
@@ -993,6 +995,7 @@ public class MenuBar extends Container implements ActionListener {
      * @param cmd Command to add
      */
     public void addCommand(Command cmd) {
+        System.out.println("addCommand");
         // prevent duplicate commands which might happen in some edge cases
         // with the select command
         if (commands.contains(cmd)) {
@@ -1058,6 +1061,7 @@ public class MenuBar extends Container implements ActionListener {
      * @param index determines the order of the added commands
      */
     protected void addCommand(Command cmd, int index) {
+        System.out.println("addcommand 2");
         if (getCommandCount() == 0 && parent != null) {
             installMenuBar();
         }
@@ -1145,6 +1149,7 @@ public class MenuBar extends Container implements ActionListener {
      * Remove all commands from the menuBar
      */
     protected void removeAllCommands() {
+        System.out.println("remove all commands");
         commands.removeAllElements();
         int behavior = getCommandBehavior();
         if(behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR || 
@@ -1164,26 +1169,29 @@ public class MenuBar extends Container implements ActionListener {
      * @param cmd Command to remove
      */
     protected void removeCommand(Command cmd) {
-        int behavior = getCommandBehavior();
-        if(behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR || 
-                behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK ||
-                behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_RIGHT) {
-            int i = commands.indexOf(cmd);
-            if(i > -1) {
-                commands.removeElementAt(i);
-                Button b = findCommandComponent(cmd);
-                if(b != null) {
-                    removeComponent(b);
+        if (cmd != null) {
+            System.out.println("remove command:" + cmd.getCommandName());
+            int behavior = getCommandBehavior();
+            if (behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR
+                    || behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK
+                    || behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_RIGHT) {
+                int i = commands.indexOf(cmd);
+                if (i > -1) {
+                    commands.removeElementAt(i);
+                    Button b = findCommandComponent(cmd);
+                    if (b != null) {
+                        removeComponent(b);
+                    }
+                    if (getCommandCount() > 0) {
+                        setLayout(new GridLayout(1, getCommandCount()));
+                    }
                 }
-                if(getCommandCount() > 0) {
-                    setLayout(new GridLayout(1, getCommandCount()));
-                }
+                return;
             }
-            return;
+            commands.removeElement(cmd);
+            backStack.removeElement(cmd);
+            updateCommands();
         }
-        commands.removeElement(cmd);
-        backStack.removeElement(cmd);
-        updateCommands();
     }
 
     void addSelectCommand(String selectText) {
