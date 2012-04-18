@@ -8,9 +8,9 @@
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/2">
             <reference>
-                <foreign-project>UI</foreign-project>
+                <foreign-project>S40</foreign-project>
                 <artifact-type>jar</artifact-type>
-                <script>${project.UI}/build.xml</script>
+                <script>${project.S40}/build.xml</script>
                 <target>jar</target>
                 <clean-target>clean</clean-target>
                 <id>jar</id>

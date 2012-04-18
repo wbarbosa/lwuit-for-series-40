@@ -62,7 +62,7 @@ public class UIDemoMain  implements ActionListener {
     private static String localLanguage;
 
     static final Demo[] DEMOS = new Demo[]{
-        new ThemeDemo(), new RenderingDemo(), new AnimationDemo(), new ButtonsDemo(),
+        /*new ThemeDemo(),*/ new RenderingDemo(), new AnimationDemo(), new ButtonsDemo(),
         new TransitionDemo(), new FontDemo(), new TabsDemo(), new DialogDemo(),
         new LayoutDemo(), new ScrollDemo(), new TableDemo(), new TreeDemo(),
         new HTMLDemo()
@@ -233,6 +233,7 @@ public class UIDemoMain  implements ActionListener {
         buildDemoMenu(r, uiContent);
 
         mainMenu.addCommand(exitCommand);
+        mainMenu.setBackCommand(exitCommand);
         mainMenu.addCommand(aboutCommand);
 
         if(localLanguage == null) {
