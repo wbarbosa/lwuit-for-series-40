@@ -12,13 +12,15 @@ import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.spinner.Spinner;
 import javax.microedition.midlet.MIDlet;
-
+import com.nokia.mid.ui.IconCommand;
+import com.nokia.mid.ui.CategoryBar;
+import com.nokia.mid.ui.ElementListener;
 
 
 /**
  * @author tkor
  */
-public class Main extends MIDlet implements ActionListener {
+public class Main extends MIDlet implements ActionListener, ElementListener {
 
     final static Command[] commands = {
         new Command("First"), new Command("Second"), new Command("Third"),
@@ -50,6 +52,7 @@ public class Main extends MIDlet implements ActionListener {
     Form softkeyForm = null;
     // tab demo form
     Form tabForm = null;
+    private CategoryBar categoryBar;
 
     public void actionPerformed(ActionEvent e) {
         Command c = e.getCommand();
@@ -117,6 +120,11 @@ public class Main extends MIDlet implements ActionListener {
         mainForm.addComponent(new Button(new Command("Show dialog") {
             public void actionPerformed(ActionEvent evt) {
                 Dialog.show("Moro", "Tere", "OK", "Cancel");
+            }
+        }));
+        mainForm.addComponent(new Button(new Command("Category bar") {
+            public void actionPerformed(ActionEvent evt) {
+                categoryBar.setVisibility(!categoryBar.getVisibility());
             }
         }));
         backCommand = new Command("Back") {
@@ -280,6 +288,14 @@ public class Main extends MIDlet implements ActionListener {
         tabForm.addCommand(backCommand);
         tabForm.setBackCommand(backCommand);
         
+        /***********************
+         * Make a category bar *
+         ***********************/
+        IconCommand cat1 = new IconCommand("Category one", javax.microedition.lcdui.Command.SCREEN, 1, IconCommand.ICON_ADD_CONTACT);
+        IconCommand cat2 = new IconCommand("Category two", javax.microedition.lcdui.Command.SCREEN, 1, IconCommand.ICON_SEND_SMS);
+        IconCommand[] cmds = { cat1, cat2 };
+        categoryBar = new CategoryBar(cmds, true);
+        categoryBar.setElementListener(this);
         
         mainForm.show();
     }
@@ -288,5 +304,13 @@ public class Main extends MIDlet implements ActionListener {
     }
 
     public void destroyApp(boolean unconditional) {
+    }
+
+    public void notifyElementSelected(CategoryBar cb, int i) {
+        switch (i) {
+            case 0: System.out.println("Category one selected"); break;
+            case 1: System.out.println("Category two selected"); break;
+            default: System.out.println("Unknown category bar selection");
+        }
     }
 }
