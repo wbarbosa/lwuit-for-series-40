@@ -459,7 +459,7 @@ public final class Display {
                 UIManager.getInstance().setThemeProps(themeres.getTheme("NokiaTheme"));
                 System.out.println("loaded nokia theme.");
             } catch (IOException e) {
-                throw new RuntimeException("Can't load Nokia Theme");
+                System.out.println("Can't load Nokia Theme");
             }
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
             INSTANCE.registerVirtualKeyboard(vkb);
