@@ -111,8 +111,7 @@ done
 git push $remote $branch || die "Git push failed" 6
 
 # post review
-post-review --guess-summary --guess-description $passthru_args $revarg || \
-	die "post-review failed" 7
+post-review --guess-summary --guess-description --branch="$branch" $passthru_args $revarg || die "post-review failed" 7
 
 echo
 echo "Done! Don't forget to publish the review request (unless you specified"
