@@ -496,8 +496,6 @@ public class MenuBar extends Container implements ActionListener {
     private void updateCommands() {
         int commandBehavior = getCommandBehavior();
         if(commandBehavior == Display.COMMAND_BEHAVIOR_NATIVE) {
-            System.out.println("LOLO");
-            System.out.println("updateCommands is native setting nativecommands");
             Display.getInstance().getImplementation().setNativeCommands(commands);
             return;
         }
@@ -995,7 +993,6 @@ public class MenuBar extends Container implements ActionListener {
      * @param cmd Command to add
      */
     public void addCommand(Command cmd) {
-        System.out.println("addCommand");
         // prevent duplicate commands which might happen in some edge cases
         // with the select command
         if (commands.contains(cmd)) {
@@ -1061,7 +1058,6 @@ public class MenuBar extends Container implements ActionListener {
      * @param index determines the order of the added commands
      */
     protected void addCommand(Command cmd, int index) {
-        System.out.println("addcommand 2");
         if (getCommandCount() == 0 && parent != null) {
             installMenuBar();
         }
@@ -1149,7 +1145,6 @@ public class MenuBar extends Container implements ActionListener {
      * Remove all commands from the menuBar
      */
     protected void removeAllCommands() {
-        System.out.println("remove all commands");
         commands.removeAllElements();
         int behavior = getCommandBehavior();
         if(behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR || 
@@ -1170,7 +1165,6 @@ public class MenuBar extends Container implements ActionListener {
      */
     protected void removeCommand(Command cmd) {
         if (cmd != null) {
-            System.out.println("remove command:" + cmd.getCommandName());
             int behavior = getCommandBehavior();
             if (behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR
                     || behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK
