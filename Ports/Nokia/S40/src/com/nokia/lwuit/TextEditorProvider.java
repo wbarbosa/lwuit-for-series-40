@@ -54,8 +54,6 @@ public abstract class TextEditorProvider {
     public abstract int getPositionY();
     public abstract Image[] getInputIndicators();
     public abstract int getInputMode();
-    public abstract void setIndicatorVisibility(boolean visible);
-    public abstract void setIndicatorLocation(int x, int y);
     
     
     public static TextEditorProvider createTextEditor() {
