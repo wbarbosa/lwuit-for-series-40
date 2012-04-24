@@ -98,6 +98,10 @@ public class Main extends MIDlet implements ActionListener {
             public void gestureEvent(GestureEvent e) {
                 if(e.getType() == GestureInteractiveZone.GESTURE_TAP) {
                     System.out.println("Gesture TAP");
+                    
+                }
+                if(e.getType() == GestureInteractiveZone.GESTURE_FLICK) {
+                    System.out.println("Gesture FLICK");
                 }
             }
         };
