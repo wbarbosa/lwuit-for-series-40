@@ -4,6 +4,9 @@
  */
 package com.futurice.lwuit.proto;
 
+import com.nokia.lwuit.GestureHandler;
+import com.nokia.mid.ui.gestures.GestureEvent;
+import com.nokia.mid.ui.gestures.GestureInteractiveZone;
 import com.sun.lwuit.*;
 import com.sun.lwuit.animations.CommonTransitions;
 import com.sun.lwuit.events.ActionEvent;
@@ -90,6 +93,14 @@ public class Main extends MIDlet implements ActionListener {
             err.printStackTrace();
         }*/
         mainForm = new Form();
+        GestureHandler handler = new GestureHandler(mainForm) {
+
+            public void gestureEvent(GestureEvent e) {
+                if(e.getType() == GestureInteractiveZone.GESTURE_TAP) {
+                    System.out.println("Gesture TAP");
+                }
+            }
+        };
         mainForm.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, true, 1000));
         mainForm.setTransitionOutAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, false, 1000));
         mainForm.setTitle("LWUIT DemoS");

@@ -1954,9 +1954,7 @@ public class S40Implementation extends LWUITImplementation {
     
     public void setCurrentGestureListener(com.sun.lwuit.Form f) {
         GestureHandler h = (GestureHandler) gestureListeners.get(f);
-        if(h != null) {
-            GestureRegistrationManager.setListener(canvas, h);
-        }
+        GestureRegistrationManager.setListener(canvas, h);
     }
     
     public void removeGestureHandler(GestureHandler l) {
