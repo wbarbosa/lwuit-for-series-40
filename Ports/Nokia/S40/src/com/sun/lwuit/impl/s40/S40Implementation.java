@@ -5,6 +5,9 @@
 package com.sun.lwuit.impl.s40;
 
 import com.nokia.lwuit.TextEditorProvider;
+import com.nokia.mid.ui.gestures.GestureInteractiveZone;
+import com.nokia.mid.ui.gestures.GestureListener;
+import com.nokia.mid.ui.gestures.GestureRegistrationManager;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.TextArea;
@@ -12,7 +15,6 @@ import com.sun.lwuit.VideoComponent;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.impl.LWUITImplementation;
-import com.sun.lwuit.impl.midp.GameCanvasImplementation;
 import com.sun.lwuit.impl.midp.MMAPIPlayer;
 import com.sun.lwuit.plaf.UIManager;
 import java.io.ByteArrayInputStream;
@@ -99,6 +101,8 @@ public class S40Implementation extends LWUITImplementation {
     private int alpha = 255;
     private int[] rgbArr;
     private final S40Implementation.C canvas = new S40Implementation.C();
+    
+    private Vector gestureListeners = new Vector();
         
     private class C extends GameCanvas implements CommandListener, Runnable {
         private boolean done;
@@ -369,6 +373,10 @@ public class S40Implementation extends LWUITImplementation {
         mid = (MIDlet)m;
         display = javax.microedition.lcdui.Display.getDisplay(mid);
         setSoftKeyCodes(mid);
+        
+        //register for gestures
+        GestureInteractiveZone giz = new GestureInteractiveZone(GestureInteractiveZone.GESTURE_ALL);
+        GestureRegistrationManager.register(canvas, giz);
     }
 
     private void setSoftKeyCodes(MIDlet m) {
@@ -1936,6 +1944,18 @@ public class S40Implementation extends LWUITImplementation {
      */
     public int getVolume() {
         return MMAPIPlayer.getVolume();
+    }
+    
+    public void addGestureListener(GestureListener l) {
+        gestureListeners.addElement(l);
+    }
+    
+    public void setCurrentGestureListener(GestureListener l) {
+        GestureRegistrationManager.setListener(canvas, l);
+    }
+    
+    public void removeGestureListener(GestureListener l) {
+        gestureListeners.removeElement(l);
     }
 
 }
