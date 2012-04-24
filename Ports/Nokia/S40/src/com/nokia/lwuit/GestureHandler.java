@@ -23,7 +23,7 @@ public abstract class GestureHandler implements GestureListener{
     public GestureHandler(Form f) {
         form = f;
         S40Implementation impl = (S40Implementation)Display.getInstance().getImplementation();
-        impl.addGestureListener(this);
+        impl.addGestureHandler(this);
     }
 
     public Form getForm() {

@@ -1078,6 +1078,7 @@ public final class Display {
         }
         if(!newForm.isInitialized()) {
             newForm.initComponentImpl();
+            ((S40Implementation)impl).setCurrentGestureListener(newForm);
         }
 
         if(newForm.getWidth() != getDisplayWidth() || newForm.getHeight() != getDisplayHeight()) {

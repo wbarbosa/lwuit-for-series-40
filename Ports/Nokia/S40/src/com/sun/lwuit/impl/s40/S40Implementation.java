@@ -4,6 +4,7 @@
  */
 package com.sun.lwuit.impl.s40;
 
+import com.nokia.lwuit.GestureHandler;
 import com.nokia.lwuit.TextEditorProvider;
 import com.nokia.mid.ui.gestures.GestureInteractiveZone;
 import com.nokia.mid.ui.gestures.GestureListener;
@@ -20,6 +21,7 @@ import com.sun.lwuit.plaf.UIManager;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Hashtable;
 import java.util.Vector;
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.*;
@@ -102,7 +104,7 @@ public class S40Implementation extends LWUITImplementation {
     private int[] rgbArr;
     private final S40Implementation.C canvas = new S40Implementation.C();
     
-    private Vector gestureListeners = new Vector();
+    private Hashtable gestureListeners = new Hashtable();
         
     private class C extends GameCanvas implements CommandListener, Runnable {
         private boolean done;
@@ -1946,16 +1948,19 @@ public class S40Implementation extends LWUITImplementation {
         return MMAPIPlayer.getVolume();
     }
     
-    public void addGestureListener(GestureListener l) {
-        gestureListeners.addElement(l);
+    public void addGestureHandler(GestureHandler l) {
+        gestureListeners.put(l.getForm(), l);
     }
     
-    public void setCurrentGestureListener(GestureListener l) {
-        GestureRegistrationManager.setListener(canvas, l);
+    public void setCurrentGestureListener(com.sun.lwuit.Form f) {
+        GestureHandler h = (GestureHandler) gestureListeners.get(f);
+        if(h != null) {
+            GestureRegistrationManager.setListener(canvas, h);
+        }
     }
     
-    public void removeGestureListener(GestureListener l) {
-        gestureListeners.removeElement(l);
+    public void removeGestureHandler(GestureHandler l) {
+        gestureListeners.remove(l.getForm());
     }
 
 }
