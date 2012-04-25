@@ -4,7 +4,7 @@
  */
 package com.sun.lwuit.impl.s40;
 
-import com.nokia.lwuit.GestureHandler;
+import com.nokia.lwuit.FormGestureHandler;
 import com.nokia.lwuit.GlobalGestureHandler;
 import com.nokia.lwuit.TextEditorProvider;
 import com.nokia.mid.ui.gestures.GestureEvent;
@@ -1951,15 +1951,15 @@ public class S40Implementation extends LWUITImplementation implements GestureLis
         return MMAPIPlayer.getVolume();
     }
     
-    public void addGestureHandler(GestureHandler l) {
+    public void addGestureHandler(FormGestureHandler l) {
         gestureListeners.addElement(l);
     }
     
     public synchronized void setCurrentGestureListener(com.sun.lwuit.Form f) {
         int l = gestureListeners.size();
-        GestureHandler h = null;
+        FormGestureHandler h = null;
         for(int i = 0; i < l; i++) {
-            h = (GestureHandler) gestureListeners.elementAt(i);
+            h = (FormGestureHandler) gestureListeners.elementAt(i);
             if(h.getForm() == f) {
                 break;
             }
@@ -1967,7 +1967,7 @@ public class S40Implementation extends LWUITImplementation implements GestureLis
         currentFormGestureHandler = h;
     }
     
-    public synchronized void removeGestureHandler(GestureHandler l) {
+    public synchronized void removeGestureHandler(FormGestureHandler l) {
         gestureListeners.removeElement(l);
     }
 
@@ -1975,7 +1975,7 @@ public class S40Implementation extends LWUITImplementation implements GestureLis
         globalGestureHandler = l;
     }
     
-    private GestureHandler currentFormGestureHandler;
+    private FormGestureHandler currentFormGestureHandler;
     private GlobalGestureHandler globalGestureHandler;
     
     public void gestureAction(Object container, GestureInteractiveZone gestureInteractiveZone, GestureEvent gestureEvent) {

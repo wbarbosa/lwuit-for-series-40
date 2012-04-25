@@ -17,11 +17,11 @@ import java.lang.ref.WeakReference;
  *
  * @author tkor
  */
-public abstract class GestureHandler{
+public abstract class FormGestureHandler{
     
     private WeakReference form;
     
-    public GestureHandler(Form f) {
+    public FormGestureHandler(Form f) {
         form = new WeakReference(f);
         S40Implementation impl = (S40Implementation)Display.getInstance().getImplementation();
         impl.addGestureHandler(this);
