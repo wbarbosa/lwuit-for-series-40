@@ -104,7 +104,7 @@ public class S40Implementation extends LWUITImplementation {
     private int[] rgbArr;
     private final S40Implementation.C canvas = new S40Implementation.C();
     
-    private Hashtable gestureListeners = new Hashtable();
+    private Vector gestureListeners = new Vector();
         
     private class C extends GameCanvas implements CommandListener, Runnable {
         private boolean done;
@@ -1949,11 +1949,18 @@ public class S40Implementation extends LWUITImplementation {
     }
     
     public void addGestureHandler(GestureHandler l) {
-        gestureListeners.put(l.getForm(), l);
+        gestureListeners.addElement(l);
     }
     
     public void setCurrentGestureListener(com.sun.lwuit.Form f) {
-        GestureHandler h = (GestureHandler) gestureListeners.get(f);
+        int l = gestureListeners.size();
+        GestureHandler h = null;
+        for(int i = 0; i < l; i++) {
+            h = (GestureHandler) gestureListeners.elementAt(i);
+            if(h.getForm() == f) {
+                break;
+            }
+        }
         GestureRegistrationManager.setListener(canvas, h);
     }
     
