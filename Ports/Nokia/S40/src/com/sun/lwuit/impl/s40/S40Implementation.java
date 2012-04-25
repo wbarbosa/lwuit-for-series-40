@@ -1958,12 +1958,15 @@ public class S40Implementation extends LWUITImplementation implements GestureLis
     public synchronized void setCurrentGestureListener(com.sun.lwuit.Form f) {
         int l = gestureListeners.size();
         FormGestureHandler h = null;
+        FormGestureHandler c = null;
         for(int i = 0; i < l; i++) {
-            h = (FormGestureHandler) gestureListeners.elementAt(i);
-            if(h.getForm() == f) {
+            c = (FormGestureHandler) gestureListeners.elementAt(i);
+            if(c.getForm() == f) {
+                h = c;
                 break;
             }
         }
+        System.out.println("setting formgestlistener:" + h);
         currentFormGestureHandler = h;
     }
     
