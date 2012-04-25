@@ -5,7 +5,9 @@
 package com.sun.lwuit.impl.s40;
 
 import com.nokia.lwuit.GestureHandler;
+import com.nokia.lwuit.GlobalGestureHandler;
 import com.nokia.lwuit.TextEditorProvider;
+import com.nokia.mid.ui.gestures.GestureEvent;
 import com.nokia.mid.ui.gestures.GestureInteractiveZone;
 import com.nokia.mid.ui.gestures.GestureListener;
 import com.nokia.mid.ui.gestures.GestureRegistrationManager;
@@ -37,7 +39,7 @@ import javax.microedition.midlet.MIDlet;
  *
  * @author tkor
  */
-public class S40Implementation extends LWUITImplementation {
+public class S40Implementation extends LWUITImplementation implements GestureListener{
     
         
     private boolean hideMenu = false;
@@ -379,6 +381,7 @@ public class S40Implementation extends LWUITImplementation {
         //register for gestures
         GestureInteractiveZone giz = new GestureInteractiveZone(GestureInteractiveZone.GESTURE_ALL);
         GestureRegistrationManager.register(canvas, giz);
+        GestureRegistrationManager.setListener(canvas, this);
     }
 
     private void setSoftKeyCodes(MIDlet m) {
@@ -1952,7 +1955,7 @@ public class S40Implementation extends LWUITImplementation {
         gestureListeners.addElement(l);
     }
     
-    public void setCurrentGestureListener(com.sun.lwuit.Form f) {
+    public synchronized void setCurrentGestureListener(com.sun.lwuit.Form f) {
         int l = gestureListeners.size();
         GestureHandler h = null;
         for(int i = 0; i < l; i++) {
@@ -1961,11 +1964,26 @@ public class S40Implementation extends LWUITImplementation {
                 break;
             }
         }
-        GestureRegistrationManager.setListener(canvas, h);
+        currentFormGestureHandler = h;
     }
     
-    public void removeGestureHandler(GestureHandler l) {
-        gestureListeners.remove(l.getForm());
+    public synchronized void removeGestureHandler(GestureHandler l) {
+        gestureListeners.removeElement(l);
     }
 
+    public synchronized void setGlobalGestureHandler(GlobalGestureHandler l) {
+        globalGestureHandler = l;
+    }
+    
+    private GestureHandler currentFormGestureHandler;
+    private GlobalGestureHandler globalGestureHandler;
+    
+    public void gestureAction(Object container, GestureInteractiveZone gestureInteractiveZone, GestureEvent gestureEvent) {
+        if(currentFormGestureHandler != null) {
+            currentFormGestureHandler.gestureEvent(gestureEvent);
+        }
+        if(globalGestureHandler != null) {
+            globalGestureHandler.gestureAction(gestureEvent);
+        }
+    }
 }

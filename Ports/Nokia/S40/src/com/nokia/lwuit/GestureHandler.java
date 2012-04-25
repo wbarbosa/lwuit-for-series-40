@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference;
  *
  * @author tkor
  */
-public abstract class GestureHandler implements GestureListener{
+public abstract class GestureHandler{
     
     private WeakReference form;
     
@@ -31,12 +31,6 @@ public abstract class GestureHandler implements GestureListener{
         Object o = form.get();
         return (o != null) ? (Form)o : null;
     }
-
-    public void gestureAction(Object container, GestureInteractiveZone gestureInteractiveZone, GestureEvent gestureEvent) {
-        gestureEvent(gestureEvent);
-    }
-    
-    
     
     public abstract void gestureEvent(GestureEvent e);
 }
