@@ -1966,7 +1966,6 @@ public class S40Implementation extends LWUITImplementation implements GestureLis
                 break;
             }
         }
-        System.out.println("setting formgestlistener:" + h);
         currentFormGestureHandler = h;
     }
     
