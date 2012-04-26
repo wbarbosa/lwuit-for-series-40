@@ -6,7 +6,8 @@ package com.nokia.lwuit;
 
 import com.nokia.mid.ui.gestures.GestureEvent;
 import com.sun.lwuit.Display;
-import com.sun.lwuit.impl.s40.S40Implementation;
+import com.sun.lwuit.impl.LWUITImplementation;
+import com.sun.lwuit.impl.s40.S40GestureImplementation;
 
 /**
  *
@@ -15,8 +16,10 @@ import com.sun.lwuit.impl.s40.S40Implementation;
 public abstract class GlobalGestureHandler {
     
     public static void setGlobalGestureHandler(GlobalGestureHandler h) {
-        S40Implementation impl = (S40Implementation) Display.getInstance().getImplementation();
-        impl.setGlobalGestureHandler(h);
+        LWUITImplementation impl = Display.getInstance().getImplementation();
+        if(impl instanceof S40GestureImplementation) {
+            ((S40GestureImplementation)impl).setGlobalGestureHandler(h);
+        }
     }
     
     public abstract void gestureAction(GestureEvent e);

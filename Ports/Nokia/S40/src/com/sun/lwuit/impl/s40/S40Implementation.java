@@ -4,13 +4,7 @@
  */
 package com.sun.lwuit.impl.s40;
 
-import com.nokia.lwuit.FormGestureHandler;
-import com.nokia.lwuit.GlobalGestureHandler;
 import com.nokia.lwuit.TextEditorProvider;
-import com.nokia.mid.ui.gestures.GestureEvent;
-import com.nokia.mid.ui.gestures.GestureInteractiveZone;
-import com.nokia.mid.ui.gestures.GestureListener;
-import com.nokia.mid.ui.gestures.GestureRegistrationManager;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.TextArea;
@@ -23,7 +17,6 @@ import com.sun.lwuit.plaf.UIManager;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Hashtable;
 import java.util.Vector;
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.*;
@@ -39,7 +32,7 @@ import javax.microedition.midlet.MIDlet;
  *
  * @author tkor
  */
-public class S40Implementation extends LWUITImplementation implements GestureListener{
+public class S40Implementation extends LWUITImplementation {
     
         
     private boolean hideMenu = false;
@@ -104,9 +97,8 @@ public class S40Implementation extends LWUITImplementation implements GestureLis
     private static int[] portableKeyCodeValues;
     private int alpha = 255;
     private int[] rgbArr;
-    private final S40Implementation.C canvas = new S40Implementation.C();
-    
-    private Vector gestureListeners = new Vector();
+    protected final S40Implementation.C canvas = new S40Implementation.C();
+
         
     private class C extends GameCanvas implements CommandListener, Runnable {
         private boolean done;
@@ -378,10 +370,6 @@ public class S40Implementation extends LWUITImplementation implements GestureLis
         display = javax.microedition.lcdui.Display.getDisplay(mid);
         setSoftKeyCodes(mid);
         
-        //register for gestures
-        GestureInteractiveZone giz = new GestureInteractiveZone(GestureInteractiveZone.GESTURE_ALL);
-        GestureRegistrationManager.register(canvas, giz);
-        GestureRegistrationManager.setListener(canvas, this);
     }
 
     private void setSoftKeyCodes(MIDlet m) {
@@ -1950,42 +1938,5 @@ public class S40Implementation extends LWUITImplementation implements GestureLis
     public int getVolume() {
         return MMAPIPlayer.getVolume();
     }
-    
-    public void addGestureHandler(FormGestureHandler l) {
-        gestureListeners.addElement(l);
-    }
-    
-    public synchronized void setCurrentGestureListener(com.sun.lwuit.Form f) {
-        int l = gestureListeners.size();
-        FormGestureHandler h = null;
-        FormGestureHandler c = null;
-        for(int i = 0; i < l; i++) {
-            c = (FormGestureHandler) gestureListeners.elementAt(i);
-            if(c.getForm() == f) {
-                h = c;
-                break;
-            }
-        }
-        currentFormGestureHandler = h;
-    }
-    
-    public synchronized void removeGestureHandler(FormGestureHandler l) {
-        gestureListeners.removeElement(l);
-    }
 
-    public synchronized void setGlobalGestureHandler(GlobalGestureHandler l) {
-        globalGestureHandler = l;
-    }
-    
-    private FormGestureHandler currentFormGestureHandler;
-    private GlobalGestureHandler globalGestureHandler;
-    
-    public void gestureAction(Object container, GestureInteractiveZone gestureInteractiveZone, GestureEvent gestureEvent) {
-        if(currentFormGestureHandler != null) {
-            currentFormGestureHandler.gestureEvent(gestureEvent);
-        }
-        if(globalGestureHandler != null) {
-            globalGestureHandler.gestureAction(gestureEvent);
-        }
-    }
 }
