@@ -93,18 +93,6 @@ public class Main extends MIDlet implements ActionListener {
             err.printStackTrace();
         }*/
         mainForm = new Form();
-        FormGestureHandler handler = new FormGestureHandler(mainForm) {
-
-            public void gestureEvent(GestureEvent e) {
-                if(e.getType() == GestureInteractiveZone.GESTURE_TAP) {
-                    System.out.println("Gesture TAP");
-                    
-                }
-                if(e.getType() == GestureInteractiveZone.GESTURE_FLICK) {
-                    System.out.println("Gesture FLICK");
-                }
-            }
-        };
         mainForm.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, true, 1000));
         mainForm.setTransitionOutAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, false, 1000));
         mainForm.setTitle("LWUIT DemoS");
