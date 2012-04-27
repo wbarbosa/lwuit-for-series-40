@@ -98,7 +98,8 @@ public class S40Implementation extends LWUITImplementation {
     private static int[] portableKeyCodeValues;
     private int alpha = 255;
     private int[] rgbArr;
-    private final S40Implementation.C canvas = new S40Implementation.C();
+    protected final S40Implementation.C canvas = new S40Implementation.C();
+
         
     private class C extends GameCanvas implements CommandListener, Runnable {
         private boolean done;
@@ -431,6 +432,7 @@ public class S40Implementation extends LWUITImplementation {
         mid = (MIDlet)m;
         display = javax.microedition.lcdui.Display.getDisplay(mid);
         setSoftKeyCodes(mid);
+        
     }
 
     private void setSoftKeyCodes(MIDlet m) {

@@ -226,14 +226,4 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
             internalListener.inputAction(this, actions);
         }
     }
-
-    public void setIndicatorVisibility(boolean visible) {
-        editor.setIndicatorVisibility(visible);
-    }
-
-    public void setIndicatorLocation(int x, int y) {
-        editor.setIndicatorLocation(x, y);
-    }
-    
-    
 }

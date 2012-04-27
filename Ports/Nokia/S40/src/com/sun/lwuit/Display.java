@@ -32,6 +32,7 @@ import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.impl.ImplementationFactory;
 import com.sun.lwuit.impl.LWUITImplementation;
 import com.sun.lwuit.impl.VirtualKeyboardInterface;
+import com.sun.lwuit.impl.s40.S40GestureImplementation;
 import com.sun.lwuit.impl.s40.S40Implementation;
 import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.util.EventDispatcher;
@@ -41,7 +42,6 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
-import javax.microedition.midlet.MIDlet;
 
 /**
  * Central class for the API that manages rendering/events and is used to place top
@@ -1078,6 +1078,10 @@ public final class Display {
         }
         if(!newForm.isInitialized()) {
             newForm.initComponentImpl();
+            if(impl instanceof S40GestureImplementation) {
+                ((S40GestureImplementation)impl).setCurrentGestureListener(newForm);
+            }
+            
         }
 
         if(newForm.getWidth() != getDisplayWidth() || newForm.getHeight() != getDisplayHeight()) {

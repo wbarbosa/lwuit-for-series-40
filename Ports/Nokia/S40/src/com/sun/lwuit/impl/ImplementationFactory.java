@@ -66,6 +66,14 @@ public class ImplementationFactory {
      * @return a newly created implementation instance
      */
     public LWUITImplementation createImplementation() {
-        return new S40Implementation();
+        LWUITImplementation impl = null;
+        try {
+            Class.forName("com.nokia.mid.ui.gestures.GestureListener");
+            impl = (LWUITImplementation)Class.forName("com.sun.lwuit.impl.s40.S40GestureImplementation").newInstance();
+        }catch(Exception e) {
+            System.out.println("no gestures supported.");
+            impl = new S40Implementation();
+        }
+        return impl;
     }
 }
