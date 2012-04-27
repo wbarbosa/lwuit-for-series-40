@@ -30,7 +30,7 @@ public abstract class FormGestureHandler{
 
     public Form getForm() {
         Object o = form.get();
-        return (o != null) ? (Form)o : null;
+        return (Form) o;
     }
     
     public abstract void gestureEvent(GestureEvent e);
