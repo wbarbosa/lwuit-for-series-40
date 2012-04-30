@@ -28,5 +28,11 @@
 		<scope>system</scope>
 		<systemPath>C:/work/jme/lwuit-svn/LWUIT_1_5/UI/dist/UI.jar</systemPath>
 	</dependency>
+	<dependency>
+		<groupId>org.apache.xmlgraphics</groupId>
+		<artifactId>batik-transcoder</artifactId>
+		<version>1.7</version>
+		<scope>compile</scope>
+	</dependency>
   </dependencies>
 </project>
