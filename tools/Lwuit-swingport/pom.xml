@@ -26,7 +26,7 @@
 		<artifactId>lwuit</artifactId>
 		<version>1.5</version>
 		<scope>system</scope>
-		<systemPath>../../UI/dist/UI.jar</systemPath>
+		<systemPath>C:/work/jme/lwuit-svn/LWUIT_1_5/UI/dist/UI.jar</systemPath>
 	</dependency>
   </dependencies>
 </project>
