@@ -16,29 +16,16 @@
   <build>
 	<plugins>
 		<plugin>
-			<artifactId>maven-assembly-plugin</artifactId>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
 			<configuration>
-				<descriptorRefs>
-					<descriptorRef>jar-with-dependencies</descriptorRef>
-				</descriptorRefs>
 				<archive>
 					<manifest>
 						<addClasspath>true</addClasspath>
-						<mainClass>
-							com.sun.lwuit.resources.editor.ResourceEditorApp
-						</mainClass>
+						<mainClass>com.sun.lwuit.resources.editor.ResourceEditorApp</mainClass>
 					</manifest>
 				</archive>
 			</configuration>
-			<executions>
-				<execution>
-					<id>make-assembly</id>
-					<phase>package</phase>
-					<goals>
-						<goal>single</goal>
-					</goals>
-				</execution>
-			</executions>
 		</plugin>
 	</plugins>
   </build>
@@ -68,27 +55,24 @@
 		<version>1.0-SNAPSHOT</version>
 		<scope>compile</scope>
 	</dependency>
-	<!-- absolute path to lwuit libs that are not maven projects -->
+	<!-- absolute path to lwuit libs that must be installed by hand to local maven reo -->
 	<dependency>
 		<groupId>com.sun.lwuit.io</groupId>
 		<artifactId>lwuit-io-se</artifactId>
 		<version>1.5</version>
-		<scope>system</scope>
-		<systemPath>C:/work/jme/lwuit-svn/LWUIT_1_5/Ports/SE/IO_SE/dist/IO_SE.jar</systemPath>
+		<scope>compile</scope>	
 	</dependency>
 	<dependency>
 		<groupId>javax.microedition</groupId>
 		<artifactId>midp-se</artifactId>
 		<version>1.0</version>
-		<scope>system</scope>
-		<systemPath>C:/work/jme/lwuit-svn/LWUIT_1_5/tools/MIDP_SE/dist/MIDP_SE.jar</systemPath>
+		<scope>compile</scope>
 	</dependency>
 	<dependency>
 		<groupId>com.sun.lwuit.uidemo</groupId>
 		<artifactId>lwuit-uidemo</artifactId>
 		<version>1.0</version>
-		<scope>system</scope>
-		<systemPath>C:/work/jme/lwuit-svn/LWUIT_1_5/Apps/LWUITDemo/LWUITDemoMIDP/dist/LWUITDemo.jar</systemPath>
+		<scope>compile</scope>
 	</dependency>
   </dependencies>
 </project>
