@@ -1,0 +1,9 @@
+Step 1.
+install lwuitdemo, midp-se and lwuit io se to local maven repository
+
+Step 2.
+compile swingport with "mvn clean install"
+
+Step 3.
+
+compile resoureeditor with "mvn clean package"
