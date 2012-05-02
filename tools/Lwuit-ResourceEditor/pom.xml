@@ -23,6 +23,7 @@
 				</descriptorRefs>
 				<archive>
 					<manifest>
+						<addClasspath>true</addClasspath>
 						<mainClass>
 							com.sun.lwuit.resources.editor.ResourceEditorApp
 						</mainClass>
