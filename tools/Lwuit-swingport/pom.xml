@@ -22,11 +22,10 @@
       <scope>test</scope>
     </dependency>
 	<dependency>
-		<groupId>com.sun.lwuit.unmodified</groupId>
-		<artifactId>lwuit</artifactId>
+		<groupId>com.sun.lwuit</groupId>
+		<artifactId>lwuit-ui-unmodified</artifactId>
 		<version>1.5</version>
-		<scope>system</scope>
-		<systemPath>C:/work/jme/lwuit-svn/LWUIT_1_5/UI/dist/UI.jar</systemPath>
+		<scope>compile</scope>
 	</dependency>
 	<dependency>
 		<groupId>org.apache.xmlgraphics</groupId>
