@@ -1,3 +1,0 @@
-ResourceEditor-binary.zip contains prebuilt ResourceEditor application.
-Extract the zip archive and run the editor with java -jar ResourceEditor.jar
-
