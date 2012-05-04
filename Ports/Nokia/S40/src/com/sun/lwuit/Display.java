@@ -466,6 +466,7 @@ public final class Display {
             if(INSTANCE.isPureTouch()) {
                 INSTANCE.setCommandBehavior(Display.COMMAND_BEHAVIOR_NATIVE);
                 if(INSTANCE.impl instanceof S40Implementation) {
+                    System.out.println("hiding menu");
                     ((S40Implementation) INSTANCE.impl).setHideMenu(true);
                 }
             }

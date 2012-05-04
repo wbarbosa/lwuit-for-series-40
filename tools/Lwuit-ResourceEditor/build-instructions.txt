@@ -1,0 +1,18 @@
+Introduction
+
+ResourceEditor is built with maven because it has a lot of third party dependencies it's easier to use maven than bundle
+every jar file to the repository.
+
+Step 0.
+Install maven and ant. Instructions can be found from http://maven.apache.org and
+http://ant.apache.org
+
+Step 1.
+Run build-resourceeditor.bat 
+
+Step 2.
+
+run resoureeditor from target folder with "java -jar Lwuit-ResourceEditor-1.0-SNAPSHOT.jar"
+
+notice that the "lib" folder contains all the jar-files resourceeditor uses so the folder
+must be in the same folder as the jar file

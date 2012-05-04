@@ -4,7 +4,6 @@
  */
 package com.futurice.lwuit.proto;
 
-import com.nokia.lwuit.FormGestureHandler;
 import com.nokia.mid.ui.gestures.GestureEvent;
 import com.nokia.mid.ui.gestures.GestureInteractiveZone;
 import com.sun.lwuit.*;
