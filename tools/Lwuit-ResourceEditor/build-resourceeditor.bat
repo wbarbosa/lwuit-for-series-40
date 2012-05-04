@@ -9,7 +9,7 @@ call ant clean default -file ../../Ports/SE/IO_SE/build.xml
 echo Installing LWUIT UI to maven repo...
 call mvn install:install-file -Dfile=../../UI/dist/UI.jar -DgroupId=com.sun.lwuit -DartifactId=lwuit-ui-unmodified -Dversion=1.5 -Dpackaging=jar
 echo Installing IO_SE to maven repo...
-call mvn install:install-file -Dfile=../../Ports/SE/IO_SE/dist/IO_SE.jar -DgroupId=com.sun.lwuit.io -DartifactId=lwuit-io.se -Dversion=1.5 -Dpackaging=jar
+call mvn install:install-file -Dfile=../../Ports/SE/IO_SE/dist/IO_SE.jar -DgroupId=com.sun.lwuit.io -DartifactId=lwuit-io-se -Dversion=1.5 -Dpackaging=jar
 echo Installing MIDP-SE to maven repo...
 call mvn install:install-file -Dfile=../MIDP_SE/dist/MIDP_SE.jar -DgroupId=javax.microedition -DartifactId=midp-se -Dversion=1.0 -Dpackaging=jar
 echo Installing LWUITDemo to maven repo...
@@ -17,7 +17,7 @@ call mvn install:install-file -Dfile=../../Apps/LWUITDemo/LWUITDemoMIDP/dist/LWU
 echo Compiling swing-port...
 call mvn clean install -f ../Lwuit-swingport/pom.xml
 echo Compiling ResourceEditor
-call mvn clean install
+call mvn clean package
 
 
 
