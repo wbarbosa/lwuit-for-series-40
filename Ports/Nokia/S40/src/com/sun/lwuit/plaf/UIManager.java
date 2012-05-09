@@ -77,6 +77,8 @@ public class UIManager {
      * Theme refreshed event
      */
     private EventDispatcher themelisteners;
+    
+    private javax.microedition.lcdui.Display nativeDisplay;
 
     UIManager() {
     }
@@ -661,6 +663,7 @@ public class UIManager {
      * @param themeProps the properties of the given theme
      */
     public void setThemeProps(Hashtable themeProps) {
+        
         if (accessible) {
             setThemePropsImpl(themeProps);
         }
@@ -764,6 +767,20 @@ public class UIManager {
         if (themelisteners != null) {
             themelisteners.fireActionEvent(new ActionEvent(themeProps));
         }
+        
+        //set theme based colors
+        themeProps.put("bgColor", Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND)));
+        themeProps.remove("Form.bgImage");
+        String fg = Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND));
+        System.out.println("System fgColor:" + fg);
+        themeProps.put("fgColor", fg);
+        System.out.println("COLOR_BORDER:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_BORDER)));
+        System.out.println("COLOR_FOREGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_FOREGROUND)));
+        System.out.println("COLOR_HIGHLIGHTED_BACKGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BACKGROUND)));
+        System.out.println("COLOR_HIGHLIGHTED_BORDER:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER)));
+        System.out.println("COLOR_HIGHLIGHTED_FOREGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_FOREGROUND)));
+        
+        
         buildTheme(themeProps);
         current.refreshTheme();
     }
@@ -772,7 +789,7 @@ public class UIManager {
         Enumeration e = themeProps.keys();
         while (e.hasMoreElements()) {
             String key = (String) e.nextElement();
-
+            System.out.println("[THEME] " + key + " " + themeProps.get(key));
             // this is a constant not a theme entry
             if (key.startsWith("@")) {
                 themeConstants.put(key.substring(1, key.length()), themeProps.get(key));
@@ -1223,5 +1240,9 @@ public class UIManager {
             return;
         }
         themelisteners.removeListener(l);
+    }
+    
+    public void setNativeDisplay(javax.microedition.lcdui.Display d) {
+        nativeDisplay = d;
     }
 }
