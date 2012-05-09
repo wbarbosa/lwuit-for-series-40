@@ -2335,6 +2335,9 @@ public class Form extends Container {
      * @param c the componant to be visible
      */
     public void scrollComponentToVisible(Component c) {
+        if(c == null) {
+            return;
+        }
         initFocused();
         Container parent = c.getParent();
         while (parent != null) {

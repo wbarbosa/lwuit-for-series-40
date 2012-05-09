@@ -23,6 +23,7 @@
  */
 package com.sun.lwuit.plaf;
 
+import com.nokia.lwuit.ImageUtils;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Font;
@@ -233,6 +234,7 @@ public class Border {
      */
     public static Border createImageBorder(Image top, Image bottom, Image left, Image right, Image topLeft, Image topRight,
         Image bottomLeft, Image bottomRight, Image background) {
+        
         Border b = new Border();
         b.type = TYPE_IMAGE;
         b.images = new Image[] {top, bottom, left, right, topLeft, topRight, bottomLeft, 
