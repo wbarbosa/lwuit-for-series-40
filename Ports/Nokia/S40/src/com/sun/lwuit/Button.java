@@ -29,6 +29,7 @@ import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.plaf.Border;
+import com.sun.lwuit.plaf.BorderBlender;
 import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
 
@@ -162,6 +163,11 @@ public class Button extends Label {
         if(state != STATE_PRESSED) {
             state = STATE_ROLLOVER;
         }
+    }
+
+    void initComponentImpl() {
+        super.initComponentImpl();
+        BorderBlender.blendBorderWithColor(getBorder(), 0xFF0000);
     }
     
     /**

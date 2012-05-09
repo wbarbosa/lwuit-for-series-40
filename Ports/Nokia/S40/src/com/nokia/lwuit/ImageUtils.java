@@ -64,4 +64,42 @@ public class ImageUtils {
         
         return ret;
     }
+    public static int[] applyColorBlending(final int [] rgb, final int color, final int coeff) {
+        
+        int [] sourceData = rgb;
+         // Define the needed pixel values
+        int alpha1, alpha2;
+        int red1, red2;
+        int green1, green2;
+        int blue1, blue2;
+        int resultA,resultR,resultG,resultB;
+
+        alpha2 = (color & 0xFF000000) >>> 24;
+        red2 = (color & 0x00FF0000) >> 16;
+        green2 = (color & 0x0000FF00) >> 8;
+        blue2 = (color & 0x000000FF);
+        // Go through all the pixels in the top and bottom images
+        for (int i=0;i<sourceData.length;i++) {
+
+           // Get individual channel values for each pixel (top,bottom)
+           alpha1 = (sourceData[i] & 0xFF000000) >>> 24;
+           
+           red1 = (sourceData[i] & 0x00FF0000) >> 16;
+           
+           green1 = (sourceData[i] & 0x0000FF00) >> 8;
+           
+           blue1 = (sourceData[i] & 0x000000FF);
+           
+           int c = 255 - coeff;
+           // Apply the image blending formula
+           resultA = ( alpha1 * coeff + alpha2 * c ) / 255;
+           resultR = ( red1 * coeff + red2 * c ) / 255;
+           resultG = ( green1 * coeff + green2 * c ) / 255;
+           resultB = ( blue1 * coeff + blue2 * c ) / 255;
+
+           // Create the final pixel value
+           sourceData[i] = resultA << 24 | resultR << 16 | resultG << 8 | resultB ;
+        }
+        return sourceData;
+    }
 }

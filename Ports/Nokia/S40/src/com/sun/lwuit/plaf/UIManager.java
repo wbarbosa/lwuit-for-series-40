@@ -789,7 +789,6 @@ public class UIManager {
         Enumeration e = themeProps.keys();
         while (e.hasMoreElements()) {
             String key = (String) e.nextElement();
-            System.out.println("[THEME] " + key + " " + themeProps.get(key));
             // this is a constant not a theme entry
             if (key.startsWith("@")) {
                 themeConstants.put(key.substring(1, key.length()), themeProps.get(key));
