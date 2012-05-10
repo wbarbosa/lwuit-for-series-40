@@ -164,11 +164,6 @@ public class Button extends Label {
             state = STATE_ROLLOVER;
         }
     }
-
-    void initComponentImpl() {
-        super.initComponentImpl();
-        BorderBlender.blendBorderWithColor(getBorder(), 0xFF0000);
-    }
     
     /**
      * @inheritDoc

@@ -780,6 +780,14 @@ public class UIManager {
         System.out.println("COLOR_HIGHLIGHTED_BORDER:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER)));
         System.out.println("COLOR_HIGHLIGHTED_FOREGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_FOREGROUND)));
         
+        String themeName = (String) themeProps.get("name");
+        if(themeName.equals("NokiaTheme")) {
+            int theme_color = nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER);
+            Border b = (Border) themeProps.get("Button.press#border");
+            BorderBlender.blendBorderWithColor(b, theme_color);
+            b = (Border) themeProps.get("Button.border");
+            BorderBlender.blendBorderWithColor(b, theme_color);
+        }
         
         buildTheme(themeProps);
         current.refreshTheme();
@@ -789,6 +797,9 @@ public class UIManager {
         Enumeration e = themeProps.keys();
         while (e.hasMoreElements()) {
             String key = (String) e.nextElement();
+            if(key.startsWith("Button")) {
+                System.out.println("[THEME] " + key);
+            }
             // this is a constant not a theme entry
             if (key.startsWith("@")) {
                 themeConstants.put(key.substring(1, key.length()), themeProps.get(key));
