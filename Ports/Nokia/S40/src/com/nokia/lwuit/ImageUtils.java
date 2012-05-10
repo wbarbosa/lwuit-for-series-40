@@ -64,6 +64,13 @@ public class ImageUtils {
         
         return ret;
     }
+    /**
+     * Apply colorblending to rgb data.
+     * @param rgb
+     * @param color
+     * @param coeff the amount of transparency for the color
+     * @return 
+     */
     public static int[] applyColorBlending(final int [] rgb, final int color, final int coeff) {
         
         int [] sourceData = rgb;
