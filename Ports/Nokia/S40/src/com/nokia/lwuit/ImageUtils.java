@@ -8,7 +8,7 @@ package com.nokia.lwuit;
 import javax.microedition.lcdui.Image;
 
 /**
- *
+ * A helper class for manipulating images.
  * @author tkor
  */
 public class ImageUtils {
