@@ -50,8 +50,8 @@ public abstract class GestureHandler {
         form = new WeakReference(f);
     }
     /**
-     * Return the form this handler which gestures are listened.
-     * @return 
+     * Return the LWUIT Form associated with this handler
+     * @return LWUIT Form
      */
     public Form getForm() {
         return (Form) form.get();
