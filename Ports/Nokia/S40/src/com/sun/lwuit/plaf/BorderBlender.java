@@ -5,7 +5,6 @@
 package com.sun.lwuit.plaf;
 
 import com.nokia.lwuit.ImageUtils;
-import javax.microedition.lcdui.Image;
 
 /**
  *
