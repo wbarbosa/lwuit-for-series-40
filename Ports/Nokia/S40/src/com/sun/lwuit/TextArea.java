@@ -370,11 +370,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
         //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
         if(Display.getInstance().getImplementation() instanceof S40Implementation) {
-            System.out.println("S40 Implementation present");
             S40Implementation impl = (S40Implementation) Display.getInstance().getImplementation();
             textEditor = impl.requestNewNativeTextEditor(maxSize, constraint, 100, rows);
-        }else {
-            System.out.println("impl:" + Display.getInstance().getImplementation().toString());
         }
         if (textEditor != null) {
             if (rows == 1) {
@@ -581,7 +578,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void keyReleased(int keyCode) {
-        System.out.println("keyreleased");
         focusTextEditor();
         if (!textEditorEnabled) {
             int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
@@ -620,7 +616,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
         
     void editString() {
-        System.out.println("editString");
         if (textEditor == null) {
             if (autoDegradeMaxSize && (!hadSuccessfulEdit) && (maxSize > 1024)) {
                 try {
@@ -1615,7 +1610,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     public void setFocus(boolean focused) {
-        System.out.println("setFocus");
         super.setFocus(focused);
         if(textEditorEnabled) {
             if(textEditor != null) {
@@ -1656,7 +1650,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 f.removePointerDraggedListener(dragListener);
                 f.removeShowListener(showListener);
         }
-        System.out.println("Deinitializing textarea");
         if(textEditor != null) {
             textEditor.setVisible(false);
         }
@@ -1669,7 +1662,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     public void focusGained(Component cmp) {
-        System.out.println("focusGained");
         if(dontWaitForKeyReleased) {
             focusTextEditor();
         }
@@ -1714,7 +1706,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                         previousClearCommand = p.getBackCommand();
                     }
                     if (previousClearCommand != clearCommand) {
-                        System.out.println("add clearcommand");
                         p.addCommand(clearCommand);
                         p.setBackCommand(clearCommand);
                     }
@@ -1724,7 +1715,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     public void focusLost(Component cmp) {
-        System.out.println("focus lost");
         if (textEditor != null && textEditorEnabled) {
             textEditor.setFocus(false);
             textEditor.setVisible(false);
@@ -1740,7 +1730,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private void removeClearCommandFromForm() {
         Form p = Display.getInstance().getCurrent();
         if (p.getBackCommand() == clearCommand) {
-            System.out.println("removing clearcommand");
             p.setBackCommand(previousClearCommand);
             p.removeCommand(clearCommand);
         }
