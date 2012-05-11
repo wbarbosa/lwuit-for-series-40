@@ -81,7 +81,12 @@ public abstract class TextEditorProvider {
         public static final int ACTION_TRAVERSE_OUT_SCROLL_DOWN =   1024;
         public static final int ACTION_TRAVERSE_OUT_SCROLL_UP =     512;
         public static final int ACTION_TRAVERSE_PREVIOUS =          8;
-                
+              
+        /**
+        * Implement to handle textEditor events
+        * @param textEditor the editor that sent the event
+        * @param actions actions that happened in the editor
+        */
         public void inputAction(TextEditorProvider textEditor, int actions);
     }
     
