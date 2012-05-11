@@ -466,7 +466,6 @@ public final class Display {
             if(INSTANCE.isPureTouch()) {
                 INSTANCE.setCommandBehavior(Display.COMMAND_BEHAVIOR_NATIVE);
                 if(INSTANCE.impl instanceof S40Implementation) {
-                    System.out.println("hiding menu");
                     ((S40Implementation) INSTANCE.impl).setHideMenu(true);
                 }
             }
@@ -1201,7 +1200,6 @@ public final class Display {
         }
         lastKeyPressed = 0;
         previousKeyPressed = 0;
-        System.out.println("REMOVE ME:Calling menusetting in the correct place");
         if(Display.getInstance().isNativeCommands()) {
             Display.getInstance().getImplementation().setNativeCommands(newForm.getMenuBar().getCommands());
         }

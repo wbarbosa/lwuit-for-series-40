@@ -658,7 +658,6 @@ public class Form extends Container {
      * @param backCommand the command to treat as the back Command
      */
     public void setBackCommand(Command backCommand) {
-        System.out.println("setBackCommand");
         menuBar.setBackCommand(backCommand);
     }
 
@@ -1183,7 +1182,6 @@ public class Form extends Container {
             title.startTicker(lf.getTickerSpeed(), true);
         }
         if(Display.getInstance().isNativeCommands()) {
-            System.out.println("initComponentImpl setNativeCommands");
             Display.getInstance().getImplementation().setNativeCommands(menuBar.getCommands());
         }
         if(getParent() != null) {
