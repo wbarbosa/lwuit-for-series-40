@@ -126,15 +126,11 @@ public class S40Implementation extends LWUITImplementation {
             currentCommands = new Command[v.size()];
             com.sun.lwuit.Command backCommand = null;
             if(Display.getInstance().getCurrent() != null) {
-                
-                System.out.println("setting backcommand in implementation for form:" + Display.getInstance().getCurrent().toString());
                 backCommand = Display.getInstance().getCurrent().getBackCommand();
-                System.out.println("backcommands:" + backCommand);
             }
             for(int iter = 0 ; iter < currentCommands.length ; iter++) {
                 com.sun.lwuit.Command current = (com.sun.lwuit.Command)v.elementAt(iter);
                 if(current == backCommand) {
-                    System.out.println("Back command:" + backCommand.getCommandName());
                     currentCommands[iter] = new S40Implementation.C.MIDPCommandWrapper(current, Command.BACK, iter + 1);
                 } else {
                     if(iter == 0) {
