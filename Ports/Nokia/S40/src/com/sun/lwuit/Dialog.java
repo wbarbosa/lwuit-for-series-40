@@ -1057,19 +1057,15 @@ public class Dialog extends Form {
         // one on top of the other
         setDisposed(false);
         if(top > -1) {
-            System.out.println("[DIALOG] top > -1");
             show(top, bottom, left, right, includeTitle, modal);
         } else {
             if(modal) {
                 if(getDialogPosition() == null) {
-                    System.out.println("[DIALOG] modal, no position");
                     super.showModal(reverse);
                 } else {
-                    System.out.println("[DIALOG] modal, position " + getDialogPosition());
                     showPacked(getDialogPosition(), true);
                 }
             } else {
-                System.out.println("[DIALOG] non-modal");
                 showModeless();
             }
         }

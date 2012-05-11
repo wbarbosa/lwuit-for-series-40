@@ -119,7 +119,6 @@ public class S40Implementation extends LWUITImplementation {
                     Class.forName("com.nokia.mid.ui.IconCommand");
                     return Class.forName("com.nokia.lwuit.MIDPIconCommandWrapper");
                 } catch (Exception e) {
-                    System.out.println("[S40Impl] IconCommand not supported");
                     return MIDPCommandWrapper.class;
                 }
             } else {
@@ -185,15 +184,11 @@ public class S40Implementation extends LWUITImplementation {
             currentCommands = new MIDPCommandWrapper[v.size()];
             com.sun.lwuit.Command backCommand = null;
             if(Display.getInstance().getCurrent() != null) {
-                
-                System.out.println("setting backcommand in implementation for form:" + Display.getInstance().getCurrent().toString());
                 backCommand = Display.getInstance().getCurrent().getBackCommand();
-                System.out.println("backcommands:" + backCommand);
             }
             for(int iter = 0 ; iter < currentCommands.length ; iter++) {
                 com.sun.lwuit.Command current = (com.sun.lwuit.Command)v.elementAt(iter);
                 if(current == backCommand) {
-                    System.out.println("Back command:" + backCommand.getCommandName());
                     currentCommands[iter] = wrapLWUITCommand(current, Command.BACK, iter + 1);
                 } else {
                     if(iter == 0) {
@@ -202,8 +197,6 @@ public class S40Implementation extends LWUITImplementation {
                         currentCommands[iter] = wrapLWUITCommand(current, iter + 1);
                     }
                 }
-                System.out.println("[S40Impl] Adding command " +
-                        currentCommands[iter].getCommand().getLabel());
                 addCommand(currentCommands[iter].getCommand());
             }
         }
@@ -1774,7 +1767,6 @@ public class S40Implementation extends LWUITImplementation {
      * @inheritDoc
      */
     public void setNativeCommands(Vector commands) {
-        System.out.println("setNativeCommands");
         canvas.setFullScreenMode(!com.sun.lwuit.Display.getInstance().isNativeCommands());
         ((S40Implementation.C)canvas).setCommands(commands);
     }

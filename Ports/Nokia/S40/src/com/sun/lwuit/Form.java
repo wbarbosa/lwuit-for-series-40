@@ -659,7 +659,6 @@ public class Form extends Container {
      * @param backCommand the command to treat as the back Command
      */
     public void setBackCommand(Command backCommand) {
-        System.out.println("setBackCommand");
         menuBar.setBackCommand(backCommand);
     }
 
