@@ -21,7 +21,7 @@ public class BorderBlender {
         for(int i = 0; i < l; i++) {
             
             b.images[i] = com.sun.lwuit.Image.createImage(
-                        ImageUtils.applyColorBlending(
+                        ImageUtils.applyAlphaBlending(
                             b.images[i].getRGB(), 
                             color, 
                             100),
