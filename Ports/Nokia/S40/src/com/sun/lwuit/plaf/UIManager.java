@@ -769,7 +769,7 @@ public class UIManager {
         }
         
         //set theme based colors
-        themeProps.put("bgColor", Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND)));
+        /*themeProps.put("bgColor", Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND)));
         themeProps.remove("Form.bgImage");
         String fg = Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND));
         System.out.println("System fgColor:" + fg);
@@ -788,7 +788,7 @@ public class UIManager {
             b = (Border) themeProps.get("Button.border");
             BorderBlender.blendBorderWithColor(b, theme_color);
         }
-        
+        */
         buildTheme(themeProps);
         current.refreshTheme();
     }
