@@ -22,14 +22,12 @@ import javax.microedition.pim.PIMException;
  */
 public class TestMidlet extends MIDlet {
     private List contactList = null;
-    private Form form;
     private PIM pim = null;
     private Command clearCommand;
     
     public void startApp() {
         Display.init(this);
-        Storage.init("LwuitTest");
-        form = new Form("Hello world");
+        Form form = new Form("Hello world");
         
         Command exitCommand = new Command("Exit") {
             public void actionPerformed(ActionEvent e) {
