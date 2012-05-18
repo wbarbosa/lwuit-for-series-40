@@ -542,23 +542,19 @@ public class MenuBar extends Container implements ActionListener {
              * The back or exit command always goes on the right, and then
              * we fill the left softkey with the second action added.
              */
-            //System.out.println("Three softkeys");
 
             // First handle RSK: put back there if defined
             if (backCommand != null) {
                 // There is a back command so put it on the right
-                System.out.println(backCommand.getCommandName() + " as back on RSK");
                 softCommand[2] = backCommand;
             }
 
             // Then handle MSK: if there's a default command stick it there
             if (defaultCommand != null) {
-                System.out.println(defaultCommand.getCommandName() + " as default on MSK");
                 softCommand[0] = defaultCommand;
                 freeButtons--;
             } else if (numberOfMiscCommands > 0) { // if not, use the first added cmd for msk
                 if (!backStack.contains(commandsWithoutBackOrDefault[0])) {
-                    System.out.println(commandsWithoutBackOrDefault[0].getCommandName() + " on MSK");
                     softCommand[0] = commandsWithoutBackOrDefault[0];
                     freeButtons--;
                     unassignedMiscCommands--;
@@ -566,7 +562,6 @@ public class MenuBar extends Container implements ActionListener {
             }
             // If there are more commands left, show a menu
             if (unassignedMiscCommands > 0) {
-                System.out.println(menuCommand.getCommandName() + " as menu on LSK");
                 softCommand[1] = menuCommand;
             }
         } else if (soft.length == 2) {
@@ -574,44 +569,34 @@ public class MenuBar extends Container implements ActionListener {
              * a) menu on the lsk if there are more than 2 commands
              * b) the other command on the lsk if there are 2
              */
-            System.out.println("Two softkeys");
             if (backCommand != null) {
                 // There is a back command so put it on the rsk
-                System.out.println("Back command '" + backCommand.getCommandName() + "' to RSK");
                 softCommand[1] = backCommand;
             }
             if (commandCount > 2) {
                 // Too many commands for softkeys, menu on lsk
-                System.out.println("Menu command on LSK");
                 softCommand[0] = menuCommand;
             } else if (commandCount == 2) {
-                System.out.println("Two commands");
                 // All commands fit on softkeys. Was there a back command?
                 if (backCommand == null) {
                     // No, so put second command on rsk
-                    System.out.println("Second '" + commandsWithoutBackOrDefault[1].getCommandName() + "' to RSK");
                     softCommand[1] = commandsWithoutBackOrDefault[1];
                 }
                 // First command on lsk
-                System.out.println("First '" + commandsWithoutBackOrDefault[0].getCommandName() + "' to LSK");
                 softCommand[0] = commandsWithoutBackOrDefault[0];
             } else if (commandCount == 1) {
                 // Fewer than 2 commands -- only possibility is 1, don't do
                 // anything for zero commands.
                 if (backCommand == null) {
                     // The command is not back so put it on lsk
-                    System.out.println("Only command '" + commandsWithoutBackOrDefault[0].getCommandName() + "' to LSK");
                     softCommand[0] = commandsWithoutBackOrDefault[0];
                 } // if the only command was back, it's handled already.
-                else {
-                    System.out.println("Back was only command");
-                }
+                
             }
         } else if (soft.length == 1) {
             /* For single softkey situations (probably not even possible but
              * let's handle it anyway) we prefer menu instead of back.
              */
-            System.out.println("One softkey");
             if (commandCount > 1) {
                 // menu on only key
                 softCommand[0] = menuCommand;
