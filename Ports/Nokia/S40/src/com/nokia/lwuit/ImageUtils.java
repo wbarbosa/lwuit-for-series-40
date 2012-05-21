@@ -67,10 +67,10 @@ public class ImageUtils {
            
            int c = 255 - coeff;
            // Apply the image blending formula
-           resultA = ( alpha1 * coeff + alpha2 * c ) / 255;
-           resultR = ( red1 * coeff + red2 * c ) / 255;
-           resultG = ( green1 * coeff + green2 * c ) / 255;
-           resultB = ( blue1 * coeff + blue2 * c ) / 255;
+           resultA = ( alpha2 * coeff + alpha1 * c ) / 255;
+           resultR = ( red2 * coeff + red1 * c ) / 255;
+           resultG = ( green2 * coeff + green1 * c ) / 255;
+           resultB = ( blue2 * coeff + blue1 * c ) / 255;
 
            // Create the final pixel value
            sourceData[i] = resultA << 24 | resultR << 16 | resultG << 8 | resultB ;

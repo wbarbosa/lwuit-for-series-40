@@ -769,26 +769,27 @@ public class UIManager {
         }
         
         //set theme based colors
-        /*themeProps.put("bgColor", Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND)));
-        themeProps.remove("Form.bgImage");
-        String fg = Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND));
-        System.out.println("System fgColor:" + fg);
-        themeProps.put("fgColor", fg);
-        System.out.println("COLOR_BORDER:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_BORDER)));
-        System.out.println("COLOR_FOREGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_FOREGROUND)));
-        System.out.println("COLOR_HIGHLIGHTED_BACKGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BACKGROUND)));
-        System.out.println("COLOR_HIGHLIGHTED_BORDER:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER)));
-        System.out.println("COLOR_HIGHLIGHTED_FOREGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_FOREGROUND)));
-        
-        String themeName = (String) themeProps.get("name");
-        if(themeName.equals("NokiaTheme")) {
-            int theme_color = nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER);
-            Border b = (Border) themeProps.get("Button.press#border");
-            BorderBlender.blendBorderWithColor(b, theme_color);
-            b = (Border) themeProps.get("Button.border");
-            BorderBlender.blendBorderWithColor(b, theme_color);
+        if (Display.getInstance().isPureTouch()) {
+            themeProps.put("bgColor", Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND)));
+            themeProps.remove("Form.bgImage");
+            String fg = Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND));
+            System.out.println("System fgColor:" + fg);
+            themeProps.put("fgColor", fg);
+            System.out.println("COLOR_BORDER:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_BORDER)));
+            System.out.println("COLOR_FOREGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_FOREGROUND)));
+            System.out.println("COLOR_HIGHLIGHTED_BACKGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BACKGROUND)));
+            System.out.println("COLOR_HIGHLIGHTED_BORDER:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER)));
+            System.out.println("COLOR_HIGHLIGHTED_FOREGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_FOREGROUND)));
+
+            String themeName = (String) themeProps.get("name");
+            if (themeName.equals("NokiaTheme")) {
+                int theme_color = nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER);
+                Border b = (Border) themeProps.get("Button.press#border");
+                BorderBlender.blendBorderWithColor(b, theme_color,200);
+                b = (Border) themeProps.get("Button.border");
+                BorderBlender.blendBorderWithColor(b, theme_color,200);
+            }
         }
-        */
         buildTheme(themeProps);
         current.refreshTheme();
     }

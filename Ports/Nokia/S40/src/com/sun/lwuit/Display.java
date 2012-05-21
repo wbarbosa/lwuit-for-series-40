@@ -172,7 +172,7 @@ public final class Display {
      * or suddenly switches to using a keypad/trackball. This sort of interface
      * is common in Android devices
      */
-    private boolean pureTouch;
+    private static boolean pureTouch;
 
     private Graphics lwuitGraphics;
 
@@ -392,9 +392,7 @@ public final class Display {
      * Private constructor to prevent instanciation
      */
     private Display() {
-        String p = System.getProperty("com.nokia.keyboard.type");
-        pureTouch = (p != null) ? p.equals("None") : false;
-        System.out.println("[DISPLAY] set pureTouch to " + pureTouch);
+        
     }
 
     Vector getAnimationQueue() {
@@ -409,6 +407,11 @@ public final class Display {
      */
     public static void init(Object m) {
         if(!INSTANCE.lwuitRunning) {
+            //set puretouch variable
+            String p = System.getProperty("com.nokia.keyboard.type");
+            pureTouch = (p != null) ? p.equals("None") : false;
+            System.out.println("[DISPLAY] set pureTouch to " + pureTouch);
+            
             INSTANCE.lwuitRunning = true;
             INSTANCE.displayInitTime = System.currentTimeMillis();
             INSTANCE.impl = ImplementationFactory.getInstance().createImplementation();
@@ -453,7 +456,11 @@ public final class Display {
             try {
                 Resources themeres = null;
                 if (INSTANCE.touchScreen) {
+                    if(pureTouch) {
+                        themeres = Resources.open("/full_touch_theme.res");
+                    }else {
                     themeres = Resources.open("/nokia_theme.res");
+                    }
                 } else {
                     themeres = Resources.open("/nokia_non_touch_theme.res");
                 }

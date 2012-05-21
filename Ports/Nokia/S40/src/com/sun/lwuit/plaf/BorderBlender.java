@@ -16,7 +16,7 @@ public class BorderBlender {
      * @param b
      * @param color 
      */
-    public static void blendBorderWithColor(Border b, int color) {
+    public static void blendBorderWithColor(Border b, int color, int coeff) {
         int l = b.images.length;
         for(int i = 0; i < l; i++) {
             
@@ -24,7 +24,7 @@ public class BorderBlender {
                         ImageUtils.applyAlphaBlending(
                             b.images[i].getRGB(), 
                             color, 
-                            100),
+                            coeff),
                         b.images[i].getWidth(), 
                         b.images[i].getHeight());
         }
