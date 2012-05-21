@@ -80,4 +80,8 @@
             </target>
 
             -->
+            <target name="post-build">
+                 <copy file="dist/S40.jar" 
+                 tofile="../../../tools/Lwuit-ResourceEditor/src/main/resources/GeneratedProject/S40.jar" />
+            </target>
 </project>
