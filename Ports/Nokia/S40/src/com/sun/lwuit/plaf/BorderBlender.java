@@ -17,6 +17,19 @@ import javax.microedition.lcdui.Image;
  * @author tkor
  */
 public class BorderBlender {
+    
+    private static BorderBlender mSelf;
+    
+    private BorderBlender() {
+        
+    }
+    
+    public static BorderBlender getInstance() {
+        if(mSelf == null) {
+            mSelf = new BorderBlender();
+        }
+        return mSelf;
+    }
     /**
      * Blends border's images with given color. Mainly used for applying platform theme colors to component borders
      * @param b
