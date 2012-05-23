@@ -387,7 +387,7 @@ public final class Display {
 
     private boolean dropEvents;
 
-
+    private static Resources nokiaResource;
     /**
      * Private constructor to prevent instanciation
      */
@@ -454,19 +454,20 @@ public final class Display {
             }
             // Load default Nokia Theme on top
             try {
-                Resources themeres = null;
+                
                 if (INSTANCE.touchScreen) {
                     if(pureTouch) {
-                        themeres = Resources.open("/full_touch_theme.res");
+                        nokiaResource = Resources.open("/full_touch_theme.res");
                     }else {
-                    themeres = Resources.open("/nokia_theme.res");
+                    nokiaResource = Resources.open("/nokia_theme.res");
                     }
                 } else {
-                    themeres = Resources.open("/nokia_non_touch_theme.res");
+                    nokiaResource = Resources.open("/nokia_non_touch_theme.res");
                 }
                 javax.microedition.lcdui.Display nativeDisplay = javax.microedition.lcdui.Display.getDisplay((MIDlet) m);
                 UIManager.getInstance().setNativeDisplay(nativeDisplay);
-                UIManager.getInstance().setThemeProps(themeres.getTheme("NokiaTheme"));
+                UIManager.getInstance().setThemeProps(nokiaResource.getTheme("NokiaTheme"));
+                
                 System.out.println("loaded nokia theme.");
             } catch (IOException e) {
                 System.out.println("Can't load Nokia Theme");
@@ -2565,5 +2566,12 @@ public final class Display {
     public boolean isTablet() {
         return impl.isTablet();
     }
-    
+    /**
+     * Get Resourcefile related to nokia theme. Note: this might be null if no
+     * nokia theme is loaded.
+     * @return 
+     */
+    public Resources getNokiaResource() {
+        return nokiaResource;
+    }
 }

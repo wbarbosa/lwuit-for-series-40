@@ -5,6 +5,7 @@
 
 package com.nokia.lwuit;
 
+import com.nokia.mid.ui.DirectUtils;
 import javax.microedition.lcdui.Image;
 
 /**
@@ -28,8 +29,9 @@ public class ImageUtils {
         //apply blending
         sourceData = applyAlphaBlending(sourceData, color, coeff);
         
-        Image ret = Image.createRGBImage(sourceData, source.getWidth(), source.getHeight(), true);
-        
+        Image ret = DirectUtils.createImage(source.getWidth(), source.getHeight(), 0xFF000000);
+        ret.getGraphics().drawRGB(sourceData, 0, source.getWidth(), 0, 0, source.getWidth(), source.getHeight(), true);
+
         return ret;
     }
     /**
@@ -67,14 +69,34 @@ public class ImageUtils {
            
            int c = 255 - coeff;
            // Apply the image blending formula
-           resultA = ( alpha2 * coeff + alpha1 * c ) / 255;
-           resultR = ( red2 * coeff + red1 * c ) / 255;
-           resultG = ( green2 * coeff + green1 * c ) / 255;
-           resultB = ( blue2 * coeff + blue1 * c ) / 255;
-
+           resultA = ( alpha1 * coeff + alpha2 * c ) / 255;
+           resultR = ( red1 * coeff + red2 * c ) / 255;
+           resultG = ( green1 * coeff + green2 * c ) / 255;
+           resultB = ( blue1 * coeff + blue2 * c ) / 255;
+           
            // Create the final pixel value
            sourceData[i] = resultA << 24 | resultR << 16 | resultG << 8 | resultB ;
         }
         return sourceData;
+    }
+    
+    public static Image drawMaskedImage(Image source, Image mask) {
+        // Reserve an array for the pixel data of each image
+        int[] sourceData = new int[source.getHeight() * source.getWidth()];
+        int[] maskData = new int[mask.getHeight() * mask.getWidth()];
+        
+        source.getRGB(sourceData, 0, source.getWidth(), 0, 0, source.getWidth(),
+                source.getHeight());
+        mask.getRGB(maskData, 0, mask.getWidth(), 0, 0, mask.getWidth(),
+                mask.getHeight());
+        // Merge the alpha channel of the mask with the color channels of the source
+        for (int i = 0; i < sourceData.length; i++) {
+            sourceData[i] = (maskData[i] & 0xFF000000)
+                    | (sourceData[i] & 0x00FFFFFF);
+        }
+        
+        Image ret = DirectUtils.createImage(source.getWidth(), source.getHeight(), 0x000000);
+        ret.getGraphics().drawRGB(sourceData, 0, source.getWidth(), 0, 0, source.getWidth(), source.getHeight(), true);
+        return ret;
     }
 }
