@@ -783,11 +783,12 @@ public class UIManager {
 
             String themeName = (String) themeProps.get("name");
             if (themeName.equals("NokiaTheme")) {
+                BorderBlender blender = BorderBlender.getInstance();
                 int theme_color = nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER);
                 Border b = (Border) themeProps.get("Button.press#border");
-                //BorderBlender.blendBorderWithColor(b, theme_color,10);
+                blender.applyButtonBorderWithColor(b, theme_color);
                 b = (Border) themeProps.get("Button.border");
-                BorderBlender.applyButtonBorderWithColor(b, theme_color);
+                blender.applyButtonBorderWithColor(b, theme_color);
             }
         }
         buildTheme(themeProps);

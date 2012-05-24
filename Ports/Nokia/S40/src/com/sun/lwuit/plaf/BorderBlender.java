@@ -35,7 +35,7 @@ public class BorderBlender {
      * @param b
      * @param color 
      */
-    public static void applyButtonBorderWithColor(Border b, int color) {
+    public void applyButtonBorderWithColor(Border b, int color) {
         
         Resources nokiaresource = Display.getInstance().getNokiaResource();
         com.sun.lwuit.Image[] maskButton = new com.sun.lwuit.Image[9];
