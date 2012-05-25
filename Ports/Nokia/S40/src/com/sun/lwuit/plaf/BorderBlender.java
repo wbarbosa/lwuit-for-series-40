@@ -68,4 +68,8 @@ public class BorderBlender {
         }
     }
     
+    public void applyColorToListItem(Border listRendererFocusBorder, int color) {
+        
+    }
+    
 }
