@@ -68,8 +68,18 @@ public class BorderBlender {
         }
     }
     
-    public void applyColorToListItem(Border listRendererFocusBorder, int color) {
-        
+    public void applyColorToListItem(Border listRendererFocusBorder, final int color) {
+        int l = listRendererFocusBorder.images.length;
+        Border b = listRendererFocusBorder;
+        Image img = null;
+        for(int i = 0; i < l; i++) {
+            img = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
+            Graphics g = img.getGraphics();
+            g.setColor(color);
+            g.fillRect(0, 0, img.getWidth(), img.getHeight());
+            g.drawRGB(b.images[i].getRGB(), 0, b.images[i].getWidth(), 0, 0, b.images[i].getWidth(), b.images[i].getHeight(), true);
+            b.images[i] = com.sun.lwuit.Image.createImage(img);
+        }
     }
     
 }
