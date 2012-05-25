@@ -31,11 +31,12 @@ public class BorderBlender {
         return mSelf;
     }
     /**
-     * Blends border's images with given color. Mainly used for applying platform theme colors to component borders
+     * Blends Button's borderimages with given color. Used to apply platform colors
+     * to buttons.
      * @param b
      * @param color 
      */
-    public void applyButtonBorderWithColor(Border b, int color) {
+    public void applyColorToButton(Border b, int color) {
         
         Resources nokiaresource = Display.getInstance().getNokiaResource();
         com.sun.lwuit.Image[] maskButton = new com.sun.lwuit.Image[9];
