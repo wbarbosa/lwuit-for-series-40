@@ -4,7 +4,7 @@
  */
 package com.nokia.lwuit;
 
-import com.nokia.mid.ui.S40TextEditor;
+
 import com.nokia.mid.ui.TextEditor;
 import com.sun.lwuit.Dialog;
 import javax.microedition.lcdui.Display;
@@ -194,32 +194,7 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
 
     public int getWidth() {
         return editor.getWidth();
-    }
-    
-    public Image[] getInputIndicators() {
-        Image [] imgs = new Image[0];
-        try {
-                S40TextEditor s40editor = (S40TextEditor) editor;
-                imgs = s40editor.getIndicatorIcons();
-                
-            }catch(ClassCastException se) {
-                System.out.println("getting input indicators not supported.");
-            }
-        
-        return imgs;
-    }
-    public int getInputMode() {
-        int ret = 0;
-        try {
-            S40TextEditor s40editor = (S40TextEditor) editor;
-            ret = s40editor.getInputMode();
-        }catch(ClassCastException se) {
-            System.out.println("getting input mode is not supported.");
-        }
-        
-        return ret;
-    }
-    
+    }   
 
     public void inputAction(TextEditor textEditor, int actions) {
         if(internalListener != null) {

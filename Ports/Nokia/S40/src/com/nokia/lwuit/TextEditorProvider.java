@@ -52,8 +52,6 @@ public abstract class TextEditorProvider {
     public abstract int getWidth();
     public abstract int getPositionX();
     public abstract int getPositionY();
-    public abstract Image[] getInputIndicators();
-    public abstract int getInputMode();
     
     
     public static TextEditorProvider createTextEditor() {
