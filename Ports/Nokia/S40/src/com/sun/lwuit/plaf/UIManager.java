@@ -770,17 +770,12 @@ public class UIManager {
         
         //set theme based colors
         if (Display.getInstance().isPureTouch()) {
+            String usePlatformColors = (String)themeProps.get("@NokiaPlatformColors");
             themeProps.put("bgColor", Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND)));
             String fg = Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND));
-            System.out.println("System fgColor:" + fg);
             themeProps.put("fgColor", fg);
-            System.out.println("COLOR_BORDER:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_BORDER)));
-            System.out.println("COLOR_FOREGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_FOREGROUND)));
-            System.out.println("COLOR_HIGHLIGHTED_BACKGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BACKGROUND)));
-            System.out.println("COLOR_HIGHLIGHTED_BORDER:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER)));
-            System.out.println("COLOR_HIGHLIGHTED_FOREGROUND:" + Integer.toHexString(nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_FOREGROUND)));
-            String themeName = (String) themeProps.get("name");
-            if (themeName.equals("NokiaTheme")) {
+
+            if (usePlatformColors != null && usePlatformColors.equals("true")) {
                 BorderBlender blender = BorderBlender.getInstance();
                 int theme_color = nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER);
                 Border b = (Border) themeProps.get("Button.press#border");
@@ -800,7 +795,6 @@ public class UIManager {
         Enumeration e = themeProps.keys();
         while (e.hasMoreElements()) {
             String key = (String) e.nextElement();
-            System.out.println("[UIManager]" + key);
             // this is a constant not a theme entry
             if (key.startsWith("@")) {
                 themeConstants.put(key.substring(1, key.length()), themeProps.get(key));
