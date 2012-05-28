@@ -773,6 +773,7 @@ public class UIManager {
             String usePlatformColors = (String)themeProps.get("@NokiaPlatformColors");
             themeProps.put("bgColor", Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND)));
             String fg = Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND));
+            System.out.println("fg:"+fg);
             themeProps.put("fgColor", fg);
 
             if (usePlatformColors != null && usePlatformColors.equals("true")) {
