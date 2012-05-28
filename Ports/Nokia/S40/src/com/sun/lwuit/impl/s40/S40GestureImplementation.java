@@ -9,6 +9,7 @@ import com.nokia.mid.ui.gestures.GestureEvent;
 import com.nokia.mid.ui.gestures.GestureInteractiveZone;
 import com.nokia.mid.ui.gestures.GestureListener;
 import com.nokia.mid.ui.gestures.GestureRegistrationManager;
+import com.sun.lwuit.Display;
 import java.util.Vector;
 
 /**
@@ -27,13 +28,17 @@ public class S40GestureImplementation extends S40Implementation{
         super.init(m);
         
         internalListener = new GestureListenerImpl();
+        
+        int gestures =GestureInteractiveZone.GESTURE_FLICK
+                | GestureInteractiveZone.GESTURE_LONG_PRESS
+                | GestureInteractiveZone.GESTURE_TAP
+                | GestureInteractiveZone.GESTURE_DRAG
+                | GestureInteractiveZone.GESTURE_DROP;
+        if(Display.getInstance().isPureTouch()) {
+            gestures = GestureInteractiveZone.GESTURE_ALL;
+        }
         //register for gestures
-        GestureInteractiveZone giz = new GestureInteractiveZone(
-                                        GestureInteractiveZone.GESTURE_FLICK|
-                                        GestureInteractiveZone.GESTURE_LONG_PRESS|
-                                        GestureInteractiveZone.GESTURE_TAP|
-                                        GestureInteractiveZone.GESTURE_DRAG|
-                                        GestureInteractiveZone.GESTURE_DROP);
+        GestureInteractiveZone giz = new GestureInteractiveZone(gestures);
         GestureRegistrationManager.register(canvas, giz);
         GestureRegistrationManager.setListener(canvas, internalListener);
     }
