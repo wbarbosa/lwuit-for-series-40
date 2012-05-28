@@ -241,7 +241,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private Command previousClearCommand;
 	
     protected javax.microedition.lcdui.Image[] indicatorImages;
-    protected IndicatorPainter indicatorPainter = new IndicatorPainter();
     /**
      * Used to listen dragevents from parent form.
      */
@@ -1606,11 +1605,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
        this.text = textEditor.getContent();   
        
-       indicatorImages = textEditor.getInputIndicators();
-       if(indicatorImages != null) {
-           Form f = getComponentForm();
-           f.repaint();
-       }
     }
 
     public void setFocus(boolean focused) {
@@ -1680,7 +1674,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             addClearCommandToForm();
             Form f = getComponentForm();
             if(f != null) {
-                f.setGlassPane(indicatorPainter);
                 f.repaint();
             }
         }
@@ -1795,38 +1788,5 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     void paintGlassImpl(Graphics g) {
         super.paintGlassImpl(g);
         
-    }
-    
-    private void paintIndicator(Graphics g) {
-
-        if (indicatorImages != null && indicatorImages.length > 0) {
-            Image img;
-            int x = getAbsoluteX() + getWidth();
-            if (isRTL()) {
-                x = getAbsoluteX();
-                for(int i = 0; i < indicatorImages.length; i++) {
-                    img = Image.createImage(indicatorImages[i]);
-                    g.drawImage(img, x, getAbsoluteY() - img.getHeight());
-                    x += img.getWidth();
-                }
-            } else {
-                for (int i = indicatorImages.length - 1; i >= 0; i--) {
-                    img = Image.createImage(indicatorImages[i]);
-                    x -= img.getWidth();
-                    g.drawImage(img, x, getAbsoluteY() - img.getHeight());
-                }
-            }
-     
-        }
-    }
-    
-    private class IndicatorPainter implements Painter {
-
-        public void paint(Graphics g, Rectangle rect) {
-            paintIndicator(g);
-        }
-        
-    }
-
-    
+    }    
 }
