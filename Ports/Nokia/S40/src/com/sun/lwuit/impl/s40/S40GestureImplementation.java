@@ -28,7 +28,12 @@ public class S40GestureImplementation extends S40Implementation{
         
         internalListener = new GestureListenerImpl();
         //register for gestures
-        GestureInteractiveZone giz = new GestureInteractiveZone(GestureInteractiveZone.GESTURE_ALL);
+        GestureInteractiveZone giz = new GestureInteractiveZone(
+                                        GestureInteractiveZone.GESTURE_FLICK|
+                                        GestureInteractiveZone.GESTURE_LONG_PRESS|
+                                        GestureInteractiveZone.GESTURE_TAP|
+                                        GestureInteractiveZone.GESTURE_DRAG|
+                                        GestureInteractiveZone.GESTURE_DROP);
         GestureRegistrationManager.register(canvas, giz);
         GestureRegistrationManager.setListener(canvas, internalListener);
     }
