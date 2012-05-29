@@ -113,6 +113,7 @@ public class DialogDemo extends Demo {
                     Dialog d = new Dialog(title.getText());
                     d.setLayout(new BorderLayout());
                     TextArea dialogBody = new TextArea(body.getText(), 3, 20);
+                    dialogBody.setEditable(false);
                     dialogBody.setUIID("Label");
                     d.addComponent(BorderLayout.CENTER, dialogBody);
                     d.addCommand(okCommand);
