@@ -750,7 +750,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     public void setRows(int rows) {
         setShouldCalcPreferredSize(true);
         this.rows = rows;
-        if(rows == 1) {
+        if(rows > 1) {
+            textEditor.setMultiline(true);
+            textEditor.setSize(textEditor.getWidth(), (textEditor.getFont().getHeight() + textEditor.getLineMarginHeight()) * rows);
+        }else if(rows == 1) {
             textEditor.setMultiline(false);
         }
     }
