@@ -13,6 +13,17 @@ tory
 The original source code for LWUIT can be obtained via this website: 
 http://lwuit.java.net/
 
+----
+
+This distribution includes the following software subject to the Mozilla
+Public License version 1.1:
+
+- Mozilla Rhino: JavaScript for Java
+
+The source code for this component can be obtained from the following address:
+
+http://www.mozilla.org/rhino/
+
 
 ----
 
