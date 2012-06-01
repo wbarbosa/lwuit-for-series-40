@@ -1286,14 +1286,23 @@ public class Dialog extends Form {
         // allows a text area to recalculate its preferred size if embedded within a dialog
         revalidate();
         int prefHeight = contentPane.getPreferredH();
+        System.out.println("prefHeight:" + prefHeight);
         int prefWidth = contentPane.getPreferredW();
         prefWidth = Math.min(prefWidth, width);
         if(contentPaneStyle.getBorder() != null) {
             prefWidth = Math.max(contentPaneStyle.getBorder().getMinimumWidth(), prefWidth);
             prefHeight = Math.max(contentPaneStyle.getBorder().getMinimumHeight(), prefHeight);
+            if(UIManager.getInstance().getThemeName().equals("NokiaTheme")) {
+                prefHeight += dialogContentPane.getStyle().getPadding(Component.TOP);
+                prefHeight += dialogContentPane.getStyle().getPadding(Component.BOTTOM);
+            }
+            
         }
-        height = height - menuHeight - title.getPreferredH();
+        prefHeight += contentPaneStyle.getMargin(Component.TOP) + contentPaneStyle.getMargin(Component.BOTTOM);
+        System.out.println("prefHeight after:" + prefHeight);
+        height = height - menuHeight - title.getPreferredH() ;
         int topBottom = Math.max(0, (height - prefHeight) / 2);
+        System.out.println("topBottom:" + topBottom);
         int leftRight = Math.max(0, (width - prefWidth) / 2);
         
         if(position.equals(BorderLayout.CENTER)) {
@@ -1318,6 +1327,17 @@ public class Dialog extends Form {
         } 
         throw new IllegalArgumentException("Unknown position: " + position);
     }
+
+    public void paint(Graphics g) {
+        super.paint(g);
+        int c = g.getColor();
+        g.setColor(0xFF0000);
+        Component comp = super.getContentPane();
+        g.drawRect(comp.getAbsoluteX(), comp.getAbsoluteY(), comp.getWidth(), comp.getHeight());
+        g.setColor(c);
+    }
+    
+    
 
     /**
      * Closes the current form and returns to the previous form, releasing the 
