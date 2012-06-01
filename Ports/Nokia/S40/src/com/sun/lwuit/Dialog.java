@@ -1328,17 +1328,6 @@ public class Dialog extends Form {
         throw new IllegalArgumentException("Unknown position: " + position);
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
-        int c = g.getColor();
-        g.setColor(0xFF0000);
-        Component comp = super.getContentPane();
-        g.drawRect(comp.getAbsoluteX(), comp.getAbsoluteY(), comp.getWidth(), comp.getHeight());
-        g.setColor(c);
-    }
-    
-    
-
     /**
      * Closes the current form and returns to the previous form, releasing the 
      * EDT in the process 
