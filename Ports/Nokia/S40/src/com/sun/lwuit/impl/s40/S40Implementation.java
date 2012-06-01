@@ -6,6 +6,8 @@ package com.sun.lwuit.impl.s40;
 
 import com.nokia.lwuit.MIDPCommandWrapper;
 import com.nokia.lwuit.TextEditorProvider;
+import com.nokia.mid.ui.orientation.Orientation;
+import com.nokia.mid.ui.orientation.OrientationListener;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.TextArea;
@@ -33,7 +35,7 @@ import javax.microedition.midlet.MIDlet;
  *
  * @author tkor
  */
-public class S40Implementation extends LWUITImplementation {
+public class S40Implementation extends LWUITImplementation implements OrientationListener {
     
         
     private boolean hideMenu = false;
@@ -99,6 +101,13 @@ public class S40Implementation extends LWUITImplementation {
     private int alpha = 255;
     private int[] rgbArr;
     protected final S40Implementation.C canvas = new S40Implementation.C();
+
+    public void displayOrientationChanged(int i) {
+        String orientation = getProperty("Nokia-MIDlet-App-Orientation", "");
+        if(orientation.equals("manual")) {
+            Orientation.setAppOrientation(i);
+        }
+    }
 
         
     private class C extends GameCanvas implements CommandListener, Runnable {
@@ -405,7 +414,7 @@ public class S40Implementation extends LWUITImplementation {
      */
     public void init(Object m) {
         
-        
+        Orientation.addOrientationListener(this);
         canvas.setTitle(null);
         canvas.setFullScreenMode(!com.sun.lwuit.Display.getInstance().isNativeCommands());
 
