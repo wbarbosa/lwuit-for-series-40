@@ -354,6 +354,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @throws IllegalArgumentException if rows <= 0 or columns <= 1
      */
     private TextArea(String text, int maxSize, int rows, int columns, int constraint){
+        
         setUIID("TextArea");
         setSelectCommandText(UIManager.getInstance().localize("edit", "Edit"));
         this.maxSize = maxSize;
@@ -403,7 +404,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 }
             };
         }
+        try {
         setText(text);
+        }catch(IllegalArgumentException iae) {
+            throw new IllegalArgumentException("setTExt failed:" + text);
+        }
         addFocusListener(this);
         setGrowByContent(false);
         setConstraint(constraint);
@@ -457,6 +462,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         setShouldCalcPreferredSize(true);
         if(maxSize < text.length()) {
             maxSize = text.length() + 1;
+            if(textEditor != null) {
+                textEditor.setMaxSize(maxSize);
+            }
         }
         
         synchronized(this) {
