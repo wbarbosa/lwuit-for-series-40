@@ -865,7 +865,6 @@ public final class Display {
             inputEvents.removeElementAt(0);
             handleEvent(i);
         }
-
         lwuitGraphics.setGraphics(impl.getNativeGraphics());
         impl.paintDirty();
 
@@ -1496,8 +1495,8 @@ public final class Display {
         if(w == current.getWidth() && h == current.getHeight()) {
             return;
         }
-
         addInputEvent(createSizeChangedEvent(w, h));
+        
     }
 
     private int[] createSizeChangedEvent(int w, int h) {

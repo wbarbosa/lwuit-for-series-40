@@ -287,6 +287,7 @@ public class S40Implementation extends LWUITImplementation {
         }
 
         protected void sizeChanged(int w, int h) {
+            gfx = super.getGraphics(); //FT devices require update of graphics
             S40Implementation.this.sizeChanged(w, h);
         }
 
@@ -407,21 +408,6 @@ public class S40Implementation extends LWUITImplementation {
      * @inheritDoc
      */
     public void init(Object m) {
-
-        OrientationListener ol = new OrientationListener() {
-
-            public void displayOrientationChanged(int i) {
-                String orientation = getProperty("Nokia-MIDlet-App-Orientation", "");
-                if (orientation.equals("manual")) {
-                    com.nokia.mid.ui.orientation.Orientation.setAppOrientation(i);
-                }
-            }
-        };
-        OrientationProvider p = OrientationProvider.getOrientationProvider();
-        if(p != null) {
-            p.addOrientationListener(ol);
-        }
-        
         canvas.setTitle(null);
         canvas.setFullScreenMode(!com.sun.lwuit.Display.getInstance().isNativeCommands());
 
@@ -442,6 +428,19 @@ public class S40Implementation extends LWUITImplementation {
         display = javax.microedition.lcdui.Display.getDisplay(mid);
         setSoftKeyCodes(mid);
         
+        OrientationListener ol = new OrientationListener() {
+
+            public void displayOrientationChanged(int i) {
+                String orientation = getProperty("Nokia-MIDlet-App-Orientation", "");
+                if (orientation.equals("manual")) {
+                    com.nokia.mid.ui.orientation.Orientation.setAppOrientation(i);
+                }
+            }
+        };
+        OrientationProvider p = OrientationProvider.getOrientationProvider();
+        if(p != null) {
+            p.addOrientationListener(ol);
+        }
     }
 
     private void setSoftKeyCodes(MIDlet m) {
