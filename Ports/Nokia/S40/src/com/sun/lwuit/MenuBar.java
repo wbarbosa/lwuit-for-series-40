@@ -496,7 +496,11 @@ public class MenuBar extends Container implements ActionListener {
     private void updateCommands() {
         int commandBehavior = getCommandBehavior();
         if(commandBehavior == Display.COMMAND_BEHAVIOR_NATIVE) {
-            Display.getInstance().getImplementation().setNativeCommands(commands);
+            //prevent platform commands from flickering by making sure
+            //the form is visible
+            if(Display.getInstance().getCurrent() == parent) {
+                Display.getInstance().getImplementation().setNativeCommands(commands);
+            }
             return;
         }
         int commandCount = getCommandCount();
