@@ -1286,7 +1286,6 @@ public class Dialog extends Form {
         // allows a text area to recalculate its preferred size if embedded within a dialog
         revalidate();
         int prefHeight = contentPane.getPreferredH();
-        System.out.println("prefHeight:" + prefHeight);
         int prefWidth = contentPane.getPreferredW();
         prefWidth = Math.min(prefWidth, width);
         if(contentPaneStyle.getBorder() != null) {
@@ -1299,10 +1298,8 @@ public class Dialog extends Form {
             
         }
         prefHeight += contentPaneStyle.getMargin(Component.TOP) + contentPaneStyle.getMargin(Component.BOTTOM);
-        System.out.println("prefHeight after:" + prefHeight);
         height = height - menuHeight - title.getPreferredH() ;
         int topBottom = Math.max(0, (height - prefHeight) / 2);
-        System.out.println("topBottom:" + topBottom);
         int leftRight = Math.max(0, (width - prefWidth) / 2);
         
         if(position.equals(BorderLayout.CENTER)) {
