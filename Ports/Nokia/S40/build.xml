@@ -80,6 +80,10 @@
             </target>
 
             -->
+            <target name="post-clean">
+                <delete file="../../../Series-40-binaries/S40-with-themes.jar" />
+                <delete file="../../../Series-40-binaries/S40-no-themes.jar" />
+            </target>
             <target name="post-build">
                  <copy file="dist/S40.jar" 
                     tofile="../../../tools/Lwuit-ResourceEditor/src/main/resources/GeneratedProject/S40.jar" />
