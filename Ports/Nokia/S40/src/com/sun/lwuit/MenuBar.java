@@ -433,7 +433,6 @@ public class MenuBar extends Container implements ActionListener {
      * @param backCommand the command to treat as the back Command
      */
     public void setBackCommand(Command backCommand) {
-        System.out.println("menubar setbackcommand");
         /**
          * The backstack is used to hold previous command that were backcommands.
          * The current backCommand is always in the backCommand-variable and the rest 
