@@ -755,10 +755,14 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         setShouldCalcPreferredSize(true);
         this.rows = rows;
         if(rows > 1) {
-            textEditor.setMultiline(true);
-            textEditor.setSize(textEditor.getWidth(), (textEditor.getFont().getHeight() + textEditor.getLineMarginHeight()) * rows);
+            if(textEditor != null) {
+                textEditor.setMultiline(true);
+                textEditor.setSize(textEditor.getWidth(), (textEditor.getFont().getHeight() + textEditor.getLineMarginHeight()) * rows);
+            }
         }else if(rows == 1) {
-            textEditor.setMultiline(false);
+            if(textEditor != null) {
+                textEditor.setMultiline(false);
+            }
         }
     }
     
