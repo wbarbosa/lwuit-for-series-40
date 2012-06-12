@@ -6,3 +6,4 @@ tags
 *.swp
 .reviewboardrc
 private
+target
