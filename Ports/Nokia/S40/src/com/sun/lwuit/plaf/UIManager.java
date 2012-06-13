@@ -786,6 +786,8 @@ public class UIManager {
                 themeConstants.put("dlgCommandGridBool", "true");
                 b = (Border) themeProps.get("ListRendererFocus.sel#border");
                 blender.applyColorToListItem(b, theme_color);
+                b = (Border) themeProps.get("ComboBox.border");
+                blender.applyColorToBorder(b, theme_color, ((Border)themeProps.get("ComboBoxMask.border")).images);
             }
         }
         buildTheme(themeProps);

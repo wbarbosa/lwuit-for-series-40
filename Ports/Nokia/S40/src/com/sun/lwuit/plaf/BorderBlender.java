@@ -67,6 +67,25 @@ public class BorderBlender {
             b.images[i] = com.sun.lwuit.Image.createImage(img);
         }
     }
+    public void applyColorToBorder(Border b, int color, com.sun.lwuit.Image[] mask) {
+        com.sun.lwuit.Image[] maskButton = mask;
+        
+        int l = b.images.length;
+        Image img = null;
+        Image temp = null;
+        for(int i = 0; i < l; i++) {
+            img = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
+            Graphics g = img.getGraphics();
+            g.setColor(color);
+            g.fillRect(0, 0, img.getWidth(), img.getHeight());            
+            
+            temp = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
+            temp.getGraphics().drawRGB(maskButton[i].getRGB(), 0, maskButton[i].getWidth(), 0, 0, maskButton[i].getWidth(), maskButton[i].getHeight(), true);
+            img = ImageUtils.drawMaskedImage(img, temp);
+            img.getGraphics().drawRGB(b.images[i].getRGB(), 0, b.images[i].getWidth(), 0, 0, b.images[i].getWidth(), b.images[i].getHeight(), true);
+            b.images[i] = com.sun.lwuit.Image.createImage(img);
+        }
+    }
     
     public void applyColorToListItem(Border listRendererFocusBorder, final int color) {
         int l = listRendererFocusBorder.images.length;
