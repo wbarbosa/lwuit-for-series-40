@@ -780,9 +780,10 @@ public class UIManager {
                 BorderBlender blender = BorderBlender.getInstance();
                 int theme_color = nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER);
                 Border b = (Border) themeProps.get("Button.press#border");
-                blender.applyColorToButton(b, theme_color);
+                Border buttonMask = (Border) themeProps.get("ButtonMask.border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);
                 b = (Border) themeProps.get("Button.border");
-                blender.applyColorToButton(b, theme_color);
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);
                 themeConstants.put("dlgCommandGridBool", "true");
                 b = (Border) themeProps.get("ListRendererFocus.sel#border");
                 blender.applyColorToListItem(b, theme_color);

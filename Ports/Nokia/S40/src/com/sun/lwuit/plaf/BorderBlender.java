@@ -30,44 +30,21 @@ public class BorderBlender {
         }
         return mSelf;
     }
+    
     /**
-     * Blends Button's borderimages with given color. Used to apply platform colors
-     * to buttons.
+     * Apply color to border. The algorithm works in a way that first the mask is used
+     * color the background and after that the border is drawn over the colored mask.
+     * In order to get a good result the border has to be semitransparent.
      * @param b
-     * @param color 
+     * @param color
+     * @param mask 
      */
-    public void applyColorToButton(Border b, int color) {
-        
-        Resources nokiaresource = Display.getInstance().getNokiaResource();
-        com.sun.lwuit.Image[] maskButton = new com.sun.lwuit.Image[9];
-        
-        maskButton[0] = nokiaresource.getImage("mask_button_FT_02.png");//top
-        maskButton[1] = nokiaresource.getImage("mask_button_FT_08.png");//bottom
-        maskButton[2] = nokiaresource.getImage("mask_button_FT_04.png");//left
-        maskButton[3] = nokiaresource.getImage("mask_button_FT_06.png");//right
-        maskButton[4] = nokiaresource.getImage("mask_button_FT_01.png");//topleft
-        maskButton[5] = nokiaresource.getImage("mask_button_FT_03.png");//topright
-        maskButton[6] = nokiaresource.getImage("mask_button_FT_07.png");//bottomleft
-        maskButton[7] = nokiaresource.getImage("mask_button_FT_09.png");//bottomRight
-        maskButton[8] = nokiaresource.getImage("mask_button_FT_05.png");//background
-        
-        int l = b.images.length;
-        Image img = null;
-        Image temp = null;
-        for(int i = 0; i < l; i++) {
-            img = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
-            Graphics g = img.getGraphics();
-            g.setColor(color);
-            g.fillRect(0, 0, img.getWidth(), img.getHeight());            
-            
-            temp = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
-            temp.getGraphics().drawRGB(maskButton[i].getRGB(), 0, maskButton[i].getWidth(), 0, 0, maskButton[i].getWidth(), maskButton[i].getHeight(), true);
-            img = ImageUtils.drawMaskedImage(img, temp);
-            img.getGraphics().drawRGB(b.images[i].getRGB(), 0, b.images[i].getWidth(), 0, 0, b.images[i].getWidth(), b.images[i].getHeight(), true);
-            b.images[i] = com.sun.lwuit.Image.createImage(img);
-        }
-    }
     public void applyColorToBorder(Border b, int color, com.sun.lwuit.Image[] mask) {
+        if(mask == null || mask.length == 0) {
+            System.out.println("border mask null or length zero");
+            return;
+        }
+            
         com.sun.lwuit.Image[] maskButton = mask;
         
         int l = b.images.length;
