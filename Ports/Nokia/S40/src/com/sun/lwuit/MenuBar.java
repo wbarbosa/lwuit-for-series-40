@@ -1171,12 +1171,14 @@ public class MenuBar extends Container implements ActionListener {
     }
 
     void addSelectCommand(String selectText) {
-        if (thirdSoftButton) {
-            if (selectCommand == null) {
-                selectCommand = createSelectCommand();
+        if (selectText != null && selectText.length() > 0) {
+            if (thirdSoftButton) {
+                if (selectCommand == null) {
+                    selectCommand = createSelectCommand();
+                }
+                selectCommand.setCommandName(selectText);
+                addCommand(selectCommand);
             }
-            selectCommand.setCommandName(selectText);
-            addCommand(selectCommand);
         }
     }
 
