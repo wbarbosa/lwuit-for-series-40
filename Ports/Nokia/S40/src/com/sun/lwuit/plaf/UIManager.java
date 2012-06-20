@@ -789,6 +789,9 @@ public class UIManager {
                 blender.applyColorToListItem(b, theme_color);
                 b = (Border) themeProps.get("ComboBox.border");
                 blender.applyColorToBorder(b, theme_color, ((Border)themeProps.get("ComboBoxMask.border")).images);
+                b = (Border) themeProps.get("TabSelected.sel#border");
+                blender.applyColorToBorder(b, theme_color);
+                themeProps.put("TabSelected.sel#fgColor", Integer.toHexString(theme_color));
             }
         }
         buildTheme(themeProps);
@@ -799,6 +802,7 @@ public class UIManager {
         Enumeration e = themeProps.keys();
         while (e.hasMoreElements()) {
             String key = (String) e.nextElement();
+            System.out.println("key:" + key);
             // this is a constant not a theme entry
             if (key.startsWith("@")) {
                 themeConstants.put(key.substring(1, key.length()), themeProps.get(key));
