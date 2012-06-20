@@ -234,6 +234,8 @@ public class Component implements Animation, StyleListener {
      * Creates a new instance of Component 
      */
     protected Component() {
+        selectText = (Display.getInstance().isTouchScreenDevice() && 
+                        !Display.getInstance().isPureTouch()) ? "" : selectText;
         LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
         animationSpeed = laf.getDefaultSmoothScrollingSpeed();
         rtl = laf.isRTL();
