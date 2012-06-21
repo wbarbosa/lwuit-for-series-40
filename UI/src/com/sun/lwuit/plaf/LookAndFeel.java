@@ -946,7 +946,7 @@ public abstract class LookAndFeel {
                 ((Component)menuRenderer).refreshTheme();
             }
         }
-
+        
         UIManager m = UIManager.getInstance();
         boolean isTouch = Display.getInstance().isTouchScreenDevice();
         fadeScrollEdge = m.isThemeConstant("fadeScrollEdgeBool", false);
