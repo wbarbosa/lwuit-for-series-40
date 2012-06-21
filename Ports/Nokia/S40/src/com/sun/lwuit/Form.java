@@ -177,8 +177,10 @@ public class Form extends Container {
 
         title.setEndsWith3Points(false);
         titleArea.addComponent(BorderLayout.CENTER, title);
-        titleArea.setUIID("TitleArea");        
-        addComponentToForm(BorderLayout.NORTH, titleArea);
+        titleArea.setUIID("TitleArea"); 
+        if(!Display.getInstance().isPureTouch()) {
+            addComponentToForm(BorderLayout.NORTH, titleArea);
+        }
         addComponentToForm(BorderLayout.CENTER, contentPane);
         
         contentPane.setUIID("ContentPane");

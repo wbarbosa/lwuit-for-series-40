@@ -2008,5 +2008,16 @@ public class S40Implementation extends LWUITImplementation {
     public int getVolume() {
         return MMAPIPlayer.getVolume();
     }
+
+    public void setCurrentForm(com.sun.lwuit.Form f) {
+        super.setCurrentForm(f);
+        String t = f.getTitle();
+        if(t != null && t.length() > 0) {
+            canvas.setTitle(t);
+        }else {
+            t = Display.getInstance().getProperty("MIDlet-Name", "LWUIT MIDlet");
+            canvas.setTitle(t);
+        }
+    }
     
 }
