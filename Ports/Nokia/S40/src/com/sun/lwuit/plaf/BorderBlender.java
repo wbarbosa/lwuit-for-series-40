@@ -64,6 +64,9 @@ public class BorderBlender {
         }
     }
     public void applyColorToBorder(Border b, int color) {
+        if(b == null) {
+            return;
+        }
         int l = b.images.length;
         Image img = null;
         Image temp = null;
