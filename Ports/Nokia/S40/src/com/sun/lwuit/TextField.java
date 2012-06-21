@@ -79,7 +79,7 @@ public class TextField extends TextArea {
     private int pressCount = 0;
     private int lastKeyCode;
     private int pressedKeyCode;
-    private static String clearText = "Clear";
+    
     private static String t9Text = "T9";
     private boolean longClick;
     private Command originalClearCommand;
@@ -122,14 +122,7 @@ public class TextField extends TextArea {
 
     private Command selectCommand;
     private static boolean useNativeTextInput = true;
-    /**
-     * Set the text that should appear on the clear softkey
-     * 
-     * @param text localized text for the clear softbutton
-     */
-    public static void setClearText(String text) {
-        clearText = text;
-    }
+    
 
 
     /**
@@ -182,7 +175,7 @@ public class TextField extends TextArea {
         }
     }
 
-    private Command DELETE_COMMAND = new CommandHandler(clearText, 1);
+    private Command DELETE_COMMAND = new CommandHandler(getClearText(), 1);
     private Command T9_COMMAND = new CommandHandler(t9Text, 2);
 
     private static final char[] DEFAULT_SYMBOL_TABLE = new char[] {

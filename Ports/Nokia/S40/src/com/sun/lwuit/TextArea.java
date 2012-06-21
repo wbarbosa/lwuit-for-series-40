@@ -236,6 +236,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     
     private Command clearCommand;
     private Command previousClearCommand;
+    private String clearText = UIManager.getInstance().localize("clear", "Clear");
 	
     protected javax.microedition.lcdui.Image[] indicatorImages;
     /**
@@ -393,7 +394,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             textEditor.setFont(nativeFont);
             textEditor.setTextEditorListener(this);
             
-            clearCommand = new Command("Clear") {
+            clearCommand = new Command(clearText) {
 
                 public void actionPerformed(ActionEvent evt) {
                     super.actionPerformed(evt);
@@ -1801,4 +1802,20 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         super.paintGlassImpl(g);
         
     }    
+    
+    /**
+     * Set the text that should appear on the clear softkey
+     * 
+     * @param text localized text for the clear softbutton
+     */
+    public void setClearText(String text) {
+        clearText = text;
+        if(text != null && text.length() > 0) {
+            clearCommand.setCommandName(clearText);
+        }
+    }
+    
+    public  String getClearText() {
+        return clearText;
+    }
 }
