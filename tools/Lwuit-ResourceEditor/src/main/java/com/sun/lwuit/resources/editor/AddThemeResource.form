@@ -88,21 +88,23 @@
     <Component class="javax.swing.JComboBox" name="template">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="14">
+          <StringArray count="16">
             <StringItem index="0" value="Blank"/>
             <StringItem index="1" value="nokia_non_touch_theme"/>
             <StringItem index="2" value="nokia_touch_type_theme"/>
-            <StringItem index="3" value="LWUIT_Touch"/>
-            <StringItem index="4" value="LWUIT_Feature"/>
-            <StringItem index="5" value="tzone_theme"/>
-            <StringItem index="6" value="tipster_theme"/>
-            <StringItem index="7" value="Blackberry"/>
-            <StringItem index="8" value="LWUIT_Classic_Theme"/>
-            <StringItem index="9" value="Wood"/>
-            <StringItem index="10" value="Accessability_Big_Theme"/>
-            <StringItem index="11" value="Accessability_Black_Theme"/>
-            <StringItem index="12" value="Accessability_White_Theme"/>
-            <StringItem index="13" value="Accessability_Yellow_Theme"/>
+            <StringItem index="3" value="full_touch_theme"/>
+            <StringItem index="4" value="LWUIT_Touch"/>
+            <StringItem index="5" value="LWUIT_Feature"/>
+            <StringItem index="6" value="tzone_theme"/>
+            <StringItem index="7" value="tipster_theme"/>
+            <StringItem index="8" value="Blackberry"/>
+            <StringItem index="9" value="LWUIT_Classic_Theme"/>
+            <StringItem index="10" value="Wood"/>
+            <StringItem index="11" value="Accessability_Big_Theme"/>
+            <StringItem index="12" value="Accessability_Black_Theme"/>
+            <StringItem index="13" value="Accessability_White_Theme"/>
+            <StringItem index="14" value="Accessability_Yellow_Theme"/>
+            <StringItem index="15" value=" "/>
           </StringArray>
         </Property>
         <Property name="name" type="java.lang.String" value="template" noResource="true"/>
