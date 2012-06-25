@@ -311,11 +311,7 @@
         <antcall target="do-clean" inheritall="true" inheritrefs="true"/>
     </target>
     <!--deps-jar-->
-    <target name="deps-jar" depends="conditional-clean" unless="no.deps">
-        <ant target="jar" inheritall="false" antfile="${project.S40}/build.xml">
-            <property name="config.active" value=""/>
-        </ant>
-    </target>
+    <target name="deps-jar" depends="conditional-clean" unless="no.deps"/>
     <!--preprocess-->
     <target name="pre-preprocess"/>
     <target name="do-preprocess" unless="no.preprocess">
