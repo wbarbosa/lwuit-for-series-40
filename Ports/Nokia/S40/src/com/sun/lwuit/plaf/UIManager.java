@@ -26,6 +26,7 @@ package com.sun.lwuit.plaf;
 import com.sun.lwuit.*;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
+import com.sun.lwuit.impl.s40.S40Implementation;
 import com.sun.lwuit.util.EventDispatcher;
 import com.sun.lwuit.util.Resources;
 import java.io.ByteArrayInputStream;
@@ -795,7 +796,14 @@ public class UIManager {
             }
         }
         buildTheme(themeProps);
+        
         current.refreshTheme();
+        if(Display.getInstance().isPureTouch()) {
+                Display.getInstance().setCommandBehavior(Display.COMMAND_BEHAVIOR_NATIVE);
+                if(Display.getInstance().getImplementation() instanceof S40Implementation) {
+                    ((S40Implementation) Display.getInstance().getImplementation()).setHideMenu(true);
+                }
+            }
     }
 
     private void buildTheme(Hashtable themeProps) {
