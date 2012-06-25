@@ -798,6 +798,8 @@ public class UIManager {
         buildTheme(themeProps);
         
         current.refreshTheme();
+        //make sure that in fulltouch we still have the platform menus instead of
+        //fullscreen application
         if(Display.getInstance().isPureTouch()) {
                 Display.getInstance().setCommandBehavior(Display.COMMAND_BEHAVIOR_NATIVE);
                 if(Display.getInstance().getImplementation() instanceof S40Implementation) {
