@@ -556,12 +556,13 @@ public class MenuBar extends Container implements ActionListener {
             if (defaultCommand != null) {
                 softCommand[0] = defaultCommand;
                 freeButtons--;
-            } else if (numberOfMiscCommands > 0) { // if not, use the first added cmd for msk
-                if (!backStack.contains(commandsWithoutBackOrDefault[0])) {
-                    softCommand[0] = commandsWithoutBackOrDefault[0];
-                    freeButtons--;
-                    unassignedMiscCommands--;
-                }
+            }
+            else if(selectCommand != null) {
+                softCommand[0] = selectCommand;
+                freeButtons--;
+            }
+            else if (numberOfMiscCommands > 0) { // if not,set empty command
+                softCommand[0] = new Command("");
             }
             // If there are more commands left, show a menu
             if (unassignedMiscCommands > 0) {
