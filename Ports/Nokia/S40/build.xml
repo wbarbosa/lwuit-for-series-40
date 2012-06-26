@@ -112,7 +112,8 @@
                  </jar>
                  <!-- create sdk1.1 binaries -->
                  <jar destfile="../../../Series-40-binaries/sdk1.1/S40-with-themes.jar">
-                     <zipfileset src="dist/S40.jar" excludes="full_touch_theme.res **/MIDPIconCommandWrapper* **/OrientationProviderImpl*" />
+                     <zipfileset src="dist/S40.jar" 
+                     excludes="full_touch_theme.res **/MIDPIconCommandWrapper* **/OrientationProviderImpl* **/S40FullTouchImplementation*" />
                  </jar>
                  <jar destfile="../../../Series-40-binaries/sdk1.1/S40-no-themes.jar">
                      <zipfileset src="../../../Series-40-binaries/sdk1.1/S40-with-themes.jar" excludes="*.res" />

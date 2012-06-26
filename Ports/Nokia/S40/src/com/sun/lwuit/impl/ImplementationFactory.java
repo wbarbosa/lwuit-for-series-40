@@ -68,11 +68,19 @@ public class ImplementationFactory {
     public LWUITImplementation createImplementation() {
         LWUITImplementation impl = null;
         try {
-            Class.forName("com.nokia.mid.ui.gestures.GestureListener");
-            impl = (LWUITImplementation)Class.forName("com.sun.lwuit.impl.s40.S40GestureImplementation").newInstance();
+            Class.forName("com.nokia.mid.ui.orientation.Orientation");
+            impl = (LWUITImplementation) Class.forName("com.sun.lwuit.impl.s40.S40FullTouchImplementation").newInstance();
         }catch(Exception e) {
-            System.out.println("no gestures supported.");
-            impl = new S40Implementation();
+            System.out.println("orientation not supported.");
+        }
+        if (impl == null) {
+            try {
+                Class.forName("com.nokia.mid.ui.gestures.GestureListener");
+                impl = (LWUITImplementation) Class.forName("com.sun.lwuit.impl.s40.S40GestureImplementation").newInstance();
+            } catch (Exception e) {
+                System.out.println("no gestures supported.");
+                impl = new S40Implementation();
+            }
         }
         return impl;
     }

@@ -5,8 +5,6 @@
 package com.sun.lwuit.impl.s40;
 
 import com.nokia.lwuit.MIDPCommandWrapper;
-import com.nokia.lwuit.OrientationListener;
-import com.nokia.lwuit.OrientationProvider;
 import com.nokia.lwuit.TextEditorProvider;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
@@ -412,19 +410,6 @@ public class S40Implementation extends LWUITImplementation {
         display = javax.microedition.lcdui.Display.getDisplay(mid);
         setSoftKeyCodes(mid);
         
-        OrientationListener ol = new OrientationListener() {
-
-            public void displayOrientationChanged(int i) {
-                String orientation = getProperty("Nokia-MIDlet-App-Orientation", "");
-                if (orientation.equals("manual")) {
-                    com.nokia.mid.ui.orientation.Orientation.setAppOrientation(i);
-                }
-            }
-        };
-        OrientationProvider p = OrientationProvider.getOrientationProvider();
-        if(p != null) {
-            p.addOrientationListener(ol);
-        }
     }
 
     private void setSoftKeyCodes(MIDlet m) {
