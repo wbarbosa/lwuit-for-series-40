@@ -12,6 +12,19 @@ public class MIDPCommandWrapper {
     int offset = 0;
     int type = 0;
 
+    public static MIDPCommandWrapper createInstance(com.sun.lwuit.Command c) {
+        if (c.getIcon() != null) {
+            try {
+                Class.forName("com.nokia.mid.ui.IconCommand");
+                Class cl = Class.forName("com.nokia.lwuit.MIDPIconCommandWrapper");
+                return (MIDPCommandWrapper) cl.newInstance();
+            } catch (Exception e) {
+                System.out.println("IconCommand not supported.");
+            }
+        }
+        return new MIDPCommandWrapper();
+        
+    }
     /**
      * Returns MIDP 2.0 Command class
      * @return javax.microedition.lcdui.Command that has lwuit command data

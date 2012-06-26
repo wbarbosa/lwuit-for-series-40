@@ -116,17 +116,8 @@ public class S40Implementation extends LWUITImplementation {
          * @param c
          * @return 
          */
-        Class getCommandWrapperClass(com.sun.lwuit.Command c) {
-            if (c.getIcon() != null) {
-                try {
-                    Class.forName("com.nokia.mid.ui.IconCommand");
-                    return Class.forName("com.nokia.lwuit.MIDPIconCommandWrapper");
-                } catch (Exception e) {
-                    return MIDPCommandWrapper.class;
-                }
-            } else {
-                return MIDPCommandWrapper.class;
-            }
+        MIDPCommandWrapper getCommandWrapperClass(com.sun.lwuit.Command c) {
+            return MIDPCommandWrapper.createInstance(c);
         }
         
         /**
@@ -139,17 +130,13 @@ public class S40Implementation extends LWUITImplementation {
          * @return 
          */
         MIDPCommandWrapper wrapLWUITCommand(com.sun.lwuit.Command c, int offset) {
-            Class cls = getCommandWrapperClass(c);
-            try {
-                MIDPCommandWrapper w = (MIDPCommandWrapper)cls.newInstance();
+            MIDPCommandWrapper w = getCommandWrapperClass(c);
+            if (w != null) {
                 w.setCommand(c);
                 w.setOffset(offset);
-                return w;
-            } catch (InstantiationException ex) {
-                throw new RuntimeException(ex.toString());
-            } catch (IllegalAccessException ex) {
-                throw new RuntimeException(ex.toString());
             }
+            return w;
+
         }
         
         /**
@@ -163,18 +150,15 @@ public class S40Implementation extends LWUITImplementation {
          * @return 
          */
         MIDPCommandWrapper wrapLWUITCommand(com.sun.lwuit.Command c, int type, int offset) {
-            Class cls = getCommandWrapperClass(c);
-            try {
-                MIDPCommandWrapper w = (MIDPCommandWrapper)cls.newInstance();
+
+            MIDPCommandWrapper w = getCommandWrapperClass(c);
+            if (w != null) {
                 w.setCommand(c);
                 w.setOffset(offset);
                 w.setType(type);
-                return w;
-            } catch (InstantiationException ex) {
-                throw new RuntimeException(ex.toString());
-            } catch (IllegalAccessException ex) {
-                throw new RuntimeException(ex.toString());
             }
+            return w;
+
         }
         
         public void setCommands(Vector v) {
@@ -2019,5 +2003,11 @@ public class S40Implementation extends LWUITImplementation {
             canvas.setTitle(t);
         }
     }
+    public boolean areGesturesSupported() {
+        return false;
+    }
     
+    public synchronized void setCurrentGestureListener(com.sun.lwuit.Form f) {
+        //do nothing
+    }
 }

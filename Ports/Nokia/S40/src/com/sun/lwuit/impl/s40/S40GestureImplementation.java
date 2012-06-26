@@ -81,4 +81,9 @@ public class S40GestureImplementation extends S40Implementation{
         }
         
     }
+
+    public boolean areGesturesSupported() {
+        return true;
+    }
+    
 }

@@ -8,8 +8,8 @@ import javax.microedition.lcdui.Image;
  * Class that wraps midp Command to IconCommand
  * @author tkor
  */
-public class MIDPIconCommandWrapper extends MIDPCommandWrapper {
-    private IconCommand command = null;
+class MIDPIconCommandWrapper extends MIDPCommandWrapper {
+    private Command command = null;
 
     public Command getCommand() {
         if (command == null) {
