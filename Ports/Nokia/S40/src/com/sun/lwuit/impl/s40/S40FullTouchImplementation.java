@@ -23,11 +23,13 @@ public class S40FullTouchImplementation extends S40GestureImplementation{
                 if (orientation.equals("manual")) {
                     com.nokia.mid.ui.orientation.Orientation.setAppOrientation(i);
                 }
+                
             }
         };
         OrientationProvider p = OrientationProvider.getOrientationProvider();
         if(p != null) {
             p.addOrientationListener(ol);
         }
+        com.nokia.mid.ui.VirtualKeyboard.hideOpenKeypadCommand(true);
     }
 }
