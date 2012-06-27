@@ -1,0 +1,15 @@
+com.sun.lwuit
+com.sun.lwuit.animations
+com.sun.lwuit.events
+com.sun.lwuit.geom
+com.sun.lwuit.html
+com.sun.lwuit.impl
+com.sun.lwuit.layouts
+com.sun.lwuit.list
+com.sun.lwuit.painter
+com.sun.lwuit.plaf
+com.sun.lwuit.spinner
+com.sun.lwuit.table
+com.sun.lwuit.tree
+com.sun.lwuit.util
+com.sun.lwuit.xml
