@@ -22,4 +22,7 @@ Currently there are binaries for:
 * SDK 1.1 (works on 1.0 also)
 * SDK 2.0 
 
+For each SDK there are versions with themes and version
+without any theme for those that are going to use their own theme.
+
 ##############################################
