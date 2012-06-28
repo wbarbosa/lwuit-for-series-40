@@ -14,14 +14,15 @@ doc:
     these are copied from the docs folder
 examples:
     contains lwuit examples from Apps folder
-resourceEditor
-    contains the resourceEditor binaries.
-    These are copied from the tools/Lwuit-ResourceEditor
+resourceEditor:
+    contains the resourceEditor binary.
+    This is copied from the tools/Lwuit-ResourceEditor folder
 
-Note:
-    this script doesn't build ResourceEditor binaries, you
-    have to recompile it yourself if you make any changes 
-    to it.
+Note! the resourceeditor target will only call maven to build the
+resourceeditor. If you get any compile errors check the build-instructions
+from the tools/Lwuit-ResourceEditor folder. After you can build
+the ResourceEditor without problems you can use this script.
+
 -->
 <project name="LWUIT-Release" default="dist" basedir=".">
     <property name="examples" location="Apps" />
@@ -31,6 +32,7 @@ Note:
     <property name="releasepath" location="Series-40-binaries" />
     <property name="readme" location="README-dist.txt" />
     <property name="s40port" location="Ports/Nokia/S40" />
+    <property name="RE" location="tools/Lwuit-ResourceEditor" />
 
     <target name="init">
         <mkdir dir="${releasepath}" />
@@ -39,27 +41,45 @@ Note:
         <mkdir dir="${releasepath}/examples" />
         <mkdir dir="${releasepath}/resourceeditor" />
     </target>
-
-    <target name="dist" depends="init">
-    <!-- build S40 port -->
+    <!--build s40 port -->
+    <target name="S40-build" depends="init">
         <ant antfile="${s40port}/build.xml" useNativeBasedir="true" target="build" />
+    </target>
+    
     <!-- copy examples -->
+    <target name="copy-examples" depends="init">
         <copy todir="${releasepath}/examples">
             <fileset dir="${examples}" >
                 <exclude name="**/build/**" />
                 <exclude name="**/dist/**" />
             </fileset>
         </copy>
+    </target>
     <!-- copy docs -->
+    <target name="copy-docs" depends="init">
         <copy todir="${releasepath}/doc" >
             <fileset dir="${javadocs}" />
         </copy>
         <copy file="${devguide}" todir="${releasepath}/doc" />
-    <!-- copy ResourceEditor -->
-
     </target>
-    <target name="package" depends="dist">
+    <!-- build & copy ResourceEditor -->
+    <target name="ResourceEditor" depends="init" >
+        <exec executable="mvn.bat" dir="${RE}">
+            <arg line="clean package" />
+        </exec>
+        <copy todir="${releasepath}/resourceeditor/lib">
+            <fileset dir="${RE}/target/lib" />
+        </copy>
+        <copy file="${RE}/target/Lwuit-ResourceEditor-1.0-SNAPSHOT.jar" 
+            tofile="${releasepath}/resourceeditor/Lwuit-ResourceEditor-1.0.jar" />
+        <copy file="${RE}/ResourceEditor.bat" 
+            todir="${releasepath}/resourceeditor" />
+    </target>
+
+    <target name="dist" depends="S40-build, copy-examples, copy-docs, ResourceEditor" />
+
     <!-- create a single zip package from Series-40-binaries folder -->
+    <target name="package" depends="dist">
 
     </target>
     <target name="clean">
