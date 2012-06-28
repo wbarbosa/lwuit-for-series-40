@@ -89,7 +89,7 @@ the ResourceEditor without problems you can use this script.
 
     <!-- create a single zip package from Series-40-binaries folder -->
     <target name="package" depends="dist">
-
+        <zip destfile="Series-40-binaries.zip" basedir="Series-40-binaries" />
     </target>
     <target name="clean">
         <delete dir="${releasepath}" />
