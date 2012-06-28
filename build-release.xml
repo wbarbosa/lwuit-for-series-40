@@ -1,0 +1,23 @@
+<project name="LWUIT-Release" default="dist" basedir=".">
+    <property name="examples" location="" />
+    <property name="s40port" location="" />
+    <property name="docs" location="" />
+    <property name="releasepath" location="Series-40-binaries" />
+
+    <target name="init">
+        <mkdir dir="${releasepath}" />
+        <mkdir dir="${releasepath}/bin" />
+        <mkdir dir="${releasepath}/doc" />
+        <mkdir dir="${releasepath}/examples" />
+        <mkdir dir="${releasepath}/resourceeditor" />
+    </target>
+
+    <target name="dist" depends="init">
+
+
+    </target>
+    <target name="clean">
+        <delete dir="${releasepath}" />
+    </target>
+
+</project>
