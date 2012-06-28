@@ -312,13 +312,7 @@
     </target>
     <!--deps-jar-->
     <target name="deps-jar" depends="conditional-clean" unless="no.deps">
-        <ant target="jar" inheritall="false" antfile="${project.IO_MIDP}/build.xml">
-            <property name="config.active" value=""/>
-        </ant>
         <ant target="jar" inheritall="false" antfile="${project.Makeover}/build.xml">
-            <property name="config.active" value=""/>
-        </ant>
-        <ant target="jar" inheritall="false" antfile="${project.S40}/build.xml">
             <property name="config.active" value=""/>
         </ant>
     </target>
