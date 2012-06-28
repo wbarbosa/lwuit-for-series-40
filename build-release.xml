@@ -33,6 +33,7 @@ the ResourceEditor without problems you can use this script.
     <property name="readme" location="README-dist.txt" />
     <property name="s40port" location="Ports/Nokia/S40" />
     <property name="RE" location="tools/Lwuit-ResourceEditor" />
+    <property name="IO" location="IO" />
 
     <target name="init">
         <mkdir dir="${releasepath}" />
@@ -40,12 +41,17 @@ the ResourceEditor without problems you can use this script.
         <mkdir dir="${releasepath}/doc" />
         <mkdir dir="${releasepath}/examples" />
         <mkdir dir="${releasepath}/resourceeditor" />
+        <mkdir dir="${releasepath}/IO" />
     </target>
     <!--build s40 port -->
     <target name="S40-build" depends="init">
         <ant antfile="${s40port}/build.xml" useNativeBasedir="true" target="build" />
     </target>
-    
+    <!-- build IO lib -->
+    <target name="IO-build" depends="init">
+        <ant antfile="${IO}/build.xml" useNativeBasedir="true" target="build" />
+        <copy file="${IO}/dist/IO.jar" todir="${releasepath}/IO" />
+    </target> 
     <!-- copy examples -->
     <target name="copy-examples" depends="init">
         <copy todir="${releasepath}/examples">
@@ -76,7 +82,7 @@ the ResourceEditor without problems you can use this script.
             todir="${releasepath}/resourceeditor" />
     </target>
 
-    <target name="dist" depends="S40-build, copy-examples, copy-docs, ResourceEditor" />
+    <target name="dist" depends="S40-build, IO-build, copy-examples, copy-docs, ResourceEditor" />
 
     <!-- create a single zip package from Series-40-binaries folder -->
     <target name="package" depends="dist">
