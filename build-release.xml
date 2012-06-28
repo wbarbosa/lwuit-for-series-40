@@ -34,6 +34,7 @@ the ResourceEditor without problems you can use this script.
     <property name="s40port" location="Ports/Nokia/S40" />
     <property name="RE" location="tools/Lwuit-ResourceEditor" />
     <property name="IO" location="IO" />
+    <property name="IO-MIDP" location="Ports/MIDP/IO_MIDP" />
 
     <target name="init">
         <mkdir dir="${releasepath}" />
@@ -50,7 +51,9 @@ the ResourceEditor without problems you can use this script.
     <!-- build IO lib -->
     <target name="IO-build" depends="init">
         <ant antfile="${IO}/build.xml" useNativeBasedir="true" target="build" />
+        <ant antfile="${IO-MIDP}/build.xml" useNativeBasedir="true" target="build" />
         <copy file="${IO}/dist/IO.jar" todir="${releasepath}/IO" />
+        <copy file="${IO-MIDP}/dist/IO.jar" tofile="${releasepath}/IO/IO-MIDP.jar" />
     </target> 
     <!-- copy examples -->
     <target name="copy-examples" depends="init">
