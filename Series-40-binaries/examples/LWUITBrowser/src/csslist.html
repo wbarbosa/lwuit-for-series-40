@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>CSS Lists</title>
+  </head>
+
+  <body>
+ <b>Images replacing bullets:</b><br>
+    <ul style="list-style-image: url(smily.png)">
+      <li>Image list bullet 1</li>
+      <li style="list-style-image: url(sady.png);">Image list bullet 2</li>
+      <li>Image list bullet 3</li>
+    </ul>
+    <b>Unordered list types:</b><br>
+    <ul>
+      <li style="list-style-type: disc">Disc bullet</li>
+      <li style="list-style-type: circle;">Circle bullet</li>
+      <li style="list-style-type: square">Square bullet</li>
+    </ul>
+    <b>Ordered list types (Main list is upper roman):</b><br>
+    <ol style="list-style-type: upper-roman; list-style-position: outside; background-color:gray">
+      <li style="font-weight:bold; border: 2px solid; background-color:green;"> 
+	  Upper Alpha
+        <ol style="list-style-type: upper-alpha; background-color:red">
+          <li>Item A</li>
+          <li>Item B</li>
+          <li style="list-style-type: decimal">Item C (decimal)</li>
+        </ol>
+      </li>
+
+      <li> <!-- style="list-style-position: inside"> -->
+  	  Lower Alpha
+        <ol style="list-style-type: upper-alpha; border: 2px solid; ">
+          <li>Item A</li>
+          <li>Item B</li>
+          <li style="list-style-type: upper-roman">Item C (upper-roman)</li>
+        </ol>
+      </li>
+
+      <li>
+	  Lower Roman
+        <ol style="list-style-type: lower-roman">
+          <li>Item A</li>
+          <li>Item B</li>
+          <li style="list-style-type: none">Item C (none)</li>
+        </ol>
+      </li>
+    </ol>
+
+  </body>
+</html>
