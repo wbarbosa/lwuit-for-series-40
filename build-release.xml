@@ -1,8 +1,35 @@
+<!--
+This creates the LWUIT release in Series-40-binaries folder
+folder structure:
+    bin 
+    doc
+    examples
+    resourceEditor
+
+bin:
+    contains binaries for different sdks, these binaries are 
+    created by S40 project
+doc:
+    contains javadocs and lwuit developer's guide pdf
+    these are copied from the docs folder
+examples:
+    contains lwuit examples from Apps folder
+resourceEditor
+    contains the resourceEditor binaries.
+    These are copied from the tools/Lwuit-ResourceEditor
+
+Note:
+    this script doesn't build ResourceEditor binaries, you
+    have to recompile it yourself if you make any changes 
+    to it.
+-->
 <project name="LWUIT-Release" default="dist" basedir=".">
-    <property name="examples" location="" />
-    <property name="s40port" location="" />
-    <property name="docs" location="" />
+    <property name="examples" location="Apps" />
+    <property name="docs" location="docs" />
+    <property name="javadocs" location="${docs}/javadocs" />
+    <property name="devguide" location="${docs}/LWUIT_Developer_Guide.pdf" />
     <property name="releasepath" location="Series-40-binaries" />
+    <property name="readme" location="README-dist.txt" />
 
     <target name="init">
         <mkdir dir="${releasepath}" />
@@ -13,7 +40,25 @@
     </target>
 
     <target name="dist" depends="init">
+    <!-- build S40 port -->
+    
+    <!-- copy examples -->
+        <copy todir="${releasepath}/examples">
+            <fileset dir="${examples}" >
+                <exclude name="**/build/**" />
+                <exclude name="**/dist/**" />
+            </fileset>
+        </copy>
+    <!-- copy docs -->
+        <copy todir="${releasepath}/doc" >
+            <fileset dir="${javadocs}" />
+        </copy>
+        <copy file="${devguide}" todir="${releasepath}/doc" />
+    <!-- copy ResourceEditor -->
 
+    </target>
+    <target name="package" depends="dist">
+    <!-- create a single zip package from Series-40-binaries folder -->
 
     </target>
     <target name="clean">
