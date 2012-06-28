@@ -30,6 +30,7 @@ Note:
     <property name="devguide" location="${docs}/LWUIT_Developer_Guide.pdf" />
     <property name="releasepath" location="Series-40-binaries" />
     <property name="readme" location="README-dist.txt" />
+    <property name="s40port" location="Ports/Nokia/S40" />
 
     <target name="init">
         <mkdir dir="${releasepath}" />
@@ -41,7 +42,7 @@ Note:
 
     <target name="dist" depends="init">
     <!-- build S40 port -->
-    
+        <ant antfile="${s40port}/build.xml" useNativeBasedir="true" target="build" />
     <!-- copy examples -->
         <copy todir="${releasepath}/examples">
             <fileset dir="${examples}" >
