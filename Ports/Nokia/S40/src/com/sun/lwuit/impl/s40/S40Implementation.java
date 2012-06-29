@@ -168,8 +168,16 @@ public class S40Implementation extends LWUITImplementation {
             setCommandListener(this);
             currentCommands = new MIDPCommandWrapper[v.size()];
             com.sun.lwuit.Command backCommand = null;
+            com.sun.lwuit.Command defaultCommand = null;
             if(Display.getInstance().getCurrent() != null) {
                 backCommand = Display.getInstance().getCurrent().getBackCommand();
+                
+                defaultCommand = Display.getInstance().getCurrent().getDefaultCommand();
+                //move defaultCommand as first in fulltouch so it will be in actionbutton
+                if(defaultCommand != null && Display.getInstance().isPureTouch()) {
+                    v.removeElement(defaultCommand);
+                    v.insertElementAt(defaultCommand, 0);
+                }
             }
             for(int iter = 0 ; iter < currentCommands.length ; iter++) {
                 com.sun.lwuit.Command current = (com.sun.lwuit.Command)v.elementAt(iter);
@@ -177,6 +185,7 @@ public class S40Implementation extends LWUITImplementation {
                     currentCommands[iter] = wrapLWUITCommand(current, Command.BACK, iter + 1);
                 } else {
                     if(iter == 0) {
+                        
                         currentCommands[iter] = wrapLWUITCommand(current, Command.OK, iter + 1);
                     } else {
                         currentCommands[iter] = wrapLWUITCommand(current, iter + 1);
