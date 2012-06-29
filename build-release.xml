@@ -8,7 +8,7 @@ folder structure:
 
 bin:
     contains binaries for different sdks, these binaries are 
-    created by S40 project
+    created by S40 project. It also contains IO folder with IO binaries.
 doc:
     contains javadocs and lwuit developer's guide pdf
     these are copied from the docs folder
@@ -42,7 +42,6 @@ the ResourceEditor without problems you can use this script.
         <mkdir dir="${releasepath}/doc" />
         <mkdir dir="${releasepath}/examples" />
         <mkdir dir="${releasepath}/resourceeditor" />
-        <mkdir dir="${releasepath}/IO" />
     </target>
     <!--build s40 port -->
     <target name="S40-build" depends="init">
@@ -52,8 +51,8 @@ the ResourceEditor without problems you can use this script.
     <target name="IO-build" depends="init">
         <ant antfile="${IO}/build.xml" useNativeBasedir="true" target="build" />
         <ant antfile="${IO-MIDP}/build.xml" useNativeBasedir="true" target="build" />
-        <copy file="${IO}/dist/IO.jar" todir="${releasepath}/IO" />
-        <copy file="${IO-MIDP}/dist/IO.jar" tofile="${releasepath}/IO/IO-MIDP.jar" />
+        <copy file="${IO}/dist/IO.jar" todir="${releasepath}/bin/IO" />
+        <copy file="${IO-MIDP}/dist/IO.jar" tofile="${releasepath}/bin/IO/IO-MIDP.jar" />
     </target> 
     <!-- copy examples -->
     <target name="copy-examples" depends="init">
