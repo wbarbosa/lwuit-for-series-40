@@ -5,48 +5,25 @@ Release Notes               LWUIT for Series 40                       June 29, 2
 Description of the Library:
 ====================
 LWUIT for Series 40 provides a Series 40 optimised port of the famous LightWeight
-UI Toolkit that is licensed under GPLv2 with ClassPath exception licence.
+UI Toolkit, which is licensed under GPLv2 with ClassPath exception licence. It has
+been optimised for Series 40 with a number of styling, theming, and functional
+changes. For example, the Nokia TextEditor and Series 40 Gesture framework have
+been taken into use. LWUIT for Series 40 has been developed and tested with
+Nokia SDK 1.1 and 2.0 for Java and it can be used for applications targeted at
+Series 40 5th Edition and newer devices with both keypad and touch user interface.
 
-The LWUIT project is organized into two main categories UI & IO.
-Within these two categories we have portable and platform specific code, all the portable
-code is located within the UI & IO projects respectively. While these projects will compile
-easily they will be useless for any purpose since they don't include the binding
-glue for the platform, to use the platform one needs to use the appropriate projects
-underneath the specific ports directory to a given platform.
-When including a JAR/project into your project you only need the ports jar/project
-since it already includes the main UI/IO project respectively. E.g. if I want to
-develop a MIDP application I will include the projects under Ports/MIDP in my build.
-If I want to develop a RIM application I will use the Ports/RIM projects.
+The aplication is hosted in Nokia Developer Projects:
+- http://projects.developer.nokia.com/LWUIT_for_Series_40
 
-The following ports are currently supported although some are currently incomplete:
-
-MIDP - this is the standard LWUIT code for MIDP using canvas, game canvas etc.
-
-Nokia - Adds some nokia specific extensions, this isn't essential at all. Mostly
-useful for the IO package where there is support for S60 APN functionality.
-
-RIM - Ports to the blackberry API
-
-SE - Ports to Java SE (desktop Java)
-
-tools - Contains tools for working with LWUIT specifically the resource editor and the
-ant task source code
-
-
-Resource Editor:
-
-The resource editor source code is a netbeans project that relies on a specific Swing
-version of LWUIT to embed LWUIT code into the application. Due to issues with Netbeans
-classpaths in newer versions of Netbeans I only use Netbeans 6.5 to build this code.
-
-The code uses the Matisse GUI builder extensively for most of the UI, it was originally
-based on the application framework API but that dependency was removed early on.
+For more information on the implementation, visit the wiki page:
+- http://projects.developer.nokia.com/LWUIT_for_Series_40/wiki
 
 
 What's New
 ===========
 
-The first release for the SDK.
+- The first release for the SDK.
+- LWUIT for Series 40 now supports Series 40 full touch.
 
 
 Features supported by the library:
@@ -71,6 +48,32 @@ Supported resolutions:
 320 x 240
 240 x 400
 
+Tested on:
+Nokia Asha 311 (Java Runtime 2.0.0 for Series 40)
+Nokia Asha 306 (Java Runtime 2.0.0 for Series 40)
+Nokia Asha 305 (Java Runtime 2.0.0 for Series 40)
+Nokia Asha 303 (Java Runtime 1.1.0 for Series 40) 
+Nokia Asha 302 (Java Runtime 1.1.0 for Series 40)
+Nokia Asha 300 (Series 40 6th Edition FP1)
+Nokia Asha 202 (Java Runtime 1.1.0 for Series 40)
+Nokia Asha 201 (Java Runtime 1.1.0 for Series 40)
+Nokia Asha 200 (Java Runtime 1.1.0 for Series 40)
+Nokia C2-03 (Java Runtime 1.0.0 for Series 40)
+Nokia C3-01 (Series 40 6th Edition FP1)
+Nokia X3-02 (Series 40 6th Edition FP1)
+Nokia C3-00 (Series 40 6th Edition)
+Nokia 6303 (Series 40 6th Edition)
+Nokia C1-01 (Series 40 6th Edition Lite)
+Nokia 2690 (Series 40 6th Edition Lite)
+Nokia 6212 (Series 40 5th Edition FP1)
+Nokia 2700 classic (Series 40 5th Edition FP1)
+Nokia 2730 classic (Series 40 5th Edition FP1)
+
+Developed with:
+Netbeans 7.1
+Nokia SDK 1.1 for Java
+Nokia SDK 2.0 for Java
+
 Integration instructions to developers:
 ========================================
 
@@ -78,8 +81,8 @@ Integration instructions to developers:
   - Open Eclipse IDE and open your project.
   - Select Project -> Properties -> Java Build Path -> Libraries.
   - Click 'Add External JARs'.
-  - Select the LWUIT library for example <LWUIT_directory>/bin/sdk2.0/S40-with-themes.jar.
-    and click 'Open' and then 'OK'.
+  - Select the LWUIT library for example <LWUIT_directory>/bin/sdk2.0
+    /S40-with-themes.jar. and click 'Open' and then 'OK'.
   - In Package Explorer, select the Referenced Libraries and right click on the
     S40-with-themes JAR and select Properties.
   - Select Javadoc Location and click 'Browse'.
@@ -93,7 +96,8 @@ Integration instructions to developers:
   - Name the library for example as 'LWUIT_for_2.0_with_themes'.
   - Set Libary Type to 'Class Libraries' and click 'OK'.
   - Click 'Add JAR/Folder...'.
-  - Select the LWUIT library for example <LWUIT_directory>/bin/sdk2.0/S40-with-themes.jar.
+  - Select the LWUIT library for example <LWUIT_directory>/bin/sdk2.0
+    /S40-with-themes.jar.
     and click 'Add JAR/Folder'.
   - Select the Javadoc tab and click 'Add ZIP/Folder'.
   - Select the LWUIT library from <LWUIT_directory>/doc/LWUIT-UI/doc and click 'OK'.
@@ -104,35 +108,37 @@ Integration instructions to developers:
 Known Problems and Limitations:
 ===============================
 
-- LWUIT for Series 40 still has not been tested thoroughly and a set of bugs have already
-  been reported for this release concerning for example Tab, Dialog and List layouts.
+- LWUIT for Series 40 still has not been tested thoroughly and a set of bugs have
+  already been reported for this release concerning for example Tab, Dialog and
+  List layouts.
 
 - LWUIT Browser is still under active development
 
 - Nokia-UI-Enhancement "CanvasHasBackground" can't be used
 
-- This manifest attribute makes the canvas background transparent so that the system
-  background can be seen. However, it   doesn't work with full-screen canvases, and
-  LWUIT's canvas is always full screen.
+- This manifest attribute makes the canvas background transparent so that the
+  system background can be seen. However, it   doesn't work with full-screen
+  canvases, and LWUIT's canvas is always full screen.
 
 - In full touch devices, the background colour is read at app startup.
 
 - The slider component is practically unusable at the moment.
 
-- On non-touch devices, when the UI has a spinner component, you can't move focus away
-  from the spinner.
+- On non-touch devices, when the UI has a spinner component, you can't move focus
+  away from the spinner.
 
-- The LWUIT library is added to every LWUIT application. The application needs to be
-  obfuscated to keep the binary size moderate. The LWUIT UI framework takes 700-800 KB
-  of space but with obfuscation it goes down to 350KB or even less, depending on the
-  complexity of the application.
+- The LWUIT library is added to every LWUIT application. The application needs to
+  be obfuscated to keep the binary size moderate. The LWUIT UI framework takes
+  700-800 KB of space but with obfuscation it goes down to 350KB or even less,
+  depending on the complexity of the application.
 
 - LWUIT is not optimised for applications that require very high-speed graphics
   (full-blown games). LCDUI's Canvas and GameCanvas are better choices there.
 
-- The Series 40 device portfolio ranges from very price-competitive entry devices with
-  a 128*160 pixel display and keyboard input to capable touch UI phones with a QVGA
-  display and many times more CPU and RAM. This means that you need to carefully select
-  your application features for each target device as some animations and transitions may
-  not run smoothly on lower-end devices. If those features are in use, scaling down the
-  application for low-end devices is needed to ensure a good user experience on each device.
+- The Series 40 device portfolio ranges from very price-competitive entry devices
+  with a 128*160 pixel display and keyboard input to capable touch UI phones with
+  a QVGA display and many times more CPU and RAM. This means that you need to
+  carefully select your application features for each target device as some
+  animations and transitions may not run smoothly on lower-end devices. If those
+  features are in use, scaling down the application for low-end devices is needed
+  to ensure a good user experience on each device.
