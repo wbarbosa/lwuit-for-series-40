@@ -31,11 +31,12 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 /**
- * Bootstraps the UI toolkit demos 
+ * Bootstraps the UI toolkit demos
  *
  * @author Shai Almog
  */
-public class UIDemoMain  implements ActionListener {
+public class UIDemoMain
+    implements ActionListener {
 
     private static final int EXIT_COMMAND = 1;
     private static final int BACK_COMMAND = 3;
@@ -45,14 +46,12 @@ public class UIDemoMain  implements ActionListener {
     private static final int RTL_COMMAND = 7;
     private static final int LANGUAGE_COMMAND = 8;
     private static final int DEMOS_COMMAND = 9;
-
     private static final Command exitCommand = new Command("Exit", EXIT_COMMAND);
     static final Command backCommand = new Command("Back", BACK_COMMAND);
     private static final Command aboutCommand = new Command("About", ABOUT_COMMAND);
     private static final Command dragModeCommand = new Command("Drag", DRAG_MODE_COMMAND);
     private static final Command scrollModeCommand = new Command("Scroll", SCROLL_MODE_COMMAND);
     private static final Command rtlCommand = new Command("RTL", RTL_COMMAND);
-
     static final Command showDemosCommand = new Command("Demos", DEMOS_COMMAND);
 
     /*
@@ -60,9 +59,8 @@ public class UIDemoMain  implements ActionListener {
      */
     private static final Command languageCommand = new Command("Chinese", LANGUAGE_COMMAND);
     private static String localLanguage;
-
     static final Demo[] DEMOS = new Demo[]{
-        /*new ThemeDemo(),*/ new RenderingDemo(), new AnimationDemo(), new ButtonsDemo(),
+        /* new ThemeDemo(), */new RenderingDemo(), new AnimationDemo(), new ButtonsDemo(),
         new TransitionDemo(), new FontDemo(), new TabsDemo(), new DialogDemo(),
         new LayoutDemo(), new ScrollDemo(), new TableDemo(), new TreeDemo(),
         new HTMLDemo()
@@ -71,11 +69,9 @@ public class UIDemoMain  implements ActionListener {
     private Hashtable demosHash = new Hashtable();
     private static Form mainMenu;
     private int cols = 0;
-    
     private int elementWidth;
     private Resources res;
     private static UIDemoMain instance;
-
     private Container uiContent;
     private Container demoPanel;
 
@@ -84,21 +80,24 @@ public class UIDemoMain  implements ActionListener {
     }
 
     public void startApp() {
-        instance=this;
+        instance = this;
         try {
             localLanguage = System.getProperty("microedition.locale");
-        } catch(Throwable t) {
+            if (!localLanguage.equalsIgnoreCase("en-US") && !localLanguage.equalsIgnoreCase("zh-CN")) {
+                localLanguage = "en-US";
+            }
+        }
+        catch (Throwable t) {
+            localLanguage = "en-US";
             // can throw a security exception in an applet
         }
         try {
-            
+
             //set the theme
-            /*if(Display.getInstance().hasNativeTheme()) {
-                Display.getInstance().installNativeTheme();
-            } else {
-                Resources theme = Resources.open("/TimelineTheme.res");
-                UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
-            }*/
+            /* if(Display.getInstance().hasNativeTheme()) { Display.getInstance().installNativeTheme(); } else {
+             * Resources theme = Resources.open("/TimelineTheme.res");
+             * UIManager.getInstance().setThemeProps(theme.getTheme(theme.getThemeResourceNames()[0]));
+            } */
             //open the resources file that contains all the fonts
             res = Resources.open("/resources.res");
 
@@ -108,26 +107,28 @@ public class UIDemoMain  implements ActionListener {
             //most devices, a good coding practice will be to allow the midp 
             //thread to return and to do all the UI on the EDT.
             Display.getInstance().callSerially(new Runnable() {
+
                 public void run() {
                     setMainForm(res);
                 }
             });
-            
-        } catch (Throwable ex) {
+
+        }
+        catch (Throwable ex) {
             ex.printStackTrace();
             Dialog.show("Exception", ex.getMessage(), "OK", null);
         }
     }
 
     /**
-     * Used instead of using the Resources API to allow us to fetch locally downloaded
-     * resources
-     * 
+     * Used instead of using the Resources API to allow us to fetch locally downloaded resources
+     *
      * @param name the name of the resource
      * @return a resources object
      */
-    public static Resources getResource(String name) throws IOException {
-            return Resources.open("/" + name + ".res");
+    public static Resources getResource(String name)
+        throws IOException {
+        return Resources.open("/" + name + ".res");
     }
 
     protected void pauseApp() {
@@ -139,7 +140,7 @@ public class UIDemoMain  implements ActionListener {
     public static void setTransition(Transition in, Transition out) {
         mainMenu.setTransitionInAnimator(in);
         mainMenu.setTransitionOutAnimator(out);
-        if(in != null) {
+        if (in != null) {
             UIManager.getInstance().getLookAndFeel().setDefaultFormTransitionIn(null);
             UIManager.getInstance().getLookAndFeel().setDefaultFormTransitionOut(null);
         }
@@ -164,15 +165,16 @@ public class UIDemoMain  implements ActionListener {
         elementWidth = 0;
 
         int buttonCount = uiContent.getComponentCount();
-        for (int i = 0; i < buttonCount ; i++) {
+        for (int i = 0; i < buttonCount; i++) {
             elementWidth = Math.max(uiContent.getComponentAt(i).getPreferredW(), elementWidth);
         }
 
         //Calculate the number of columns for the GridLayout according to the
         //screen width
-        if(elementWidth > 0){
+        if (elementWidth > 0) {
             cols = width / elementWidth;
-        } else {
+        }
+        else {
             cols = 4;
         }
         int rows = DEMOS.length / cols;
@@ -183,7 +185,7 @@ public class UIDemoMain  implements ActionListener {
 
     void setMainForm(Resources r) {
         Font.setBitmapFontEnabled(true);
-        if(localLanguage != null) {
+        if (localLanguage != null) {
             try {
                 Resources res = Resources.open("/resources.res");
                 UIManager.getInstance().setResourceBundle(res.getL10N("localize", localLanguage));
@@ -191,13 +193,14 @@ public class UIDemoMain  implements ActionListener {
                 if (!"en".equals(localLanguage)) {
                     Font.setBitmapFontEnabled(false);
                 }
-            } catch (IOException ex) {
+            }
+            catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
 
         Form main;
-        if(Display.getInstance().isTablet()) {
+        if (Display.getInstance().isTablet()) {
             main = new Form("");
             main.setLayout(new BorderLayout());
             demoPanel = new Container(new BorderLayout());
@@ -210,21 +213,24 @@ public class UIDemoMain  implements ActionListener {
             uiContentParent.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
             main.addComponent(BorderLayout.WEST, uiContentParent);
             main.addOrientationListener(new ActionListener() {
+
                 public void actionPerformed(ActionEvent evt) {
-                    Form f = (Form)demoPanel.getComponentAt(0);
-                    if(Display.getInstance().isPortrait()) {
+                    Form f = (Form) demoPanel.getComponentAt(0);
+                    if (Display.getInstance().isPortrait()) {
                         f.addCommand(showDemosCommand, 1);
-                    } else {
+                    }
+                    else {
                         f.removeCommand(showDemosCommand);
                     }
                 }
             });
-        } else {
+        }
+        else {
             main = new Form("LWUIT Demo");
-            
+
             uiContent = main.getContentPane();
         }
-        if(mainMenu != null){
+        if (mainMenu != null) {
             main.setTransitionInAnimator(mainMenu.getTransitionInAnimator());
             main.setTransitionOutAnimator(mainMenu.getTransitionOutAnimator());
         }
@@ -236,7 +242,7 @@ public class UIDemoMain  implements ActionListener {
         mainMenu.setBackCommand(exitCommand);
         mainMenu.addCommand(aboutCommand);
 
-        if(localLanguage == null) {
+        if (localLanguage == null) {
             localLanguage = "en-US";
         }
         if (localLanguage.equalsIgnoreCase("zh-CN")) {
@@ -246,13 +252,14 @@ public class UIDemoMain  implements ActionListener {
             languageCommand.setCommandName("Chinese");
         }
         mainMenu.addCommand(languageCommand);
-        
+
         mainMenu.addCommand(rtlCommand);
         mainMenu.addCommand(dragModeCommand);
 
         mainMenu.addCommandListener(this);
-        if(Display.getInstance().getCurrent() != null) {
-            Display.getInstance().getCurrent().setTransitionOutAnimator(CommonTransitions.createEmpty());
+        if (Display.getInstance().getCurrent() != null) {
+            Display.getInstance().getCurrent().setTransitionOutAnimator(CommonTransitions.
+                createEmpty());
         }
         mainMenu.show();
     }
@@ -265,7 +272,7 @@ public class UIDemoMain  implements ActionListener {
         int textPosition = Label.BOTTOM;
         ButtonGroup bg = null;
         int alignment = Component.CENTER;
-        if(Display.getInstance().isTablet()) {
+        if (Display.getInstance().isTablet()) {
             textPosition = Label.RIGHT;
             alignment = Component.LEFT;
             bg = new ButtonGroup();
@@ -275,14 +282,15 @@ public class UIDemoMain  implements ActionListener {
             selectedImages[i] = temp;
             unselectedImages[i] = r.getImage(DEMOS[i].getName().toLowerCase() + ".png");
             Button btn;
-            if(bg != null) {
+            if (bg != null) {
                 btn = new RadioButton(DEMOS[i].getName(), unselectedImages[i]);
                 btn.setToggle(true);
-                bg.add((RadioButton)btn);
-                if(i == 0) {
-                    ((RadioButton)btn).setSelected(true);
+                bg.add((RadioButton) btn);
+                if (i == 0) {
+                    ((RadioButton) btn).setSelected(true);
                 }
-            } else {
+            }
+            else {
                 btn = new Button(DEMOS[i].getName(), unselectedImages[i]);
             }
             final Button b = btn;
@@ -297,14 +305,14 @@ public class UIDemoMain  implements ActionListener {
             b.addActionListener(bAListner);
             demosHash.put(b, DEMOS[i]);
         }
-        if(!Display.getInstance().isTablet()) {
+        if (!Display.getInstance().isTablet()) {
             calcGridSize();
         }
     }
 
     /**
-     * Invoked when a command is clicked. We could derive from Command but that would 
-     * require 3 separate classes.
+     * Invoked when a command is clicked. We could derive from Command but that would require 3
+     * separate classes.
      */
     public void actionPerformed(ActionEvent evt) {
         Command cmd = evt.getCommand();
@@ -318,35 +326,41 @@ public class UIDemoMain  implements ActionListener {
                 break;
             case ABOUT_COMMAND:
                 Form aboutForm = new Form("About");
-                aboutForm.setScrollable(false);
+                aboutForm.setScrollable(true);
                 aboutForm.setLayout(new BorderLayout());
                 TextArea aboutText = new TextArea(getAboutText(), 5, 10);
                 aboutText.setEditable(false);
                 aboutForm.addComponent(BorderLayout.CENTER, aboutText);
                 Command backFromAbout = new Command("Back") {
+
                     public void actionPerformed(ActionEvent evt) {
-                        if(demoPanel != null) {
-                            demoPanel.replace(demoPanel.getComponentAt(0), mainMenu, UIManager.getInstance().getLookAndFeel().getDefaultFormTransitionOut().copy(true));
-                        } else {
+                        if (demoPanel != null) {
+                            demoPanel.replace(demoPanel.getComponentAt(0), mainMenu, UIManager.
+                                getInstance().getLookAndFeel().getDefaultFormTransitionOut().copy(
+                                true));
+                        }
+                        else {
                             mainMenu.showBack();
                         }
                     }
                 };
                 aboutForm.addCommand(backFromAbout);
                 aboutForm.setBackCommand(backFromAbout);
-                if(demoPanel != null) {
-                    demoPanel.replace(demoPanel.getComponentAt(0), aboutForm, UIManager.getInstance().getLookAndFeel().getDefaultFormTransitionOut());
-                } else {
+                if (demoPanel != null) {
+                    demoPanel.replace(demoPanel.getComponentAt(0), aboutForm,
+                        UIManager.getInstance().getLookAndFeel().getDefaultFormTransitionOut());
+                }
+                else {
                     aboutForm.show();
                 }
                 break;
             case DRAG_MODE_COMMAND:
                 Container c = mainMenu.getContentPane();
-                if(uiContent != null) {
+                if (uiContent != null) {
                     c = uiContent;
                 }
                 c.setDropTarget(true);
-                for(int iter = 0 ; iter < c.getComponentCount() ; iter++) {
+                for (int iter = 0; iter < c.getComponentCount(); iter++) {
                     c.getComponentAt(iter).setDraggable(true);
                 }
                 mainMenu.removeCommand(dragModeCommand);
@@ -354,7 +368,7 @@ public class UIDemoMain  implements ActionListener {
                 break;
             case SCROLL_MODE_COMMAND:
                 mainMenu.getContentPane().setDropTarget(false);
-                for(int iter = 0 ; iter < mainMenu.getContentPane().getComponentCount() ; iter++) {
+                for (int iter = 0; iter < mainMenu.getContentPane().getComponentCount(); iter++) {
                     mainMenu.getContentPane().getComponentAt(iter).setDraggable(false);
                 }
                 mainMenu.removeCommand(scrollModeCommand);
@@ -372,8 +386,8 @@ public class UIDemoMain  implements ActionListener {
                 buildDemoMenu(res, popup);
                 popup.showPopupDialog(evt.getComponent());
                 break;
-             case LANGUAGE_COMMAND:
-                 if (localLanguage.equalsIgnoreCase("zh-CN")) {
+            case LANGUAGE_COMMAND:
+                if (localLanguage.equalsIgnoreCase("zh-CN")) {
                     localLanguage = "en-US";
                     languageCommand.setCommandName("Chinese");
                 }
@@ -390,11 +404,13 @@ public class UIDemoMain  implements ActionListener {
         return UIManager.getInstance().localize("aboutString", "About text");
     }
 
-    private class ButtonActionListener implements ActionListener {
+    private class ButtonActionListener
+        implements ActionListener {
+
         public void actionPerformed(ActionEvent evt) {
-            Form f = ((Button)evt.getSource()).getComponentForm();
-            if(f instanceof Dialog) {
-                ((Dialog)f).dispose();
+            Form f = ((Button) evt.getSource()).getComponentForm();
+            if (f instanceof Dialog) {
+                ((Dialog) f).dispose();
             }
             currentDemo = ((Demo) (demosHash.get(evt.getSource())));
             currentDemo.run(backCommand, UIDemoMain.this, demoPanel);
