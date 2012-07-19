@@ -1,13 +1,16 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright © 2012 Nokia Corporation. All rights reserved.
+ * Nokia and Nokia Connecting People are registered trademarks of Nokia Corporation. 
+ * Oracle and Java are trademarks or registered trademarks of Oracle and/or its
+ * affiliates. Other product and company names mentioned herein may be trademarks
+ * or trade names of their respective owners. 
+ * See LICENSE.TXT for license information.
  */
-package com.futurice;
+package com.nokia.contactbookdemo;
 
 import com.sun.lwuit.*;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
-import com.sun.lwuit.io.Storage;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.list.DefaultListModel;
 import java.util.Enumeration;
@@ -17,10 +20,7 @@ import javax.microedition.pim.ContactList;
 import javax.microedition.pim.PIM;
 import javax.microedition.pim.PIMException;
 
-/**
- * @author ilau
- */
-public class TestMidlet extends MIDlet {
+public class ContactBookDemo extends MIDlet {
     private List contactList = null;
     private PIM pim = null;
     private Command clearCommand;
