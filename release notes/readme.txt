@@ -12,7 +12,7 @@ been taken into use. LWUIT for Series 40 has been developed and tested with
 Nokia SDK 1.1 and 2.0 for Java and it can be used for applications targeted at
 Series 40 5th Edition and newer devices with both keypad and touch user interface.
 
-The aplication is hosted in Nokia Developer Projects:
+The application is hosted in Nokia Developer Projects:
 - http://projects.developer.nokia.com/LWUIT_for_Series_40
 
 For more information on the implementation, visit the wiki page:
@@ -34,6 +34,17 @@ Features supported by the library:
 • Support for Nokia TextEditor, and Gesture FW added
 • Resource Editor modified to improve the development process
 • New and updated example apps for Series 40
+
+Choosing JAR
+============
+
+A theme allows us to set the style attributes for an entire class of components in a single place.
+
+To get S40 look and feel to your application, use S40-with-themes.jar. If you want to have a theme of you own and save in size of jar file, use S40-no-themes.jar. Use the jar under the release name folder (sdk2.0/sdk1.1/s40-6th-ed-sdk) for same or earlier version of devices.
+ 
+For example, if you write a LWUIT application for SDK 2.0 and 1.1 devices, use sdk2.0/S40-touch-and-type.jar. Applications using LWUIT jars under specific release folder are expected to compile and run on the same release but in earlier versions they only run but do not compile.
+
+IO-MIDP.jar is S40 LWUIT MIDP version and IO-SE.jar is Java SE version. Both provide tools for networking and storage & file system IO operations.
 
 
 Supported Devices/Platform:
@@ -134,6 +145,8 @@ Known Problems and Limitations:
 
 - LWUIT is not optimised for applications that require very high-speed graphics
   (full-blown games). LCDUI's Canvas and GameCanvas are better choices there.
+
+- 3D transitions will not work. However, other transitions like Slide, Fade and etc work.
 
 - The Series 40 device portfolio ranges from very price-competitive entry devices
   with a 128*160 pixel display and keyboard input to capable touch UI phones with
