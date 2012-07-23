@@ -20,7 +20,6 @@ import com.sun.lwuit.TextArea;
 import com.sun.lwuit.animations.Transition;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
-import com.sun.lwuit.events.FocusListener;
 import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.layouts.GridLayout;
@@ -62,8 +61,8 @@ public class UIDemoMain
     static final Demo[] DEMOS = new Demo[]{
         /* new ThemeDemo(), */new RenderingDemo(), new AnimationDemo(), new ButtonsDemo(),
         new TransitionDemo(), new FontDemo(), new TabsDemo(), new DialogDemo(),
-        new LayoutDemo(), new ScrollDemo(), new TableDemo(), new TreeDemo(),
-        new HTMLDemo()
+        new LayoutDemo(), new ScrollDemo(), new TableDemo(), new TreeDemo()/*,
+        new HTMLDemo()*/
     };
     private Demo currentDemo;
     private Hashtable demosHash = new Hashtable();
