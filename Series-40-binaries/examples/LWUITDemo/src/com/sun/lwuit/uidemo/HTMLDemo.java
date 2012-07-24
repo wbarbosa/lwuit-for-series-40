@@ -44,7 +44,14 @@ public class HTMLDemo extends Demo /*implements ActionListener*/ {
         public void actionPerformed(ActionEvent evt) {
             Form srcForm = new Form("View Source");
             srcForm.setLayout(new BorderLayout());
-            TextArea srcTa=new TextArea(getSource());
+            String src = getSource();
+            int lines = 1;
+            for (int i = 0; i < src.length(); i++) {
+                if (src.charAt(i) == '\n') {
+                    lines++;
+                }
+            }
+            TextArea srcTa=new TextArea(src, lines, 35);
             srcTa.setEditable(false);
             srcForm.addComponent(BorderLayout.CENTER,srcTa);
             Command c = new Command("Back") {
