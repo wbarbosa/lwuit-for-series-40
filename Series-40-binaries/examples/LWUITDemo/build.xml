@@ -124,8 +124,4 @@
             <animation file="images/duke3_1.gif" />
         </build>
     </target>
-
-    <target name="extract-libs" description="Dont do this">
-        <!-- workaround for Netbeans 6.9 bug -->
-    </target>
 </project>

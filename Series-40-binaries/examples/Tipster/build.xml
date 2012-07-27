@@ -81,9 +81,6 @@
 
             -->
 
-    <target name="extract-libs" description="Dont do this">
-        <!-- workaround for Netbeans 6.9 bug -->
-    </target>
    <target name="build-release" depends="rebuild">
         <ant inheritall="false" antfile="Desktop/build.xml" target="clean" />
         <ant inheritall="false" antfile="Desktop/build.xml" target="jar" />
