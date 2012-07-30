@@ -58,6 +58,7 @@ the ResourceEditor without problems you can use this script.
     <target name="copy-examples" depends="init">
         <copy todir="${releasepath}/examples">
             <fileset dir="${examples}" >
+                <exclude name="**/TimeZone/**" />
                 <exclude name="**/build/**" />
                 <exclude name="**/dist/**" />
             </fileset>
@@ -102,61 +103,33 @@ the ResourceEditor without problems you can use this script.
         <replace file="${releasepath}/examples/LWUITDemo/nbproject/project.properties"
             value="../../bin/sdk2.0/S40-with-themes.jar"
             token="../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
-        />
-        <replace file="${releasepath}/examples/LWUITDemo/LWUITDemoMIDP/nbproject/project.properties"
-            value="../../../bin/sdk2.0/S40-with-themes.jar"
-            token="../../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
-        />
+        /> 
         <!-- Makeover -->
         <replace file="${releasepath}/examples/Makeover/nbproject/project.properties"
             value="../../bin/sdk2.0/S40-with-themes.jar"
             token="../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
         />
         <replace file="${releasepath}/examples/Makeover/nbproject/project.properties"
-            value="../../bin/IO/IO.jar"
-            token="../../Series-40-binaries/bin/IO/IO.jar"
-        />
-        <replace file="${releasepath}/examples/Makeover/MakeoverMIDP/nbproject/project.properties"
-            value="../../../bin/IO/IO-MIDP.jar"
-            token="../../../Series-40-binaries/bin/IO/IO-MIDP.jar"
-        />
-        <replace file="${releasepath}/examples/Makeover/MakeoverMIDP/nbproject/project.properties"
-            value="../../../bin/sdk2.0/S40-with-themes.jar"
-            token="../../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
+            value="../../bin/IO/IO-MIDP.jar"
+            token="../../Series-40-binaries/bin/IO/IO-MIDP.jar"
         />
         <!-- TimeZone -->
-        <replace file="${releasepath}/examples/TimeZone/MIDP/nbproject/project.properties"
-            value="../../../bin/sdk2.0/S40-with-themes.jar"
-            token="../../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
-        />
-        <replace file="${releasepath}/examples/TimeZone/MIDP/nbproject/project.properties"
-            value="../../../bin/IO/IO-MIDP.jar"
-            token="../../../Series-40-binaries/bin/IO/IO-MIDP.jar"
-        />
-        <replace file="${releasepath}/examples/TimeZone/nbproject/project.properties"
-            value="../../bin/IO/IO.jar"
-            token="../../Series-40-binaries/bin/IO/IO.jar"
+        <!--<replace file="${releasepath}/examples/TimeZone/nbproject/project.properties"
+            value="../../bin/IO/IO-MIDP.jar"
+            token="../../Series-40-binaries/bin/IO/IO-MIDP.jar"
         />
         <replace file="${releasepath}/examples/TimeZone/nbproject/project.properties"
             value="../../bin/sdk2.0/S40-with-themes.jar"
             token="../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
-        />
+        />-->
         <!-- Tipster -->
         <replace file="${releasepath}/examples/Tipster/nbproject/project.properties"
             value="../../bin/sdk2.0/S40-with-themes.jar"
             token="../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
         />
         <replace file="${releasepath}/examples/Tipster/nbproject/project.properties"
-            value="../../bin/IO/IO.jar"
-            token="../../Series-40-binaries/bin/IO/IO.jar"
-        />
-        <replace file="${releasepath}/examples/Tipster/MIDP/nbproject/project.properties"
-            value="../../../bin/sdk2.0/S40-with-themes.jar"
-            token="../../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
-        />
-        <replace file="${releasepath}/examples/Tipster/MIDP/nbproject/project.properties"
-            value="../../../bin/IO/IO-MIDP.jar"
-            token="../../../Series-40-binaries/bin/IO/IO-MIDP.jar"
+            value="../../bin/IO/IO-MIDP.jar"
+            token="../../Series-40-binaries/bin/IO/IO-MIDP.jar"
         />
     </target>
 
