@@ -157,7 +157,7 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
     }
 
     public void setSize(int width, int height) {
-        editor.setSize(width, height);
+        editor.setSize(width < 1 ? 1 : width, height < 1 ? 1 : height);
     }
 
     public void setTextEditorListener(TextEditorListener listener) {
