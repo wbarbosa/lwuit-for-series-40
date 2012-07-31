@@ -47,7 +47,7 @@ public class ContactBookDemo
 
         final TextArea searchField = TextField.create();
         form.addComponent(searchField);
-
+        
         Button searchButton = new Button("Search");
         searchButton.setPreferredW(form.getWidth() / 2 - 5);
         searchButton.addActionListener(new ActionListener() {
@@ -74,6 +74,7 @@ public class ContactBookDemo
         populateContactList(searchField.getText());
 
         form.show();
+        form.setFocused(searchField);
     }
 
     private void populateContactList(String searchTerm) {
