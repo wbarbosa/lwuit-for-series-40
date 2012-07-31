@@ -36,11 +36,6 @@ public class S40FullTouchImplementation extends S40GestureImplementation impleme
         com.nokia.mid.ui.VirtualKeyboard.setVisibilityListener(this);
     }
 
-    public void setCurrentForm(Form f) {
-        
-        super.setCurrentForm(f);
-    }
-
     public void showNotify(int i) {
         //do nothing
     }
