@@ -1165,6 +1165,7 @@ public class Form extends Container {
      * Displays the current form on the screen
      */
     private void show(boolean reverse) {
+        
         if (transitionOutAnimator == null && transitionInAnimator == null) {
             initLaf(UIManager.getInstance().getLookAndFeel());
         }
