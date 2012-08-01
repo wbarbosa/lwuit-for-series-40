@@ -257,7 +257,9 @@ public class Dialog extends Form {
     }
 
     /**
-     * @inheritDoc
+     * Returns the layout manager responsible for arranging this container
+     * 
+     * @return the container layout manager
      */
     public Layout getLayout() {
         if(dialogTitleCompatibilityMode) {
@@ -288,7 +290,14 @@ public class Dialog extends Form {
     }
 
     /**
-     * @inheritDoc
+     * Adds a Component to the Container
+     * 
+     * @param constraints this method is useful when the Layout requires a constraint
+     * such as the BorderLayout.
+     * In this case you need to specify an additional data when you add a Component,
+     * such as "CENTER", "NORTH"...
+     *
+     * @param cmp component to add
      */
     public void addComponent(Object constraints, Component cmp) {
         if(dialogTitleCompatibilityMode) {
@@ -299,7 +308,14 @@ public class Dialog extends Form {
     }
 
     /**
-     * @inheritDoc
+     * Adds a Component to the Container
+     * 
+     * @param index location to insert the Component
+     * @param constraints this method is useful when the Layout requires a constraint
+     * such as the BorderLayout.
+     * In this case you need to specify an additional data when you add a Component,
+     * such as "CENTER", "NORTH"...
+     * @param cmp component to add
      */
     public void addComponent(int index, Object constraints, Component cmp) {
         if(dialogTitleCompatibilityMode) {
@@ -364,7 +380,9 @@ public class Dialog extends Form {
     }
 
     /**
-     * @inheritDoc
+     * Sets the layout manager responsible for arranging this container
+     * 
+     * @param layout the specified layout manager
      */
     public void setLayout(Layout layout) {
         if(dialogTitleCompatibilityMode) {
@@ -1034,7 +1052,10 @@ public class Dialog extends Form {
     }
 
     /**
-     * @inheritDoc
+     * The equivalent of calling both setScrollableY and setScrollableX
+     * 
+     * @param scrollable whether the component should/could scroll on the 
+     * X and Y axis
      */
     public void setScrollable(boolean scrollable) {
         getContentPane().setScrollable(scrollable);
@@ -1378,7 +1399,7 @@ public class Dialog extends Form {
     }
 
     /**
-     * @inheritDoc
+     * Overrides {@link Animation} animate method.
      */
     public boolean animate() {
         isTimedOut();

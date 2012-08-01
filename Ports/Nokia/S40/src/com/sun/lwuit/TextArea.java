@@ -238,7 +238,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private Command previousClearCommand;
     private String clearText = UIManager.getInstance().localize("clear", "Clear");
 	
-    protected javax.microedition.lcdui.Image[] indicatorImages;
     /**
      * Used to listen dragevents from parent form.
      */
@@ -1280,10 +1279,14 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     public static char getWidestChar() {
         return widestChar;
     }
-	
-	public void setSingleLineTextArea(boolean singleLineTextArea) {
+
+    /**
+     * Set singleLIneTextArea variable. Mostly used only internally.
+     * @param singleLineTextArea true for single-line, false otherwise.
+     */
+    public void setSingleLineTextArea(boolean singleLineTextArea) {
 		this.singleLineTextArea = singleLineTextArea;
-	}
+    }
 
     /**
      * Indicates whether this is a single line text area, in which case "growing" won't
@@ -1628,6 +1631,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
     }    
     
+    /**
+     * Returns the visibility of the Nokia TextEditor.
+     * @return true if visible, false otherwise.
+     */
     public boolean isNativeTextEditorVisible() {
         if(textEditor != null) {
             return textEditor.isVisible();
@@ -1666,11 +1673,17 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         
     }
 
+    /**
+     * @inheritDoc
+     */
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         
     }
 
+    /**
+     * @inheritDoc
+     */
     public void focusGained(Component cmp) {
         if(dontWaitForKeyReleased) {
             focusTextEditor();
@@ -1722,7 +1735,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             }
         }
     }
-    
+    /**
+     * @inheritDoc
+     */
     public void focusLost(Component cmp) {
         if (textEditor != null && textEditorEnabled) {
             textEditor.setFocus(false);
@@ -1744,6 +1759,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
     }
     
+    /**
+     * Get visible contentposition of the content in TextEditorProvider
+     * @return visible contentposition.
+     */
     public int getVisibleContentPosition() {
         return visibleContentPosition;
     }
@@ -1761,7 +1780,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             }
         }
     }
-    
+    /**
+     * Return true if Nokia textEditor is enabled in this field. False if otherwise.
+     * @return true if enabled, false otherwise.
+     */
     public boolean getTextEditorEnabled() {
         return textEditorEnabled;
     }
@@ -1814,7 +1836,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             clearCommand.setCommandName(clearText);
         }
     }
-    
+    /**
+     * Get the string that is shown in the clear-button.
+     * @return String containing the clear-button label.
+     */
     public  String getClearText() {
         return clearText;
     }

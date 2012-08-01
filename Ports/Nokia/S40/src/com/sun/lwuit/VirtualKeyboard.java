@@ -116,13 +116,34 @@ public class VirtualKeyboard extends Dialog implements VirtualKeyboardInterface{
     private boolean upperCase = false;
     private Button currentButton;
 
-    
+    /**
+     * Button type for inserting the label of the button.
+     */
     public static final int INSERT_CHAR = 1;
+    /**
+     * Button type for deleting a character.
+     */
     public static final int DELETE_CHAR = 2;
+    /**
+     * Button type for mode changing.
+     */
     public static final int CHANGE_MODE = 3;
+    
+    /**
+     * Button type for shift
+     */
     public static final int SHIFT = 4;
+    /**
+     * Button type for OK
+     */
     public static final int OK = 5;
+    /**
+     * Button type for SPACE
+     */
     public static final int SPACE = 6;
+    /**
+     * Button type for T9
+     */
     public static final int T9 = 7;
     
     private Hashtable specialButtons = new Hashtable();
@@ -136,6 +157,9 @@ public class VirtualKeyboard extends Dialog implements VirtualKeyboardInterface{
 
     private static Class vkbClass;
     private VirtualKeyboard vkb;
+    /**
+     * VirtualKeyboard name
+     */
     public final static String NAME = "LWUIT_VirtualKeyboard";
     private boolean isShowing = false;
 
@@ -156,6 +180,10 @@ public class VirtualKeyboard extends Dialog implements VirtualKeyboardInterface{
         }
     }
 
+    /**
+     * Set input type
+     * @param inputType type of input see {@link TextArea} for input types.
+     */
     public void setInputType(int inputType) {
         switch (inputType) {
             case TextArea.NUMERIC:
@@ -957,14 +985,15 @@ public class VirtualKeyboard extends Dialog implements VirtualKeyboardInterface{
     }
 
     /**
-     * @see VirtualKeyboardInterface
+     * return keyboard name
      */
     public String getVirtualKeyboardName() {
         return NAME;
     }
 
     /**
-     * @see VirtualKeyboardInterface
+     * Return true if Keyboard shown false otherwise
+     * @return true if visible, false otherwise.
      */
     public boolean isVirtualKeyboardShowing() {
         return isShowing;
