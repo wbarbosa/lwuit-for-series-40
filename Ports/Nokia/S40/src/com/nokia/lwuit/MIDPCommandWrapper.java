@@ -12,6 +12,11 @@ public class MIDPCommandWrapper {
     int offset = 0;
     int type = 0;
 
+    /**
+     * Create the an instance of this class.
+     * @param c
+     * @return new MIDPCommandWrapper instance.
+     */
     public static MIDPCommandWrapper createInstance(com.sun.lwuit.Command c) {
         if (c.getIcon() != null) {
             try {
@@ -44,6 +49,9 @@ public class MIDPCommandWrapper {
         return lwuitCommand;
     }
 
+    /**
+     * Default Constructor
+     */
     public MIDPCommandWrapper() {
         offset = 0;
         type = Command.SCREEN;

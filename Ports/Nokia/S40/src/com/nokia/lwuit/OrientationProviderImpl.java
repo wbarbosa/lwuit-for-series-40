@@ -14,10 +14,15 @@ import java.util.Hashtable;
 class OrientationProviderImpl extends OrientationProvider{
 
     private static final Hashtable listeners = new Hashtable();
+    /**
+     * Default Constructor.
+     */
     public OrientationProviderImpl() {
         
     }
-    
+    /**
+     * @inheritDoc
+     */
     public void addOrientationListener(final OrientationListener listener) {
         com.nokia.mid.ui.orientation.OrientationListener ol = new com.nokia.mid.ui.orientation.OrientationListener() {
 
@@ -31,15 +36,21 @@ class OrientationProviderImpl extends OrientationProvider{
         }
         
     }
-
+    /**
+     * @inheritDoc
+     */
     public int getAppOrientation() {
         return Orientation.getAppOrientation();
     }
-
+    /**
+     * @inheritDoc
+     */
     public int getDisplayOrientation() {
         return Orientation.getDisplayOrientation();
     }
-
+    /**
+     * @inheritDoc
+     */
     public void removeOrientationListener(OrientationListener listener) {
         com.nokia.mid.ui.orientation.OrientationListener ol = (com.nokia.mid.ui.orientation.OrientationListener)listeners.get(listener);
         if(ol != null) {
@@ -49,7 +60,9 @@ class OrientationProviderImpl extends OrientationProvider{
             listeners.remove(listener);
         }
     }
-
+    /**
+     * @inheritDoc
+     */
     public void setAppOrientation(int newAppOrientation) {
         Orientation.setAppOrientation(newAppOrientation);
     }

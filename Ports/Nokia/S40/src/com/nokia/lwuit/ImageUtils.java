@@ -80,6 +80,12 @@ public class ImageUtils {
         return sourceData;
     }
     
+    /**
+     * Create a new image by using a mask to a source image.
+     * @param source
+     * @param mask
+     * @return new image that has been masked from the source.
+     */
     public static Image drawMaskedImage(Image source, Image mask) {
         // Reserve an array for the pixel data of each image
         int[] sourceData = new int[source.getHeight() * source.getWidth()];

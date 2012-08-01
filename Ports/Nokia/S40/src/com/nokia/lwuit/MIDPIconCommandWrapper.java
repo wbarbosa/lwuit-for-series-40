@@ -11,6 +11,10 @@ import javax.microedition.lcdui.Image;
 class MIDPIconCommandWrapper extends MIDPCommandWrapper {
     private Command command = null;
 
+    /**
+     * Creates a IconCommand from the original LWUIT Command class.
+     * @return IconCommand class. 
+     */
     public Command getCommand() {
         if (command == null) {
             command = new IconCommand(lwuitCommand.getCommandName(),
@@ -21,6 +25,9 @@ class MIDPIconCommandWrapper extends MIDPCommandWrapper {
         return command;
     }
 
+    /**
+     * Default Constructor
+     */
     public MIDPIconCommandWrapper() {
         offset = 0;
         type = Command.SCREEN;
