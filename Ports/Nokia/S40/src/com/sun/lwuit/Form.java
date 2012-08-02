@@ -714,7 +714,9 @@ public class Form extends Container {
     }
 
     /**
-     * @inheritDoc
+     * Sets the layout manager responsible for arranging this container
+     * 
+     * @param layout the specified layout manager
      */
     public void setLayout(Layout layout) {
         contentPane.setLayout(layout);
@@ -761,14 +763,28 @@ public class Form extends Container {
     }
 
     /**
-     * @inheritDoc
+     * Adds a Component to the Container
+     * 
+     * @param constraints this method is useful when the Layout requires a constraint
+     * such as the BorderLayout.
+     * In this case you need to specify an additional data when you add a Component,
+     * such as "CENTER", "NORTH"...
+     *
+     * @param cmp component to add
      */
     public void addComponent(Object constraints, Component cmp) {
         contentPane.addComponent(constraints, cmp);
     }
 
     /**
-     * @inheritDoc
+     * Adds a Component to the Container
+     * 
+     * @param index location to insert the Component
+     * @param constraints this method is useful when the Layout requires a constraint
+     * such as the BorderLayout.
+     * In this case you need to specify an additional data when you add a Component,
+     * such as "CENTER", "NORTH"...
+     * @param cmp component to add
      */
     public void addComponent(int index, Object constraints, Component cmp) {
         contentPane.addComponent(index, constraints, cmp);
@@ -784,14 +800,30 @@ public class Form extends Container {
     }
 
     /**
-     * @inheritDoc
+     * This method replaces the current Component with the next Component.
+     * Current Component must be contained in this Container.
+     * This method return immediately.
+     * 
+     * @param current a Component to remove from the Container
+     * @param next a Component that replaces the current Component
+     * @param t a Transition between the add and removal of the Components
+     *  a Transition can be null
      */
     public void replace(Component current, Component next, Transition t) {
         contentPane.replace(current, next, t);
     }
 
     /**
-     * @inheritDoc
+     * This method replaces the current Component with the next Component.
+     * Current Component must be contained in this Container.
+     * This method returns when transition has finished.
+     *
+     * @param current a Component to remove from the Container
+     * @param next a Component that replaces the current Component
+     * @param t a Transition between the add and removal of the Components
+     *  a Transition can be null
+     * @param dropEvents indicates if the display should drop all events
+     * while this Component replacing is happening
      */
     public void replaceAndWait(Component current, Component next, Transition t) {
         contentPane.replaceAndWait(current, next, t);
@@ -903,7 +935,7 @@ public class Form extends Container {
     }
 
     /**
-     * @inheritDoc
+     * Overrides {@link Animation} animate method.
      */
     public boolean animate() {
         if(getParent() != null) {
@@ -1600,7 +1632,9 @@ public class Form extends Container {
     }
 
     /**
-     * @inheritDoc
+     * Returns the layout manager responsible for arranging this container
+     * 
+     * @return the container layout manager
      */
     public Layout getLayout() {
         return contentPane.getLayout();
@@ -1982,21 +2016,28 @@ public class Form extends Container {
     }
 
     /**
-     * @inheritDoc
+     * Sets whether the component should/could scroll on the Y axis
+     * 
+     * @param scrollableY whether the component should/could scroll on the Y axis
      */
     public void setScrollableY(boolean scrollableY) {
         getContentPane().setScrollableY(scrollableY);
     }
 
     /**
-     * @inheritDoc
+     * Sets whether the component should/could scroll on the X axis
+     * 
+     * @param scrollableX whether the component should/could scroll on the X axis
      */
     public void setScrollableX(boolean scrollableX) {
         getContentPane().setScrollableX(scrollableX);
     }
 
     /**
-     * @inheritDoc
+     * Returns the Component index in the Container
+     * 
+     * @param cmp the component to search for
+     * @return the Component index in the Container or -1 if not found
      */
     public int getComponentIndex(Component cmp) {
         return getContentPane().getComponentIndex(cmp);
@@ -2402,7 +2443,10 @@ public class Form extends Container {
     }
 
     /**
-     * @inheritDoc
+     * The equivalent of calling both setScrollableY and setScrollableX
+     * 
+     * @param scrollable whether the component should/could scroll on the 
+     * X and Y axis
      */
     public void setScrollable(boolean scrollable) {
         contentPane.setScrollable(scrollable);
