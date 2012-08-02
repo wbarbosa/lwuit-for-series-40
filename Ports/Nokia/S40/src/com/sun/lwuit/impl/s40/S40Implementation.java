@@ -68,11 +68,18 @@ public class S40Implementation extends LWUITImplementation {
         return ret;
     }
     
-    
+    /**
+     * Hide LWUIT menu.
+     * @param value true for invisible, false for visible.
+     */
     public void setHideMenu(boolean value) {
         hideMenu = value;
     }
     
+    /**
+     * Get the hidemenu value.
+     * @return true if menu should be hidden, false otherwise.
+     */
     public boolean shouldHideMenu() {
         return hideMenu;
     }
@@ -98,6 +105,9 @@ public class S40Implementation extends LWUITImplementation {
     private static int[] portableKeyCodeValues;
     private int alpha = 255;
     private int[] rgbArr;
+    /**
+     * The actual canvas that LWUIT is drawn to.
+     */
     protected final S40Implementation.C canvas = new S40Implementation.C();
 
     
@@ -356,6 +366,9 @@ public class S40Implementation extends LWUITImplementation {
         return new S40Implementation.C();
     }
 
+    /**
+     * Default constructor. 
+     */
     public S40Implementation() {
         // code should be in the init to allow assignment into implementation first
     }
@@ -1997,10 +2010,20 @@ public class S40Implementation extends LWUITImplementation {
             canvas.setTitle(t);
         }
     }
+    /**
+     * A method to check if Gesture API is supported by the platform
+     * @return 
+     */
     public boolean areGesturesSupported() {
         return false;
     }
     
+    /**
+     * Set the GestureListener that is attached to the Form as the current GestureListener
+     * used mostly internally. Base implementation doesn't do anything. {@link S40GestureImplementation}
+     * has the actual implementation.
+     * @param f a Form that has a gestureHandler attached to.
+     */
     public synchronized void setCurrentGestureListener(com.sun.lwuit.Form f) {
         //do nothing
     }

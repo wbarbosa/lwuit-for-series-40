@@ -36,10 +36,18 @@ public class S40FullTouchImplementation extends S40GestureImplementation impleme
         com.nokia.mid.ui.VirtualKeyboard.setVisibilityListener(this);
     }
 
+    /**
+     * Override of com.nokia.mid.ui.KeyboardVisibilityListener
+     * @param i which can be VirtualKeyboard.SYSTEM_KEYBOARD or VirtualKeyboard.CUSTOM_KEYBOARD
+     */
     public void showNotify(int i) {
         //do nothing
     }
 
+    /**
+     * Override of com.nokia.mid.ui.KeyboardVisibilityListener
+     * @param i which can be VirtualKeyboard.SYSTEM_KEYBOARD or VirtualKeyboard.CUSTOM_KEYBOARD
+     */
     public void hideNotify(int i) {
         //issue extra repaint so that the screensize is updated properly
         this.getCurrentForm().repaint();

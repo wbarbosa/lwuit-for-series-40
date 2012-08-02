@@ -24,6 +24,13 @@ public class S40GestureImplementation extends S40Implementation{
     private Vector gestureListeners = new Vector();
     private GestureListenerImpl internalListener;
     
+    /**
+     * Default constructor.
+     */
+    public S40GestureImplementation() {
+        
+    }
+    
     public void init(Object m) {
         super.init(m);
         
@@ -43,6 +50,11 @@ public class S40GestureImplementation extends S40Implementation{
         GestureRegistrationManager.setListener(canvas, internalListener);
     }
         
+    /**
+     * Add gesturehandler. This causes the handler to receive gesture-events when the
+     * Form that this handler is attached to is shown.
+     * @param l the handler to register to receive events
+     */
     public void addGestureHandler(GestureHandler l) {
         gestureListeners.addElement(l);
     }
@@ -61,10 +73,20 @@ public class S40GestureImplementation extends S40Implementation{
         currentFormGestureHandler = h;
     }
     
+    /**
+     * Remove a gesturehandler. After this the handler will no longer receive Gesture
+     * events.
+     * @param l 
+     */
     public synchronized void removeGestureHandler(GestureHandler l) {
         gestureListeners.removeElement(l);
     }
 
+    /**
+     * Set a gesturehandler that will get every gesture event that occur in the app.
+     * To remove a global handler, set this to null.
+     * @param l the handler to register as global handler
+     */
     public synchronized void setGlobalGestureHandler(GestureHandler l) {
         globalGestureHandler = l;
     }
