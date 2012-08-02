@@ -13,17 +13,24 @@ import javax.microedition.lcdui.Image;
 
 
 /**
- *
+ * For internal use only. This class is used to apply graphical effects to a border
  * @author tkor
  */
 public class BorderBlender {
     
     private static BorderBlender mSelf;
     
+    /**
+     * Default constructor
+     */
     private BorderBlender() {
         
     }
     
+    /**
+     * Get instnace of the BorderBlender class.
+     * @return singleton instance of the BorderBlender class.
+     */
     public static BorderBlender getInstance() {
         if(mSelf == null) {
             mSelf = new BorderBlender();
@@ -63,6 +70,11 @@ public class BorderBlender {
             b.images[i] = com.sun.lwuit.Image.createImage(img);
         }
     }
+    /**
+     * Apply color to border.
+     * @param b the border to be colored
+     * @param color the color
+     */
     public void applyColorToBorder(Border b, int color) {
         if(b == null) {
             return;
@@ -82,6 +94,12 @@ public class BorderBlender {
             b.images[i] = com.sun.lwuit.Image.createImage(img);
         }
     }    
+    
+    /**
+     * Apply color to a border used in list.
+     * @param listRendererFocusBorder the border the listitem is using
+     * @param color the color
+     */
     public void applyColorToListItem(Border listRendererFocusBorder, final int color) {
         int l = listRendererFocusBorder.images.length;
         Border b = listRendererFocusBorder;

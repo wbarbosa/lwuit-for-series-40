@@ -1682,7 +1682,8 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
     }
 
     /**
-     * @inheritDoc
+     * Invoked when component gains focus
+     * @param cmp the component that gains focus
      */
     public void focusGained(Component cmp) {
         if(cmp instanceof Label) {
@@ -1694,7 +1695,8 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
     }
 
     /**
-     * @inheritDoc
+     * Invoked when component loses focus
+     * @param cmp the component that lost focus
      */
     public void focusLost(Component cmp) {
         if(cmp instanceof Label) {

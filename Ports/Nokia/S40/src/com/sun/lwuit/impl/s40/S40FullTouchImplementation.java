@@ -15,6 +15,13 @@ import com.sun.lwuit.Form;
  */
 public class S40FullTouchImplementation extends S40GestureImplementation implements com.nokia.mid.ui.KeyboardVisibilityListener{
     
+    /**
+     * Default constructor.
+     */
+    public S40FullTouchImplementation() {
+        
+    }
+    
     public void init(Object m) {
         super.init(m);
         

@@ -229,6 +229,7 @@ public class UIManager {
     }
 
     /**
+     * Get the name of the current theme.
      * @return the name of the current theme for theme switching UI's
      */
     public String getThemeName() {
@@ -1264,6 +1265,10 @@ public class UIManager {
         themelisteners.removeListener(l);
     }
     
+    /**
+     * Set native display.
+     * @param d the native display
+     */
     public void setNativeDisplay(javax.microedition.lcdui.Display d) {
         nativeDisplay = d;
     }

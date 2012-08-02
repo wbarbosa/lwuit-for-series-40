@@ -690,7 +690,7 @@ public class Border {
     }
 
     /**
-     * {@inheritDoc}
+     * Check equals method from {@link Object}
      */
     public boolean equals(Object obj) {
         if (obj != null && obj.getClass() == getClass()) {
@@ -746,6 +746,14 @@ public class Border {
         return obj1.equals(obj2);
     }
 
+    /**
+     * Create a compound border.
+     * @param top top border
+     * @param bottom bottom border
+     * @param left left border
+     * @param right right border
+     * @return 
+     */
     public static Border createCompoundBorder(Border top, Border bottom, Border left, Border right) {
 
         if ((top != null && !top.isRectangleType()) || 

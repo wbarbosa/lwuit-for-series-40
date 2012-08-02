@@ -113,15 +113,6 @@ the ResourceEditor without problems you can use this script.
             value="../../bin/IO/IO-MIDP.jar"
             token="../../Series-40-binaries/bin/IO/IO-MIDP.jar"
         />
-        <!-- TimeZone -->
-        <!--<replace file="${releasepath}/examples/TimeZone/nbproject/project.properties"
-            value="../../bin/IO/IO-MIDP.jar"
-            token="../../Series-40-binaries/bin/IO/IO-MIDP.jar"
-        />
-        <replace file="${releasepath}/examples/TimeZone/nbproject/project.properties"
-            value="../../bin/sdk2.0/S40-with-themes.jar"
-            token="../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
-        />-->
         <!-- Tipster -->
         <replace file="${releasepath}/examples/Tipster/nbproject/project.properties"
             value="../../bin/sdk2.0/S40-with-themes.jar"
