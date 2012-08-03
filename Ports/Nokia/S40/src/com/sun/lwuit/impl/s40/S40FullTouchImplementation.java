@@ -56,7 +56,7 @@ public class S40FullTouchImplementation extends S40GestureImplementation impleme
      * @param i which can be VirtualKeyboard.SYSTEM_KEYBOARD or VirtualKeyboard.CUSTOM_KEYBOARD
      */
     public void hideNotify(int i) {
-        //issue extra repaint so that the screensize is updated properly
+        //issue extra repaint so that the screensize is updated properly 
         this.getCurrentForm().repaint();
     }
     

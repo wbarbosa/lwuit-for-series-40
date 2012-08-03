@@ -1092,7 +1092,7 @@ public final class Display {
             }
             
         }
-
+        
         if(newForm.getWidth() != getDisplayWidth() || newForm.getHeight() != getDisplayHeight()) {
             newForm.setSize(new Dimension(getDisplayWidth(), getDisplayHeight()));
             newForm.setShouldCalcPreferredSize(true);
@@ -1489,9 +1489,6 @@ public final class Display {
     public void sizeChanged(int w, int h){
         Form current = impl.getCurrentForm();
         if(current == null) {
-            return;
-        }
-        if(w == current.getWidth() && h == current.getHeight()) {
             return;
         }
         addInputEvent(createSizeChangedEvent(w, h));
