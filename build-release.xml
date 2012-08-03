@@ -30,7 +30,7 @@ the ResourceEditor without problems you can use this script.
     <property name="javadocs" location="${docs}/javadocs" />
     <property name="devguide" location="${docs}/LWUIT_Developer_Guide.pdf" />
     <property name="releasepath" location="Series-40-binaries" />
-    <property name="readme" location="README-dist.txt" />
+    <property name="releasenotes" location="release notes" />
     <property name="s40port" location="Ports/Nokia/S40" />
     <property name="RE" location="tools/Lwuit-ResourceEditor" />
     <property name="IO" location="IO" />
@@ -70,6 +70,11 @@ the ResourceEditor without problems you can use this script.
             <fileset dir="${javadocs}" />
         </copy>
         <copy file="${devguide}" todir="${releasepath}/doc" />
+    </target>
+    <target name="copy-notes" depends="init">
+        <copy todir="${releasepath}" >
+            <fileset dir="${releasenotes}" />
+        </copy>
     </target>
     <!-- build & copy ResourceEditor -->
     <target name="ResourceEditor" depends="init" >
@@ -124,7 +129,7 @@ the ResourceEditor without problems you can use this script.
         />
     </target>
 
-    <target name="dist" depends="S40-build, IO-build, copy-examples, copy-docs, ResourceEditor, fix-paths" />
+    <target name="dist" depends="S40-build, IO-build, copy-examples, copy-docs, ResourceEditor, fix-paths, copy-notes" />
 
     <!-- create a single zip package from Series-40-binaries folder -->
     <target name="package" depends="dist">
