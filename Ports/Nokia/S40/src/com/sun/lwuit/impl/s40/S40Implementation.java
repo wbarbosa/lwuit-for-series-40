@@ -62,7 +62,6 @@ public class S40Implementation extends LWUITImplementation {
         try {
             Class.forName("com.nokia.mid.ui.TextEditor");            
         }catch(ClassNotFoundException cnfe) {
-            System.out.println("Native Input not supported.");
             ret = false;
         }
         return ret;

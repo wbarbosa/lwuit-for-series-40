@@ -277,6 +277,7 @@ public class MenuBar extends Container implements ActionListener {
      */
     public void setClearCommand(Command clearCommand) {
         this.clearCommand = clearCommand;
+        updateCommands();
     }
 
     /**
@@ -493,6 +494,7 @@ public class MenuBar extends Container implements ActionListener {
      * Updates the command mapping to the softbuttons
      */
     private void updateCommands() {
+        System.out.println("MenuBar.updateCommands");
         int commandBehavior = getCommandBehavior();
         if(commandBehavior == Display.COMMAND_BEHAVIOR_NATIVE) {
             //prevent platform commands from flickering by making sure
@@ -513,7 +515,8 @@ public class MenuBar extends Container implements ActionListener {
         Command commandsWithoutBackOrDefault[] = new Command[commandCount];
         for (int i = commandCount-1, j = 0; i >= 0; --i) {
             Command c = getCommand(i);
-            if (c != backCommand && c != defaultCommand) {
+
+            if (c != backCommand && c != defaultCommand && c != clearCommand ) {
                 commandsWithoutBackOrDefault[j++] = c;
                 numberOfMiscCommands++;
             }
@@ -550,6 +553,12 @@ public class MenuBar extends Container implements ActionListener {
             if (backCommand != null) {
                 // There is a back command so put it on the right
                 softCommand[2] = backCommand;
+            }
+            //if clear command is present, overide RSK to that
+            if(clearCommand != null) {
+                System.out.println("Menubar.updateCommands setting clearcommand:" + clearCommand.getCommandName());
+                
+                softCommand[2] = clearCommand;
             }
 
             // Then handle MSK: if there's a default command stick it there
@@ -1510,7 +1519,7 @@ public class MenuBar extends Container implements ActionListener {
      * @param commands list of command objects
      * @return Component that will result in the parent menu dialog recieving a command event
      */
-    protected Component createCommandComponent(Vector commands) {
+    protected Component createCommandComponent(Vector commands) {        
         // Create a touch based menu interface
         if (UIManager.getInstance().getLookAndFeel().isTouchMenus()) {
             Container menu = new Container();

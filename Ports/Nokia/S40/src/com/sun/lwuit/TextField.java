@@ -1123,6 +1123,7 @@ public class TextField extends TextArea {
         // if the text field is removed without restoring the commands we need to restore them
         if(handlesInput()) {
             if(useSoftkeys) {
+                System.out.println("TextField.deinitialize call removeCommands");
                 removeCommands(DELETE_COMMAND, T9_COMMAND, originalClearCommand);
             } else {
                 Form f = getComponentForm();
@@ -1240,6 +1241,7 @@ public class TextField extends TextArea {
      * clear command was installed before or not applicable.
      */
     protected Command installCommands(Command clear, Command t9) {
+        System.out.println("TextField.installCommands");
         Form f = getComponentForm();
         if(f != null) {
             Command original = f.getClearCommand();
@@ -1258,7 +1260,6 @@ public class TextField extends TextArea {
                 }
             }
 
-            
             f.addCommand(clear, 0);
             f.addCommand(t9, 0);
             f.setClearCommand(clear);
@@ -1279,6 +1280,7 @@ public class TextField extends TextArea {
      * @inheritDoc
      */
     protected void fireClicked() {
+        System.out.println("TextField.fireClicked");
         if(useNativeTextInput && Display.getInstance().isNativeInputSupported()) {
             super.fireClicked();
             return;
@@ -1323,6 +1325,7 @@ public class TextField extends TextArea {
      * @param originalClear the command originally assigned as the clear command (or null if no command was assigned before)
      */
     protected void removeCommands(Command clear, Command t9, Command originalClear) {
+        System.out.println("TextField.removeCommands");
         Form f = getComponentForm();
         if(f != null) {
             f.removeCommand(clear);
