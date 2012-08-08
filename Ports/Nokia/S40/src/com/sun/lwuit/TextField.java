@@ -1123,8 +1123,8 @@ public class TextField extends TextArea {
         // if the text field is removed without restoring the commands we need to restore them
         if(handlesInput()) {
             if(useSoftkeys) {
-                System.out.println("TextField.deinitialize call removeCommands");
-                removeCommands(DELETE_COMMAND, T9_COMMAND, originalClearCommand);
+                //don't remove the T9 or it wont be shown in the menu
+                removeCommands(DELETE_COMMAND, null, originalClearCommand);
             } else {
                 Form f = getComponentForm();
                 if(f != null) {
@@ -1344,12 +1344,14 @@ public class TextField extends TextArea {
     }
     
     void focusLostInternal() {
+        System.out.println("focusLostInternal");
         // we don't call super to avoid the text area blocking the scrolling
         stopComponentLableTicker();
-
+        
+        Form f = getComponentForm();
         if(handlesInput() || pressedAndNotReleased || pendingCommit) {
             setHandlesInput(false);
-            Form f = getComponentForm();
+            f = getComponentForm();
             if(f != null) {
                 if (useSoftkeys) {
                     removeCommands(DELETE_COMMAND, T9_COMMAND, originalClearCommand);
@@ -1362,7 +1364,7 @@ public class TextField extends TextArea {
             pressedAndNotReleased = false;
             longClick = false;
         }
-        Form f = getComponentForm();
+        f = getComponentForm();
         if(f != null) {
             // prevent the VKB folding in case we are moving from one text component to another
             if(f.getFocused() instanceof TextField) {

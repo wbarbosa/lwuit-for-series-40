@@ -494,7 +494,6 @@ public class MenuBar extends Container implements ActionListener {
      * Updates the command mapping to the softbuttons
      */
     private void updateCommands() {
-        System.out.println("MenuBar.updateCommands");
         int commandBehavior = getCommandBehavior();
         if(commandBehavior == Display.COMMAND_BEHAVIOR_NATIVE) {
             //prevent platform commands from flickering by making sure
