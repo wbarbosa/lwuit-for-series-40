@@ -83,7 +83,7 @@
             <property name="bin" location="../../../Series-40-binaries/bin" />
             
             <target name="post-clean">
-                <delete file="${bin}/bin/sdk2.0/S40-with-themes.jar" />
+                <delete file="${bin}/sdk2.0/S40-with-themes.jar" />
                 <delete file="${bin}/sdk2.0/S40-no-themes.jar" />
                 <delete file="${bin}/sdk2.0/S40-non-touch.jar" />
                 <delete file="${bin}/sdk2.0/S40-touch-and-type.jar" />

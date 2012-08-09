@@ -16,6 +16,7 @@
     <property name="wtk.home" value="c:\tools\Nokia\Devices\Nokia_SDK_2_0_Java" />
     <property name="wtk.midp.version" value="2.0" />
     <property name="UI-MIDP" value="..\..\MIDP\UI\dist\UI.jar" />
+    <property name="bin" location="../../../Series-40-binaries/bin" />
     <path id="bootclasspath.ref">
         <fileset dir="${wtk.home}/lib" >
             <include name="*.jar" />
@@ -27,6 +28,9 @@
     <target name="clean">
         <delete dir="classes" />
         <delete dir="dist" />
+        <delete dir="${bin}/sdk2.0" />
+        <delete dir="${bin}/sdk1.1" />
+        <delete dir="${bin}/s40-6th-ed-sdk" />
     </target>
     <target name="init">
         <mkdir dir="classes/" />
@@ -60,5 +64,41 @@
 
         </wtkpackage>
     </target>
-
+    <target name="release" depends="package">
+        <copy file="dist/S40.jar" 
+            tofile="../../../tools/Lwuit-ResourceEditor/src/main/resources/GeneratedProject/S40.jar" />
+        <!-- create sdk2.0 binaries -->
+        <copy file="dist/S40.jar" 
+            tofile="${bin}/sdk2.0/S40-with-themes.jar" />
+                
+        <jar destfile="${bin}/sdk2.0/S40-no-themes.jar">
+            <zipfileset src="dist/S40.jar" excludes="*.res" />
+        </jar>
+        <jar destfile="${bin}/sdk2.0/S40-non-touch.jar">
+            <zipfileset src="dist/S40.jar" excludes="full_touch_theme.res, nokia_theme.res" />
+        </jar>
+        <jar destfile="${bin}/sdk2.0/S40-touch-and-type.jar">
+            <zipfileset src="dist/S40.jar" excludes="nokia_non_touch_theme.res, full_touch_theme.res" />
+        </jar>
+        <jar destfile="${bin}/sdk2.0/S40-full-touch.jar">
+            <zipfileset src="dist/S40.jar" excludes="nokia_non_touch_theme.res, nokia_theme.res" />
+        </jar>
+        <!-- create sdk1.1 binaries -->
+        <jar destfile="${bin}/sdk1.1/S40-with-themes.jar">
+            <zipfileset src="dist/S40.jar" 
+                excludes="full_touch_theme.res **/MIDPIconCommandWrapper* **/OrientationProviderImpl* **/S40FullTouchImplementation*" />
+        </jar>
+        <jar destfile="${bin}/sdk1.1/S40-no-themes.jar">
+            <zipfileset src="${bin}/sdk1.1/S40-with-themes.jar" excludes="*.res" />
+        </jar>
+        <!-- create S40 6th ed. binaries -->
+        <jar destfile="${bin}/s40-6th-ed-sdk/S40-with-theme.jar">
+            <zipfileset src="${bin}/sdk1.1/S40-with-themes.jar" 
+                excludes="nokia_theme.res **/GestureHandler* **/TextEditorProviderImpl* **/S40GestureImplementation*" />
+        </jar>
+        <jar destfile="${bin}/s40-6th-ed-sdk/S40-no-theme.jar">
+            <zipfileset src="${bin}/s40-6th-ed-sdk/S40-with-theme.jar" excludes="*.res" />
+        </jar>
+        
+    </target>
 </project>
