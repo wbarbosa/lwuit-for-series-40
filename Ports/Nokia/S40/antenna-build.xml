@@ -1,3 +1,15 @@
+<!---
+    A buildscript to build LWUIT for Series 40 library very FAST.
+    
+    1. Make sure ant (http://ant.sourceforge.net) and antenna (http://antenna.sourceforge.net/)
+       are installed.
+    2. set the wtk.home property to the Nokia SDK 2.0 location
+    3. Compile the UI-MIDP port. This has to be done only once.
+    4. Run "ant -f antenna-build.xml" to build S40.jar
+
+    To create the release packages run "release" target.
+    
+-->
 <project name="LWUIT-for-Series-40" default="package" basedir=".">
     <taskdef resource="antenna.properties"/>
     <property name="src" location="src" />
