@@ -1724,7 +1724,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             if (!((S40Implementation) impl).shouldHideMenu()) {
                 Form f = Display.getInstance().getCurrent();
                 if ((constraint & TextArea.UNEDITABLE) == 0) {
-                    if (f.getBackCommand() != clearCommand) {
+                    if (f.getClearCommand() != clearCommand) {
                         previousClearCommand = f.getClearCommand();
                     }
                     if (previousClearCommand != clearCommand) {

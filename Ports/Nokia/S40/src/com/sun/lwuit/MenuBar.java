@@ -434,6 +434,9 @@ public class MenuBar extends Container implements ActionListener {
      * @param backCommand the command to treat as the back Command
      */
     public void setBackCommand(Command backCommand) {
+        if(!commands.contains(backCommand)) {
+            addCommand(backCommand);
+        }
         /**
          * The backstack is used to hold previous command that were backcommands.
          * The current backCommand is always in the backCommand-variable and the rest 
@@ -555,9 +558,11 @@ public class MenuBar extends Container implements ActionListener {
             }
             //if clear command is present, overide RSK to that
             if(clearCommand != null) {
-                System.out.println("Menubar.updateCommands setting clearcommand:" + clearCommand.getCommandName());
-                
                 softCommand[2] = clearCommand;
+                //make sure user still sees the back button in the menu
+                if(backCommand != null) {
+                    unassignedMiscCommands++;
+                }
             }
 
             // Then handle MSK: if there's a default command stick it there
@@ -1526,17 +1531,17 @@ public class MenuBar extends Container implements ActionListener {
             for (int iter = 0; iter < commands.size(); iter++) {
                 Command c = (Command)commands.elementAt(iter);
                 // Only add to menu if:
-                //  a) it's not the back command or the default command, and
+                //  a) it's not the the default command, and
                 //  b) it's not the MSK command on a 3-button layout
                 //  (essentially an automagically set 'default command').
-                if (!(c == backCommand || c == defaultCommand) &&
+                if (!(c == defaultCommand) &&
                         !(soft.length == 3 && c == softCommand[0])) {
                     menu.addComponent(createTouchCommandButton(c));
                 }
             }
             // S40 always has only 1 column in the menu
             int cols = 1;
-            int rows = backCommand == null ? commands.size() : commands.size() - 1;
+            int rows = commands.size();
             GridLayout g = new GridLayout(rows, cols);
             menu.setLayout(g);
             menu.setPreferredW(Display.getInstance().getDisplayWidth());
