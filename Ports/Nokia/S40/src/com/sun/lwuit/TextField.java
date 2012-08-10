@@ -1259,7 +1259,7 @@ public class TextField extends TextArea {
                     selectCommand = getComponentForm().getCommand(0);
                 }
             }
-
+            f.getMenuBar().addSelectCommand(UIManager.getInstance().localize("OK", "OK"));
             f.addCommand(clear, 0);
             f.addCommand(t9, 0);
             f.setClearCommand(clear);
@@ -1328,6 +1328,7 @@ public class TextField extends TextArea {
         System.out.println("TextField.removeCommands");
         Form f = getComponentForm();
         if(f != null) {
+            getComponentForm().getMenuBar().addSelectCommand(getSelectCommandText());
             f.removeCommand(clear);
             f.removeCommand(t9);
             if(selectCommand != null) {
