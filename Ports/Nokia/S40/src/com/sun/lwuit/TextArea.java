@@ -1722,14 +1722,14 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         LWUITImplementation impl = Display.getInstance().getImplementation();
         if (impl instanceof S40Implementation) {
             if (!((S40Implementation) impl).shouldHideMenu()) {
-                Form p = Display.getInstance().getCurrent();
+                Form f = Display.getInstance().getCurrent();
                 if ((constraint & TextArea.UNEDITABLE) == 0) {
-                    if (p.getBackCommand() != clearCommand) {
-                        previousClearCommand = p.getBackCommand();
+                    if (f.getBackCommand() != clearCommand) {
+                        previousClearCommand = f.getClearCommand();
                     }
                     if (previousClearCommand != clearCommand) {
-                        p.addCommand(clearCommand);
-                        p.setBackCommand(clearCommand);
+                        f.addCommand(clearCommand);
+                        f.setClearCommand(clearCommand);
                     }
                 }
             }
@@ -1753,8 +1753,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     private void removeClearCommandFromForm() {
         Form p = Display.getInstance().getCurrent();
-        if (p.getBackCommand() == clearCommand) {
-            p.setBackCommand(previousClearCommand);
+        if (p.getClearCommand() == clearCommand) {
+            p.setClearCommand(previousClearCommand);
             p.removeCommand(clearCommand);
         }
     }
