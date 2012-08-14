@@ -1171,7 +1171,7 @@ public class Form extends Container {
     void initFocused() {
         if (focused == null) {
             Component c = contentPane.findFirstFocusable();
-            if(c instanceof TextArea) {
+            if(c instanceof TextArea && Display.getInstance().isTouchScreenDevice()) {
                 setFocused(null);
             }else {
                 setFocused(c);
