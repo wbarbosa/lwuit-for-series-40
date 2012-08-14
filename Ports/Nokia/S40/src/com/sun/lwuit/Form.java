@@ -1170,7 +1170,12 @@ public class Form extends Container {
 
     void initFocused() {
         if (focused == null) {
-            setFocused(contentPane.findFirstFocusable());
+            Component c = contentPane.findFirstFocusable();
+            if(c instanceof TextArea) {
+                setFocused(null);
+            }else {
+                setFocused(c);
+            }
             if(!Display.getInstance().shouldRenderSelection()) {
                 return;
             }
