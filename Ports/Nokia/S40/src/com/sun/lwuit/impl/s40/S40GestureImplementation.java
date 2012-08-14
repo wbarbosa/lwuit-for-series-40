@@ -23,6 +23,7 @@ public class S40GestureImplementation extends S40Implementation{
         
     private Vector gestureListeners = new Vector();
     private GestureListenerImpl internalListener;
+    private boolean registered = false;
     
     /**
      * Default constructor.
@@ -33,10 +34,12 @@ public class S40GestureImplementation extends S40Implementation{
     
     public void init(Object m) {
         super.init(m);
-        
+    }
+    
+    private void registerGestureCanvas() {
         internalListener = new GestureListenerImpl();
         
-        int gestures =GestureInteractiveZone.GESTURE_FLICK
+        int gestures = GestureInteractiveZone.GESTURE_FLICK
                 | GestureInteractiveZone.GESTURE_LONG_PRESS
                 | GestureInteractiveZone.GESTURE_TAP
                 | GestureInteractiveZone.GESTURE_DRAG
@@ -56,6 +59,10 @@ public class S40GestureImplementation extends S40Implementation{
      * @param l the handler to register to receive events
      */
     public void addGestureHandler(GestureHandler l) {
+        if (!registered) {
+            registerGestureCanvas();
+            registered = true;
+        }
         gestureListeners.addElement(l);
     }
     
