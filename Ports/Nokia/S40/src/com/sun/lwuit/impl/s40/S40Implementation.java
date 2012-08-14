@@ -413,7 +413,6 @@ public class S40Implementation extends LWUITImplementation {
     public void init(Object m) {
         canvas.setTitle(null);
         canvas.setFullScreenMode(!com.sun.lwuit.Display.getInstance().isNativeCommands());
-
         // disable the flashGraphics bug on Nokia phones
         String platform = System.getProperty("microedition.platform");
         if (platform != null && platform.toUpperCase().indexOf("NOKIA") >= 0) {
