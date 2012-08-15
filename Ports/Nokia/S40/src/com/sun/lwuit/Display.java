@@ -453,7 +453,8 @@ public final class Display {
             }
             // Load default Nokia Theme on top
             try {
-                
+                javax.microedition.lcdui.Display nativeDisplay = javax.microedition.lcdui.Display.getDisplay((MIDlet) m);
+                UIManager.getInstance().setNativeDisplay(nativeDisplay);
                 if (INSTANCE.touchScreen) {
                     if(pureTouch) {
                         nokiaResource = Resources.open("/full_touch_theme.res");
@@ -463,8 +464,7 @@ public final class Display {
                 } else {
                     nokiaResource = Resources.open("/nokia_non_touch_theme.res");
                 }
-                javax.microedition.lcdui.Display nativeDisplay = javax.microedition.lcdui.Display.getDisplay((MIDlet) m);
-                UIManager.getInstance().setNativeDisplay(nativeDisplay);
+                
                 UIManager.getInstance().setThemeProps(nokiaResource.getTheme("NokiaTheme"));
                 
                 System.out.println("loaded nokia theme.");
