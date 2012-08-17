@@ -45,7 +45,7 @@ the ResourceEditor without problems you can use this script.
     </target>
     <!--build s40 port -->
     <target name="S40-build" depends="init">
-        <ant antfile="${s40port}/antenna-build.xml" useNativeBasedir="true" target="build" />
+        <ant antfile="${s40port}/antenna-build.xml" useNativeBasedir="true" target="release" />
     </target>
     <!-- build IO lib -->
     <target name="IO-build" depends="init">
