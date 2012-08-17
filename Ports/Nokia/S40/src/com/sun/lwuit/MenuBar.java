@@ -1541,7 +1541,7 @@ public class MenuBar extends Container implements ActionListener {
             }
             // S40 always has only 1 column in the menu
             int cols = 1;
-            int rows = commands.size();
+            int rows = menu.getComponentCount();
             GridLayout g = new GridLayout(rows, cols);
             menu.setLayout(g);
             menu.setPreferredW(Display.getInstance().getDisplayWidth());
