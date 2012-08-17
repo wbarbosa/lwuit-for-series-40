@@ -45,7 +45,7 @@ the ResourceEditor without problems you can use this script.
     </target>
     <!--build s40 port -->
     <target name="S40-build" depends="init">
-        <ant antfile="${s40port}/build.xml" useNativeBasedir="true" target="build" />
+        <ant antfile="${s40port}/antenna-build.xml" useNativeBasedir="true" target="build" />
     </target>
     <!-- build IO lib -->
     <target name="IO-build" depends="init">
@@ -66,7 +66,7 @@ the ResourceEditor without problems you can use this script.
     </target>
     <!-- copy docs -->
     <target name="copy-docs" depends="init">
-        <copy todir="${releasepath}/doc" >
+        <copy todir="${releasepath}/doc/javadoc" >
             <fileset dir="${javadocs}" />
         </copy>
         <copy file="${devguide}" todir="${releasepath}/doc" />
