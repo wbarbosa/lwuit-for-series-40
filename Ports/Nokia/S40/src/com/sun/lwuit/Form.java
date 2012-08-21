@@ -1277,18 +1277,10 @@ public class Form extends Container {
 
     void onShowCompletedImpl() {
         onShowCompleted();
-        if(!(this instanceof  Dialog)) {
-            System.out.println("Form: onShowCompletedImpl");
-        }
         //make sure we don't focus back to textarea since the back button will be missing
         //otherwise
         if(Display.getInstance().isTouchScreenDevice()) {
-            System.out.println("Form.onShowCompletedImpl is touch focused:" + (focused == null));
-            if(focused instanceof TextField) {
-                System.out.println("Form: textfield is focused");
-            }
             if(focused instanceof TextArea) {
-                System.out.println("Form: focused is textarea");
                 setFocused(null);
             }
         }
