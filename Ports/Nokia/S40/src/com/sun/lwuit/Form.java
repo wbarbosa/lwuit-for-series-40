@@ -231,7 +231,6 @@ public class Form extends Container {
      * @param l listener
      */
     public void addShowListener(ActionListener l) {
-        System.out.println("addShowListener");
         if(showListener == null) {
             showListener = new EventDispatcher();
         }
@@ -1170,12 +1169,9 @@ public class Form extends Container {
     }
 
     void initFocused() {
-        System.out.println("Form: initFocused");
         if (focused == null) {
-            System.out.println("finding first focusable.");
             Component c = contentPane.findFirstFocusable();
             if(c instanceof TextArea && Display.getInstance().isTouchScreenDevice()) {
-                System.out.println("textarea is first focusable, set null");
                 setFocused(null);
             }else {
                 setFocused(c);
@@ -2292,7 +2288,6 @@ public class Form extends Container {
     }
 
     Component findNextFocusDown() {
-        System.out.println("focusdown");
         if(focused != null) {
             if(focused.getNextFocusDown() != null) {
                 return focused.getNextFocusDown();
@@ -2303,7 +2298,6 @@ public class Form extends Container {
     }
 
     Component findNextFocusUp() {
-        System.out.println("focusup");
         if(focused != null) {
             if(focused.getNextFocusUp() != null) {
                 return focused.getNextFocusUp();
@@ -2314,7 +2308,6 @@ public class Form extends Container {
     }
 
     Component findNextFocusRight() {
-        System.out.println("focusRight");
         if(focused != null) {
             if(focused.getNextFocusRight() != null) {
                 return focused.getNextFocusRight();
@@ -2325,7 +2318,6 @@ public class Form extends Container {
     }
 
     Component findNextFocusLeft() {
-        System.out.println("focuseleft");
         if(focused != null) {
             if(focused.getNextFocusLeft() != null) {
                 return focused.getNextFocusLeft();
@@ -2345,7 +2337,6 @@ public class Form extends Container {
     }
 
     private void updateFocus(int gameAction) {
-        System.out.println("Form: updateFocus");
         Component focused = getFocused();
         switch (gameAction) {
             case Display.GAME_DOWN: {
@@ -2464,7 +2455,6 @@ public class Form extends Container {
      * @param cmp the form child component
      */
     void requestFocus(Component cmp) {
-        System.out.println("Form: requestFocus");
         if (cmp.isFocusable() && contains(cmp)) {
             scrollComponentToVisible(cmp);
             setFocused(cmp);
@@ -2603,9 +2593,7 @@ public class Form extends Container {
      */
     protected void clearTextFieldFocus() {
         if(Display.getInstance().isTouchScreenDevice()) {
-            System.out.println("Form: clearTextFieldFocus");
             if(focused instanceof TextArea) {
-                System.out.println("Form: focused instanceof TextArea");
                 setFocused(null);
             }
         }
