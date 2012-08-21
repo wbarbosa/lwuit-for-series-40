@@ -231,6 +231,7 @@ public class Form extends Container {
      * @param l listener
      */
     public void addShowListener(ActionListener l) {
+        System.out.println("addShowListener");
         if(showListener == null) {
             showListener = new EventDispatcher();
         }
@@ -1169,9 +1170,12 @@ public class Form extends Container {
     }
 
     void initFocused() {
+        System.out.println("Form: initFocused");
         if (focused == null) {
+            System.out.println("finding first focusable.");
             Component c = contentPane.findFirstFocusable();
             if(c instanceof TextArea && Display.getInstance().isTouchScreenDevice()) {
+                System.out.println("textarea is first focusable, set null");
                 setFocused(null);
             }else {
                 setFocused(c);
@@ -1277,6 +1281,21 @@ public class Form extends Container {
 
     void onShowCompletedImpl() {
         onShowCompleted();
+        if(!(this instanceof  Dialog)) {
+            System.out.println("Form: onShowCompletedImpl");
+        }
+        //make sure we don't focus back to textarea since the back button will be missing
+        //otherwise
+        if(Display.getInstance().isTouchScreenDevice()) {
+            System.out.println("Form.onShowCompletedImpl is touch focused:" + (focused == null));
+            if(focused instanceof TextField) {
+                System.out.println("Form: textfield is focused");
+            }
+            if(focused instanceof TextArea) {
+                System.out.println("Form: focused is textarea");
+                setFocused(null);
+            }
+        }
         if(showListener != null) {
             showListener.fireActionEvent(new ActionEvent(this));
         }
@@ -1300,9 +1319,11 @@ public class Form extends Container {
      * @param modal indictes if this is a modal or modeless dialog true for modal dialogs
      */
     void showModal(int top, int bottom, int left, int right, boolean includeTitle, boolean modal, boolean reverse) {
+        System.out.println("Form: showModal");
         Display.getInstance().flushEdt();
         if (previousForm == null){
             previousForm = Display.getInstance().getCurrent();
+            previousForm.clearTextFieldFocus();
             // special case for application opening with a dialog before any form is shown
             if (previousForm == null) {
                 previousForm = new Form();
@@ -1410,6 +1431,7 @@ public class Form extends Container {
      * Works only for modal forms by returning to the previous form
      */
     void disposeImpl() {
+        System.out.println("Form: disposeImpl");
         if (previousForm != null) {
             previousForm.tint = false;
 
@@ -1477,6 +1499,11 @@ public class Form extends Container {
      * @param focused the newly focused component or null for no focus
      */
     public void setFocused(Component focused) {
+        if(!(this instanceof Dialog)) {
+            
+            System.out.println("Form: setFocused(focused):" + ((focused == null) ? "null" : focused.getUIID()));
+        
+        }
         if (this.focused == focused && focused != null) {
             this.focused.repaint();
             return;
@@ -1485,6 +1512,11 @@ public class Form extends Container {
         this.focused = focused;
         boolean triggerRevalidate = false;
         if (oldFocus != null) {
+            System.out.println("oldfocus:" + oldFocus.getUIID());
+            //debug
+            if(oldFocus instanceof TextArea) {
+                System.out.println("oldFocus is textarea");
+            }
             triggerRevalidate = changeFocusState(oldFocus, false);
             //if we need to revalidate no need to repaint the Component, it will
             //be painted from the Form
@@ -1517,6 +1549,10 @@ public class Form extends Container {
      * revalidate
      */
     private boolean changeFocusState(Component cmp, boolean gained){
+        //debug
+        if(cmp instanceof TextArea) {
+            System.out.println("Form: TextArea changing focusstate");
+        }
         boolean trigger = false;
         Style selected = cmp.getSelectedStyle();
         Style unselected = cmp.getUnselectedStyle();
@@ -1737,8 +1773,11 @@ public class Form extends Container {
             return;
         }
         if (y >= contentPane.getY()) {
-            
             Component cmp = contentPane.getComponentAt(x, y);
+            //make sure we remove the textarea focus if user touches an empty area
+            if(focused != cmp && focused instanceof TextArea) {
+                setFocused(null);
+            }
             if(cmp != null) {
                 cmp.initDragAndDrop(x, y);
                 if(cmp.hasLead) {
@@ -2253,6 +2292,7 @@ public class Form extends Container {
     }
 
     Component findNextFocusDown() {
+        System.out.println("focusdown");
         if(focused != null) {
             if(focused.getNextFocusDown() != null) {
                 return focused.getNextFocusDown();
@@ -2263,6 +2303,7 @@ public class Form extends Container {
     }
 
     Component findNextFocusUp() {
+        System.out.println("focusup");
         if(focused != null) {
             if(focused.getNextFocusUp() != null) {
                 return focused.getNextFocusUp();
@@ -2273,6 +2314,7 @@ public class Form extends Container {
     }
 
     Component findNextFocusRight() {
+        System.out.println("focusRight");
         if(focused != null) {
             if(focused.getNextFocusRight() != null) {
                 return focused.getNextFocusRight();
@@ -2283,6 +2325,7 @@ public class Form extends Container {
     }
 
     Component findNextFocusLeft() {
+        System.out.println("focuseleft");
         if(focused != null) {
             if(focused.getNextFocusLeft() != null) {
                 return focused.getNextFocusLeft();
@@ -2302,6 +2345,7 @@ public class Form extends Container {
     }
 
     private void updateFocus(int gameAction) {
+        System.out.println("Form: updateFocus");
         Component focused = getFocused();
         switch (gameAction) {
             case Display.GAME_DOWN: {
@@ -2420,6 +2464,7 @@ public class Form extends Container {
      * @param cmp the form child component
      */
     void requestFocus(Component cmp) {
+        System.out.println("Form: requestFocus");
         if (cmp.isFocusable() && contains(cmp)) {
             scrollComponentToVisible(cmp);
             setFocused(cmp);
@@ -2550,5 +2595,19 @@ public class Form extends Container {
     
     public String toString() {
         return "Form";
+    }
+    
+    /**
+     * Helper method to clear textfield when showing a Dialog on top of
+     * the Form. 
+     */
+    protected void clearTextFieldFocus() {
+        if(Display.getInstance().isTouchScreenDevice()) {
+            System.out.println("Form: clearTextFieldFocus");
+            if(focused instanceof TextArea) {
+                System.out.println("Form: focused instanceof TextArea");
+                setFocused(null);
+            }
+        }
     }
 }

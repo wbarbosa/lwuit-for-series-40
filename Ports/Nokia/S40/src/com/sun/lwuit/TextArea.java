@@ -35,6 +35,7 @@ import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.impl.LWUITImplementation;
 import java.util.Vector;
+import com.nokia.lwuit.Dbug;
 /**
  * An optionally multi-line editable region that can display text and allow a user to edit it.
  * Depending on the platform editing might occur in a new screen. Notice that when creating
@@ -659,6 +660,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void pointerReleased(int x, int y) {
+        System.out.println("TextArea: pointerReleased");
         // prevent a drag operation from going into edit mode
         if (isDragActivated()) {
             super.pointerReleased(x, y);
@@ -683,6 +685,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
     }
 
+    public void pointerPressed(int x, int y) {
+        super.pointerPressed(x, y);
+        System.out.println("TextArea: pointerPressed");
+    }
+    
+
     public void pointerDragged(int x, int y) {
         super.pointerDragged(x, y);
         hideTextEditor();
@@ -701,6 +709,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     void focusLostInternal() {
+        System.out.println("TextArea: focusLostInternal");
         super.focusLostInternal();
         setHandlesInput(false);
     }
@@ -1595,7 +1604,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                t.dontWaitForKeyReleased = true;
            }
            c.requestFocus();
-
        }
        if((actions&TextEditorProvider.TextEditorListener.ACTION_PAINT_REQUEST) != 0) {
            repaint();
@@ -1603,7 +1611,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
        if((actions&TextEditorProvider.TextEditorListener.ACTION_SCROLLBAR_CHANGED) != 0) {
            //Visible Congtent Position shows how far the y is from the textEditor Y position
            visibleContentPosition = textEditor.getVisibleContentPosition();
-           
        }
        
         if ((actions & TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
@@ -1617,12 +1624,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 }
             }
         }
-
-       this.text = textEditor.getContent();   
+        this.text = textEditor.getContent();   
        
     }
 
     public void setFocus(boolean focused) {
+        System.out.println("TextArea: setFocus");
         super.setFocus(focused);
         if(textEditorEnabled) {
             if(textEditor != null) {
@@ -1685,11 +1692,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void focusGained(Component cmp) {
+        System.out.println("TextArea: focusGained");
         if(dontWaitForKeyReleased) {
             focusTextEditor();
         }
     }
-    private void focusTextEditor() {
+    protected void focusTextEditor() {
         if (textEditor != null && textEditorEnabled) {
             dontWaitForKeyReleased = false;
             if ((constraint & TextArea.UNEDITABLE) == 0) {
@@ -1705,7 +1713,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
     }
     
-    private void hideTextEditor() {
+    protected void hideTextEditor() {
         if (textEditor != null && textEditor.isVisible()) {
             textEditor.setVisible(false);
             setText(textEditor.getContent());
@@ -1816,6 +1824,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     private void ensureTextEditorIsShown() {
         if(hasFocus()) {
+            System.out.println("TextArea: ensureTextEditorIsShown");
             focusTextEditor();
         }
     }
