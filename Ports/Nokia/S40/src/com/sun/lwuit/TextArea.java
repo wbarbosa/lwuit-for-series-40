@@ -660,7 +660,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void pointerReleased(int x, int y) {
-        System.out.println("TextArea: pointerReleased");
         // prevent a drag operation from going into edit mode
         if (isDragActivated()) {
             super.pointerReleased(x, y);
@@ -687,7 +686,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     public void pointerPressed(int x, int y) {
         super.pointerPressed(x, y);
-        System.out.println("TextArea: pointerPressed");
     }
     
 
@@ -709,7 +707,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     void focusLostInternal() {
-        System.out.println("TextArea: focusLostInternal");
         super.focusLostInternal();
         setHandlesInput(false);
     }
@@ -1629,7 +1626,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     public void setFocus(boolean focused) {
-        System.out.println("TextArea: setFocus");
         super.setFocus(focused);
         if(textEditorEnabled) {
             if(textEditor != null) {
@@ -1692,7 +1688,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void focusGained(Component cmp) {
-        System.out.println("TextArea: focusGained");
         if(dontWaitForKeyReleased) {
             focusTextEditor();
         }
@@ -1824,7 +1819,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     private void ensureTextEditorIsShown() {
         if(hasFocus()) {
-            System.out.println("TextArea: ensureTextEditorIsShown");
             focusTextEditor();
         }
     }
