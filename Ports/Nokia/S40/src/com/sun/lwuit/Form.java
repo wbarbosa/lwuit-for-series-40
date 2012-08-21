@@ -1495,11 +1495,6 @@ public class Form extends Container {
      * @param focused the newly focused component or null for no focus
      */
     public void setFocused(Component focused) {
-        if(!(this instanceof Dialog)) {
-            
-            System.out.println("Form: setFocused(focused):" + ((focused == null) ? "null" : focused.getUIID()));
-        
-        }
         if (this.focused == focused && focused != null) {
             this.focused.repaint();
             return;
@@ -1508,11 +1503,6 @@ public class Form extends Container {
         this.focused = focused;
         boolean triggerRevalidate = false;
         if (oldFocus != null) {
-            System.out.println("oldfocus:" + oldFocus.getUIID());
-            //debug
-            if(oldFocus instanceof TextArea) {
-                System.out.println("oldFocus is textarea");
-            }
             triggerRevalidate = changeFocusState(oldFocus, false);
             //if we need to revalidate no need to repaint the Component, it will
             //be painted from the Form
@@ -1545,10 +1535,6 @@ public class Form extends Container {
      * revalidate
      */
     private boolean changeFocusState(Component cmp, boolean gained){
-        //debug
-        if(cmp instanceof TextArea) {
-            System.out.println("Form: TextArea changing focusstate");
-        }
         boolean trigger = false;
         Style selected = cmp.getSelectedStyle();
         Style unselected = cmp.getUnselectedStyle();
