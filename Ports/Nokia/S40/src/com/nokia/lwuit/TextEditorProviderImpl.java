@@ -292,4 +292,11 @@ class TextEditorProviderImpl extends TextEditorProvider implements com.nokia.mid
             internalListener.inputAction(this, actions);
         }
     }
+
+    public void cleanup() {
+        editor.setParent(null);
+        editor = null;
+    }
+    
+    
 }

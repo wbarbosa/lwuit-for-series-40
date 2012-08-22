@@ -369,46 +369,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         this.columns = columns;
         LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
         setSmoothScrolling(laf.isDefaultSmoothScrolling());
-        //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
-        if(Display.getInstance().getImplementation() instanceof S40Implementation) {
-            S40Implementation impl = (S40Implementation) Display.getInstance().getImplementation();
-            textEditor = impl.requestNewNativeTextEditor(maxSize, constraint, 100, rows);
-        }
-        if (textEditor != null) {
-            if (rows == 1) {
-                textEditor.setMultiline(false);
-            } else if (rows > 1) {
-                textEditor.setMultiline(true);
-            }
-            int color = 0xFF000000 | getStyle().getFgColor();
-            textEditor.setForegroundColor(color);
-            //these are from DefaultLookAndFeel.drawTextArea to help position texteditor
-            leftPadding = getStyle().getPadding(isRTL(), Component.LEFT);
-            rightPadding = getStyle().getPadding(isRTL(), Component.RIGHT);
-            topPadding = getStyle().getPadding(false, Component.TOP);
-            bottomPadding = getStyle().getPadding(false, Component.BOTTOM);
-
-            textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
-
-            javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
-            textEditor.setFont(nativeFont);
-            textEditor.setTextEditorListener(this);
-            
-            clearCommand = new Command(clearText) {
-
-                public void actionPerformed(ActionEvent evt) {
-                    super.actionPerformed(evt);
-                    int c = textEditor.getCaretPosition();
-                    if(c != 0) {
-                        textEditor.delete(c - 1, 1);
-                    }
-                }
-            };
-        }
+        
         try {
-        setText(text);
+            setText(text);
         }catch(IllegalArgumentException iae) {
-            throw new IllegalArgumentException("setTExt failed:" + text);
+            iae.printStackTrace();
         }
         addFocusListener(this);
         setGrowByContent(false);
@@ -773,14 +738,57 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     void initComponentImpl() {
+        System.out.println("TextArea: initComponentImpl");
         getRowStrings();
         Form f = getComponentForm();
         if (f != null) {
                 f.addPointerDraggedListener(dragListener);
                 f.addShowListener(showListener);
             }
+        initTextEditor();
         super.initComponentImpl();
     }
+    
+    private void initTextEditor() {
+        //the 100 is set to width since texteditor requires pixelwidth, not some columnwidth
+        if(Display.getInstance().getImplementation() instanceof S40Implementation) {
+            S40Implementation impl = (S40Implementation) Display.getInstance().getImplementation();
+            textEditor = impl.requestNewNativeTextEditor(maxSize, constraint, 100, rows);
+        }
+        if (textEditor != null) {
+            if (rows == 1) {
+                textEditor.setMultiline(false);
+            } else if (rows > 1) {
+                textEditor.setMultiline(true);
+            }
+            int color = 0xFF000000 | getStyle().getFgColor();
+            textEditor.setForegroundColor(color);
+            //these are from DefaultLookAndFeel.drawTextArea to help position texteditor
+            leftPadding = getStyle().getPadding(isRTL(), Component.LEFT);
+            rightPadding = getStyle().getPadding(isRTL(), Component.RIGHT);
+            topPadding = getStyle().getPadding(false, Component.TOP);
+            bottomPadding = getStyle().getPadding(false, Component.BOTTOM);
+
+            textEditor.setPosition(getAbsoluteX() + leftPadding, getAbsoluteY() + topPadding);
+
+            javax.microedition.lcdui.Font nativeFont = javax.microedition.lcdui.Font.getFont(javax.microedition.lcdui.Font.FONT_INPUT_TEXT);
+            textEditor.setFont(nativeFont);
+            textEditor.setTextEditorListener(this);
+            
+            clearCommand = new Command(clearText) {
+
+                public void actionPerformed(ActionEvent evt) {
+                    super.actionPerformed(evt);
+                    int c = textEditor.getCaretPosition();
+                    if(c != 0) {
+                        textEditor.delete(c - 1, 1);
+                    }
+                }
+            };
+            textEditor.setContent(getText());
+        }
+    }
+    
     
     private Vector getRowStrings() {
         if(rowStrings == null || widthForRowCalculations != getWidth() - getUnselectedStyle().getPadding(false, RIGHT) - getUnselectedStyle().getPadding(false, LEFT)){
@@ -1671,7 +1679,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 f.removeShowListener(showListener);
         }
         if(textEditor != null) {
-            textEditor.setVisible(false);
+            textEditor.setVisible(false); 
+            textEditor.cleanup();
+            textEditor = null;
         }
         
     }

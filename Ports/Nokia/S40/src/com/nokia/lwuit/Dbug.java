@@ -21,7 +21,7 @@ public class Dbug {
      * @param tag (optional) tag that will be printed before the message
      * @param message the log message
      */
-    public synchronized static void log(String tag, String message) {
+    public static void log(String tag, String message) {
         StringBuffer buf = new StringBuffer();
         if (tag != null || !tag.equals("")) {
             buf.append(tag);

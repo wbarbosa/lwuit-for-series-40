@@ -1345,7 +1345,6 @@ public class TextField extends TextArea {
     }
     
     void focusLostInternal() {
-        System.out.println("focusLostInternal");
         // we don't call super to avoid the text area blocking the scrolling
         stopComponentLableTicker();
         

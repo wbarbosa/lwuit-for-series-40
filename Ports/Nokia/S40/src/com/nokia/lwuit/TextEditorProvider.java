@@ -261,6 +261,8 @@ public abstract class TextEditorProvider {
      */
     public abstract int getPositionY();
     
+    public abstract void cleanup(); 
+    
     /**
      * Create an new instance of the TextEditorProvider
      * @return new instance of the TextEditorProvider class or null if required
