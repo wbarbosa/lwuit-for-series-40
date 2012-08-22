@@ -234,7 +234,7 @@ public class HttpRequestHandler implements DocumentRequestHandler {
                 hc.close(); //all the data is in the buffer
                 return bais;
             }
-
+            hc.close(); // close HttpConnection so it won't be left open after HTMLComponent has handled InputStream
         } catch (SecurityException e) {
             return getStream("Network access was disallowed for this session. Only local and cached pages can be viewed.<br><br> To browse external sites please exit the application and when asked for network access allow it.", "Security error");
         } catch (IOException e) {
