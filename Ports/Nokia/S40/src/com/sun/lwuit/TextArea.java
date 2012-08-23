@@ -1098,17 +1098,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     protected Dimension calcPreferredSize(){
-        Dimension ret;
-        
-        if(shouldShowHint()) {
-            Label l = getHintLabelImpl();
-            if(l != null) {
-                Dimension d1 = UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
-                Dimension d2 = l.getPreferredSize();
-                ret = new Dimension(d1.getWidth() + d2.getWidth(), d1.getHeight() + d2.getHeight());
-                return ret;
-            }
-        }
+        Dimension ret;        
         ret = UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
         return ret;
     }
