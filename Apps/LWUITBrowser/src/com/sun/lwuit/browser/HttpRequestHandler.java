@@ -130,9 +130,9 @@ public class HttpRequestHandler implements DocumentRequestHandler {
         if (url.startsWith("file://")) {
             return getFileStream(docInfo);
         }
-
+        HttpConnection hc = null;
         try {
-            HttpConnection hc = (HttpConnection)Connector.open(url);
+            hc = (HttpConnection)Connector.open(url);
             String encoding=null;
             if (docInfo.isPostRequest()) {
                 encoding="application/x-www-form-urlencoded";
@@ -234,7 +234,6 @@ public class HttpRequestHandler implements DocumentRequestHandler {
                 hc.close(); //all the data is in the buffer
                 return bais;
             }
-            hc.close(); // close HttpConnection so it won't be left open after HTMLComponent has handled InputStream
         } catch (SecurityException e) {
             return getStream("Network access was disallowed for this session. Only local and cached pages can be viewed.<br><br> To browse external sites please exit the application and when asked for network access allow it.", "Security error");
         } catch (IOException e) {
@@ -243,6 +242,13 @@ public class HttpRequestHandler implements DocumentRequestHandler {
         } catch (IllegalArgumentException e) { // For malformed URL
             System.out.println("HttpRequestHandler->IllegalArgumentException: "+e.getMessage());
             return getStream("The reuqested URL is not valid.", "Malformed URL");
+        } finally {
+            try {
+                if (hc != null)
+                    hc.close(); // close HttpConnection so it won't be left open after HTMLComponent has handled InputStream
+            } catch (IOException e) {
+                System.out.println("HttpRequestHandler->IOException: "+e.getMessage());
+            }
         }
 
         return is;
