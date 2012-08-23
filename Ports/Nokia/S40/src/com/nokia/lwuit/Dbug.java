@@ -35,7 +35,9 @@ public class Dbug {
             } catch (IOException e) {
             }
         }
-        logs.addElement(buf.toString());
+        synchronized(logs) {
+            logs.addElement(buf.toString());
+        }
     }
     /**
      * Get logs
