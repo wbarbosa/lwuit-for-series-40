@@ -1,3 +1,4 @@
 Changelog
 -------------------------------------------------------------------------------
+0.6.1 Beta. TextArea/TextField bug fixes.
 0.6 Beta. Initial release.
