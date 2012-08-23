@@ -738,7 +738,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     void initComponentImpl() {
-        System.out.println("TextArea: initComponentImpl");
         getRowStrings();
         Form f = getComponentForm();
         if (f != null) {
@@ -1082,10 +1081,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         if (textEditor == null || !textEditorEnabled || !hasFocus() || !textEditor.isVisible()) {    
             UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);
         }
-        paintHint(g);
-        if (hasFocus()) {
-            //paintIndicator(g);
-        }
+        paintHint(g);        
     }
     
 
