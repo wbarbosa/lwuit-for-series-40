@@ -54,7 +54,7 @@
         </copy>
     </target>
     <target name="create-jad" depends="init">
-        <wtkjad jadfile="dist/S40.jad" name="LWUIT-for-Series-40" vendor="Nokia" version="0.6" encoding="UTF-8">
+        <wtkjad jadfile="dist/S40.jad" name="LWUIT-for-Series-40" vendor="Nokia" version="0.6.1" encoding="UTF-8">
     
         </wtkjad>
     </target>
