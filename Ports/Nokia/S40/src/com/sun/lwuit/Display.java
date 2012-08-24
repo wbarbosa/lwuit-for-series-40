@@ -516,6 +516,29 @@ public final class Display {
     public static Display getInstance(){
         return INSTANCE;
     }
+    
+    /**
+     * Forces the screen to full screen mode.
+     * 
+     * @param mode true to force to full screen mode, false otherwise
+     */
+    public void setForceFullScreen(boolean mode) {
+        if(INSTANCE.impl instanceof S40Implementation) {
+            ((S40Implementation)INSTANCE.impl).setForceFullScreen(mode);
+        }
+    }
+    
+    /**
+     * Indicates whether screen is forced to full screen mode.
+     * 
+     * @return true if the screen is forced to full screen mode, false otherwise
+     */
+    public boolean isForceFullScreen() {
+        if(INSTANCE.impl instanceof S40Implementation) {
+            return ((S40Implementation)INSTANCE.impl).isForceFullScreen();
+        }
+        return false;
+    }
 
     /**
      * This method allows us to manipulate the drag started detection logic.
