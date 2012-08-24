@@ -516,6 +516,12 @@ public final class Display {
     public static Display getInstance(){
         return INSTANCE;
     }
+    
+    public static void setFTMenuVisible(boolean mode) {
+        if(INSTANCE.impl instanceof S40Implementation) {
+            ((S40Implementation)INSTANCE.impl).setFTMenuVisible(mode);
+        }
+    }
 
     /**
      * This method allows us to manipulate the drag started detection logic.

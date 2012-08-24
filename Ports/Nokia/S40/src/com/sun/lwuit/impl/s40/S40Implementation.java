@@ -94,6 +94,7 @@ public class S40Implementation extends LWUITImplementation {
     private boolean minimized;
     private MIDlet mid;
     private Object currentlyPlayingAudio;
+    private boolean ftMenuVisible = false;
 
     /**
      * On some devices getKeyCode returns numeric values for game actions,
@@ -412,7 +413,7 @@ public class S40Implementation extends LWUITImplementation {
      */
     public void init(Object m) {
         canvas.setTitle(null);
-        canvas.setFullScreenMode(!com.sun.lwuit.Display.getInstance().isNativeCommands());
+        canvas.setFullScreenMode(!ftMenuVisible || !com.sun.lwuit.Display.getInstance().isNativeCommands());
         // disable the flashGraphics bug on Nokia phones
         String platform = System.getProperty("microedition.platform");
         if (platform != null && platform.toUpperCase().indexOf("NOKIA") >= 0) {
@@ -429,7 +430,7 @@ public class S40Implementation extends LWUITImplementation {
         mid = (MIDlet)m;
         display = javax.microedition.lcdui.Display.getDisplay(mid);
         setSoftKeyCodes(mid);
-        
+
     }
 
     private void setSoftKeyCodes(MIDlet m) {
@@ -725,6 +726,15 @@ public class S40Implementation extends LWUITImplementation {
      */
     public void flushGraphics() {
         canvas.flushGraphics();
+    }
+    
+    /**
+     * Sets the menu bar in S40 full touch devices visible or not.
+     * 
+     * @param mode true to set menu bar visible, false otherwise
+     */
+    public void setFTMenuVisible(boolean mode) {
+        ftMenuVisible = mode;
     }
 
     /**
@@ -1335,7 +1345,7 @@ public class S40Implementation extends LWUITImplementation {
 
         if(!minimized) {
             if (d instanceof Canvas) {
-                ((Canvas) d).setFullScreenMode(!com.sun.lwuit.Display.getInstance().isNativeCommands());
+                ((Canvas) d).setFullScreenMode(!ftMenuVisible || !com.sun.lwuit.Display.getInstance().isNativeCommands());
             }
 
             display.setCurrent(d);
@@ -1771,7 +1781,7 @@ public class S40Implementation extends LWUITImplementation {
      * @inheritDoc
      */
     public void setNativeCommands(Vector commands) {
-        canvas.setFullScreenMode(!com.sun.lwuit.Display.getInstance().isNativeCommands());
+        canvas.setFullScreenMode(!ftMenuVisible || !com.sun.lwuit.Display.getInstance().isNativeCommands());
         ((S40Implementation.C)canvas).setCommands(commands);
     }
 
