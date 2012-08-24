@@ -94,7 +94,7 @@ public class S40Implementation extends LWUITImplementation {
     private boolean minimized;
     private MIDlet mid;
     private Object currentlyPlayingAudio;
-    private boolean ftMenuVisible = false;
+    private boolean forceFullScreen = false;
 
     /**
      * On some devices getKeyCode returns numeric values for game actions,
@@ -413,7 +413,7 @@ public class S40Implementation extends LWUITImplementation {
      */
     public void init(Object m) {
         canvas.setTitle(null);
-        canvas.setFullScreenMode(!ftMenuVisible || !com.sun.lwuit.Display.getInstance().isNativeCommands());
+        canvas.setFullScreenMode(forceFullScreen || !com.sun.lwuit.Display.getInstance().isNativeCommands());
         // disable the flashGraphics bug on Nokia phones
         String platform = System.getProperty("microedition.platform");
         if (platform != null && platform.toUpperCase().indexOf("NOKIA") >= 0) {
@@ -729,12 +729,21 @@ public class S40Implementation extends LWUITImplementation {
     }
     
     /**
-     * Sets the menu bar in S40 full touch devices visible or not.
+     * Forces the screen to full screen mode.
      * 
-     * @param mode true to set menu bar visible, false otherwise
+     * @param mode true to force to full screen mode, false otherwise
      */
-    public void setFTMenuVisible(boolean mode) {
-        ftMenuVisible = mode;
+    public void setForceFullScreen(boolean mode) {
+        forceFullScreen = mode;
+    }
+    
+    /**
+     * Indicates whether screen is forced to full screen mode.
+     * 
+     * @return true if the screen is forced to full screen mode, false otherwise
+     */
+    public boolean isForceFullScreen() {
+        return forceFullScreen;
     }
 
     /**
@@ -1345,7 +1354,7 @@ public class S40Implementation extends LWUITImplementation {
 
         if(!minimized) {
             if (d instanceof Canvas) {
-                ((Canvas) d).setFullScreenMode(!ftMenuVisible || !com.sun.lwuit.Display.getInstance().isNativeCommands());
+                ((Canvas) d).setFullScreenMode(forceFullScreen || !com.sun.lwuit.Display.getInstance().isNativeCommands());
             }
 
             display.setCurrent(d);
@@ -1781,7 +1790,7 @@ public class S40Implementation extends LWUITImplementation {
      * @inheritDoc
      */
     public void setNativeCommands(Vector commands) {
-        canvas.setFullScreenMode(!ftMenuVisible || !com.sun.lwuit.Display.getInstance().isNativeCommands());
+        canvas.setFullScreenMode(forceFullScreen || !com.sun.lwuit.Display.getInstance().isNativeCommands());
         ((S40Implementation.C)canvas).setCommands(commands);
     }
 
