@@ -152,6 +152,13 @@ public class EncodedImage extends Image {
     /**
      * @inheritDoc
      */
+    public Object getImage() {
+        return getInternalImpl().getImage();
+    }
+
+    /**
+     * @inheritDoc
+     */
     public void lock() {
         locked = true;
         if(cache != null) {
