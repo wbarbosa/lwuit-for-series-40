@@ -885,7 +885,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         Font font = style.getFont();
         int charWidth = font.charWidth(widestChar);
         Style selectedStyle = getSelectedStyle();
-        if(selectedStyle.getFont() != style.getFont()) {
+        if(selectedStyle.getFont() != style.getFont() && isEditable()) {
             int cw = selectedStyle.getFont().charWidth(widestChar);
             if(cw > charWidth) {
                 charWidth = cw;
