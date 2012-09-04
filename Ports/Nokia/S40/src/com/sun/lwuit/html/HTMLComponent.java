@@ -637,7 +637,7 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
     public void setShowImages(boolean show) {
         showImages=show;
     }
-
+    
     /**
      * Sets whether this HTMLComponent will ignore all CSS.directives.
      * This includes external CSS files (which won't be downloaded), embedded CSS segmentsand style tags and attributes.
@@ -2324,8 +2324,6 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
 
                     
                     if ((iWidth!=0) || (iHeight!=0)) { // reserve space while loading image if either width or height are specified, otherwise we don't know how much to reserve
-                        iWidth+=imgLabel.getStyle().getPadding(Component.LEFT)+imgLabel.getStyle().getPadding(Component.RIGHT);
-                        iHeight+=imgLabel.getStyle().getPadding(Component.TOP)+imgLabel.getStyle().getPadding(Component.BOTTOM);
                         imgLabel.setPreferredSize(new Dimension(iWidth,iHeight));
                     } else { // If no space is reserved, make a minimal text, otherwise LWUIT won't calculate the size right after the image loads
                         if ((imgLabel.getText()==null) || (imgLabel.getText().equals(""))) {
