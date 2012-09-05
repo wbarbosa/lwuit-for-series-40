@@ -73,7 +73,7 @@ the ResourceEditor without problems you can use this script.
         <copy file="${devguide}" todir="${releasepath}/doc" />
     </target>
     <target name="copy-notes" depends="init">
-        <copy todir="${releasepath}/${releasenotes}" >
+        <copy todir="${releasepath}/releasenotes" >
             <fileset dir="${releasenotes}" />
         </copy>
     </target>

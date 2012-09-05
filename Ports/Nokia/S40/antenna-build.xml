@@ -89,16 +89,22 @@
             <zipfileset src="dist/S40.jar" 
                 excludes="full_touch_theme.res **/MIDPIconCommandWrapper* **/OrientationProviderImpl* **/S40FullTouchImplementation*" />
         </jar>
+        <jar destfile="${bin}/sdk1.1/S40-non-touch.jar">
+            <zipfileset src="${bin}/sdk1.1/S40-with-themes.jar" excludes="nokia_theme.res" />
+        </jar>
         <jar destfile="${bin}/sdk1.1/S40-no-themes.jar">
             <zipfileset src="${bin}/sdk1.1/S40-with-themes.jar" excludes="*.res" />
         </jar>
         <!-- create S40 6th ed. binaries -->
-        <jar destfile="${bin}/s40-6th-ed-sdk/S40-with-theme.jar">
+        <jar destfile="${bin}/s40-6th-ed-sdk/S40-with-themes.jar">
             <zipfileset src="${bin}/sdk1.1/S40-with-themes.jar" 
-                excludes="nokia_theme.res **/GestureHandler* **/TextEditorProviderImpl* **/S40GestureImplementation*" />
+                excludes="**/GestureHandler* **/TextEditorProviderImpl* **/S40GestureImplementation*" />
+        </jar>
+        <jar destfile="${bin}/s40-6th-ed-sdk/S40-non-touch.jar">
+            <zipfileset src="${bin}/s40-6th-ed-sdk/S40-with-themes.jar" excludes="nokia_theme.res" />
         </jar>
         <jar destfile="${bin}/s40-6th-ed-sdk/S40-no-theme.jar">
-            <zipfileset src="${bin}/s40-6th-ed-sdk/S40-with-theme.jar" excludes="*.res" />
+            <zipfileset src="${bin}/s40-6th-ed-sdk/S40-with-themes.jar" excludes="*.res" />
         </jar>
         
     </target>
