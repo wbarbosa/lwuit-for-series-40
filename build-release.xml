@@ -30,7 +30,7 @@ the ResourceEditor without problems you can use this script.
     <property name="javadocs" location="${docs}/javadocs" />
     <property name="devguide" location="${docs}/LWUIT_Developer_Guide.pdf" />
     <property name="releasepath" location="Series-40-binaries" />
-    <property name="releasenotes" location="release notes" />
+    <property name="releasenotes" location="releasenotes" />
     <property name="s40port" location="Ports/Nokia/S40" />
     <property name="RE" location="tools/Lwuit-ResourceEditor" />
     <property name="IO" location="IO" />
@@ -42,6 +42,7 @@ the ResourceEditor without problems you can use this script.
         <mkdir dir="${releasepath}/doc" />
         <mkdir dir="${releasepath}/examples" />
         <mkdir dir="${releasepath}/resourceeditor" />
+        <mkdir dir="${releasepath}/releasenotes" />
     </target>
     <!--build s40 port -->
     <target name="S40-build" depends="init">
@@ -72,7 +73,7 @@ the ResourceEditor without problems you can use this script.
         <copy file="${devguide}" todir="${releasepath}/doc" />
     </target>
     <target name="copy-notes" depends="init">
-        <copy todir="${releasepath}" >
+        <copy todir="${releasepath}/${releasenotes}" >
             <fileset dir="${releasenotes}" />
         </copy>
     </target>
