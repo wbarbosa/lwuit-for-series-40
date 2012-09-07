@@ -1538,8 +1538,13 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     boolean shouldShowHint() {
         boolean showHint = getText().equals("");
-        if(textEditorEnabled) {
-            showHint = textEditor.getContent().length() == 0;
+        
+        if(textEditor != null) {
+            String content = textEditor.getContent();
+            if(content != null) {
+                showHint = content.length() == 0;
+            }
+            textEditor.getContent();
         }
         return showHint;
     }
