@@ -1,0 +1,55 @@
+<project name="LWUIT-ResourceEditor" default="package" basedir=".">
+    <property name="uidemo" value="../../Apps/LWUITDemo/build.xml" />
+    <property name="MIDP-SE" value="../MIDP_SE/build.xml" />
+    <property name="UI" value="../../UI/build.xml" />
+    <property name="IO_SE" value="../../Ports/SE/IO_SE/build.xml" />
+    
+    <target name="clean">
+        <ant antfile="${uidemo}" useNativeBasedir="true" target="clean" />
+        <ant antfile="${MIDP-SE}" useNativeBasedir="true" target="clean" />
+        <ant antfile="${UI}" useNativeBasedir="true" target="clean" />
+        <ant antfile="${IO_SE}" useNativeBasedir="true" target="clean" />
+
+    </target>
+
+    <target name="build-dependencies">
+        <ant antfile="${uidemo}" useNativeBasedir="true" target="jar" />
+        <ant antfile="${MIDP-SE}" useNativeBasedir="true" target="default" />
+        <ant antfile="${UI}" useNativeBasedir="true" target="jar" />
+        <ant antfile="${IO_SE}" useNativeBasedir="true" target="default" />
+    </target>
+    
+    <target name="install-dependency">
+        <exec executable="mvn.bat" dir="${basedir}">
+            <arg line="${maven-args}" />
+        </exec>
+    </target>
+    <target name="install-dependencies">
+    <!-- install UI project to maven repo -->
+        <antcall target="install-dependency">
+            <param name="maven-args" value="install:install-file -Dfile=../../UI/dist/UI.jar -DgroupId=com.sun.lwuit -DartifactId=lwuit-ui-unmodified -Dversion=1.5 -Dpackaging=jar" />
+        </antcall>
+    <!-- install IO_SE project to maven repo -->
+        <antcall target="install-dependency">
+            <param name="maven-args" value="install:install-file -Dfile=../../Ports/SE/IO_SE/dist/IO_SE.jar -DgroupId=com.sun.lwuit.io -DartifactId=lwuit-io-se -Dversion=1.5 -Dpackaging=jar" />
+        </antcall>
+    <!-- install MIDP-SE project to maven repo -->
+        <antcall target="install-dependency">
+            <param name="maven-args" value="install:install-file -Dfile=../MIDP_SE/dist/MIDP_SE.jar -DgroupId=javax.microedition -DartifactId=midp-se -Dversion=1.0 -Dpackaging=jar" />
+        </antcall>
+    <!-- install LWUITDemo to maven repo -->
+        <antcall target="install-dependency">
+            <param name="maven-args" value="install:install-file -Dfile=../../Apps/LWUITDemo/dist/LWUITDemo.jar -DgroupId=com.sun.lwuit.uidemo -DartifactId=lwuit-uidemo -Dversion=1.0 -Dpackaging=jar" />
+        </antcall>
+    </target>
+    <target name="compile-swingport">
+        <exec executable="mvn.bat" dir="${basedir}">
+            <arg line="clean install -f ../Lwuit-swingport/pom.xml" />
+        </exec>
+    </target>
+    <target name="package" depends="clean, build-dependencies, install-dependencies, compile-swingport">
+        <exec executable="mvn.bat" dir="${basedir}">
+            <arg line="clean package" />
+        </exec>
+    </target>
+</project>
