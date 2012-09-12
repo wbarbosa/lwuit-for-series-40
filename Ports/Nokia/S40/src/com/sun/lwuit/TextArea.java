@@ -491,6 +491,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
+        if(textEditor != null) {
+            textEditor.setMaxSize(maxSize);
+        }
     }
     
     /**
