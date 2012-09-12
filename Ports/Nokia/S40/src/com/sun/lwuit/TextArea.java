@@ -470,7 +470,14 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @param b true is text are is editable; otherwise false
      */
     public void setEditable(boolean b) {
-        constraint = constraint | TextArea.UNEDITABLE;
+        if(!b) {
+            constraint = constraint | TextArea.UNEDITABLE;
+        }else {
+            if((constraint & TextArea.UNEDITABLE) != 0) {
+                constraint &= ~TextArea.UNEDITABLE;
+            }
+        }
+        
         setConstraint(constraint);
         editable = b;
     }
