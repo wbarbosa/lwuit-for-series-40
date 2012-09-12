@@ -1427,26 +1427,69 @@ public class MenuBar extends Container implements ActionListener {
      */
     protected Command showMenuDialog(Dialog menu) {
         boolean pref = UIManager.getInstance().isThemeConstant("menuPrefSizeBool", false);
-        int height;
-        int marginLeft;
-        int marginRight = 0;
-        if(pref) {
-            Container dialogContentPane = menu.getDialogComponent();
+
+        Style style = menu.getStyle();
+        int height = parent.getHeight();
+        int marginLeft = style.getMargin(LEFT);
+        int marginRight = style.getMargin(RIGHT);
+        int marginTop = style.getMargin(TOP);
+        int marginBottom = style.getMargin(BOTTOM);
+        int paddingTop = style.getPadding(TOP);
+        int paddingBottom = style.getPadding(BOTTOM);
+
+        Container dialogContentPane = menu.getDialogComponent();
+        if(pref) {            
             marginLeft = parent.getWidth() - (dialogContentPane.getPreferredW() +
                     menu.getStyle().getPadding(LEFT) +
                     menu.getStyle().getPadding(RIGHT));
             marginLeft = Math.max(0, marginLeft);
             if(parent.getSoftButtonCount() > 1) {
-                height = parent.getHeight() - parent.getSoftButton(0).getParent().getPreferredH() - dialogContentPane.getPreferredH();
+                height = height - parent.getSoftButton(0).getParent().getPreferredH() - dialogContentPane.getPreferredH();
             } else {
-                height = parent.getHeight() - dialogContentPane.getPreferredH();
+                height = height - dialogContentPane.getPreferredH();
             }
             height = Math.max(0, height);
         } else {
-            float menuWidthPercent = 1 - Float.parseFloat(UIManager.getInstance().getThemeConstant("menuWidthPercent", "75")) / 100;
-            float menuHeightPercent = 1 - Float.parseFloat(UIManager.getInstance().getThemeConstant("menuHeightPercent", "50")) / 100;
-            height = (int) (parent.getHeight() * menuHeightPercent);
-            marginLeft = (int) (parent.getWidth() * menuWidthPercent);
+            int commandCount = 1;
+            int commandHeight = 1;        
+            int itemGap = 0;
+
+            Component cmds = ((Form) menu).getMenuBar().commandList;
+            if(cmds instanceof Container) {
+                System.out.println("menu is a Container");
+                commandCount = ((Container) cmds).getComponentCount();
+                if(commandCount > 0) {
+                    Component cmd = ((Container) cmds).getComponentAt(0);
+                    Style cmdStyle = cmd.getStyle();
+                    commandHeight = cmd.getPreferredH() + cmdStyle.getMargin(
+                            TOP) + cmdStyle.getMargin(BOTTOM);
+                }
+            } else if(cmds instanceof List) {
+                System.out.println("menu is a List");
+                commandCount = ((List) cmds).getModel().getSize();
+                Dimension commandSize = ((List) cmds).getElementSize(false, true);
+                commandHeight = commandSize.getHeight();
+                itemGap = ((List) cmds).getItemGap();
+            }
+
+            if(parent instanceof Form) {
+                height -= ((Form)parent).getTitleArea().getPreferredH();
+            }
+
+            if (parent.getSoftButtonCount() > 0) {
+                height -= parent.getSoftButton(0).getParent().getPreferredH();
+            }
+
+            height -= marginBottom + paddingTop + paddingBottom;
+
+            int maxVisibleCommands = (height + itemGap) / (commandHeight + itemGap);
+
+            commandCount = Math.min(maxVisibleCommands, commandCount);
+            int contentHeight = (commandHeight + itemGap) * commandCount - itemGap;
+
+            marginTop = height - contentHeight;
+
+            return menu.show(marginTop, marginBottom, marginLeft, marginRight, false, true);
         }
 
         if (isReverseSoftButtons()) {
