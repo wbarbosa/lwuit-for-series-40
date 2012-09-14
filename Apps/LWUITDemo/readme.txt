@@ -10,8 +10,7 @@ Building in Nokia IDE for Java ME (Eclipse):
 3. In the Import NetBeans Projects dialog, click Browse to select the LWUITDemo project in ...\Nokia\Devices\Nokia_SDK_2_0_Java\plugins\lwuit\examples and then click Finish. The project is loaded into your Workspace.
 4. Right-click on the LWUITDemo project, select Properties > Java build path > Libraries tab and click on Add External JARs to add ...\Nokia\Devices\Nokia_SDK_2_0_Java\plugins\lwuit\bin\sdk2.0\s40-with-themes.jar. Then remove editor.jar (it is only needed to run this application in the Resorce Editor).
 5. In the Order and export tab, ensure that S40-with-themes.jar and LWUITDemo are selected and click OK.
-6. Add the resources.res from the project root folder to res folder in the eclipse project
-7. Compile the LWUITDemo project and run it on the Series 40 Emulator.
+6. Compile the LWUITDemo project and run it on the Series 40 Emulator.
 
 
 Building in NetBeans IDE:
