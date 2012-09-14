@@ -364,21 +364,21 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
      */
     public void drawRadioButton(Graphics g, Button rb) {
         if (rButtonImages != null) {
-            Image x;
+            Image currentRadioIcon;
             if(rButtonImagesFocus != null && rButtonImagesFocus[0] != null && rb.hasFocus() && Display.getInstance().shouldRenderSelection(rb)) {
                 if(rb.isEnabled()) {
-                    x = rButtonImagesFocus[rb.isSelected() ? 1 : 0];
+                    currentRadioIcon = rButtonImagesFocus[rb.isSelected() ? 1 : 0];
                 } else {
-                    x = rButtonImagesFocus[rb.isSelected() ? 3 : 2];
+                    currentRadioIcon = rButtonImagesFocus[rb.isSelected() ? 3 : 2];
                 }
             } else {
                 if(rb.isEnabled()) {
-                    x = rButtonImages[rb.isSelected() ? 1 : 0];
+                    currentRadioIcon = rButtonImages[rb.isSelected() ? 1 : 0];
                 } else {
-                    x = rButtonImages[rb.isSelected() ? 3 : 2];
+                    currentRadioIcon = rButtonImages[rb.isSelected() ? 3 : 2];
                 }
             }
-            drawComponent(g, rb, rb.getIconFromState(), x, 0);
+            drawComponent(g, rb, rb.getIconFromState(), currentRadioIcon, 0);
         } else {
             Style style = rb.getStyle();
 
@@ -919,7 +919,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                     } else {
                         tX = tX + cmpWidth - leftPadding - stateIconSize;
                     }
-                    cmpWidth -= leftPadding - stateIconSize;
+                    cmpWidth -= (leftPadding + stateIconSize);
             } else {
                 preserveSpaceForState = stateIconSize + gap;
                 if (rtl) {
@@ -984,9 +984,8 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             switch (textPos) {
                 case Label.LEFT:
                 case Label.RIGHT:
-                    x = cmpX + cmpWidth - rightPadding -
-                            ( ((icon != null) ? (icon.getWidth() + gap) : 0) +
-                            font.stringWidth(text));
+                    int iconWidth = (icon != null) ? (icon.getWidth() + gap) : 0;
+                    x = cmpX + cmpWidth - rightPadding - iconWidth - font.stringWidth(text);
                     if(l.isRTL()) {
                         x = Math.max(x - preserveSpaceForState, cmpX + leftPadding);
                     } else {
