@@ -1450,13 +1450,15 @@ public class MenuBar extends Container implements ActionListener {
             }
             height = Math.max(0, height);
         } else {
+            // Adjust the menu height according to the amount of commands
             int commandCount = 1;
             int commandHeight = 1;        
             int itemGap = 0;
 
             Component cmds = ((Form) menu).getMenuBar().commandList;
+
+            // Menu should be either a Container or a List
             if(cmds instanceof Container) {
-                System.out.println("menu is a Container");
                 commandCount = ((Container) cmds).getComponentCount();
                 if(commandCount > 0) {
                     Component cmd = ((Container) cmds).getComponentAt(0);
@@ -1465,7 +1467,6 @@ public class MenuBar extends Container implements ActionListener {
                             TOP) + cmdStyle.getMargin(BOTTOM);
                 }
             } else if(cmds instanceof List) {
-                System.out.println("menu is a List");
                 commandCount = ((List) cmds).getModel().getSize();
                 Dimension commandSize = ((List) cmds).getElementSize(false, true);
                 commandHeight = commandSize.getHeight();
