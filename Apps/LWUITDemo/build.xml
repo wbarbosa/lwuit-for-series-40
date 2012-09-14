@@ -80,7 +80,7 @@
             </target>
 
             -->
-    <target name="post-compile">
+    <!-- <target name="post-compile">
         <delete dir="build" includes="**/Thumbs.db" />
         <taskdef classpath="editor.jar" classname="com.sun.lwuit.tools.resourcebuilder.LWUITTask" name="build" />
         <build dest="${build.classes.dir}/resources.res">
@@ -91,7 +91,7 @@
             <font logicalName="SansSerif" size="20" charset=" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-02" />
             <font logicalName="Monospaced" size="10" />
             <font logicalName="DialogInput" />
-            <font logicalName="Dialog" />
+            <font logicalName="Dialog" /> -->
             <!-- image file="images/icons/Animations_sel.png" />
             <image file="images/icons/Buttons_sel.png" />
             <image file="images/icons/Dialogs_sel.png" />
@@ -119,9 +119,9 @@
             <image file="images/icons/Table_unsel.png" />
             <image file="images/icons/Tree_unsel.png" />
             <image file="images/icons/HTML_unsel.png" / -->
-        </build>
+       <!-- </build>
         <build dest="${build.classes.dir}/duke.res">
             <animation file="images/duke3_1.gif" />
-        </build>
-    </target>
+        </build> 
+    </target> -->
 </project>
