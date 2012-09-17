@@ -1171,7 +1171,6 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             		x = x - txtW + textSpaceW;
                 } else {
                     if (l.isEndsWith3Points()) {
-                        System.out.println("space for text:" + textSpaceW);
                         text = shortenString(text, textSpaceW, f);
                     }
                 }
@@ -1189,27 +1188,28 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
      * @return shortened string with ellipsis
      */
     private String shortenString(String original, final int width, final Font font) {
+        if(font.stringWidth(original) <= width) {
+            return original;
+        }
         String ret = "";
         String points = "...";
-        int index = 1;
-        int widest = font.charWidth('W');
         int pointsW = font.stringWidth(points);
-        while (fastCharWidthCheck(original, index, width - pointsW, widest, font)) {
-            index++;
+        int l = original.length();
+        String sub = "";
+        int currentWidth = 0;
+        //we travel from end to the beginning and stop as soon as the width is 
+        //under or equal to allowed width
+        for(int i = l; i >= 0; i--) {
+            sub = original.substring(0, (i - 1));
+            currentWidth = font.stringWidth(sub) + pointsW;
+            if(currentWidth <= width) {
+                break;
+            }
         }
-        ret = original.substring(0, Math.max(1, index - 1)) + points;
+        ret = sub + points;
 
         return ret;
     }
-
-    private boolean fastCharWidthCheck(String s, int length, int width, int charWidth, Font f) {
-        if(length * charWidth < width) {
-            return true;
-        }
-        length = Math.min(s.length(), length);
-        return f.substringWidth(s, 0, length) < width;
-    }
-    
     /**
      * @inheritDoc
      */
