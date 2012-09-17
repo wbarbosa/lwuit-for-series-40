@@ -938,8 +938,19 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
 
         int align = reverseAlignForBidi(l, style.getAlignment());
 
-        int textPos= reverseAlignForBidi(l, l.getTextPosition());
+        final int textPos= reverseAlignForBidi(l, l.getTextPosition());
+        //calculate the space for text
+        int textSpaceW = cmpWidth - rightPadding - leftPadding;
+        
+        if (icon != null && (textPos == Label.RIGHT || textPos == Label.LEFT)) {
+            textSpaceW = textSpaceW - icon.getWidth();
+        }
 
+        if (stateIcon != null) {
+            textSpaceW = textSpaceW - stateIconSize;
+        } else {
+            textSpaceW = textSpaceW - preserveSpaceForState;
+        }
         //set initial x,y position according to the alignment and textPosition
         if (align == Component.LEFT) {
             switch (textPos) {
@@ -985,7 +996,11 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                 case Label.LEFT:
                 case Label.RIGHT:
                     int iconWidth = (icon != null) ? (icon.getWidth() + gap) : 0;
-                    x = cmpX + cmpWidth - rightPadding - iconWidth - font.stringWidth(text);
+                    System.out.println("space for text here:" + textSpaceW);
+                    String shortened = shortenString(text, textSpaceW, font);
+                    System.out.println("calculating with:" + shortened);
+                    int textWidth = font.stringWidth(shortened);
+                    x = cmpX + cmpWidth - rightPadding - iconWidth - textWidth;
                     if(l.isRTL()) {
                         x = Math.max(x - preserveSpaceForState, cmpX + leftPadding);
                     } else {
@@ -1009,18 +1024,6 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             }
         }
 
-
-        int textSpaceW = cmpWidth - rightPadding - leftPadding;
-
-        if (icon != null && (textPos == Label.RIGHT || textPos == Label.LEFT)) {
-            textSpaceW = textSpaceW - icon.getWidth();
-        }
-
-        if (stateIcon != null) {
-            textSpaceW = textSpaceW - stateIconSize;
-        } else {
-            textSpaceW = textSpaceW - preserveSpaceForState;
-        }
 
         if (icon == null) { // no icon only string 
             drawLabelString(g, l, text, x, y, textSpaceW);
@@ -1168,15 +1171,8 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             		x = x - txtW + textSpaceW;
                 } else {
                     if (l.isEndsWith3Points()) {
-                        String points = "...";
-                        int index = 1;
-                        int widest = f.charWidth('W');
-                        int pointsW = f.stringWidth(points);
-                        while (fastCharWidthCheck(text, index, textSpaceW - pointsW, widest, f)){
-                            index++;
-                        }
-                        text = text.substring(0, Math.max(1, index-1)) + points;
-                        txtW =  f.stringWidth(text);
+                        System.out.println("space for text:" + textSpaceW);
+                        text = shortenString(text, textSpaceW, f);
                     }
                 }
             }
@@ -1184,6 +1180,26 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
 
         g.drawString(text, l.getShiftText() + x, y,style.getTextDecoration());
         return Math.min(txtW, textSpaceW);
+    }
+    /**
+     * Shortens the string to fit inside given width and adds ... to the end of the string
+     * @param original the string to shorten
+     * @param width the space that the shortened string should fit
+     * @param font the font that is used to draw the text
+     * @return shortened string with ellipsis
+     */
+    private String shortenString(String original, final int width, final Font font) {
+        String ret = "";
+        String points = "...";
+        int index = 1;
+        int widest = font.charWidth('W');
+        int pointsW = font.stringWidth(points);
+        while (fastCharWidthCheck(original, index, width - pointsW, widest, font)) {
+            index++;
+        }
+        ret = original.substring(0, Math.max(1, index - 1)) + points;
+
+        return ret;
     }
 
     private boolean fastCharWidthCheck(String s, int length, int width, int charWidth, Font f) {
