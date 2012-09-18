@@ -891,7 +891,6 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         int cmpY = l.getY();
         int cmpHeight = l.getHeight();
         int cmpWidth = l.getWidth();
-        System.out.println("begin cmpWidth:" + cmpWidth);
         boolean rtl = l.isRTL();
         int leftPadding = style.getPadding(rtl, Component.LEFT);
         int rightPadding = style.getPadding(rtl, Component.RIGHT);
@@ -908,7 +907,6 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         }
         
         if (stateIcon != null) {
-            System.out.println("state icon present.");
             stateIconSize = stateIcon.getWidth(); //square image width == height
             stateIconYPosition = cmpY + topPadding +
                     (cmpHeight - topPadding -
@@ -941,9 +939,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
 
         final int textPos= reverseAlignForBidi(l, l.getTextPosition());
         //calculate the space for text
-        System.out.println("cmpWidth before calcs:" + cmpWidth);
         int textSpaceW = cmpWidth - rightPadding - leftPadding;
-        System.out.println("textSpaceW:" + textSpaceW);
         if (icon != null && (textPos == Label.RIGHT || textPos == Label.LEFT)) {
             textSpaceW = textSpaceW - icon.getWidth();
         }
