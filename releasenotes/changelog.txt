@@ -1,5 +1,12 @@
 Changelog
 -------------------------------------------------------------------------------
+0.6.3 Beta. 
+	* TextArea setMaxSize now works
+	* TextArea setEditable now works
+	* LWUITDemo import to eclipse now works (fixed resources.res error)
+	* menus are now usable in non-touch
+	* TextArea shouldShowHint nullPointerException fixed
+	* RadioButton and CheckBox relayout according to S40 style
 0.6.2 Beta. TextArea and HTML Component fixes.
 0.6.1 Beta. TextArea/TextField bug fixes.
 0.6 Beta. Initial release.
