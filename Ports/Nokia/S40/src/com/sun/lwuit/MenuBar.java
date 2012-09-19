@@ -497,8 +497,7 @@ public class MenuBar extends Container implements ActionListener {
      * Updates the command mapping to the softbuttons
      */
     private void updateCommands() {
-        int commandBehavior = getCommandBehavior();
-        if(commandBehavior == Display.COMMAND_BEHAVIOR_NATIVE) {
+        if(isNativeCommandBehavior()) {
             //prevent platform commands from flickering by making sure
             //the form is visible
             if(Display.getInstance().getCurrent() == parent) {
@@ -1000,7 +999,7 @@ public class MenuBar extends Container implements ActionListener {
         if (commands.contains(cmd)) {
             return;
         }
-
+        
         // special case for default commands which are placed at the end and aren't overriden later
         if (soft.length > 2 && cmd == parent.getDefaultCommand()) {
             commands.addElement(cmd);
@@ -1030,8 +1029,13 @@ public class MenuBar extends Container implements ActionListener {
                 return;
             }
         }
-
-        updateCommands();
+        //for native commands we don't want update everything if the command is at the
+        //end of the commands vector
+        if(isNativeCommandBehavior()) {
+            
+        }else {
+            updateCommands();
+        }
     }
 
     /**
@@ -1657,5 +1661,8 @@ public class MenuBar extends Container implements ActionListener {
         return cancelMenuItem;
     }
     
+    private boolean isNativeCommandBehavior() {
+        return getCommandBehavior() == Display.COMMAND_BEHAVIOR_NATIVE;
+    }
     
 }
