@@ -18,6 +18,7 @@ import com.sun.lwuit.plaf.UIManager;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.Vector;
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.*;
@@ -170,11 +171,37 @@ public class S40Implementation extends LWUITImplementation {
         }
 
         public void addCommand(com.sun.lwuit.Command cmd) {
-            //TODO: implement
+            
+            //wrap it with midpcommandwrapper
+            MIDPCommandWrapper wrapped = wrapLWUITCommand(cmd, currentCommands.size());
+            if(currentCommands.contains(wrapped)) {
+                return;
+            }
+            //set command type BACK or OK or default
+            com.sun.lwuit.Form f = Display.getInstance().getCurrent();
+            
+            if(f.getBackCommand() == cmd) {
+                wrapped.setType(Command.BACK);
+            }else if(f.getDefaultCommand() == cmd) {
+                wrapped.setType(Command.OK);
+            }
+            //add to end of currentCommands
+            currentCommands.addElement(wrapped);
+            //add to canvas
+            addCommand(wrapped.getCommand());
         }
 
         public void removeCommand(com.sun.lwuit.Command cmd) {
-            //TODO: implement
+            int l = currentCommands.size();
+            MIDPCommandWrapper w;
+            for(int i = 0; i < l; i++) {
+               w = (MIDPCommandWrapper) currentCommands.elementAt(i);
+               if(w.getLWUITCommand() == cmd) {
+                   removeCommand(w.getCommand());
+                   currentCommands.removeElement(w);
+                   break;
+               }
+            }
         }
         
         

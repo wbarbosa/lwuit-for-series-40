@@ -1032,7 +1032,8 @@ public class MenuBar extends Container implements ActionListener {
         //for native commands we don't want update everything if the command is at the
         //end of the commands vector
         if(isNativeCommandBehavior()) {
-            
+            S40Implementation impl = (S40Implementation)Display.getInstance().getImplementation();
+            impl.addNativeCommand(cmd);
         }else {
             updateCommands();
         }
@@ -1190,7 +1191,14 @@ public class MenuBar extends Container implements ActionListener {
             }
             commands.removeElement(cmd);
             backStack.removeElement(cmd);
-            updateCommands();
+            if(isNativeCommandBehavior()) {
+                if(Display.getInstance().getImplementation() instanceof S40Implementation) {
+                    S40Implementation impl = (S40Implementation) Display.getInstance().getImplementation();
+                    impl.removeNativeCommand(cmd);
+                }
+            }else {
+                updateCommands();
+            }
         }
     }
 

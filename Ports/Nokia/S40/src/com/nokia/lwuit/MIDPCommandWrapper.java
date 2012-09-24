@@ -79,4 +79,32 @@ public class MIDPCommandWrapper {
     public void setType(int type) {
         this.type = type;
     }
+
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + (this.lwuitCommand != null ? this.lwuitCommand.hashCode() : 0);
+        hash = 53 * hash + (this.command != null ? this.command.hashCode() : 0);
+        hash = 53 * hash + this.offset;
+        hash = 53 * hash + this.type;
+        return hash;
+    }
+    /**
+     * the equals doesn't use the lcdui command at all since we don't care about
+     * that. We only want objects that have same lwuitcommand class
+     * @param obj
+     * @return true if equal otherwise false
+     */
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+        if(obj instanceof MIDPCommandWrapper) {
+            MIDPCommandWrapper w = (MIDPCommandWrapper) obj;
+            return w.getLWUITCommand() == this.lwuitCommand;
+        }else {
+            return false;
+        }
+    }
+    
+    
 }
