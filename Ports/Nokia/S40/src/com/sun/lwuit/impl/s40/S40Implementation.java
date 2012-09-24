@@ -213,6 +213,8 @@ public class S40Implementation extends LWUITImplementation {
                     temp = (MIDPCommandWrapper)currentCommands.elementAt(iter);
                     removeCommand(temp.getCommand());
                 }
+            }else {
+                currentCommands = new Vector();
             }
             setCommandListener(this);
             currentCommands.removeAllElements();
