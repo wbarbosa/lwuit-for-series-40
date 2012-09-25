@@ -1152,6 +1152,10 @@ public class MenuBar extends Container implements ActionListener {
      * Remove all commands from the menuBar
      */
     protected void removeAllCommands() {
+        defaultCommand = null;
+        backStack.removeAllElements();
+        backCommand = null;
+        clearCommand = null;
         commands.removeAllElements();
         int behavior = getCommandBehavior();
         if(behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR || 
