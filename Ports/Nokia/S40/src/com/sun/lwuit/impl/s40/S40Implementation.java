@@ -115,7 +115,7 @@ public class S40Implementation extends LWUITImplementation {
         
     private class C extends GameCanvas implements CommandListener, Runnable {
         private boolean done;
-        private Vector currentCommands;
+        private Vector currentCommands = new Vector();
         
         /**
          * Dynamically get correct wrapper class for LWUIT command.
@@ -139,6 +139,7 @@ public class S40Implementation extends LWUITImplementation {
          * @return 
          */
         MIDPCommandWrapper wrapLWUITCommand(com.sun.lwuit.Command c, int offset) {
+            System.out.println("wrapLWUITCommand:" + c.getCommandName() + offset);
             MIDPCommandWrapper w = getCommandWrapperClass(c);
             if (w != null) {
                 w.setCommand(c);
@@ -171,19 +172,22 @@ public class S40Implementation extends LWUITImplementation {
         }
 
         public void addCommand(com.sun.lwuit.Command cmd) {
-            
+            System.out.println("S40Implementation.C addCommand");
             //wrap it with midpcommandwrapper
             MIDPCommandWrapper wrapped = wrapLWUITCommand(cmd, currentCommands.size());
             if(currentCommands.contains(wrapped)) {
+                System.out.println("wrapped command already in vector");
                 return;
             }
+            wrapped.setType(Command.SCREEN);
             //set command type BACK or OK or default
             com.sun.lwuit.Form f = Display.getInstance().getCurrent();
-            
-            if(f.getBackCommand() == cmd) {
-                wrapped.setType(Command.BACK);
-            }else if(f.getDefaultCommand() == cmd) {
-                wrapped.setType(Command.OK);
+            if (f != null) {
+                if (f.getBackCommand() == cmd) {
+                    wrapped.setType(Command.BACK);
+                } else if (f.getDefaultCommand() == cmd) {
+                    wrapped.setType(Command.OK);
+                }
             }
             //add to end of currentCommands
             currentCommands.addElement(wrapped);
@@ -206,8 +210,11 @@ public class S40Implementation extends LWUITImplementation {
         
         
         public void setCommands(Vector v) {
+            System.out.println("S40Implementation.setCommands()");
             if(currentCommands != null) {
+                
                 int l = currentCommands.size();
+                System.out.println("currentCommands size before removal:" + l);
                 MIDPCommandWrapper temp;
                 for(int iter = 0 ; iter < l ; iter++) {
                     temp = (MIDPCommandWrapper)currentCommands.elementAt(iter);
@@ -1835,6 +1842,7 @@ public class S40Implementation extends LWUITImplementation {
      * @inheritDoc
      */
     public void setNativeCommands(Vector commands) {
+        System.out.println("S40Implementation.setNativeCommands");
         canvas.setFullScreenMode(forceFullScreen || !com.sun.lwuit.Display.getInstance().isNativeCommands());
         ((S40Implementation.C)canvas).setCommands(commands);
     }

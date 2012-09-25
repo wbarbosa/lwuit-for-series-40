@@ -497,6 +497,7 @@ public class MenuBar extends Container implements ActionListener {
      * Updates the command mapping to the softbuttons
      */
     private void updateCommands() {
+        System.out.println("MenuBar.updateCommands");
         if(isNativeCommandBehavior()) {
             //prevent platform commands from flickering by making sure
             //the form is visible
@@ -1006,7 +1007,6 @@ public class MenuBar extends Container implements ActionListener {
         } else {
             commands.insertElementAt(cmd, 0);
         }
-
         if(!(parent instanceof Dialog)) {
             int behavior = getCommandBehavior();
             if(behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR || behavior == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK ||
@@ -1020,12 +1020,12 @@ public class MenuBar extends Container implements ActionListener {
                         synchronizeCommandsWithButtonsInBackbutton();
                         return;
                     }
-
+                    
                     setLayout(new GridLayout(1, getCommandCount()));
                     addComponent(createTouchCommandButton(cmd));
                 } else {
                     commands.removeElement(cmd);
-                }
+                }   
                 return;
             }
         }
@@ -1669,7 +1669,7 @@ public class MenuBar extends Container implements ActionListener {
         return cancelMenuItem;
     }
     
-    private boolean isNativeCommandBehavior() {
+    protected boolean isNativeCommandBehavior() {
         return getCommandBehavior() == Display.COMMAND_BEHAVIOR_NATIVE;
     }
     

@@ -1207,6 +1207,7 @@ public final class Display {
     }
 
     void setCurrentForm(Form newForm){
+        System.out.println("Display.setCurrentForm");
         boolean forceShow = false;
         Form current = impl.getCurrentForm();
         if(current != null){
@@ -1232,9 +1233,6 @@ public final class Display {
         }
         lastKeyPressed = 0;
         previousKeyPressed = 0;
-        if(Display.getInstance().isNativeCommands()) {
-            Display.getInstance().getImplementation().setNativeCommands(newForm.getMenuBar().getCommands());
-        }
         newForm.onShowCompletedImpl();
     }
 

@@ -2105,8 +2105,11 @@ public class Form extends Container {
      * @param cmd the Form command to be added
      */
     public void addCommand(Command cmd) {
-        //menuBar.addCommand(cmd);
-        addCommand(cmd, 0);
+        if(menuBar.isNativeCommandBehavior()) {
+            menuBar.addCommand(cmd);
+        }else {
+            addCommand(cmd, 0);
+        }
     }
 
     /**

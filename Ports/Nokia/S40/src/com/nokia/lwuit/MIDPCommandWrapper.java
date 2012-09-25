@@ -19,9 +19,11 @@ public class MIDPCommandWrapper {
      */
     public static MIDPCommandWrapper createInstance(com.sun.lwuit.Command c) {
         if (c.getIcon() != null) {
+            
             try {
                 Class.forName("com.nokia.mid.ui.IconCommand");
                 Class cl = Class.forName("com.nokia.lwuit.MIDPIconCommandWrapper");
+                System.out.println("creating iconcommand");
                 return (MIDPCommandWrapper) cl.newInstance();
             } catch (Exception e) {
                 System.out.println("IconCommand not supported.");
