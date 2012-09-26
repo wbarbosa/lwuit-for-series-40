@@ -23,6 +23,7 @@
  */
 package com.sun.lwuit.plaf;
 
+import com.nokia.lwuit.TextEditorProvider;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.Graphics;
 import com.sun.lwuit.Image;
@@ -528,55 +529,63 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
      * @inheritDoc
      */
     public void drawTextArea(Graphics g, TextArea ta) {
-        setFG(g, ta);
         
-        int leftPadding = ta.getStyle().getPadding(ta.isRTL(), Component.LEFT);
-        int rightPadding = ta.getStyle().getPadding(ta.isRTL(), Component.RIGHT);
-        int topPadding = ta.getStyle().getPadding(false, Component.TOP);
-        int bottomPadding = ta.getStyle().getPadding(false, Component.BOTTOM);
-        
-        int line = ta.getLines();
-        int oX = g.getClipX();
-        int oY = g.getClipY() + topPadding;
-        int oWidth = g.getClipWidth();
-        int oHeight = g.getClipHeight() - topPadding - bottomPadding;
-        Font f = ta.getStyle().getFont();
-        int fontHeight = f.getHeight();
-        int align = reverseAlignForBidi(ta);
+        if(ta.isTextEditorActive()) {
 
-        
-        boolean shouldBreak = false;
-        
-        for (int i = 0; i < line; i++) {
-            int x = ta.getX() + leftPadding;
-            int y = (ta.getY() - ta.getVisibleContentPosition()) +  topPadding + 
-                    (ta.getRowsGap() + fontHeight) * i;
-            if(Rectangle.intersects(x, y, ta.getWidth(), fontHeight, oX, oY, oWidth, oHeight)) {
-                
-                String rowText = (String) ta.getTextAt(i);
-                //display ******** if it is a password field
-                String displayText = "";
-                if ((ta.getConstraint() & TextArea.PASSWORD) != 0) {
-                    for (int j = 0; j < rowText.length(); j++) {
-                        displayText += "*";
+            // Series 40 TextEditor handles its own drawing
+            ta.updateTextAreaStyles();
+
+        } else {
+
+            // Draw original LWUIT TextArea
+            setFG(g, ta);
+
+            int leftPadding = ta.getStyle().getPadding(ta.isRTL(), Component.LEFT);
+            int rightPadding = ta.getStyle().getPadding(ta.isRTL(), Component.RIGHT);
+            int topPadding = ta.getStyle().getPadding(false, Component.TOP);
+            int bottomPadding = ta.getStyle().getPadding(false, Component.BOTTOM);
+
+            int line = ta.getLines();
+            int oX = g.getClipX();
+            int oY = g.getClipY() + topPadding;
+            int oWidth = g.getClipWidth();
+            int oHeight = g.getClipHeight() - topPadding - bottomPadding;
+            Font f = ta.getStyle().getFont();
+            int fontHeight = f.getHeight();
+            int align = reverseAlignForBidi(ta);
+
+
+            boolean shouldBreak = false;
+
+            for (int i = 0; i < line; i++) {
+                int x = ta.getX() + leftPadding;
+                int y = (ta.getY() - ta.getVisibleContentPosition()) +  topPadding +
+                        (ta.getRowsGap() + fontHeight) * i;
+                if(Rectangle.intersects(x, y, ta.getWidth(), fontHeight, oX, oY, oWidth, oHeight)) {
+
+                    String rowText = (String) ta.getTextAt(i);
+                    //display ******** if it is a password field
+                    String displayText = "";
+                    if ((ta.getConstraint() & TextArea.PASSWORD) != 0) {
+                        for (int j = 0; j < rowText.length(); j++) {
+                            displayText += "*";
+                        }
+                    } else {
+                        displayText = rowText;
                     }
-                } else {
-                    displayText = rowText;
-                }
 
-                switch(align) {
-                    case Component.RIGHT:
-                		x = ta.getX() + ta.getWidth() - rightPadding - f.stringWidth(displayText);
-                        break;
-                    case Component.CENTER:
-                        x+= (ta.getWidth()-leftPadding-rightPadding-f.stringWidth(displayText))/2;
-                        break;
-                }
-                g.drawString(displayText, x, y ,ta.getStyle().getTextDecoration());
-                
-                shouldBreak = true;
-            }else{
-                if(shouldBreak){
+                    switch(align) {
+                        case Component.RIGHT:
+                                    x = ta.getX() + ta.getWidth() - rightPadding - f.stringWidth(displayText);
+                            break;
+                        case Component.CENTER:
+                            x+= (ta.getWidth()-leftPadding-rightPadding-f.stringWidth(displayText))/2;
+                            break;
+                    }
+                    g.drawString(displayText, x, y ,ta.getStyle().getTextDecoration());
+
+                    shouldBreak = true;
+                } else if(shouldBreak) {
                     break;
                 }
             }
@@ -819,41 +828,68 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
      * @inheritDoc
      */
     public Dimension getTextAreaSize(TextArea ta, boolean pref) {
+
         int prefW = 0;
         int prefH = 0;
+
         Style style = ta.getStyle();
-        Font f = style.getFont();
+        int leftPadding = style.getPadding(false, Component.LEFT);
+        int rightPadding = style.getPadding(false, Component.RIGHT);
+        int topPadding = style.getPadding(false, Component.TOP);
+        int bottomPadding = style.getPadding(false, Component.BOTTOM);
 
-        //if this is a text field the preferred size should be the text width
-        if (ta.getRows() == 1) {
-            prefW = f.stringWidth(ta.getText());
-        } else {
-            prefW = f.charWidth(TextArea.getWidestChar()) * ta.getColumns();
-        }
-        int rows;
-        if(pref) {
-            rows = ta.getActualRows();
-        } else {
-            rows = ta.getLines();
-        }
-        prefH = (f.getHeight() + ta.getRowsGap()) * rows;
-        int columns = ta.getColumns();
-        String str = "";
-        for (int iter = 0; iter < columns; iter++) {
-            str += TextArea.getWidestChar();
-        }
-        if(columns > 0) {
-            prefW = Math.max(prefW, f.stringWidth(str));
-        }
-        prefH = Math.max(prefH, rows * f.getHeight());
+        if(ta.isTextEditorActive()) {
+            
+            // Calculate size according to Series 40 TextEditor
+            TextEditorProvider te = ta.getTextEditorProvider();
+            prefW = te.getWidth();
 
-        prefW += style.getPadding(false, Component.RIGHT) + style.getPadding(false, Component.LEFT);
-        prefH += style.getPadding(false, Component.TOP) + style.getPadding(false, Component.BOTTOM);
+            int minHeight = ta.getRows() * (te.getFont().getHeight() + te.getLineMarginHeight());
+            
+            if(ta.isGrowByContent() || !pref) {
+               prefH = Math.max(te.getContentHeight(), minHeight);            
+            } else {
+               prefH = te.getHeight();
+            }
+
+        } else {
+            
+            // Calculate size the original way
+            Font f = style.getFont();
+
+            //if this is a text field the preferred size should be the text width
+            if (ta.getRows() == 1) {
+                prefW = f.stringWidth(ta.getText());
+            } else {
+                prefW = f.charWidth(TextArea.getWidestChar()) * ta.getColumns();
+            }
+            int rows;
+            if(pref) {
+                rows = ta.getActualRows();
+            } else {
+                rows = ta.getLines();
+            }
+            prefH = (f.getHeight() + ta.getRowsGap()) * rows;
+            int columns = ta.getColumns();
+            String str = "";
+            for (int iter = 0; iter < columns; iter++) {
+                str += TextArea.getWidestChar();
+            }
+            if(columns > 0) {
+                prefW = Math.max(prefW, f.stringWidth(str));
+            }
+            prefH = Math.max(prefH, rows * f.getHeight());
+            
+        }
+
+        prefW += leftPadding + rightPadding;
+        prefH += topPadding + bottomPadding;
+        
         if(style.getBorder() != null) {
             prefW = Math.max(style.getBorder().getMinimumWidth(), prefW);
             prefH = Math.max(style.getBorder().getMinimumHeight(), prefH);
         }
-
+        
         return new Dimension(prefW, prefH);
     }
 
@@ -891,6 +927,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         int cmpY = l.getY();
         int cmpHeight = l.getHeight();
         int cmpWidth = l.getWidth();
+
         boolean rtl = l.isRTL();
         int leftPadding = style.getPadding(rtl, Component.LEFT);
         int rightPadding = style.getPadding(rtl, Component.RIGHT);
@@ -940,14 +977,16 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         final int textPos= reverseAlignForBidi(l, l.getTextPosition());
         //calculate the space for text
         int textSpaceW = cmpWidth - rightPadding - leftPadding;
+        
         if (icon != null && (textPos == Label.RIGHT || textPos == Label.LEFT)) {
             textSpaceW = textSpaceW - icon.getWidth();
         }
 
-        if (stateIcon == null) {
+        if (stateIcon != null) {
+            textSpaceW = textSpaceW - stateIconSize;
+        } else {
             textSpaceW = textSpaceW - preserveSpaceForState;
         }
-        
         //set initial x,y position according to the alignment and textPosition
         if (align == Component.LEFT) {
             switch (textPos) {
@@ -993,7 +1032,9 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                 case Label.LEFT:
                 case Label.RIGHT:
                     int iconWidth = (icon != null) ? (icon.getWidth() + gap) : 0;
+                    System.out.println("space for text here:" + textSpaceW);
                     String shortened = shortenString(text, textSpaceW, font);
+                    System.out.println("calculating with:" + shortened);
                     int textWidth = font.stringWidth(shortened);
                     x = cmpX + cmpWidth - rightPadding - iconWidth - textWidth;
                     if(l.isRTL()) {
