@@ -1234,6 +1234,7 @@ public final class Display {
         lastKeyPressed = 0;
         previousKeyPressed = 0;
         if(Display.getInstance().isNativeCommands()) {
+            System.out.println("Display.setCurrentForm() setNativeCommands");
             Display.getInstance().getImplementation().setNativeCommands(newForm.getMenuBar().getCommands());
         }
         newForm.onShowCompletedImpl();
