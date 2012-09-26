@@ -280,11 +280,7 @@ public class S40Implementation extends LWUITImplementation {
                 if(current == backCommand) {
                     currentCommands.addElement(wrapLWUITCommand(current, Command.BACK, iter + 1));
                 } else {
-                    if(iter == 0) {
-                        currentCommands.addElement(wrapLWUITCommand(current, Command.OK, iter + 1));
-                    } else {
-                        currentCommands.addElement(wrapLWUITCommand(current, iter + 1));
-                    }
+                    currentCommands.addElement(wrapLWUITCommand(current, iter + 1));
                 }
                 MIDPCommandWrapper mcw = (MIDPCommandWrapper)currentCommands.elementAt(iter);
                 addCommand(mcw.getCommand());
