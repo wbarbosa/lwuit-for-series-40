@@ -439,9 +439,11 @@ public class MenuBar extends Container implements ActionListener {
      */
     public void setBackCommand(Command backCommand) {
         if(!commands.contains(backCommand)) {
+            System.out.println("backcommand not in vector");
             if(!isNativeCommandBehavior()) {
                 addCommand(backCommand);
             }else {
+                System.out.println("native behavior adding to commands vector");
                 commands.addElement(backCommand);
             }
         }

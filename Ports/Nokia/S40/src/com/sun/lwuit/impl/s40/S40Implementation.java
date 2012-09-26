@@ -175,6 +175,7 @@ public class S40Implementation extends LWUITImplementation {
         }
 
         public void addCommand(com.sun.lwuit.Command cmd) {
+            setCommandListener(this);
             System.out.println("S40Implementation.C addCommand");
             //wrap it with midpcommandwrapper
             MIDPCommandWrapper wrapped = wrapLWUITCommand(cmd, currentCommands.size());
@@ -214,6 +215,7 @@ public class S40Implementation extends LWUITImplementation {
             }
         }
         public void setPrimaryCommand(com.sun.lwuit.Command c) {
+            setCommandListener(this);
             int l = currentCommands.size();
             MIDPCommandWrapper w;
             //first remove it if necessary
@@ -225,16 +227,19 @@ public class S40Implementation extends LWUITImplementation {
             addCommand(w.getCommand());
         }
         public void setBackCommand(com.sun.lwuit.Command c) {
+            setCommandListener(this);
             int l = currentCommands.size();
             MIDPCommandWrapper w;
             for(int i = 0; i < l; i++) {
                 w = (MIDPCommandWrapper) currentCommands.elementAt(i);
                 if(w.getType() == Command.BACK || w.getLWUITCommand() == c) {
+                    System.out.println("removing old back");
                     removeCommand(w.getCommand());
                     currentCommands.removeElement(w);
                     break;
                 }
             }
+            System.out.println("setting new back");
             w = wrapLWUITCommand(c, Command.BACK, currentCommands.size());
             currentCommands.addElement(w);
             addCommand(w.getCommand());
