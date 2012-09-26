@@ -142,7 +142,6 @@ public class S40Implementation extends LWUITImplementation {
          * @return 
          */
         MIDPCommandWrapper wrapLWUITCommand(com.sun.lwuit.Command c, int offset) {
-            System.out.println("wrapLWUITCommand:" + c.getCommandName() + offset);
             MIDPCommandWrapper w = getCommandWrapperClass(c);
             if (w != null) {
                 w.setCommand(c);
@@ -176,11 +175,9 @@ public class S40Implementation extends LWUITImplementation {
 
         public void addCommand(com.sun.lwuit.Command cmd) {
             setCommandListener(this);
-            System.out.println("S40Implementation.C addCommand");
             //wrap it with midpcommandwrapper
             MIDPCommandWrapper wrapped = wrapLWUITCommand(cmd, currentCommands.size());
             if(currentCommands.contains(wrapped)) {
-                System.out.println("wrapped command already in vector");
                 return;
             }
             wrapped.setType(Command.SCREEN);
@@ -233,13 +230,11 @@ public class S40Implementation extends LWUITImplementation {
             for(int i = 0; i < l; i++) {
                 w = (MIDPCommandWrapper) currentCommands.elementAt(i);
                 if(w.getType() == Command.BACK || w.getLWUITCommand() == c) {
-                    System.out.println("removing old back");
                     removeCommand(w.getCommand());
                     currentCommands.removeElement(w);
                     break;
                 }
             }
-            System.out.println("setting new back");
             w = wrapLWUITCommand(c, Command.BACK, currentCommands.size());
             currentCommands.addElement(w);
             addCommand(w.getCommand());
@@ -247,11 +242,9 @@ public class S40Implementation extends LWUITImplementation {
         
         
         public void setCommands(Vector v) {
-            System.out.println("S40Implementation.setCommands()");
             if(currentCommands != null) {
                 
                 int l = currentCommands.size();
-                System.out.println("currentCommands size before removal:" + l);
                 MIDPCommandWrapper temp;
                 for(int iter = 0 ; iter < l ; iter++) {
                     temp = (MIDPCommandWrapper)currentCommands.elementAt(iter);
@@ -1878,7 +1871,6 @@ public class S40Implementation extends LWUITImplementation {
      * @inheritDoc
      */
     public void setNativeCommands(Vector commands) {
-        System.out.println("S40Implementation.setNativeCommands");
         canvas.setFullScreenMode(forceFullScreen || !com.sun.lwuit.Display.getInstance().isNativeCommands());
         ((S40Implementation.C)canvas).setCommands(commands);
     }

@@ -1307,7 +1307,6 @@ public class Form extends Container {
      * @param modal indictes if this is a modal or modeless dialog true for modal dialogs
      */
     void showModal(int top, int bottom, int left, int right, boolean includeTitle, boolean modal, boolean reverse) {
-        System.out.println("Form: showModal");
         Display.getInstance().flushEdt();
         if (previousForm == null){
             previousForm = Display.getInstance().getCurrent();
@@ -1419,7 +1418,6 @@ public class Form extends Container {
      * Works only for modal forms by returning to the previous form
      */
     void disposeImpl() {
-        System.out.println("Form: disposeImpl");
         if (previousForm != null) {
             previousForm.tint = false;
 

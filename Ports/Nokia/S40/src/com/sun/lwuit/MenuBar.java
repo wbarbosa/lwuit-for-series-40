@@ -439,11 +439,9 @@ public class MenuBar extends Container implements ActionListener {
      */
     public void setBackCommand(Command backCommand) {
         if(!commands.contains(backCommand)) {
-            System.out.println("backcommand not in vector");
             if(!isNativeCommandBehavior()) {
                 addCommand(backCommand);
             }else {
-                System.out.println("native behavior adding to commands vector");
                 commands.addElement(backCommand);
             }
         }
@@ -512,7 +510,6 @@ public class MenuBar extends Container implements ActionListener {
      * Updates the command mapping to the softbuttons
      */
     private void updateCommands() {
-        System.out.println("MenuBar.updateCommands");
         if(isNativeCommandBehavior()) {
             //prevent platform commands from flickering by making sure
             //the form is visible
@@ -1010,7 +1007,6 @@ public class MenuBar extends Container implements ActionListener {
      * @param cmd Command to add
      */
     public void addCommand(Command cmd) {
-        System.out.println("menubar.addCommand");
         // prevent duplicate commands which might happen in some edge cases
         // with the select command
         if (commands.contains(cmd)) {
