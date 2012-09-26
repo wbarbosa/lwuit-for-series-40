@@ -81,6 +81,13 @@ public class MIDPCommandWrapper {
     public void setType(int type) {
         this.type = type;
     }
+    /**
+     * Get MIDP Command type
+     * @return type
+     */
+    public int getType() {
+        return this.type;
+    }
 
     public int hashCode() {
         int hash = 7;

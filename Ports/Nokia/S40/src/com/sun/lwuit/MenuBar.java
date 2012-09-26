@@ -252,6 +252,10 @@ public class MenuBar extends Container implements ActionListener {
      */
     public void setDefaultCommand(Command defaultCommand) {
         this.defaultCommand = defaultCommand;
+        if(isNativeCommandBehavior()) {
+            S40Implementation impl = (S40Implementation)Display.getInstance().getImplementation();
+            impl.setPrimaryNativeCommand(defaultCommand);
+        }
     }
 
     /**
@@ -435,7 +439,11 @@ public class MenuBar extends Container implements ActionListener {
      */
     public void setBackCommand(Command backCommand) {
         if(!commands.contains(backCommand)) {
-            addCommand(backCommand);
+            if(!isNativeCommandBehavior()) {
+                addCommand(backCommand);
+            }else {
+                commands.addElement(backCommand);
+            }
         }
         /**
          * The backstack is used to hold previous command that were backcommands.
@@ -459,7 +467,12 @@ public class MenuBar extends Container implements ActionListener {
         }
         updateTitleCommandPlacement();
         // 'back' gets special treatment so update softkey actions
-        updateCommands();
+        if(isNativeCommandBehavior()) {
+            S40Implementation impl = (S40Implementation)Display.getInstance().getImplementation();
+            impl.setNativeBackCommand(backCommand);
+        }else{
+            updateCommands();
+        }
     }
 
     /**
@@ -995,6 +1008,7 @@ public class MenuBar extends Container implements ActionListener {
      * @param cmd Command to add
      */
     public void addCommand(Command cmd) {
+        System.out.println("menubar.addCommand");
         // prevent duplicate commands which might happen in some edge cases
         // with the select command
         if (commands.contains(cmd)) {

@@ -115,6 +115,9 @@ public class S40Implementation extends LWUITImplementation {
         
     private class C extends GameCanvas implements CommandListener, Runnable {
         private boolean done;
+        /**
+         * Contains the MIDPCommandWrapper wrapped commands
+         */
         private Vector currentCommands = new Vector();
         
         /**
@@ -184,10 +187,13 @@ public class S40Implementation extends LWUITImplementation {
             com.sun.lwuit.Form f = Display.getInstance().getCurrent();
             if (f != null) {
                 if (f.getBackCommand() == cmd) {
-                    wrapped.setType(Command.BACK);
+                    setBackCommand(cmd);
+                    return;
                 } else if (f.getDefaultCommand() == cmd) {
-                    wrapped.setType(Command.OK);
+                    setPrimaryCommand(cmd);
+                    return;
                 }
+               
             }
             //add to end of currentCommands
             currentCommands.addElement(wrapped);
@@ -206,6 +212,32 @@ public class S40Implementation extends LWUITImplementation {
                    break;
                }
             }
+        }
+        public void setPrimaryCommand(com.sun.lwuit.Command c) {
+            int l = currentCommands.size();
+            MIDPCommandWrapper w;
+            //first remove it if necessary
+            removeCommand(c);
+            //create command with highest priority and type OK
+            w = wrapLWUITCommand(c, Command.OK, 0);
+            currentCommands.addElement(w);
+            
+            addCommand(w.getCommand());
+        }
+        public void setBackCommand(com.sun.lwuit.Command c) {
+            int l = currentCommands.size();
+            MIDPCommandWrapper w;
+            for(int i = 0; i < l; i++) {
+                w = (MIDPCommandWrapper) currentCommands.elementAt(i);
+                if(w.getType() == Command.BACK || w.getLWUITCommand() == c) {
+                    removeCommand(w.getCommand());
+                    currentCommands.removeElement(w);
+                    break;
+                }
+            }
+            w = wrapLWUITCommand(c, Command.BACK, currentCommands.size());
+            currentCommands.addElement(w);
+            addCommand(w.getCommand());
         }
         
         
@@ -1854,6 +1886,12 @@ public class S40Implementation extends LWUITImplementation {
     public void removeNativeCommand(com.sun.lwuit.Command c) {
         ((S40Implementation.C)canvas).removeCommand(c);
     } 
+    public void setPrimaryNativeCommand(com.sun.lwuit.Command c) {
+        ((S40Implementation.C)canvas).setPrimaryCommand(c);
+    }
+    public void setNativeBackCommand(com.sun.lwuit.Command c) {
+        ((S40Implementation.C)canvas).setBackCommand(c);
+    }
     
     /**
      * Exits the application...
