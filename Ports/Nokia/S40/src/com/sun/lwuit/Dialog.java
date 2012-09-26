@@ -1006,19 +1006,21 @@ public class Dialog extends Form {
                 for(int iter = 0 ; iter < cmds.length ; iter++) {
                     dialog.addCommand(cmds[iter]);
                 }
-            }
-
-            // for the special case of one command map it to the back button
-            if(cmds.length == 1) {
-                dialog.setBackCommand(cmds[0]);
-            } else {
-                // maps the second command to back
-                if(cmds.length == 2) {
-                    dialog.setBackCommand(cmds[1]);
+            
+                // for the special case of one command map it to the back button
+                if (cmds.length == 1) {
+                    dialog.setBackCommand(cmds[0]);
+                } else {
+                    // maps the second command to back
+                    if (cmds.length == 2) {
+                        dialog.setBackCommand(cmds[1]);
+                    }
                 }
             }
+
         }
-        if(defaultCommand != null) {
+        if(defaultCommand != null && !commandsAsButtons) {
+            
             dialog.setDefaultCommand(defaultCommand);
         }
         dialog.addComponent(BorderLayout.CENTER, body);
