@@ -1299,7 +1299,6 @@ public class List extends Component {
             return;
         }
         if(!Display.getInstance().shouldRenderSelection(this)) {
-            System.out.println("does it skip focuspaint?");
             return;
         }
         calculateComponentPosition(getCurrentSelected(), width, pos, rendererSize, getElementSize(true, true), true);
@@ -1320,7 +1319,6 @@ public class List extends Component {
             renderComponentBackground(g, cmp, x, y, size.getWidth(), size.getHeight());
             renderComponent(g, cmp, x, y, size.getWidth(), size.getHeight());
         }
-        
     }
 
     /**

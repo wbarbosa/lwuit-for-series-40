@@ -2145,6 +2145,7 @@ public final class Display {
      * @return the shouldRenderSelection
      */
     public boolean shouldRenderSelection(Component c) {
+        //System.out.println("shouldRenderSelection(c)");
         boolean shouldrender = getDeviceType() == NON_TOUCH_DEVICE;
         if(c.isCellRenderer()) {
             return shouldRenderSelection();
@@ -2612,7 +2613,7 @@ public final class Display {
         if(INSTANCE.impl.isTouchDevice()) {
             //is T&T device
             if(!keyboard.equals("None")) {
-                ret = NON_TOUCH_DEVICE;
+                ret = TOUCH_AND_TYPE_DEVICE;
             }else {
                 ret = FULL_TOUCH_DEVICE;
             }
