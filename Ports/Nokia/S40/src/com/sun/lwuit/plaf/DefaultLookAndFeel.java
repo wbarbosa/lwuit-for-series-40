@@ -1032,9 +1032,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                 case Label.LEFT:
                 case Label.RIGHT:
                     int iconWidth = (icon != null) ? (icon.getWidth() + gap) : 0;
-                    System.out.println("space for text here:" + textSpaceW);
                     String shortened = shortenString(text, textSpaceW, font);
-                    System.out.println("calculating with:" + shortened);
                     int textWidth = font.stringWidth(shortened);
                     x = cmpX + cmpWidth - rightPadding - iconWidth - textWidth;
                     if(l.isRTL()) {
