@@ -35,7 +35,7 @@ import javax.microedition.midlet.MIDlet;
  * @author tkor
  */
 public class S40Implementation extends LWUITImplementation {
-    
+
         
     private boolean hideMenu = false;
     /**
@@ -2138,4 +2138,5 @@ public class S40Implementation extends LWUITImplementation {
     public synchronized void setCurrentGestureListener(com.sun.lwuit.Form f) {
         //do nothing
     }
+    
 }

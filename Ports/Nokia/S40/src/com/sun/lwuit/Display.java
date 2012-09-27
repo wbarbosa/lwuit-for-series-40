@@ -165,6 +165,9 @@ public final class Display {
     public static final int DENSITY_HD = 60;
 
 
+    public static final int NON_TOUCH_DEVICE = 0;
+    public static final int TOUCH_AND_TYPE_DEVICE = 1;
+    public static final int FULL_TOUCH_DEVICE = 2;
     /**
      * A pure touch device has no focus showing when the user is using the touch
      * interface. Selection only shows when the user actually touches the screen
@@ -406,10 +409,6 @@ public final class Display {
      */
     public static void init(Object m) {
         if(!INSTANCE.lwuitRunning) {
-            //set puretouch variable
-            String p = System.getProperty("com.nokia.keyboard.type");
-            pureTouch = (p != null) ? p.equals("None") : false;
-            System.out.println("[DISPLAY] set pureTouch to " + pureTouch);
             
             INSTANCE.lwuitRunning = true;
             INSTANCE.displayInitTime = System.currentTimeMillis();
@@ -440,6 +439,10 @@ public final class Display {
             INSTANCE.dragPathY = new float[INSTANCE.PATHLENGTH];
             INSTANCE.dragPathTime = new long[INSTANCE.PATHLENGTH];
 
+            //set puretouch variable
+            int devtype = INSTANCE.getDeviceType();
+            pureTouch = (devtype == TOUCH_AND_TYPE_DEVICE || devtype == FULL_TOUCH_DEVICE) ? true : false;
+            
             // this can happen on some cases where an application was restarted etc...
             // generally its probably a bug but we can let it slide...
             if(INSTANCE.edt == null) {
@@ -455,16 +458,17 @@ public final class Display {
             try {
                 javax.microedition.lcdui.Display nativeDisplay = javax.microedition.lcdui.Display.getDisplay((MIDlet) m);
                 UIManager.getInstance().setNativeDisplay(nativeDisplay);
-                if (INSTANCE.touchScreen) {
-                    if(pureTouch) {
+                switch(INSTANCE.getDeviceType()) {
+                    case FULL_TOUCH_DEVICE:
                         nokiaResource = Resources.open("/full_touch_theme.res");
-                    }else {
-                    nokiaResource = Resources.open("/nokia_theme.res");
-                    }
-                } else {
-                    nokiaResource = Resources.open("/nokia_non_touch_theme.res");
-                }
-                
+                        break;
+                    case TOUCH_AND_TYPE_DEVICE:
+                        nokiaResource = Resources.open("/nokia_theme.res");
+                        break;
+                    case NON_TOUCH_DEVICE:
+                        nokiaResource = Resources.open("/nokia_non_touch_theme.res");
+                        break;
+                }                
                 UIManager.getInstance().setThemeProps(nokiaResource.getTheme("NokiaTheme"));
                 
                 System.out.println("loaded nokia theme.");
@@ -473,7 +477,7 @@ public final class Display {
             }
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
             INSTANCE.registerVirtualKeyboard(vkb);
-            if(INSTANCE.isPureTouch()) {
+            if(INSTANCE.getDeviceType() == FULL_TOUCH_DEVICE) {
                 INSTANCE.setCommandBehavior(Display.COMMAND_BEHAVIOR_NATIVE);
                 if(INSTANCE.impl instanceof S40Implementation) {
                     ((S40Implementation) INSTANCE.impl).setHideMenu(true);
@@ -2119,29 +2123,33 @@ public final class Display {
     }
 
     /**
-     * This is an internal state flag relevant only for pureTouch mode (otherwise it
-     * will always be true). A pureTouch mode is stopped if a user switches to using
-     * the trackball/navigation pad and this flag essentially toggles between those two modes.
+     * This is an internal state flag relevant only for devices that don't have focus 
+     * indication mode (otherwise it  will always be true). A pureTouch mode is 
+     * stopped if a user switches to using the trackball/navigation pad and this 
+     * flag essentially toggles between those two modes.
      *
      * @return the shouldRenderSelection
      */
     public boolean shouldRenderSelection() {
-        return !pureTouch || pointerPressedAndNotReleasedOrDragged || lastInteractionWasKeypad;
+        boolean shouldrender = getDeviceType() == NON_TOUCH_DEVICE;
+        return shouldrender || pointerPressedAndNotReleasedOrDragged || lastInteractionWasKeypad;
     }
 
     /**
-     * This is an internal state flag relevant only for pureTouch mode (otherwise it
-     * will always be true). A pureTouch mode is stopped if a user switches to using
-     * the trackball/navigation pad and this flag essentially toggles between those two modes.
+     * This is an internal state flag relevant only for devices that don't have focus 
+     * indication mode (otherwise it  will always be true). A pureTouch mode is 
+     * stopped if a user switches to using the trackball/navigation pad and this 
+     * flag essentially toggles between those two modes.
      *
      * @param c the component to test against, this prevents a touch outside of the component that triggers a repaint from painting the component selection
      * @return the shouldRenderSelection
      */
     public boolean shouldRenderSelection(Component c) {
+        boolean shouldrender = getDeviceType() == NON_TOUCH_DEVICE;
         if(c.isCellRenderer()) {
             return shouldRenderSelection();
         }
-        return !pureTouch || lastInteractionWasKeypad || (pointerPressedAndNotReleasedOrDragged && c.contains(pointerX, pointerY));
+        return shouldrender || lastInteractionWasKeypad || (pointerPressedAndNotReleasedOrDragged && c.contains(pointerX, pointerY));
     }
 
     /**
@@ -2594,4 +2602,22 @@ public final class Display {
     public Resources getNokiaResource() {
         return nokiaResource;
     }
+    
+    public int getDeviceType() {
+        String keyboard = System.getProperty("com.nokia.keyboard.type");
+        if(keyboard == null) {
+            keyboard = "None";
+        }
+        int ret = NON_TOUCH_DEVICE;
+        if(INSTANCE.impl.isTouchDevice()) {
+            //is T&T device
+            if(!keyboard.equals("None")) {
+                ret = NON_TOUCH_DEVICE;
+            }else {
+                ret = FULL_TOUCH_DEVICE;
+            }
+        }
+        return ret;
+    }
+    
 }
