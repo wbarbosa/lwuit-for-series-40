@@ -61,8 +61,8 @@ public class UIDemoMain
     static final Demo[] DEMOS = new Demo[]{
         /* new ThemeDemo(), */new RenderingDemo(), new AnimationDemo(), new ButtonsDemo(),
         new TransitionDemo(), new FontDemo(), new TabsDemo(), new DialogDemo(),
-        new LayoutDemo(), new ScrollDemo(), new TableDemo(), new TreeDemo()/*,
-        new HTMLDemo()*/
+        new LayoutDemo(), new ScrollDemo(), new TableDemo(), new TreeDemo(),
+        new HTMLDemo()
     };
     private Demo currentDemo;
     private Hashtable demosHash = new Hashtable();
