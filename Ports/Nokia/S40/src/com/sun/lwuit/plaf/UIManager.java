@@ -771,7 +771,7 @@ public class UIManager {
         }
         
         //set theme based colors
-        if (Display.getInstance().isPureTouch()) {
+        if (Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE) {
             String usePlatformColors = (String)themeProps.get("@NokiaPlatformColors");
             themeProps.put("bgColor", Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND)));
             String fg = Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND));
@@ -801,7 +801,7 @@ public class UIManager {
         current.refreshTheme();
         //make sure that in fulltouch we still have the platform menus instead of
         //fullscreen application
-        if(Display.getInstance().isPureTouch()) {
+        if(Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE) {
                 Display.getInstance().setCommandBehavior(Display.COMMAND_BEHAVIOR_NATIVE);
                 if(Display.getInstance().getImplementation() instanceof S40Implementation) {
                     ((S40Implementation) Display.getInstance().getImplementation()).setHideMenu(true);

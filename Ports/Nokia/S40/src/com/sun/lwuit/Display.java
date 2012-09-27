@@ -441,7 +441,7 @@ public final class Display {
 
             //set puretouch variable
             int devtype = INSTANCE.getDeviceType();
-            pureTouch = (devtype == TOUCH_AND_TYPE_DEVICE || devtype == FULL_TOUCH_DEVICE) ? true : false;
+            pureTouch = (devtype != NON_TOUCH_DEVICE) ? true : false;
             
             // this can happen on some cases where an application was restarted etc...
             // generally its probably a bug but we can let it slide...

@@ -44,7 +44,7 @@ public class S40GestureImplementation extends S40Implementation{
                 | GestureInteractiveZone.GESTURE_TAP
                 | GestureInteractiveZone.GESTURE_DRAG
                 | GestureInteractiveZone.GESTURE_DROP;
-        if(Display.getInstance().isPureTouch()) {
+        if(Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE) {
             gestures = GestureInteractiveZone.GESTURE_ALL;
         }
         //register for gestures

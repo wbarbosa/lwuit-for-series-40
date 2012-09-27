@@ -219,7 +219,7 @@ public class Dialog extends Form {
     Dialog(String dialogUIID, String dialogTitleUIID) {
         super();
 
-        commandsAsButtons = Display.getInstance().isPureTouch();
+        commandsAsButtons = Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE;
         
         if(dialogTitleCompatibilityMode) {
             getContentPane().setUIID(dialogUIID);
