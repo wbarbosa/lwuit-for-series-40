@@ -1,0 +1,45 @@
+<project name="LWUIT-UI" default="package" basedir=".">
+    <taskdef resource="antenna.properties"/>
+    <property name="src" location="src" />
+    <property name="wtk.home" value="c:\tools\Nokia\Devices\Nokia_SDK_2_0_Java" />
+    <property name="wtk.midp.version" value="2.0" />
+    <property name="wtk.cldc.version" value="1.1" />
+    <path id="bootclasspath.ref">
+        <fileset dir="${wtk.home}/lib" >
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="classes" />
+        <delete dir="dist" />
+    </target>
+    <target name="init">
+        <mkdir dir="classes/" />
+        <mkdir dir="dist/" />
+    </target>
+
+    <target name="build" depends="init">
+       <wtkbuild
+            srcdir="${src}" 
+            destdir="classes/" 
+            encoding="UTF-8" 
+            source="1.3" 
+            includeAntRuntime="false" 
+        >
+            <bootclasspath refid="bootclasspath.ref" />
+        </wtkbuild>
+
+    </target>
+    <target name="create-jad" depends="init">
+        <wtkjad jadfile="dist/UI.jad" name="LWUIT-UI" vendor="Nokia" version="1.5" encoding="UTF-8">
+        </wtkjad>
+    </target>
+    <target name="package" depends="build, create-jad">
+        <wtkpackage preverify="true" jarfile="dist/UI.jar" jadfile="dist/UI.jad">
+            <bootclasspath refid="bootclasspath.ref" />
+
+            <fileset dir="classes" />
+        </wtkpackage>
+    </target>
+</project>
