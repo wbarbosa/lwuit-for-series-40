@@ -1,5 +1,13 @@
 Changelog
 -------------------------------------------------------------------------------
+0.7.0 Beta.
+	* Fixed issue with textarea expanding not working.
+	* Resized checkboxes and radiobuttons in FT theme
+	* Fixed issue with command going to actionbutton 1 when it was not set as defaultcommand
+	* Fixed issue with removeCommands method in Form not working
+	* Fixed issue with blinking menuitems in FT
+	* Fixed issue with dialog creating an actionbutton when shown
+	* Fixed issue with T&T phones having focus when they shouldn't
 0.6.3 Beta. 
 	* TextArea setMaxSize now works
 	* TextArea setEditable now works
