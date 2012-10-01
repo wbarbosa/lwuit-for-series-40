@@ -1644,7 +1644,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     protected void deinitialize() {
+        if(isTextEditorActive()) {
+            textEditor.setVisible(false);
+        }
+
         super.deinitialize();
+        
         Form f = getComponentForm();
         if (f != null) {
             f.removePointerDraggedListener(dragListener);
