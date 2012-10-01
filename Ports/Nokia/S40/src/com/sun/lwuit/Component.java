@@ -2052,6 +2052,7 @@ public class Component implements Animation, StyleListener {
      * @param y the pointer y coordinate
      */
     public void pointerPressed(int x, int y) {
+        dragActivated = false;
         clearDrag();
     }
 

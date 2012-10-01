@@ -1,7 +1,7 @@
 <project name="LWUIT-ResourceEditor" default="package" basedir=".">
     <property name="uidemo" value="../../Apps/LWUITDemo/build.xml" />
     <property name="MIDP-SE" value="../MIDP_SE/build.xml" />
-    <property name="UI" value="../../UI/build.xml" />
+    <property name="UI" value="../../UI/antenna-build.xml" />
     <property name="IO_SE" value="../../Ports/SE/IO_SE/build.xml" />
     
     <target name="clean">
@@ -15,7 +15,7 @@
     <target name="build-dependencies">
         <ant antfile="${uidemo}" useNativeBasedir="true" target="jar" />
         <ant antfile="${MIDP-SE}" useNativeBasedir="true" target="default" />
-        <ant antfile="${UI}" useNativeBasedir="true" target="jar" />
+        <ant antfile="${UI}" useNativeBasedir="true" target="package" />
         <ant antfile="${IO_SE}" useNativeBasedir="true" target="default" />
     </target>
     
