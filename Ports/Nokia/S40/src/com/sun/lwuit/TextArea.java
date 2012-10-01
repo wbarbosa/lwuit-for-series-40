@@ -426,12 +426,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             //zero the vector inorder to initialize it on the next paint
             rowStrings=null; 
         }
-        if (textEditor != null) {
-            if (!textEditor.getContent().equals(text)) {
-                textEditor.setContent(text);
-                textEditor.setCaret(text.length());
-            }
+
+        if (isTextEditorActive() && !textEditor.getContent().equals(text)) {
+            textEditor.setContent(text);
+            textEditor.setCaret(text.length());
         }
+
         setShouldCalcPreferredSize(true);
     }
 
