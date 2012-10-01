@@ -1231,12 +1231,10 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         int l = original.length();
         String sub = "";
         int currentWidth = 0;
-        //we travel from end to the beginning and stop as soon as the width is 
-        //under or equal to allowed width
-        for(int i = l; i >= 0; i--) {
-            sub = original.substring(0, (i - 1));
+        for(int i = 0; i < l; i++) {
+            sub = original.substring(0, (i == 0) ? 1 :(i - 1));
             currentWidth = font.stringWidth(sub) + pointsW;
-            if(currentWidth <= width) {
+            if(currentWidth >= width) {
                 break;
             }
         }
