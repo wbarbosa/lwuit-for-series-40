@@ -1539,25 +1539,34 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @param actions 
      */
     public void inputAction(TextEditorProvider textEditor, int actions) {
+       
        if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_NEXT) != 0) {
-           //focus to next element
-           Form f = getComponentForm();
-           Component c = f.findNextFocusDown();
-           if(c instanceof TextArea) {
+            //focus to next element
+            Form f = getComponentForm();
+            Component c = f.findNextFocusDown();
+
+            if(c instanceof TextArea) {
                TextArea t = (TextArea) c;
                t.dontWaitForKeyReleased = true;
-           }
-           c.requestFocus();
+            }
+
+            if(c != null) {
+                c.requestFocus();
+            }            
        }
        if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
            //focus previous element
            Form f = getComponentForm();
            Component c = f.findNextFocusUp();
+
            if(c instanceof TextArea) {
                TextArea t = (TextArea) c;
                t.dontWaitForKeyReleased = true;
            }
-           c.requestFocus();
+
+           if(c != null) {
+                c.requestFocus();
+            }
        }
        if((actions&TextEditorProvider.TextEditorListener.ACTION_PAINT_REQUEST) != 0
                || (actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
