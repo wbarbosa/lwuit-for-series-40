@@ -46,7 +46,7 @@ class ResourceThreadQueue {
     /**
      * The default number of maximum threads used for image download
      */
-    private static int DEFAULT_MAX_THREADS = 2;
+    private static final int DEFAULT_MAX_THREADS = 2;
 
     HTMLComponent htmlC;
     Vector queue = new Vector();
@@ -348,6 +348,18 @@ class ResourceThreadQueue {
         }
         str+="---- count:"+threadCount+" ----\n";
         return str;
+    }
+    
+    /**
+     * Clears queued resources from queue
+     */
+    void clear() {
+        if (started) {
+            throw new IllegalStateException("ResourceThreadQueue alreadey started! stop/cancel first");
+        }
+        queue.removeAllElements();
+        images.clear();
+        cssCount = -1;
     }
 
     // Inner classes:
