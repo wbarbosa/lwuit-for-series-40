@@ -5,10 +5,12 @@
 package com.sun.lwuit.list;
 
 import com.sun.lwuit.Component;
+import com.sun.lwuit.Display;
 import com.sun.lwuit.Font;
 import com.sun.lwuit.Graphics;
 import com.sun.lwuit.Image;
 import com.sun.lwuit.List;
+import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
 
@@ -27,6 +29,7 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
     
     public NokiaListCellRenderer() {
         setUIID("ListRenderer");
+        setCellRenderer(true);
     }
 
     public void paint(Graphics g) {
@@ -44,7 +47,7 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         int width = getWidth();
         int height = getHeight();
         int x;
-        int y = getY() + topPadding + (font.getHeight() / 2);
+        int y = getY() + topPadding;
 
         switch(align) {
             case Component.LEFT:
@@ -60,6 +63,7 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
                 x = getX();
                 break;
         }
+       
         g.drawString(mText, x, y, style.getTextDecoration());
         
     }
@@ -73,7 +77,11 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
     
 
     public Component getListCellRendererComponent(List list, Object value, int index, boolean isSelected) {
-        
+        if(!Display.getInstance().shouldRenderSelection(list)) {
+            isSelected = false;
+        }
+        setFocus(isSelected);
+        mText = value.toString();
         
         return this;
     }
@@ -83,8 +91,24 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
             mFocusComponent = new NokiaListCellRenderer();
             mFocusComponent.setUIID("ListRendererFocus");
             mFocusComponent.setFocus(true);
+            mFocusComponent.setCellRenderer(true);
         }
         return mFocusComponent;
     }
+
+    protected Dimension calcPreferredSize() {
+        Style s = getStyle();
+        Font f = s.getFont();
+        int w = 0;
+        int h = 0;
+        w += s.getPadding(LEFT) + s.getPadding(RIGHT) + f.stringWidth(mText);
+        h += s.getPadding(TOP) + s.getPadding(BOTTOM) + f.getHeight();
+        
+        return new Dimension(w, h);
+        
+        
+    }
+    
+    
     
 }
