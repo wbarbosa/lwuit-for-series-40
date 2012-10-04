@@ -1550,22 +1550,32 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                t.dontWaitForKeyReleased = true;
             }
 
-            if(c != null) {
+            try {
                 c.requestFocus();
-            }            
+            } catch(NullPointerException npe) {
+                /*
+                 * MenuBar.updateCommands some times throws nullpointerexception
+                 * for still unknown reason. Same below.
+                 */
+            }
        }
        if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
-           //focus previous element
-           Form f = getComponentForm();
-           Component c = f.findNextFocusUp();
+            //focus previous element
+            Form f = getComponentForm();
+            Component c = f.findNextFocusUp();
 
-           if(c instanceof TextArea) {
-               TextArea t = (TextArea) c;
-               t.dontWaitForKeyReleased = true;
-           }
+            if(c instanceof TextArea) {
+                TextArea t = (TextArea) c;
+                t.dontWaitForKeyReleased = true;
+            }
 
-           if(c != null) {
+            try {
                 c.requestFocus();
+            } catch(NullPointerException npe) {
+                /*
+                 * MenuBar.updateCommands some times throws nullpointerexception
+                 * for still unknown reason
+                 */
             }
        }
        if((actions&TextEditorProvider.TextEditorListener.ACTION_PAINT_REQUEST) != 0
