@@ -31,10 +31,11 @@ public class UIDemoMain
     private static final Command exitCommand = new Command("Exit", EXIT_COMMAND);
     private static final Command backCommand = new Command("Back", BACK_COMMAND);
     private static final Command aboutCommand = new Command("About", ABOUT_COMMAND);
-    private static final Command dragModeCommand = new Command("Drag", DRAG_MODE_COMMAND);
     private static final Command scrollModeCommand = new Command("Scroll", SCROLL_MODE_COMMAND);
     private static final Command rtlCommand = new Command("RTL", RTL_COMMAND);
+    private static Command dragModeCommand; // Initialized later, needs an image resource
     static final Command showDemosCommand = new Command("Demos", DEMOS_COMMAND);
+    
 
     /*
      * Used for Localization
@@ -236,7 +237,12 @@ public class UIDemoMain
         mainMenu.addCommand(languageCommand);
 
         mainMenu.addCommand(rtlCommand);
+
+        dragModeCommand = new Command("Drag mode", 
+                r.getImage("Drag_mode.png"),
+                DRAG_MODE_COMMAND);
         mainMenu.addCommand(dragModeCommand);
+        mainMenu.setDefaultCommand(dragModeCommand);
 
         mainMenu.addCommandListener(this);
         if (Display.getInstance().getCurrent() != null) {
@@ -347,6 +353,7 @@ public class UIDemoMain
                 }
                 mainMenu.removeCommand(dragModeCommand);
                 mainMenu.addCommand(scrollModeCommand);
+                mainMenu.setDefaultCommand(scrollModeCommand);
                 break;
             case SCROLL_MODE_COMMAND:
                 mainMenu.getContentPane().setDropTarget(false);
@@ -355,6 +362,7 @@ public class UIDemoMain
                 }
                 mainMenu.removeCommand(scrollModeCommand);
                 mainMenu.addCommand(dragModeCommand);
+                mainMenu.setDefaultCommand(dragModeCommand);                
                 break;
             case RTL_COMMAND:
                 LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
