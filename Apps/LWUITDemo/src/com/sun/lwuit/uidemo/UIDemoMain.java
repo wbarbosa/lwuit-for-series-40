@@ -238,7 +238,7 @@ public class UIDemoMain
 
         mainMenu.addCommand(rtlCommand);
 
-        dragModeCommand = new Command("Drag mode", 
+        dragModeCommand = new Command("Drag",
                 r.getImage("Drag_mode.png"),
                 DRAG_MODE_COMMAND);
         mainMenu.addCommand(dragModeCommand);
@@ -352,8 +352,8 @@ public class UIDemoMain
                     c.getComponentAt(iter).setDraggable(true);
                 }
                 mainMenu.removeCommand(dragModeCommand);
-                mainMenu.addCommand(scrollModeCommand);
                 mainMenu.setDefaultCommand(scrollModeCommand);
+                mainMenu.addCommand(scrollModeCommand);
                 break;
             case SCROLL_MODE_COMMAND:
                 mainMenu.getContentPane().setDropTarget(false);
@@ -361,8 +361,8 @@ public class UIDemoMain
                     mainMenu.getContentPane().getComponentAt(iter).setDraggable(false);
                 }
                 mainMenu.removeCommand(scrollModeCommand);
-                mainMenu.addCommand(dragModeCommand);
-                mainMenu.setDefaultCommand(dragModeCommand);                
+                mainMenu.setDefaultCommand(dragModeCommand); 
+                mainMenu.addCommand(dragModeCommand);          
                 break;
             case RTL_COMMAND:
                 LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
