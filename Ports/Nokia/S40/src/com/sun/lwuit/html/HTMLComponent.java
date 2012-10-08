@@ -1118,8 +1118,17 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
         }
         cleanup();
         document=newDocument;
-        rebuildPage();
-        //clickTimer("rebuilt");
+        try {
+            rebuildPage();
+            //clickTimer("rebuilt");
+        } catch (OutOfMemoryError err) { // handle possible OOM when creating UI components
+            threadQueue.clear();
+            System.out.println("Page loading failed with OutOfMemoryError");
+            InputStreamReader isr=getStream("Page loading failed with OutOfMemoryError",null);
+            HTMLElement newDoc=parser.parseHTML(isr);
+            documentReady(docInfo, newDoc);
+            return;
+        }
         
         if ((!cancelled) || (cancelledCaught)) {
             Display.getInstance().callSerially(new Runnable() {
@@ -1144,8 +1153,8 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
                                 goToAnchor(anchorName);
                             }
                         }
-
-
+                        
+                        
                 }
             });
         } else { // Page was cancelled
