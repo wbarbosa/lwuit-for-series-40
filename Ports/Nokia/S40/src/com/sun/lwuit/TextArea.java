@@ -426,12 +426,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             //zero the vector inorder to initialize it on the next paint
             rowStrings=null; 
         }
-        if (textEditor != null) {
-            if (!textEditor.getContent().equals(text)) {
-                textEditor.setContent(text);
-                textEditor.setCaret(text.length());
-            }
+
+        if (isTextEditorActive() && !textEditor.getContent().equals(text)) {
+            textEditor.setContent(text);
+            textEditor.setCaret(text.length());
         }
+
         setShouldCalcPreferredSize(true);
     }
 
@@ -1539,25 +1539,44 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @param actions 
      */
     public void inputAction(TextEditorProvider textEditor, int actions) {
+       
        if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_NEXT) != 0) {
-           //focus to next element
-           Form f = getComponentForm();
-           Component c = f.findNextFocusDown();
-           if(c instanceof TextArea) {
+            //focus to next element
+            Form f = getComponentForm();
+            Component c = f.findNextFocusDown();
+
+            if(c instanceof TextArea) {
                TextArea t = (TextArea) c;
                t.dontWaitForKeyReleased = true;
-           }
-           c.requestFocus();
+            }
+
+            try {
+                c.requestFocus();
+            } catch(NullPointerException npe) {
+                /*
+                 * MenuBar.updateCommands some times throws nullpointerexception
+                 * for still unknown reason. Same below.
+                 */
+            }
        }
        if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
-           //focus previous element
-           Form f = getComponentForm();
-           Component c = f.findNextFocusUp();
-           if(c instanceof TextArea) {
-               TextArea t = (TextArea) c;
-               t.dontWaitForKeyReleased = true;
-           }
-           c.requestFocus();
+            //focus previous element
+            Form f = getComponentForm();
+            Component c = f.findNextFocusUp();
+
+            if(c instanceof TextArea) {
+                TextArea t = (TextArea) c;
+                t.dontWaitForKeyReleased = true;
+            }
+
+            try {
+                c.requestFocus();
+            } catch(NullPointerException npe) {
+                /*
+                 * MenuBar.updateCommands some times throws nullpointerexception
+                 * for still unknown reason
+                 */
+            }
        }
        if((actions&TextEditorProvider.TextEditorListener.ACTION_PAINT_REQUEST) != 0
                || (actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
@@ -1644,7 +1663,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     protected void deinitialize() {
+        if(isTextEditorActive()) {
+            textEditor.setVisible(false);
+        }
+
         super.deinitialize();
+        
         Form f = getComponentForm();
         if (f != null) {
             f.removePointerDraggedListener(dragListener);
