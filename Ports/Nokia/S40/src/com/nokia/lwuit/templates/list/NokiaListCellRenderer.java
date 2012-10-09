@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sun.lwuit.list;
+package com.nokia.lwuit.templates.list;
 
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
@@ -11,6 +11,7 @@ import com.sun.lwuit.Graphics;
 import com.sun.lwuit.Image;
 import com.sun.lwuit.List;
 import com.sun.lwuit.geom.Dimension;
+import com.sun.lwuit.list.ListCellRenderer;
 import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
 import java.util.Hashtable;
@@ -19,7 +20,8 @@ import java.util.Vector;
 /**
  * A faster version of the Renderer that list component can use. This renderer
  * only supports text and image but has far more simpler way of drawing them compared
- * to Label component that is used in DefaultListCellRenderer
+ * to Label component that is used in DefaultListCellRenderer. <b>Note:</b> you
+ * should not reuse the same renderer but instead create a new renderer every time.
  * @author tkor
  */
 public class NokiaListCellRenderer extends Component implements ListCellRenderer{
@@ -31,14 +33,17 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
     
     private String ellipsis = "...";
     private int ellipsisWidth = 0;
-    
-    private Hashtable shorteningCache;
+    /**
+     * This hashtable will contain cached values of strings that are shortened.
+     * This is done so that we don't have to shorten the string every time repaint
+     * occurs.
+     */
+    private static Hashtable shorteningCache = new Hashtable(20);
     
     public NokiaListCellRenderer() {
         setUIID("ListRenderer");
         setCellRenderer(true);
         ellipsisWidth = getStyle().getFont().stringWidth(ellipsis);
-        shorteningCache = new Hashtable(20);
     }
 
     public void paint(Graphics g) {
@@ -57,12 +62,8 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         
         int width = getWidth();
         int height = getHeight();
-        long time = System.currentTimeMillis();
         mText = shortenString(mText, width, font);
-        time = System.currentTimeMillis() - time;
-        if(time > 0) 
-            System.out.println("time:" + time);
-        System.out.println(mText);
+
         int textWidth = font.stringWidth(mText);
         
         int x;
@@ -164,6 +165,10 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
             index--;
         }
         String ret = original.substring(0, index) + ellipsis;
+        //make sure the cache is cleared so that we don't get OOM
+        if(shorteningCache.size() > 20) {
+            shorteningCache.clear();
+        }
         shorteningCache.put(original, ret);
         return ret;
         
@@ -174,4 +179,10 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         }
         return f.stringWidth(s.substring(0, length)) < width;
     }
+
+    protected void deinitialize() {
+        super.deinitialize();
+        System.out.println("deinitialize");
+    }
+    
 }
