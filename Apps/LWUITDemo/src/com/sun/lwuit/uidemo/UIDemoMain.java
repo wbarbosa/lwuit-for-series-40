@@ -11,6 +11,8 @@ import com.sun.lwuit.plaf.*;
 import com.sun.lwuit.util.Resources;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Bootstraps the UI toolkit demos
@@ -86,13 +88,21 @@ public class UIDemoMain
 
             //open the resources file that contains all the icons
             res = Resources.open("/images.res");
-            //although calling directly to setMainForm(res) will work on
+            //although constructing and showing Frames directly will work on
             //most devices, a good coding practice will be to allow the midp 
             //thread to return and to do all the UI on the EDT.
             Display.getInstance().callSerially(new Runnable() {
 
                 public void run() {
-                    setMainForm(res);
+                    // Show splash screen first
+                    new SplashScreen(res.getImage("splash.png")).show();
+                    Timer timer = new Timer();
+                    TimerTask timerTask = new TimerTask() {
+                        public void run() {
+                            setMainForm(res);
+                        }
+                    };
+                    timer.schedule(timerTask, 1000);
                 }
             });
 
@@ -241,8 +251,8 @@ public class UIDemoMain
         dragModeCommand = new Command("Drag",
                 r.getImage("Drag_mode.png"),
                 DRAG_MODE_COMMAND);
+        mainMenu.setDefaultCommand(dragModeCommand);        
         mainMenu.addCommand(dragModeCommand);
-        mainMenu.setDefaultCommand(dragModeCommand);
 
         mainMenu.addCommandListener(this);
         if (Display.getInstance().getCurrent() != null) {
