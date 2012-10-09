@@ -26,6 +26,8 @@ import java.util.Vector;
  */
 public class NokiaListCellRenderer extends Component implements ListCellRenderer{
     
+    private int cache_size = 20;
+    
     private NokiaListCellRenderer mFocusComponent;
     
     private String mText = "";
@@ -36,7 +38,8 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
     /**
      * This hashtable will contain cached values of strings that are shortened.
      * This is done so that we don't have to shorten the string every time repaint
-     * occurs.
+     * occurs. If you know that you will have many items you should increase the cache
+     * size. 
      */
     private static Hashtable shorteningCache = new Hashtable(20);
     
@@ -166,7 +169,7 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         }
         String ret = original.substring(0, index) + ellipsis;
         //make sure the cache is cleared so that we don't get OOM
-        if(shorteningCache.size() > 20) {
+        if(shorteningCache.size() > cache_size) {
             shorteningCache.clear();
         }
         shorteningCache.put(original, ret);
@@ -180,9 +183,13 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         return f.stringWidth(s.substring(0, length)) < width;
     }
 
-    protected void deinitialize() {
-        super.deinitialize();
-        System.out.println("deinitialize");
+    /**
+     * Set desired String cache size. This helps increase fps when scrolling the
+     * list when you have long strings. The default cache size is 20.
+     * @param c desired cachesize
+     */
+    public void setStringCache(int c) {
+        cache_size = c;
     }
     
 }
