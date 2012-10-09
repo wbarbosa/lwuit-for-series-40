@@ -68,6 +68,7 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         if(mImage != null) {
             textSpace -= mImage.getWidth();
         }
+        textSpace = textSpace - leftPadding - rightPadding;
         mText = shortenString(mText, textSpace, font);
 
         int textWidth = font.stringWidth(mText);
@@ -162,6 +163,10 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         int h = 0;
         w += s.getPadding(LEFT) + s.getPadding(RIGHT) + f.stringWidth(mText);
         h += s.getPadding(TOP) + s.getPadding(BOTTOM) + f.getHeight();
+        if(mImage != null) {
+            h = Math.max(h, mImage.getHeight() + s.getPadding(TOP) + s.getPadding(BOTTOM));
+            w = Math.max(w, mImage.getWidth() + f.stringWidth(mText) + s.getPadding(LEFT) + s.getPadding(RIGHT));
+        }
         return new Dimension(w, h);
         
         
