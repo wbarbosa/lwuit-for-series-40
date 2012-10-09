@@ -20,8 +20,7 @@ import java.util.Vector;
 /**
  * A faster version of the Renderer that list component can use. This renderer
  * only supports text and image but has far more simpler way of drawing them compared
- * to Label component that is used in DefaultListCellRenderer. <b>Note:</b> you
- * should not reuse the same renderer but instead create a new renderer every time.
+ * to Label component that is used in DefaultListCellRenderer.
  * @author tkor
  */
 public class NokiaListCellRenderer extends Component implements ListCellRenderer{
@@ -54,7 +53,7 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         UIManager.getInstance().getLookAndFeel().setFG(g, this);
         Style style = getStyle();
         boolean rtl = this.isRTL();
-        
+        int gap = 5; //gap between image and text
         int leftPadding = style.getPadding(rtl, Component.LEFT);
         int rightPadding = style.getPadding(rtl, Component.RIGHT);
         int topPadding = style.getPadding(false, Component.TOP);
@@ -65,26 +64,53 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         
         int width = getWidth();
         int height = getHeight();
-        mText = shortenString(mText, width, font);
+        int textSpace = width;
+        if(mImage != null) {
+            textSpace -= mImage.getWidth();
+        }
+        mText = shortenString(mText, textSpace, font);
 
         int textWidth = font.stringWidth(mText);
         
-        int x;
+        int x = 0;
         int y = getY() + topPadding;
 
         switch(align) {
             case Component.LEFT:
                 x = getX() + leftPadding;
+                if(mImage != null) {
+                    x += mImage.getWidth() + gap;
+                }
                 break;
             case Component.RIGHT:
                 x = getX() + width - leftPadding - textWidth;
+                if(mImage != null) {
+                    if(rtl) {
+                        x -= mImage.getWidth() - gap;
+                    }
+                }
                 break;
             case Component.CENTER:
                 x = getX() + (width / 2) - (textWidth / 2);
+                if(mImage != null) {
+                    if(rtl) {
+                        x -= mImage.getWidth() - gap;
+                    }else {
+                        x += mImage.getWidth() + gap;
+                    }
+                }
                 break;
             default:
                 x = getX();
                 break;
+        }
+        if(mImage != null) {
+            if(rtl) {
+                g.drawImage(mImage, getX() + getWidth() - rightPadding - mImage.getWidth(),
+                                    getY() + topPadding);
+            }else {
+                g.drawImage(mImage, getX() + leftPadding, getY() + topPadding);
+            }
         }
         g.drawString(mText, x, y, this.getStyle().getTextDecoration());
         
@@ -102,11 +128,20 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
     
 
     public Component getListCellRendererComponent(List list, Object value, int index, boolean isSelected) {
-        if(!Display.getInstance().shouldRenderSelection(list)) {
-            isSelected = false;
+        if (value instanceof BasicListItem) {
+            if (!Display.getInstance().shouldRenderSelection(list)) {
+                isSelected = false;
+            }
+            setFocus(isSelected);
+            BasicListItem data = (BasicListItem) value;
+            mText = data.getText();
+            mImage = data.getImage();
+
+        } else {
+            mText = "";
+            mImage = null;
         }
-        setFocus(isSelected);
-        mText = value.toString();
+
         return this;
     }
 
@@ -127,7 +162,6 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         int h = 0;
         w += s.getPadding(LEFT) + s.getPadding(RIGHT) + f.stringWidth(mText);
         h += s.getPadding(TOP) + s.getPadding(BOTTOM) + f.getHeight();
-        
         return new Dimension(w, h);
         
         
