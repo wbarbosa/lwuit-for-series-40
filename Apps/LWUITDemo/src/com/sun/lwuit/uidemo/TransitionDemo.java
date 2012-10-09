@@ -3,30 +3,15 @@
  */
 package com.sun.lwuit.uidemo;
 
-import com.sun.lwuit.Button;
-import com.sun.lwuit.ButtonGroup;
-import com.sun.lwuit.CheckBox;
-import com.sun.lwuit.Command;
-import com.sun.lwuit.Component;
-import com.sun.lwuit.ComponentGroup;
-import com.sun.lwuit.Container;
-import com.sun.lwuit.Dialog;
-import com.sun.lwuit.Display;
-import com.sun.lwuit.Form;
-import com.sun.lwuit.Label;
-import com.sun.lwuit.M3G;
-import com.sun.lwuit.RadioButton;
-import com.sun.lwuit.TextArea;
-import com.sun.lwuit.TextField;
+import com.sun.lwuit.*;
 import com.sun.lwuit.animations.CommonTransitions;
 import com.sun.lwuit.animations.Transition;
 import com.sun.lwuit.animations.Transition3D;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.layouts.BoxLayout;
-import com.sun.lwuit.layouts.FlowLayout;
-import com.sun.lwuit.spinner.Spinner;
 import com.sun.lwuit.plaf.UIManager;
+import com.sun.lwuit.spinner.Spinner;
 
 /**
  * Transitons between screens
@@ -93,8 +78,8 @@ public class TransitionDemo extends Demo {
                 f.getComponentForm().show();
             }
         };
-        destination.addCommand(backCommand);
         destination.setBackCommand(backCommand);
+        destination.addCommand(backCommand);
         
         final Button updateButton = new Button("Preview Transition");
         final Button applyButton = new Button("Apply Transition");
@@ -162,6 +147,7 @@ public class TransitionDemo extends Demo {
                         UIDemoMain.setTransition(in, out);
                     } else {
                         if(applyMenu == ev.getSource()) {
+                            Display.getInstance().getCurrent().setMenuTransitions(in, out);
                             UIDemoMain.setMenuTransition(in, out);
                         }
                     }
@@ -176,7 +162,10 @@ public class TransitionDemo extends Demo {
         buttonPanel.setElementUIID("ButtonGroup");
         buttonPanel.addComponent(updateButton);
         buttonPanel.addComponent(applyButton);
-        buttonPanel.addComponent(applyMenu);
+        if (Display.getInstance().getDeviceType() != Display.FULL_TOUCH_DEVICE) {
+            buttonPanel.addComponent(applyMenu);
+        }
         f.addComponent(buttonPanel);
-    }    
+    }
+     
 }
