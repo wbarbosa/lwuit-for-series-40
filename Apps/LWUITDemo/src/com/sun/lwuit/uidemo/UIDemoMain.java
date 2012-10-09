@@ -3,28 +3,11 @@
  */
 package com.sun.lwuit.uidemo;
 
-import com.sun.lwuit.Button;
-import com.sun.lwuit.ButtonGroup;
-import com.sun.lwuit.animations.CommonTransitions;
-import com.sun.lwuit.Command;
-import com.sun.lwuit.Component;
-import com.sun.lwuit.Container;
-import com.sun.lwuit.Dialog;
-import com.sun.lwuit.Display;
-import com.sun.lwuit.Font;
-import com.sun.lwuit.Form;
-import com.sun.lwuit.Image;
-import com.sun.lwuit.Label;
-import com.sun.lwuit.RadioButton;
-import com.sun.lwuit.TextArea;
-import com.sun.lwuit.animations.Transition;
-import com.sun.lwuit.events.ActionEvent;
-import com.sun.lwuit.events.ActionListener;
-import com.sun.lwuit.layouts.BorderLayout;
-import com.sun.lwuit.layouts.BoxLayout;
-import com.sun.lwuit.layouts.GridLayout;
-import com.sun.lwuit.plaf.LookAndFeel;
-import com.sun.lwuit.plaf.UIManager;
+import com.sun.lwuit.*;
+import com.sun.lwuit.animations.*;
+import com.sun.lwuit.events.*;
+import com.sun.lwuit.layouts.*;
+import com.sun.lwuit.plaf.*;
 import com.sun.lwuit.util.Resources;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -46,12 +29,13 @@ public class UIDemoMain
     private static final int LANGUAGE_COMMAND = 8;
     private static final int DEMOS_COMMAND = 9;
     private static final Command exitCommand = new Command("Exit", EXIT_COMMAND);
-    static final Command backCommand = new Command("Back", BACK_COMMAND);
+    private static final Command backCommand = new Command("Back", BACK_COMMAND);
     private static final Command aboutCommand = new Command("About", ABOUT_COMMAND);
-    private static final Command dragModeCommand = new Command("Drag", DRAG_MODE_COMMAND);
     private static final Command scrollModeCommand = new Command("Scroll", SCROLL_MODE_COMMAND);
     private static final Command rtlCommand = new Command("RTL", RTL_COMMAND);
+    private static Command dragModeCommand; // Initialized later, needs an image resource
     static final Command showDemosCommand = new Command("Demos", DEMOS_COMMAND);
+    
 
     /*
      * Used for Localization
@@ -253,7 +237,12 @@ public class UIDemoMain
         mainMenu.addCommand(languageCommand);
 
         mainMenu.addCommand(rtlCommand);
+
+        dragModeCommand = new Command("Drag",
+                r.getImage("Drag_mode.png"),
+                DRAG_MODE_COMMAND);
         mainMenu.addCommand(dragModeCommand);
+        mainMenu.setDefaultCommand(dragModeCommand);
 
         mainMenu.addCommandListener(this);
         if (Display.getInstance().getCurrent() != null) {
@@ -363,6 +352,7 @@ public class UIDemoMain
                     c.getComponentAt(iter).setDraggable(true);
                 }
                 mainMenu.removeCommand(dragModeCommand);
+                mainMenu.setDefaultCommand(scrollModeCommand);
                 mainMenu.addCommand(scrollModeCommand);
                 break;
             case SCROLL_MODE_COMMAND:
@@ -371,7 +361,8 @@ public class UIDemoMain
                     mainMenu.getContentPane().getComponentAt(iter).setDraggable(false);
                 }
                 mainMenu.removeCommand(scrollModeCommand);
-                mainMenu.addCommand(dragModeCommand);
+                mainMenu.setDefaultCommand(dragModeCommand); 
+                mainMenu.addCommand(dragModeCommand);          
                 break;
             case RTL_COMMAND:
                 LookAndFeel laf = UIManager.getInstance().getLookAndFeel();
