@@ -13,6 +13,8 @@ import com.sun.lwuit.List;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * A faster version of the Renderer that list component can use. This renderer
@@ -27,25 +29,42 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
     private String mText = "";
     private Image mImage;
     
+    private String ellipsis = "...";
+    private int ellipsisWidth = 0;
+    
+    private Hashtable shorteningCache;
+    
     public NokiaListCellRenderer() {
         setUIID("ListRenderer");
         setCellRenderer(true);
+        ellipsisWidth = getStyle().getFont().stringWidth(ellipsis);
+        shorteningCache = new Hashtable(20);
     }
 
     public void paint(Graphics g) {
+
         UIManager.getInstance().getLookAndFeel().setFG(g, this);
         Style style = getStyle();
         boolean rtl = this.isRTL();
+        
         int leftPadding = style.getPadding(rtl, Component.LEFT);
         int rightPadding = style.getPadding(rtl, Component.RIGHT);
         int topPadding = style.getPadding(false, Component.TOP);
         int bottomPadding = style.getPadding(false, Component.BOTTOM);
         
         Font font = style.getFont();
-        int align = style.getAlignment();
-        int textWidth = font.stringWidth(mText);
+        int align = reverseAlignForBidi(style.getAlignment());
+        
         int width = getWidth();
         int height = getHeight();
+        long time = System.currentTimeMillis();
+        mText = shortenString(mText, width, font);
+        time = System.currentTimeMillis() - time;
+        if(time > 0) 
+            System.out.println("time:" + time);
+        System.out.println(mText);
+        int textWidth = font.stringWidth(mText);
+        
         int x;
         int y = getY() + topPadding;
 
@@ -63,8 +82,7 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
                 x = getX();
                 break;
         }
-       
-        g.drawString(mText, x, y, style.getTextDecoration());
+        g.drawString(mText, x, y, this.getStyle().getTextDecoration());
         
     }
 
@@ -72,6 +90,9 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
      * override to prevent unnecessary repaints when using list
      */
     public void repaint() {
+    }
+
+    public void repaint(int x, int y, int w, int h) {
     }
     
     
@@ -82,7 +103,6 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         }
         setFocus(isSelected);
         mText = value.toString();
-        
         return this;
     }
 
@@ -109,6 +129,49 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         
     }
     
-    
-    
+    private int reverseAlignForBidi(int align) {
+        if(isRTL()) {
+            switch(align) {
+                case Component.RIGHT:
+                    return Component.LEFT;
+                case Component.LEFT:
+                    return Component.RIGHT;
+            }
+        }
+        return align;
+    }
+
+    /**
+     * Shortens the string to fit inside given width and adds ... to the end of the string
+     * @param original the string to shorten
+     * @param width the space that the shortened string should fit
+     * @param font the font that is used to draw the text
+     * @return shortened string with ellipsis
+     */    
+    private String shortenString(String original, final int width, final Font font) {
+        if(font.stringWidth(original) <= width) {
+            return original;
+        }
+        if(shorteningCache.containsKey(original)) {
+            return (String) shorteningCache.get(original);
+        }
+        
+        int widestCharWidth = font.charWidth('W');
+
+        int index = original.length() - 1;
+        int targetWidth = width - ellipsisWidth;
+        while(!doesStringFit(original, index, widestCharWidth, targetWidth, font)) {
+            index--;
+        }
+        String ret = original.substring(0, index) + ellipsis;
+        shorteningCache.put(original, ret);
+        return ret;
+        
+    }
+    private boolean doesStringFit(String s, int length, int widestCharWidth, int width, Font f) {
+        if(length * widestCharWidth < width) {
+            return true;
+        }
+        return f.stringWidth(s.substring(0, length)) < width;
+    }
 }
