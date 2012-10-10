@@ -11,8 +11,6 @@ import com.sun.lwuit.plaf.*;
 import com.sun.lwuit.util.Resources;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Bootstraps the UI toolkit demos
@@ -92,17 +90,8 @@ public class UIDemoMain
             //most devices, a good coding practice will be to allow the midp 
             //thread to return and to do all the UI on the EDT.
             Display.getInstance().callSerially(new Runnable() {
-
                 public void run() {
-                    // Show splash screen first
-                    new SplashScreen(res.getImage("splash.png")).show();
-                    Timer timer = new Timer();
-                    TimerTask timerTask = new TimerTask() {
-                        public void run() {
-                            setMainForm(res);
-                        }
-                    };
-                    timer.schedule(timerTask, 1000);
+                    setMainForm(res);
                 }
             });
 
@@ -259,7 +248,7 @@ public class UIDemoMain
             Display.getInstance().getCurrent().setTransitionOutAnimator(CommonTransitions.
                 createEmpty());
         }
-        mainMenu.show();
+        //mainMenu.show();
     }
 
     private void buildDemoMenu(Resources r, final Container uiContent) {

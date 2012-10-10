@@ -4,6 +4,8 @@
 package com.sun.lwuit.uidemo;
 
 import com.sun.lwuit.Display;
+import com.sun.lwuit.util.Resources;
+import java.io.IOException;
 import javax.microedition.midlet.*;
 
 /**
@@ -18,7 +20,28 @@ public class Main
 
     public void startApp() {
         Display.init(this);
+        
+        // Show splash screen
+        try {
+            Resources res = Resources.open("/images.res");
+            new SplashScreen(res.getImage("splash.png")).show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+        // Start initializing main view in the background
+        long start = System.currentTimeMillis();
         main.startApp();
+        long difference = System.currentTimeMillis() - start;
+        
+        try {
+            // Show splash view for at least a second
+            Thread.sleep(Math.max(0, 1000 - difference));
+        }
+        catch (InterruptedException e) {
+        }
+        
+        UIDemoMain.getMainForm().show();
     }
 
     public void pauseApp() {
