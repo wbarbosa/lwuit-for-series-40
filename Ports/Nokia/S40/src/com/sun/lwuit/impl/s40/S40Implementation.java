@@ -174,10 +174,12 @@ public class S40Implementation extends LWUITImplementation {
         }
 
         public void addCommand(com.sun.lwuit.Command cmd) {
+            System.out.println("addCommand:" + cmd.getCommandName());
             setCommandListener(this);
             //wrap it with midpcommandwrapper
             MIDPCommandWrapper wrapped = wrapLWUITCommand(cmd, currentCommands.size());
             if(currentCommands.contains(wrapped)) {
+                System.out.println("already contained");
                 return;
             }
             wrapped.setType(Command.SCREEN);
@@ -188,11 +190,14 @@ public class S40Implementation extends LWUITImplementation {
                     setBackCommand(cmd);
                     return;
                 } else if (f.getDefaultCommand() == cmd) {
+                    System.out.println("adding as primarycommand");
                     setPrimaryCommand(cmd);
+                    
                     return;
                 }
                
             }
+            System.out.println("adding command:" + cmd.getCommandName());
             //add to end of currentCommands
             currentCommands.addElement(wrapped);
             //add to canvas
@@ -200,6 +205,7 @@ public class S40Implementation extends LWUITImplementation {
         }
 
         public void removeCommand(com.sun.lwuit.Command cmd) {
+            System.out.println("removeCommand:" + cmd.getCommandName());
             int l = currentCommands.size();
             MIDPCommandWrapper w;
             for(int i = 0; i < l; i++) {
@@ -212,6 +218,7 @@ public class S40Implementation extends LWUITImplementation {
             }
         }
         public void setPrimaryCommand(com.sun.lwuit.Command c) {
+            System.out.println("setPrimaryCommand:"+ c.getCommandName());
             setCommandListener(this);
             int l = currentCommands.size();
             MIDPCommandWrapper w;
@@ -242,6 +249,7 @@ public class S40Implementation extends LWUITImplementation {
         
         
         public void setCommands(Vector v) {
+            System.out.println("setCommands:" +v.size());
             if(currentCommands != null) {
                 
                 int l = currentCommands.size();
@@ -270,16 +278,19 @@ public class S40Implementation extends LWUITImplementation {
             int l = v.size();
             for(int iter = 0 ; iter < l ; iter++) {
                 com.sun.lwuit.Command current = (com.sun.lwuit.Command)v.elementAt(iter);
+                System.out.println("current:" + current.getCommandName());
                 //skip back and default commands since they are already added.
                 if(current == backCommand) {
                     continue;
                 } else if(defaultCommand != null && current == defaultCommand) {
+                    System.out.println("skipping def:" + current.getCommandName());
                     continue;
                 }else {
-                    currentCommands.addElement(wrapLWUITCommand(current, iter + 1));
+                    //System.out.println("adding command:" + current.getCommandName());
+                    MIDPCommandWrapper mcw = wrapLWUITCommand(current, iter + 1);
+                    addCommand(mcw.getCommand());
+                    currentCommands.addElement(mcw);
                 }
-                MIDPCommandWrapper mcw = (MIDPCommandWrapper)currentCommands.elementAt(iter);
-                addCommand(mcw.getCommand());
             }
         }
 
