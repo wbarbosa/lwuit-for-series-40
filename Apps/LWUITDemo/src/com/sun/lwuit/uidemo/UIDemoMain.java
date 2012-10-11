@@ -86,11 +86,10 @@ public class UIDemoMain
 
             //open the resources file that contains all the icons
             res = Resources.open("/images.res");
-            //although calling directly to setMainForm(res) will work on
+            //although constructing and showing Frames directly will work on
             //most devices, a good coding practice will be to allow the midp 
             //thread to return and to do all the UI on the EDT.
             Display.getInstance().callSerially(new Runnable() {
-
                 public void run() {
                     setMainForm(res);
                 }
@@ -241,15 +240,15 @@ public class UIDemoMain
         dragModeCommand = new Command("Drag",
                 r.getImage("Drag_mode.png"),
                 DRAG_MODE_COMMAND);
+        mainMenu.setDefaultCommand(dragModeCommand);        
         mainMenu.addCommand(dragModeCommand);
-        mainMenu.setDefaultCommand(dragModeCommand);
 
         mainMenu.addCommandListener(this);
         if (Display.getInstance().getCurrent() != null) {
             Display.getInstance().getCurrent().setTransitionOutAnimator(CommonTransitions.
                 createEmpty());
         }
-        mainMenu.show();
+        //mainMenu.show();
     }
 
     private void buildDemoMenu(Resources r, final Container uiContent) {

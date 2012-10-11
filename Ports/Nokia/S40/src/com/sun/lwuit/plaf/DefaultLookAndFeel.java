@@ -1225,24 +1225,25 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         if(font.stringWidth(original) <= width) {
             return original;
         }
-        String ret = "";
-        String points = "...";
-        int pointsW = font.stringWidth(points);
-        int l = original.length();
-        String sub = "";
-        int currentWidth = 0;
-        //we travel from end to the beginning and stop as soon as the width is 
-        //under or equal to allowed width
-        for(int i = l; i >= 0; i--) {
-            sub = original.substring(0, (i - 1));
-            currentWidth = font.stringWidth(sub) + pointsW;
-            if(currentWidth <= width) {
-                break;
-            }
+        
+        int widestCharWidth = font.charWidth('W');
+        String ellipsis = "...";
+        int ellipsisWidth = font.stringWidth(ellipsis);
+        int index = original.length() - 1;
+        int targetWidth = width - ellipsisWidth;
+        while(!doesStringFit(original, index, widestCharWidth, targetWidth, font)) {
+            index--;
         }
-        ret = sub + points;
+        String ret = original.substring(0, index) + ellipsis;
 
         return ret;
+        
+    }
+    private boolean doesStringFit(String s, int length, int widestCharWidth, int width, Font f) {
+        if(length * widestCharWidth < width) {
+            return true;
+        }
+        return f.stringWidth(s.substring(0, length)) < width;
     }
     /**
      * @inheritDoc
