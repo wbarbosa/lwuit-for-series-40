@@ -229,12 +229,14 @@ public class UIDemoMain
         mainMenu.addCommand(languageCommand);
 
         mainMenu.addCommand(rtlCommand);
-
+        
         dragModeCommand = new Command("Drag",
                 r.getImage("Drag_mode.png"),
                 DRAG_MODE_COMMAND);
-        mainMenu.setDefaultCommand(dragModeCommand);        
-        mainMenu.addCommand(dragModeCommand);
+        if (Display.getInstance().isTouchScreenDevice()) {
+            mainMenu.setDefaultCommand(dragModeCommand);        
+            mainMenu.addCommand(dragModeCommand);
+        }
 
         mainMenu.addCommandListener(this);
         if (Display.getInstance().getCurrent() != null) {
