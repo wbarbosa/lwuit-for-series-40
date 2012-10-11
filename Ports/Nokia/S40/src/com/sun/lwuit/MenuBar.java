@@ -539,7 +539,8 @@ public class MenuBar extends Container implements ActionListener {
         for (int i = commandCount-1, j = 0; i >= 0; --i) {
             Command c = getCommand(i);
 
-            if (c != backCommand && c != defaultCommand && c != clearCommand ) {
+            if (c != backCommand && c != defaultCommand && 
+                c != clearCommand && c != selectCommand) {
                 commandsWithoutBackOrDefault[j++] = c;
                 numberOfMiscCommands++;
             }
