@@ -254,7 +254,9 @@ public class MenuBar extends Container implements ActionListener {
         this.defaultCommand = defaultCommand;
         if(isNativeCommandBehavior()) {
             S40Implementation impl = (S40Implementation)Display.getInstance().getImplementation();
-            impl.setPrimaryNativeCommand(defaultCommand);
+            if(Display.getInstance().getCurrent() == parent) {
+                impl.setPrimaryNativeCommand(defaultCommand);
+            }
         }else {
             if (getCommandCount() == 0 && parent != null) {
                 installMenuBar();
@@ -445,7 +447,9 @@ public class MenuBar extends Container implements ActionListener {
     public void setBackCommand(Command backCommand) {
         if(!commands.contains(backCommand)) {
             if(!isNativeCommandBehavior()) {
-                addCommand(backCommand);
+                if(Display.getInstance().getCurrent() == parent) {
+                    addCommand(backCommand);
+                }
             }else {
                 commands.addElement(backCommand);
             }
@@ -1050,7 +1054,9 @@ public class MenuBar extends Container implements ActionListener {
         //end of the commands vector
         if(isNativeCommandBehavior()) {
             S40Implementation impl = (S40Implementation)Display.getInstance().getImplementation();
-            impl.addNativeCommand(cmd);
+            if(Display.getInstance().getCurrent() == parent) {
+                impl.addNativeCommand(cmd);
+            }
         }else {
             updateCommands();
         }
