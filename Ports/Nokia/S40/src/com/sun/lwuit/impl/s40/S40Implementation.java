@@ -189,6 +189,7 @@ public class S40Implementation extends LWUITImplementation {
                     return;
                 } else if (f.getDefaultCommand() == cmd) {
                     setPrimaryCommand(cmd);
+                    
                     return;
                 }
                
@@ -276,10 +277,11 @@ public class S40Implementation extends LWUITImplementation {
                 } else if(defaultCommand != null && current == defaultCommand) {
                     continue;
                 }else {
-                    currentCommands.addElement(wrapLWUITCommand(current, iter + 1));
+                    //System.out.println("adding command:" + current.getCommandName());
+                    MIDPCommandWrapper mcw = wrapLWUITCommand(current, iter + 1);
+                    addCommand(mcw.getCommand());
+                    currentCommands.addElement(mcw);
                 }
-                MIDPCommandWrapper mcw = (MIDPCommandWrapper)currentCommands.elementAt(iter);
-                addCommand(mcw.getCommand());
             }
         }
 
