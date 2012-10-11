@@ -746,7 +746,7 @@ public class Dialog extends Form {
         Command[] cmds;
         Command okCommand = new Command(okText);
         if (cancelText != null) {
-            cmds = new Command[]{new Command(cancelText), okCommand};
+            cmds = new Command[]{okCommand, new Command(cancelText)};
         } else {
             cmds = new Command[]{okCommand};
         }
