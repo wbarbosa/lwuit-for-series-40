@@ -86,15 +86,8 @@ public class UIDemoMain
 
             //open the resources file that contains all the icons
             res = Resources.open("/images.res");
-            //although constructing and showing Frames directly will work on
-            //most devices, a good coding practice will be to allow the midp 
-            //thread to return and to do all the UI on the EDT.
-            Display.getInstance().callSerially(new Runnable() {
-                public void run() {
-                    setMainForm(res);
-                }
-            });
 
+            setMainForm(res);
         }
         catch (Throwable ex) {
             ex.printStackTrace();
@@ -236,12 +229,14 @@ public class UIDemoMain
         mainMenu.addCommand(languageCommand);
 
         mainMenu.addCommand(rtlCommand);
-
+        
         dragModeCommand = new Command("Drag",
                 r.getImage("Drag_mode.png"),
                 DRAG_MODE_COMMAND);
-        mainMenu.setDefaultCommand(dragModeCommand);        
-        mainMenu.addCommand(dragModeCommand);
+        if (Display.getInstance().isTouchScreenDevice()) {
+            mainMenu.setDefaultCommand(dragModeCommand);        
+            mainMenu.addCommand(dragModeCommand);
+        }
 
         mainMenu.addCommandListener(this);
         if (Display.getInstance().getCurrent() != null) {

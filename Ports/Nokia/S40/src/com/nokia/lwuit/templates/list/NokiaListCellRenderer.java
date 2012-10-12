@@ -4,6 +4,7 @@
  */
 package com.nokia.lwuit.templates.list;
 
+import com.sun.lwuit.Command;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Font;
@@ -125,19 +126,26 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
 
     public void repaint(int x, int y, int w, int h) {
     }
-    
-    
 
     public Component getListCellRendererComponent(List list, Object value, int index, boolean isSelected) {
+        if (!Display.getInstance().shouldRenderSelection(list)) {
+            isSelected = false;
+        }
+        setFocus(isSelected);        
         if (value instanceof BasicListItem) {
-            if (!Display.getInstance().shouldRenderSelection(list)) {
-                isSelected = false;
-            }
-            setFocus(isSelected);
             BasicListItem data = (BasicListItem) value;
             mText = data.getText();
             mImage = data.getImage();
 
+        }
+        else if (value instanceof Command) {         
+            Command c = (Command)value;            
+            mText = c.getCommandName();
+            mImage = c.getIcon();
+        }
+        else if (value != null) {
+            mText = value.toString();
+            mImage = null;
         } else {
             mText = "";
             mImage = null;
