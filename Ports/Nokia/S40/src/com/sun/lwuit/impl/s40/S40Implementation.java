@@ -214,6 +214,9 @@ public class S40Implementation extends LWUITImplementation {
         }
         public void setPrimaryCommand(com.sun.lwuit.Command c) {
             setCommandListener(this);
+            if(c == null) {
+                return;
+            }
             int l = currentCommands.size();
             MIDPCommandWrapper w;
             //first remove it if necessary
