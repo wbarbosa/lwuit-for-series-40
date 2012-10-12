@@ -1219,6 +1219,15 @@ public class MenuBar extends Container implements ActionListener {
             }
             commands.removeElement(cmd);
             backStack.removeElement(cmd);
+            if(cmd == defaultCommand) {
+                defaultCommand = null;
+            }
+            if(cmd == clearCommand) {
+                clearCommand = null;
+            }
+            if(cmd == backCommand) {
+                backCommand = (backStack.size() > 0) ? (Command)backStack.pop() : null;
+            }
             if(isNativeCommandBehavior()) {
                 if(Display.getInstance().getImplementation() instanceof S40Implementation) {
                     S40Implementation impl = (S40Implementation) Display.getInstance().getImplementation();
