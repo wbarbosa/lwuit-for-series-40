@@ -251,10 +251,16 @@ public class MenuBar extends Container implements ActionListener {
      * @param defaultCommand the command to treat as default
      */
     public void setDefaultCommand(Command defaultCommand) {
+        Command olddef = this.defaultCommand;
         this.defaultCommand = defaultCommand;
         if(!commands.contains(defaultCommand)) {
             commands.addElement(defaultCommand);
         }
+        if (olddef != null) {
+            removeCommand(olddef);
+            addCommand(olddef);
+        }
+        
         if(isNativeCommandBehavior()) {
             S40Implementation impl = (S40Implementation)Display.getInstance().getImplementation();
             if(Display.getInstance().getCurrent() == parent) {
