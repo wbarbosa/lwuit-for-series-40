@@ -794,6 +794,7 @@ public class MenuBar extends Container implements ActionListener {
      * The method blocks until the user dispose the dialog.
      */
     public void showMenu() {
+        System.out.println("showMenu");
         final Dialog d = new Dialog("Menu", "");
         d.setDisposeWhenPointerOutOfBounds(true);
         d.setMenu(true);
@@ -1632,12 +1633,8 @@ public class MenuBar extends Container implements ActionListener {
             menu.setScrollableY(true);
             for (int iter = 0; iter < commands.size(); iter++) {
                 Command c = (Command)commands.elementAt(iter);
-                // Only add to menu if:
-                //  a) it's not the the default command, and
-                //  b) it's not the MSK command on a 3-button layout
-                //  (essentially an automagically set 'default command').
-                if (!(c == defaultCommand) &&
-                        !(soft.length == 3 && c == softCommand[0])) {
+                
+                if (shouldCommandShowInMenu(c)) {
                     menu.addComponent(createTouchCommandButton(c));
                 }
             }
@@ -1650,6 +1647,14 @@ public class MenuBar extends Container implements ActionListener {
             return menu;
         }
         return createCommandList(commands);
+    }
+    private boolean shouldCommandShowInMenu(Command c) {
+        // Only add to menu if:
+        //  a) it's not the the default command, and
+        //  b) it's not the MSK command on a 3-button layout
+        //  (essentially an automagically set 'default command').
+        return !(c == defaultCommand) &&
+               !(soft.length == 3 && c == softCommand[0]);
     }
 
     /**
@@ -1670,7 +1675,15 @@ public class MenuBar extends Container implements ActionListener {
      * @return List object
      */
     protected List createCommandList(Vector commands) {
-        List l = new List(commands);
+        Vector menucommands = new Vector();
+        Command cmd = null;
+        for(int i = 0; i < commands.size(); i++) {
+            cmd = (Command) commands.elementAt(i);
+            if(shouldCommandShowInMenu(cmd)) {
+                menucommands.addElement(cmd);
+            }
+        }
+        List l = new List(menucommands);
         l.setUIID("CommandList");
         Component c = (Component) l.getRenderer();
         c.setUIID("Command");
