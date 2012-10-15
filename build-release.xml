@@ -80,7 +80,7 @@ the ResourceEditor without problems you can use this script.
     </target>
     <!-- build & copy ResourceEditor -->
     <target name="ResourceEditor" depends="init" >
-        <ant antfile="${RE}/build.xml" userNativeBasedir="true" target="package" /> 
+        <ant antfile="${RE}/build.xml" useNativeBasedir="true" target="package" /> 
         <copy todir="${releasepath}/resourceeditor/lib">
             <fileset dir="${RE}/target/lib" />
         </copy>
