@@ -35,6 +35,7 @@ the ResourceEditor without problems you can use this script.
     <property name="RE" location="tools/Lwuit-ResourceEditor" />
     <property name="IO" location="IO" />
     <property name="IO-MIDP" location="Ports/MIDP/IO_MIDP" />
+    <property name="package-version" value="0.7.1-beta" />
 
     <target name="init">
         <mkdir dir="${releasepath}" />
@@ -79,9 +80,7 @@ the ResourceEditor without problems you can use this script.
     </target>
     <!-- build & copy ResourceEditor -->
     <target name="ResourceEditor" depends="init" >
-        <exec executable="mvn.bat" dir="${RE}">
-            <arg line="clean package" />
-        </exec>
+        <ant antfile="${RE}/build.xml" userNativeBasedir="true" target="package" /> 
         <copy todir="${releasepath}/resourceeditor/lib">
             <fileset dir="${RE}/target/lib" />
         </copy>
@@ -134,7 +133,9 @@ the ResourceEditor without problems you can use this script.
 
     <!-- create a single zip package from Series-40-binaries folder -->
     <target name="package" depends="dist">
-        <zip destfile="Series-40-binaries.zip" basedir="Series-40-binaries" />
+        <zip destfile="LWUIT-for-Series-40-binaries-${package-version}.zip">
+            <zipfileset dir="Series-40-binaries" prefix="LWUIT-for-Series-40-${package-version}" />
+        </zip>
     </target>
     <target name="clean">
         <delete dir="${releasepath}" />
