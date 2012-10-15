@@ -1,5 +1,13 @@
 Changelog
 -------------------------------------------------------------------------------
+0.7.1 Beta.
+	* textarea seteditable fixed.
+	* fixed issue where components forgot their draggable state
+	* fixed nullpointer issue in textarea/textfield when losing focus
+	* fixed issue with no commands appearing in the msk
+	* fixed issue with ok button shown twice in dialog
+	* fixed issue with defaultcommand disappearing when setting new defaultcommand
+	* fixed issue with selectcommand appearing in options-menu
 0.7.0 Beta.
 	* Fixed issue with textarea expanding not working.
 	* Resized checkboxes and radiobuttons in FT theme
