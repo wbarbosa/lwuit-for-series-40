@@ -767,6 +767,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     int c = textEditor.getCaretPosition();
                     if(c != 0) {
                         textEditor.delete(c - 1, 1);
+                        if(textEditor.getContent().length()  == 0) {
+                            removeClearCommandFromForm();
+                        }
                     }
                 }
             };            
@@ -1602,6 +1605,12 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }
 
         text = textEditor.getContent();
+        if(text.length() > 0) {
+            addClearCommandToForm();
+        }
+        if(text.length() == 0) {
+            removeClearCommandFromForm();
+        }
     }
 
     /**
@@ -1709,7 +1718,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             dontWaitForKeyReleased = false;
             
             if ((constraint & TextArea.UNEDITABLE) == 0) {
-                addClearCommandToForm();
+                if(getText().length() > 0) {
+                    addClearCommandToForm();
+                }
                 updatePaddings();
                 updateTextAreaStyles();
                 
@@ -1768,10 +1779,14 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     private void addClearCommandToForm() {
+        Form f = Display.getInstance().getCurrent();
+        if(f.getClearCommand() == clearCommand) {
+            return;
+        }
         LWUITImplementation impl = Display.getInstance().getImplementation();
         if (impl instanceof S40Implementation) {
             if (!((S40Implementation) impl).shouldHideMenu()) {
-                Form f = Display.getInstance().getCurrent();
+                
                 if ((constraint & TextArea.UNEDITABLE) == 0) {
                     if (f.getClearCommand() != clearCommand) {
                         previousClearCommand = f.getClearCommand();
@@ -1779,6 +1794,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     if (previousClearCommand != clearCommand) {
                         f.addCommand(clearCommand);
                         f.setClearCommand(clearCommand);
+                        f.repaint();
                     }
                 }
             }
