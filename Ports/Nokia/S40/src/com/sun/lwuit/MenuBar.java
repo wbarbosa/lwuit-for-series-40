@@ -297,7 +297,13 @@ public class MenuBar extends Container implements ActionListener {
      */
     public void setClearCommand(Command clearCommand) {
         this.clearCommand = clearCommand;
+        if(!commands.contains(clearCommand)) {
+            commands.addElement(clearCommand);
+        }
         updateCommands();
+        if (getCommandCount() == 0 && parent != null) {
+            installMenuBar();
+        }
     }
 
     /**
