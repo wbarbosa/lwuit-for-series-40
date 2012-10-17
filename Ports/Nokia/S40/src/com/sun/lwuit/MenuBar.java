@@ -800,7 +800,6 @@ public class MenuBar extends Container implements ActionListener {
      * The method blocks until the user dispose the dialog.
      */
     public void showMenu() {
-        System.out.println("showMenu");
         final Dialog d = new Dialog("Menu", "");
         d.setDisposeWhenPointerOutOfBounds(true);
         d.setMenu(true);
