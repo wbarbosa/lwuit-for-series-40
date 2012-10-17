@@ -1007,9 +1007,9 @@ public class Dialog extends Form {
                     dialog.addCommand(cmds[iter]);
                 }
             
-                // for the special case of one command map it to the back button
+                // for the special case of one command map it to the MSK
                 if (cmds.length == 1) {
-                    dialog.setBackCommand(cmds[0]);
+                    dialog.setDefaultCommand(cmds[0]);
                 } else {
                     // maps the second command to back
                     if (cmds.length == 2) {

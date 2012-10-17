@@ -251,6 +251,9 @@ public class MenuBar extends Container implements ActionListener {
      * @param defaultCommand the command to treat as default
      */
     public void setDefaultCommand(Command defaultCommand) {
+        if(this.defaultCommand == defaultCommand) {
+            return;
+        }
         Command olddef = this.defaultCommand;
         this.defaultCommand = defaultCommand;
         if(!commands.contains(defaultCommand)) {
@@ -543,7 +546,6 @@ public class MenuBar extends Container implements ActionListener {
             return;
         }
         int commandCount = getCommandCount();
-        
         // first we build an array of all the commands that are *not* the back
         // or default command. We can then pick from this array for the rest of
         // the softkeys without danger of picking the back command again.  Also
@@ -561,7 +563,6 @@ public class MenuBar extends Container implements ActionListener {
             }
         }
         int unassignedMiscCommands = numberOfMiscCommands;
-        
         // Number of softkey buttons that can have any action. RSK can
         // only have 'back'.
         int freeButtons = soft.length - 1;
