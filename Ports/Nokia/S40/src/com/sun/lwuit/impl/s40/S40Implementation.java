@@ -280,7 +280,6 @@ public class S40Implementation extends LWUITImplementation {
                 } else if(defaultCommand != null && current == defaultCommand) {
                     continue;
                 }else {
-                    //System.out.println("adding command:" + current.getCommandName());
                     MIDPCommandWrapper mcw = wrapLWUITCommand(current, iter + 1);
                     addCommand(mcw.getCommand());
                     currentCommands.addElement(mcw);

@@ -29,6 +29,7 @@ import com.sun.lwuit.animations.Transition;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.geom.Dimension;
+import com.sun.lwuit.geom.Rectangle;
 import com.sun.lwuit.impl.ImplementationFactory;
 import com.sun.lwuit.impl.LWUITImplementation;
 import com.sun.lwuit.impl.VirtualKeyboardInterface;
@@ -855,7 +856,7 @@ public final class Display {
     }
 
     long time;
-
+    FPSPainter fpspainter = new FPSPainter();
     /**
      * Implementation of the event dispatch loop content
      */
@@ -915,6 +916,34 @@ public final class Display {
             processSerialCalls();
         }
         time = System.currentTimeMillis() - currentTime;
+        /*long fps = 0;
+        if(time > 0) {
+            fps = 1000/time;
+        }
+ 
+        if(fps > 0) {
+            fpspainter.setFPS(fps);
+            if(current.getGlassPane() != fpspainter) {
+                current.setGlassPane(fpspainter);
+            }
+            
+        }*/
+    }
+    
+    private class FPSPainter implements Painter {
+        
+        private long mFPS;
+        public void setFPS( long fps) {
+            mFPS = fps;
+        }
+
+        public void paint(Graphics g, Rectangle rect) {
+            int c = g.getColor();
+            g.setColor(0xFF0000);
+            g.drawString("" + mFPS, rect.getX(), rect.getY());
+            g.setColor(c);
+        }
+        
     }
 
     boolean hasNoSerialCallsPending() {
