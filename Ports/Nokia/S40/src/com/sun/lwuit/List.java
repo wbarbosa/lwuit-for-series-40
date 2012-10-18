@@ -1757,7 +1757,7 @@ public class List extends Component {
             calculateComponentPosition(getSelectedIndex(), width, pos, rendererSize, getElementSize(true, true), true);
 
             if (orientation != HORIZONTAL) {
-                if(y < pos.getY()){
+                if(y < pos.getY()) {
                     selectedIndex = y / (rendererSize.getHeight() + itemGap);
                 }else{
                     int current = getSelectedIndex();

@@ -1181,6 +1181,7 @@ public class Form extends Container {
             }
             layoutContainer();
         }
+        
     }
 
     /**
@@ -1202,7 +1203,7 @@ public class Form extends Container {
      * Displays the current form on the screen
      */
     private void show(boolean reverse) {
-        
+        layoutContainer();
         if (transitionOutAnimator == null && transitionInAnimator == null) {
             initLaf(UIManager.getInstance().getLookAndFeel());
         }
