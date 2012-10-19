@@ -25,6 +25,8 @@ public class S40GestureImplementation extends S40Implementation{
     private GestureListenerImpl internalListener;
     private boolean registered = false;
     
+    private GestureInteractiveZone giz;
+    
     /**
      * Default constructor.
      */
@@ -34,10 +36,11 @@ public class S40GestureImplementation extends S40Implementation{
     
     public void init(Object m) {
         super.init(m);
+        internalListener = new GestureListenerImpl();
     }
     
-    private void registerGestureCanvas() {
-        internalListener = new GestureListenerImpl();
+    private void registerAllGesturesToCanvas() {
+        
         
         int gestures = GestureInteractiveZone.GESTURE_FLICK
                 | GestureInteractiveZone.GESTURE_LONG_PRESS
@@ -48,9 +51,32 @@ public class S40GestureImplementation extends S40Implementation{
             gestures = GestureInteractiveZone.GESTURE_ALL;
         }
         //register for gestures
-        GestureInteractiveZone giz = new GestureInteractiveZone(gestures);
+        if(giz == null) {
+            giz = new GestureInteractiveZone(gestures);
+        }else {
+            giz.setGestures(gestures);
+        }
+        registerToCanvas();
+        
+    }
+    private void registerToCanvas() {
+        System.out.println("registering to canvas");
+        GestureRegistrationManager.unregister(canvas, giz);
         GestureRegistrationManager.register(canvas, giz);
         GestureRegistrationManager.setListener(canvas, internalListener);
+        registered = true; 
+    }
+    
+    private void registerGesture(int gesture) {
+        System.out.println("registering gesture:" + gesture);
+        int gestures = gesture;
+        if(giz != null) {
+            gestures = giz.getGestures() | gesture;
+        }else {
+            giz = new GestureInteractiveZone(gestures);
+        }
+        giz.setGestures(gestures);
+        registerToCanvas();
     }
         
     /**
@@ -59,9 +85,10 @@ public class S40GestureImplementation extends S40Implementation{
      * @param l the handler to register to receive events
      */
     public void addGestureHandler(GestureHandler l) {
-        if (!registered) {
-            registerGestureCanvas();
-            registered = true;
+        if(l.getGestures() == l.GESTURE_ALL) {
+            registerAllGesturesToCanvas();
+        }else {
+            registerGesture(l.getGestures());
         }
         gestureListeners.addElement(l);
     }
@@ -101,12 +128,17 @@ public class S40GestureImplementation extends S40Implementation{
     private class GestureListenerImpl implements GestureListener {
 
         public void gestureAction(Object container, GestureInteractiveZone gestureInteractiveZone, GestureEvent gestureEvent) {
-            if(currentFormGestureHandler != null) {
-            currentFormGestureHandler.gestureAction(gestureEvent);
-        }
-        if(globalGestureHandler != null) {
-            globalGestureHandler.gestureAction(gestureEvent);
-        }
+            System.out.println("internal listener receiving gestureevents");
+            if (currentFormGestureHandler != null) {
+                if((currentFormGestureHandler.getGestures() & gestureEvent.getType()) != 0) {
+                    currentFormGestureHandler.gestureAction(gestureEvent);
+                }
+            }
+            if (globalGestureHandler != null) {
+                if((globalGestureHandler.getGestures() & gestureEvent.getType()) != 0) {
+                    globalGestureHandler.gestureAction(gestureEvent);
+                }
+            }
         }
         
     }

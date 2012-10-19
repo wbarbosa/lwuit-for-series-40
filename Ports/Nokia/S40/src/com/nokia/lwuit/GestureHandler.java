@@ -19,7 +19,29 @@ import java.lang.ref.WeakReference;
  */
 public abstract class GestureHandler {
     
+    public static final int GESTURE_FLICK = 16;
+    public static final int GESTURE_LONG_PRESS = 2;
+    public static final int GESTURE_LONG_PRESS_REPEATED = 32;
+    public static final int GESTURE_TAP = 1;
+    public static final int GESTURE_DRAG = 4;
+    public static final int GESTURE_DROP = 8;
+    public static final int GESTURE_ALL = 49279;
+    public static final int GESTURE_PINCH = 64;
+    
     private WeakReference form;
+    
+    private int gestures;
+    
+    public GestureHandler() {
+        gestures = GESTURE_ALL;
+    }
+    public GestureHandler(int gestures) {
+        this.gestures = gestures;
+    }
+    
+    public int getGestures() {
+        return this.gestures;
+    }
     
     /**
     * Set global gesturehandler that will receive all the gestures. Setting it null will 
