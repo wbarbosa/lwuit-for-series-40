@@ -1779,8 +1779,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     private void addClearCommandToForm() {
-        Form f = Display.getInstance().getCurrent();
-        if(f.getClearCommand() == clearCommand) {
+        Form f = getComponentForm();
+        if(f == null || f.getClearCommand() == clearCommand) {
             return;
         }
         LWUITImplementation impl = Display.getInstance().getImplementation();
