@@ -60,7 +60,6 @@ public class S40GestureImplementation extends S40Implementation{
         
     }
     private void registerToCanvas() {
-        System.out.println("registering to canvas");
         GestureRegistrationManager.unregister(canvas, giz);
         GestureRegistrationManager.register(canvas, giz);
         GestureRegistrationManager.setListener(canvas, internalListener);
@@ -68,7 +67,6 @@ public class S40GestureImplementation extends S40Implementation{
     }
     
     private void registerGesture(int gesture) {
-        System.out.println("registering gesture:" + gesture);
         int gestures = gesture;
         if(giz != null) {
             gestures = giz.getGestures() | gesture;
@@ -128,7 +126,6 @@ public class S40GestureImplementation extends S40Implementation{
     private class GestureListenerImpl implements GestureListener {
 
         public void gestureAction(Object container, GestureInteractiveZone gestureInteractiveZone, GestureEvent gestureEvent) {
-            System.out.println("internal listener receiving gestureevents");
             if (currentFormGestureHandler != null) {
                 if((currentFormGestureHandler.getGestures() & gestureEvent.getType()) != 0) {
                     currentFormGestureHandler.gestureAction(gestureEvent);
