@@ -2117,14 +2117,22 @@ public class S40Implementation extends LWUITImplementation {
 
     public void setCurrentForm(com.sun.lwuit.Form f) {
         super.setCurrentForm(f);
-        String t = f.getTitle();
+        setNativeTitle(f.getTitle());
+    }
+
+    /**
+     * Sets the title for native canvas
+     * @param t
+     */
+    public void setNativeTitle(String t) {
         if(t != null && t.length() > 0) {
             canvas.setTitle(t);
-        }else {
+        } else {
             t = Display.getInstance().getProperty("MIDlet-Name", "LWUIT MIDlet");
             canvas.setTitle(t);
         }
     }
+
     /**
      * A method to check if Gesture API is supported by the platform
      * @return 

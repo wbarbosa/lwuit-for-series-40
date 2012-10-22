@@ -30,6 +30,9 @@ import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.animations.Transition;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
+import com.sun.lwuit.impl.ImplementationFactory;
+import com.sun.lwuit.impl.LWUITImplementation;
+import com.sun.lwuit.impl.s40.S40Implementation;
 import com.sun.lwuit.list.ListCellRenderer;
 import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.FlowLayout;
@@ -728,7 +731,11 @@ public class Form extends Container {
      * @param title the form title
      */
     public void setTitle(String title) {
-        this.title.setText(title);
+        this.title.setText(title);        
+        LWUITImplementation impl = Display.getInstance().getImplementation();
+        if(impl instanceof S40Implementation) {
+            ((S40Implementation) impl).setNativeTitle(title);
+        }
         if(isInitialized() && this.title.isTickerEnabled()) {
             int b =Display.getInstance().getCommandBehavior();
             if(b == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK || b == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_RIGHT) {
