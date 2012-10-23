@@ -51,16 +51,12 @@ public class S40GestureImplementation extends S40Implementation{
             gestures = GestureInteractiveZone.GESTURE_ALL;
         }
         //register for gestures
-        if(giz == null) {
-            giz = new GestureInteractiveZone(gestures);
-        }else {
-            giz.setGestures(gestures);
-        }
+        giz = new GestureInteractiveZone(gestures);
         registerToCanvas();
         
     }
     private void registerToCanvas() {
-        GestureRegistrationManager.unregister(canvas, giz);
+        GestureRegistrationManager.unregisterAll(canvas);
         GestureRegistrationManager.register(canvas, giz);
         GestureRegistrationManager.setListener(canvas, internalListener);
         registered = true; 
@@ -70,10 +66,8 @@ public class S40GestureImplementation extends S40Implementation{
         int gestures = gesture;
         if(giz != null) {
             gestures = giz.getGestures() | gesture;
-        }else {
-            giz = new GestureInteractiveZone(gestures);
         }
-        giz.setGestures(gestures);
+        giz = new GestureInteractiveZone(gestures);
         registerToCanvas();
     }
         
@@ -120,6 +114,11 @@ public class S40GestureImplementation extends S40Implementation{
      * @param l the handler to register as global handler
      */
     public synchronized void setGlobalGestureHandler(GestureHandler l) {
+        if(l.getGestures() == l.GESTURE_ALL) {
+            registerAllGesturesToCanvas();
+        }else {
+            registerGesture(l.getGestures());
+        }
         globalGestureHandler = l;
     }
     
