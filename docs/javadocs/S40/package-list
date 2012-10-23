@@ -1,7 +1,11 @@
 com.nokia.lwuit
+com.nokia.lwuit.templates.list
 com.sun.lwuit
+com.sun.lwuit.html
 com.sun.lwuit.impl
 com.sun.lwuit.impl.s40
 com.sun.lwuit.list
 com.sun.lwuit.plaf
 com.sun.lwuit.spinner
+com.sun.lwuit.util
+com.sun.lwuit.xml
