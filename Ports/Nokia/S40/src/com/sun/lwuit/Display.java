@@ -2671,12 +2671,12 @@ public final class Display {
     }
     
     /**
-     * Wrapper for the getObjectTrait method of the com.nokia.mid.ui.LCDUIUtil
+     * Wrapper for the setObjectTrait method of the com.nokia.mid.ui.LCDUIUtil
      * class. Sets the trait value of the target object as Object. Values in the
      * given "value" Object are copied into the target's trait so subsequent
      * changes to the "value" Object have no effect on the value of the target's
      * trait. If the LCDUIUtil class is not present in the target configuration 
-     * the method returns false false.
+     * the method returns false.
      *
      * @param target the target object to set the trait to
      * @param trait the name of the trait to be set
