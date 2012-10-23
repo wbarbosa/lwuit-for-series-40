@@ -23,6 +23,7 @@
  */
 package com.sun.lwuit;
 
+import com.nokia.mid.ui.LCDUIUtil;
 import com.sun.lwuit.animations.Animation;
 import com.sun.lwuit.animations.CommonTransitions;
 import com.sun.lwuit.animations.Transition;
@@ -2647,5 +2648,49 @@ public final class Display {
         }
         return ret;
     }
+
+    /**
+     * Wrapper for the getObjectTrait method of the com.nokia.mid.ui.LCDUIUtil
+     * class. Sets the trait value of the target object as Object. Values in the
+     * given "value" Object are copied into the target's trait so subsequent
+     * changes to the "value" Object have no effect on the value of the target's
+     * trait. 
+     *
+     * @param target the target object to read the trait from
+     * @param trait the name of the trait to be set
+     * @return Object
+     */    
+    public static Object getObjectTrait(Object target, String traitName) {
+
+        try {
+            Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
+            return LCDUIUtil.getObjectTrait(target, traitName);
+        } catch (ClassNotFoundException ex) {
+            return null;
+        }
+    }
     
+    /**
+     * Wrapper for the getObjectTrait method of the com.nokia.mid.ui.LCDUIUtil
+     * class. Sets the trait value of the target object as Object. Values in the
+     * given "value" Object are copied into the target's trait so subsequent
+     * changes to the "value" Object have no effect on the value of the target's
+     * trait. If the LCDUIUtil class is not present in the target configuration 
+     * the method returns false false.
+     *
+     * @param target the target object to set the trait to
+     * @param trait the name of the trait to be set
+     * @param value the value of the trait to be set as String
+     * @return boolean
+     */
+    public static boolean setObjectTrait(Object target, String traitName, Object value) {
+
+        try {
+            Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
+            LCDUIUtil.setObjectTrait(target, traitName, value);
+            return true;
+        } catch (ClassNotFoundException ex) {
+            return false;
+        }
+    }
 }
