@@ -665,9 +665,26 @@ public class UIManager {
      * @param themeProps the properties of the given theme
      */
     public void setThemeProps(Hashtable themeProps) {
-        
+
         if (accessible) {
             setThemePropsImpl(themeProps);
+        }
+    }
+
+    /**
+     * Loads a theme from resource and applies it for defined device type.
+     *
+     * @param resRef a local reference to a resource using the syntax of
+     * Class.getResourceAsStream(String)
+     * @param deviceType device type as defined in Display class
+     * @param themeId name of the theme resource
+     */
+    public void loadThemeForDeviceType(String resRef, int deviceType, String themeId)
+            throws IOException {
+        if (deviceType == Display.getInstance().getDeviceType()) {
+            Resources r;
+            r = Resources.open((String) resRef);
+            UIManager.getInstance().setThemeProps(r.getTheme(themeId));
         }
     }
 
@@ -1272,4 +1289,5 @@ public class UIManager {
     public void setNativeDisplay(javax.microedition.lcdui.Display d) {
         nativeDisplay = d;
     }
+
 }
