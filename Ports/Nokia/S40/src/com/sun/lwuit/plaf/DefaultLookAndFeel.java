@@ -1222,6 +1222,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
      * @return shortened string with ellipsis
      */
     private String shortenString(String original, final int width, final Font font) {
+        
         if(font.stringWidth(original) <= width) {
             return original;
         }
@@ -1234,8 +1235,10 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         while(!doesStringFit(original, index, widestCharWidth, targetWidth, font)) {
             index--;
         }
-        String ret = original.substring(0, index) + ellipsis;
-
+        String ret = ellipsis;
+        if(index > 0) {
+            ret = original.substring(0, index) + ellipsis;
+        }
         return ret;
         
     }
