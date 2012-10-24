@@ -23,7 +23,6 @@
  */
 package com.sun.lwuit;
 
-
 import com.sun.lwuit.events.DataChangedListener;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.plaf.Style;
@@ -38,6 +37,7 @@ import com.sun.lwuit.util.EventDispatcher;
  * @author Shai Almog
  */
 public class Slider extends Label {
+
     private int value;
     private int maxValue = 100;
     private int minValue = 0;
@@ -51,11 +51,9 @@ public class Slider extends Label {
     private boolean paintingFull;
     private boolean renderPercentageOnTop;
     private boolean renderValueOnTop;
-
     private boolean infinite = false;
     private float infiniteDirection = 0.03f;
     private Image thumbImage;
-
 
     /**
      * The default constructor uses internal rendering to draw its state
@@ -89,7 +87,7 @@ public class Slider extends Label {
      * @inheritDoc
      */
     public void initComponent() {
-        if(infinite) {
+        if (infinite) {
             getComponentForm().registerAnimatedInternal(this);
         }
     }
@@ -98,9 +96,9 @@ public class Slider extends Label {
      * @inheritDoc
      */
     public void deinitialize() {
-        if(infinite) {
+        if (infinite) {
             Form f = getComponentForm();
-            if(f != null) {
+            if (f != null) {
                 f.deregisterAnimatedInternal(this);
             }
         }
@@ -110,32 +108,33 @@ public class Slider extends Label {
      * @inheritDoc
      */
     public boolean animate() {
-        if(infinite) {
+        if (infinite) {
             super.animate();
-            float f = (infiniteDirection * ((float)maxValue));
-            if(((int)f) == 0) {
-                if(f < 0) {
+            float f = (infiniteDirection * ((float) maxValue));
+            if (((int) f) == 0) {
+                if (f < 0) {
                     f = -1;
                 } else {
                     f = 1;
                 }
             }
-            value += ((int)f);
-            if(value >= maxValue) {
+            value += ((int) f);
+            if (value >= maxValue) {
                 value = maxValue;
                 infiniteDirection *= (-1);
             }
-            if(value <= 0) {
-                value = (byte)0;
+            if (value <= 0) {
+                value = (byte) 0;
                 infiniteDirection *= (-1);
             }
             return true;
         }
         return super.animate();
     }
+
     /**
-     * The infinite slider functionality is used to animate
-     * progress for which there is no defined value.
+     * The infinite slider functionality is used to animate progress for which
+     * there is no defined value.
      *
      * @return true for infinite progress
      */
@@ -144,16 +143,16 @@ public class Slider extends Label {
     }
 
     /**
-     * Activates/disables the infinite slider functionality used to animate 
+     * Activates/disables the infinite slider functionality used to animate
      * progress for which there is no defined value.
-     * 
+     *
      * @param i true for infinite progress
      */
     public void setInfinite(boolean i) {
-        if(infinite != i) {
+        if (infinite != i) {
             infinite = i;
-            if(isInitialized()) {
-                if(i) {
+            if (isInitialized()) {
+                if (i) {
                     getComponentForm().registerAnimatedInternal(this);
                 } else {
                     getComponentForm().deregisterAnimatedInternal(this);
@@ -172,7 +171,6 @@ public class Slider extends Label {
         s.infinite = true;
         return s;
     }
-
 
     /**
      * @inheritDoc
@@ -195,31 +193,35 @@ public class Slider extends Label {
     }
 
     /**
-     * Indicates the value of progress made, this method is thread safe and
-     * can be invoked from any thread although discression should still be kept
-     * so one thread doesn't regress progress made by another thread...
+     * Indicates the value of progress made, this method is thread safe and can
+     * be invoked from any thread although discression should still be kept so
+     * one thread doesn't regress progress made by another thread...
      *
      * @param value new value for progress
      */
     public void setProgress(int value) {
         this.value = value;
-        if(renderValueOnTop) {
+        if (renderValueOnTop) {
             super.setText("" + value);
         } else {
-            if(renderPercentageOnTop) {
-                super.setText(value + "%");
+            if (renderPercentageOnTop) {
+                super.setText((int)(getRelativeValue() * 100) + "%");
             } else {
                 repaint();
             }
         }
+    }
+    
+    private float getRelativeValue() {
+        return (float)(value - minValue) / (maxValue - minValue);
     }
 
     /**
      * @inheritDoc
      */
     public Style getStyle() {
-        if(paintingFull) {
-            if(hasFocus()) {
+        if (paintingFull) {
+            if (hasFocus()) {
                 return sliderFullSelected;
             }
             return sliderFull;
@@ -233,14 +235,14 @@ public class Slider extends Label {
     protected Dimension calcPreferredSize() {
         Style style = getStyle();
         int prefW = 0, prefH = 0;
-        if(style.getBorder() != null) {
+        if (style.getBorder() != null) {
             prefW = Math.max(style.getBorder().getMinimumWidth(), prefW);
             prefH = Math.max(style.getBorder().getMinimumHeight(), prefH);
         }
         // we don't really need to be in the font height but this provides
         // a generally good indication for size expectations
-        if(Display.getInstance().isTouchScreenDevice() && isEditable()) {
-            if(vertical) {
+        if (Display.getInstance().isTouchScreenDevice() && isEditable()) {
+            if (vertical) {
                 return new Dimension(Math.max(prefW, Font.getDefaultFont().charWidth('X') * 2),
                         Math.max(prefH, Display.getInstance().getDisplayHeight() / 2));
             } else {
@@ -248,7 +250,7 @@ public class Slider extends Label {
                         Math.max(prefH, Font.getDefaultFont().getHeight() * 2));
             }
         } else {
-            if(vertical) {
+            if (vertical) {
                 return new Dimension(Math.max(prefW, Font.getDefaultFont().charWidth('X')),
                         Math.max(prefH, Display.getInstance().getDisplayHeight() / 2));
             } else {
@@ -263,6 +265,7 @@ public class Slider extends Label {
      */
     public void paintBackground(Graphics g) {
         super.paintBackground(g);
+        
         int clipX = g.getClipX();
         int clipY = g.getClipY();
         int clipW = g.getClipWidth();
@@ -271,18 +274,17 @@ public class Slider extends Label {
         int height = getHeight();
 
         int y = getY();
-        if(infinite) {
+        if (infinite) {
             int blockSize = getWidth() / 5;
-            int x = getX() + (int) ((((float) value) / ((float)maxValue - minValue)) * (getWidth() - blockSize));
+            int x = getX() + (int) (getRelativeValue() * (getWidth() - blockSize));
             g.clipRect(x, y, blockSize, height - 1);
         } else {
-            if(vertical) {
-                int actualHeight = (int) ((((float) value) / ((float)maxValue - minValue)) * getHeight());
+            if (vertical) {
+                int actualHeight = (int) (getRelativeValue() * getHeight());
                 y += height - actualHeight;
             } else {
-                width = (int) ((((float) value) / ((float)maxValue - minValue)) * getWidth());
+                width = (int) (getRelativeValue() * getWidth());
             }
-
             g.clipRect(getX(), y, width, height);
         }
 
@@ -292,8 +294,8 @@ public class Slider extends Label {
         paintingFull = false;
 
         g.setClip(clipX, clipY, clipW, clipH);
-        if(thumbImage != null && !infinite) {
-            if(!vertical) {
+        if (thumbImage != null && !infinite) {
+            if (!vertical) {
                 int xPos = getX() + width - thumbImage.getWidth() / 2;
                 xPos = Math.max(getX(), xPos);
                 xPos = Math.min(getX() + getWidth() - thumbImage.getWidth(), xPos);
@@ -311,6 +313,7 @@ public class Slider extends Label {
 
     /**
      * Indicates the slider is vertical
+     *
      * @return true if the slider is vertical
      */
     public boolean isVertical() {
@@ -319,6 +322,7 @@ public class Slider extends Label {
 
     /**
      * Indicates the slider is vertical
+     *
      * @param vertical true if the slider is vertical
      */
     public void setVertical(boolean vertical) {
@@ -327,6 +331,7 @@ public class Slider extends Label {
 
     /**
      * Indicates the slider is modifyable
+     *
      * @return true if the slider is editable
      */
     public boolean isEditable() {
@@ -335,42 +340,45 @@ public class Slider extends Label {
 
     /**
      * Indicates the slider is modifyable
-     * @param editable  true if the slider is editable
+     *
+     * @param editable true if the slider is editable
      */
     public void setEditable(boolean editable) {
         this.editable = editable;
         setFocusable(editable);
-    }    
-   
+    }
+
     public void pointerPressed(int x, int y) {
-        if(!editable) {
+        if (!editable) {
             return;
         }
+
         int range = maxValue - minValue;
-        if(vertical) {
+
+        if (vertical) {
             // turn the coordinate to a local coordinate and invert it
             y = Math.abs(getHeight() - (y - getAbsoluteY()));
-            setProgress((int)(Math.min(range, ((float)y) / ((float)getHeight()) * range)));
+            setProgress((int) (Math.min(maxValue, ((float) y) / ((float) getHeight()) * range)) + minValue);
         } else {
             x = Math.abs(x - getAbsoluteX());
-            setProgress((int)(Math.min(range, ((float)x) / ((float)getWidth()) * range)));
+            setProgress((int) (Math.min(maxValue, ((float) x) / ((float) getWidth()) * range)) + minValue);
         }
-        
-        if(vertical) {
-            if(previousY < y){
+
+        if (vertical) {
+            if (previousY < y) {
                 fireDataChanged(DataChangedListener.ADDED, value);
-            }else{
+            } else {
                 fireDataChanged(DataChangedListener.REMOVED, value);
             }
             previousY = y;
-        }else{
-            if(previousX < x){
+        } else {
+            if (previousX < x) {
                 fireDataChanged(DataChangedListener.ADDED, value);
-            }else{
+            } else {
                 fireDataChanged(DataChangedListener.REMOVED, value);
             }
             previousX = x;
-        
+
         }
     }
 
@@ -378,41 +386,43 @@ public class Slider extends Label {
      * @inheritDoc
      */
     public void pointerDragged(int x, int y) {
-        if(!editable) {
+        if (!editable) {
             return;
         }
-        if(vertical && previousY == -1){
+        if (vertical && previousY == -1) {
             previousY = y;
             return;
         }
-        if(!vertical && previousX == -1){
+        if (!vertical && previousX == -1) {
             previousX = x;
             return;
         }
+        
         int val = 0;
         int range = maxValue - minValue;
-        if(vertical) {
+        
+        if (vertical) {
             // turn the coordinate to a local coordinate and invert it
             y = Math.abs(getHeight() - (y - getAbsoluteY()));
-            val = (int)Math.min(range, ((float)y) / ((float)getHeight()) * range);
+            val = (int) Math.min(maxValue, ((float) y) / ((float) getHeight()) * range + minValue);
         } else {
             x = Math.abs(x - getAbsoluteX());
-            val = (int)Math.min(range, ((float)x) / ((float)getWidth()) * range);
+            val = (int) Math.min(maxValue, ((float) x) / ((float) getWidth()) * range + minValue);
         }
-        if(val != getProgress()) {
+        if (val != getProgress()) {
             setProgress(val);
 
-            if(vertical) {
-                if(previousY < y){
+            if (vertical) {
+                if (previousY < y) {
                     fireDataChanged(DataChangedListener.ADDED, value);
-                }else{
+                } else {
                     fireDataChanged(DataChangedListener.REMOVED, value);
                 }
                 previousY = y;
-            }else{
-                if(previousX < x){
+            } else {
+                if (previousX < x) {
                     fireDataChanged(DataChangedListener.ADDED, value);
-                }else{
+                } else {
                     fireDataChanged(DataChangedListener.REMOVED, value);
                 }
                 previousX = x;
@@ -438,7 +448,7 @@ public class Slider extends Label {
      * @inheritDoc
      */
     public void pointerReleased(int x, int y) {
-        if(!editable) {
+        if (!editable) {
             return;
         }
         previousX = -1;
@@ -449,50 +459,50 @@ public class Slider extends Label {
      * @inheritDoc
      */
     public void keyPressed(int code) {
-        if(editable && handlesInput()) {
+        if (editable && handlesInput()) {
             int game = Display.getInstance().getGameAction(code);
-            switch(game) {
+            switch (game) {
                 case Display.GAME_UP:
-                    if(vertical) {
-                        setProgress((byte)(Math.min(maxValue, value + increments)));
+                    if (vertical) {
+                        setProgress((byte) (Math.min(maxValue, value + increments)));
                         fireDataChanged(DataChangedListener.ADDED, value);
                     } else {
                         setHandlesInput(false);
                     }
                     break;
                 case Display.GAME_DOWN:
-                    if(vertical) {
-                        setProgress((byte)(Math.max(minValue, value - increments)));
+                    if (vertical) {
+                        setProgress((byte) (Math.max(minValue, value - increments)));
                         fireDataChanged(DataChangedListener.REMOVED, value);
                     } else {
                         setHandlesInput(false);
                     }
                     break;
                 case Display.GAME_LEFT:
-                    if(!vertical) {
-                        setProgress((byte)(Math.max(minValue, value - increments)));
+                    if (!vertical) {
+                        setProgress((byte) (Math.max(minValue, value - increments)));
                         fireDataChanged(DataChangedListener.REMOVED, value);
                     } else {
                         setHandlesInput(false);
                     }
                     break;
                 case Display.GAME_RIGHT:
-                    if(!vertical) {
-                        setProgress((byte)(Math.min(maxValue, value + increments)));
+                    if (!vertical) {
+                        setProgress((byte) (Math.min(maxValue, value + increments)));
                         fireDataChanged(DataChangedListener.ADDED, value);
                     } else {
                         setHandlesInput(false);
                     }
                     break;
                 case Display.GAME_FIRE:
-                    if(!Display.getInstance().isThirdSoftButton()) {
+                    if (!Display.getInstance().isThirdSoftButton()) {
                         fireClicked();
                     }
                     break;
             }
         } else {
-            if(!Display.getInstance().isThirdSoftButton() &&
-                    Display.getInstance().getGameAction(code) == Display.GAME_FIRE) {
+            if (!Display.getInstance().isThirdSoftButton()
+                    && Display.getInstance().getGameAction(code) == Display.GAME_FIRE) {
                 fireClicked();
             }
         }
@@ -516,8 +526,8 @@ public class Slider extends Label {
     public void setIncrements(int increments) {
         this.increments = increments;
     }
-   
-    private void fireDataChanged(int event, int val){
+
+    private void fireDataChanged(int event, int val) {
         listeners.fireDataChangeEvent(val, event);
     }
 
@@ -526,7 +536,7 @@ public class Slider extends Label {
      *
      * @param l new listener
      */
-    public void addDataChangedListener(DataChangedListener l){
+    public void addDataChangedListener(DataChangedListener l) {
         listeners.addListener(l);
     }
 
@@ -535,13 +545,13 @@ public class Slider extends Label {
      *
      * @param l listener to remove
      */
-    public void removeDataChangedListener(DataChangedListener l){
+    public void removeDataChangedListener(DataChangedListener l) {
         listeners.removeListener(l);
     }
 
     /**
-     * Indicates that the value of the slider should be rendered with a percentage sign
-     * on top of the slider.
+     * Indicates that the value of the slider should be rendered with a
+     * percentage sign on top of the slider.
      *
      * @return true if so
      */
@@ -550,8 +560,8 @@ public class Slider extends Label {
     }
 
     /**
-     * Indicates that the value of the slider should be rendered with a percentage sign
-     * on top of the slider.
+     * Indicates that the value of the slider should be rendered with a
+     * percentage sign on top of the slider.
      *
      * @param renderPercentageOnTop true to render percentages
      */
@@ -612,7 +622,7 @@ public class Slider extends Label {
 
     /**
      * The thumb image is drawn on top of the current progress
-     * 
+     *
      * @param thumbImage the thumbImage to set
      */
     public void setThumbImage(Image thumbImage) {
