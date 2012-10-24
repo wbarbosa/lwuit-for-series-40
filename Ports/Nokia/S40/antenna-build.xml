@@ -18,6 +18,8 @@
     <property name="wtk.cldc.version" value="1.1" />
     <property name="UI-MIDP" value="..\..\MIDP\UI\dist\UI.jar" />
     <property name="bin" location="../../../Series-40-binaries/bin" />
+    <property name="package-version" value="0.7.1" />
+    <property name="template-folder" value="../../../tools/Lwuit-ResourceEditor/src/main/resources/templates" />
     <path id="bootclasspath.ref">
         <fileset dir="${wtk.home}/lib" >
             <include name="*.jar" />
@@ -52,6 +54,10 @@
                 <include name="*.res" />
             </fileset>
         </copy>
+        <!-- copy theme files to resourceeditor so that they are up to date -->
+        <copy file="src/full_touch_theme.res" todir="${template-folder}" overwrite="true" />
+        <copy file="src/nokia_non_touch_theme.res" todir="${template-folder}" overwrite="true" />
+        <copy file="src/nokia_theme.res" tofile="${template-folder}/nokia_touch_type_theme.res" overwrite="true" />
     </target>
     <target name="create-jad" depends="init">
         <wtkjad jadfile="dist/S40.jad" name="LWUIT-for-Series-40" vendor="Nokia" version="0.6.1" encoding="UTF-8">
