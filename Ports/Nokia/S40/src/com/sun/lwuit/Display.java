@@ -460,20 +460,9 @@ public final class Display {
             try {
                 javax.microedition.lcdui.Display nativeDisplay = javax.microedition.lcdui.Display.getDisplay((MIDlet) m);
                 UIManager.getInstance().setNativeDisplay(nativeDisplay);
-                switch(INSTANCE.getDeviceType()) {
-                    case FULL_TOUCH_DEVICE:
-                        nokiaResource = Resources.open("/full_touch_theme.res");
-                        break;
-                    case TOUCH_AND_TYPE_DEVICE:
-                        nokiaResource = Resources.open("/nokia_theme.res");
-                        break;
-                    case NON_TOUCH_DEVICE:
-                        nokiaResource = Resources.open("/nokia_non_touch_theme.res");
-                        break;
-                }                
-                UIManager.getInstance().setThemeProps(nokiaResource.getTheme("NokiaTheme"));
-                
-                System.out.println("loaded nokia theme.");
+                UIManager.getInstance().loadThemeForDeviceType("/full_touch_theme.res", FULL_TOUCH_DEVICE, "NokiaTheme");
+                UIManager.getInstance().loadThemeForDeviceType("/nokia_theme.res", TOUCH_AND_TYPE_DEVICE, "NokiaTheme");
+                UIManager.getInstance().loadThemeForDeviceType("/nokia_non_touch_theme.res", NON_TOUCH_DEVICE, "NokiaTheme");
             } catch (IOException e) {
                 System.out.println("Can't load Nokia Theme");
             }
@@ -2693,4 +2682,5 @@ public final class Display {
             return false;
         }
     }
+
 }
