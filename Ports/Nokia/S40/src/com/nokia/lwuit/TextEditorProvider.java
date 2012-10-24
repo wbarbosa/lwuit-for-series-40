@@ -274,8 +274,8 @@ public abstract class TextEditorProvider {
             Class.forName("com.nokia.mid.ui.TextEditor");
             Class c = Class.forName("com.nokia.lwuit.TextEditorProviderImpl");
             provider = (TextEditorProvider)c.newInstance();
-        }catch(Exception cnfe) {
-            System.out.println("No native TextEditor supported.");
+        } catch(Exception cnfe) {
+            // No native TextEditor supported.
         }
         return provider;
     }
