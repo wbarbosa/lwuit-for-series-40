@@ -709,14 +709,8 @@ public class Component implements Animation, StyleListener {
         if (Display.getInstance().getKeyboardType() != Display.KEYBOARD_TYPE_VIRTUAL && isSelectableInteraction()) {
             Form f = getComponentForm();
             if (f != null) {
-                if((cmp instanceof TextArea)) {
-                    //we only want to show edit if native input is not supported
-                    if(!Display.getInstance().getImplementation().isNativeInputSupported()) {
-                        f.getMenuBar().addSelectCommand(getSelectCommandText());
-                    }
-                }else {
-                    f.getMenuBar().addSelectCommand(getSelectCommandText());
-                }
+                f.getMenuBar().addSelectCommand(getSelectCommandText());
+                
                 f.restoreMenu();
             }
         }

@@ -254,7 +254,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private ActionListener showListener = new ActionListener() {
         
         public void actionPerformed(ActionEvent evt) {
-            ensureTextEditorIsShown();
+            if(Display.getInstance().getDeviceType() != Display.NON_TOUCH_DEVICE) {
+                ensureTextEditorIsShown();
+            }
         }
     };
     
@@ -600,6 +602,16 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 Display.getInstance().editString(this, getMaxSize(), getConstraint(), getText());
             }
 
+        }else {
+            if(Display.getInstance().getDeviceType() == Display.NON_TOUCH_DEVICE) {
+                if(!isTextEditorActive()) {
+                    setSelectCommandText(UIManager.getInstance().localize("OK", "OK"));
+                    focusTextEditor();
+                }else {
+                    setSelectCommandText(UIManager.getInstance().localize("Edit", "Edit"));
+                    hideTextEditor();
+                }
+            }
         }
     }
 
@@ -1704,9 +1716,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void focusGained(Component cmp) {
-        if(dontWaitForKeyReleased) {
+        if(Display.getInstance().getDeviceType() != Display.NON_TOUCH_DEVICE) {
             focusTextEditor();
         }
+        
     }
 
     /**
