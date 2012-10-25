@@ -240,6 +240,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private Command clearCommand;
     private Command previousClearCommand;
     private String clearText = UIManager.getInstance().localize("clear", "Clear");
+    
+    private Command selectCommand;
 	
     /**
      * Used to listen dragevents from parent form.
@@ -552,7 +554,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void keyReleased(int keyCode) {
-        focusTextEditor();
         if (!textEditorEnabled) {
             int action = com.sun.lwuit.Display.getInstance().getGameAction(keyCode);
             if (isEditable()) {
@@ -605,10 +606,18 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }else {
             if(Display.getInstance().getDeviceType() == Display.NON_TOUCH_DEVICE) {
                 if(!isTextEditorActive()) {
-                    setSelectCommandText(UIManager.getInstance().localize("OK", "OK"));
+                    if(selectCommand != null) {
+                        getComponentForm().removeCommand(selectCommand);
+                    }
+                    getComponentForm().getMenuBar().addSelectCommand(UIManager.getInstance().localize("OK", "OK"));
+                    selectCommand = getComponentForm().getMenuBar().getSelectCommand();
                     focusTextEditor();
                 }else {
-                    setSelectCommandText(UIManager.getInstance().localize("Edit", "Edit"));
+                    if(selectCommand != null) {
+                        getComponentForm().removeCommand(selectCommand);
+                    }
+                    getComponentForm().getMenuBar().addSelectCommand(UIManager.getInstance().localize("Edit", "Edit"));
+                    selectCommand = getComponentForm().getMenuBar().getSelectCommand();
                     hideTextEditor();
                 }
             }
@@ -1555,44 +1564,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void inputAction(TextEditorProvider textEditor, int actions) {
        
-       if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_NEXT) != 0) {
-            //focus to next element
-            Form f = getComponentForm();
-            Component c = f.findNextFocusDown();
-
-            if(c instanceof TextArea) {
-               TextArea t = (TextArea) c;
-               t.dontWaitForKeyReleased = true;
-            }
-
-            try {
-                c.requestFocus();
-            } catch(NullPointerException npe) {
-                /*
-                 * MenuBar.updateCommands some times throws nullpointerexception
-                 * for still unknown reason. Same below.
-                 */
-            }
-       }
-       if((actions&TextEditorProvider.TextEditorListener.ACTION_TRAVERSE_PREVIOUS) != 0) {
-            //focus previous element
-            Form f = getComponentForm();
-            Component c = f.findNextFocusUp();
-
-            if(c instanceof TextArea) {
-                TextArea t = (TextArea) c;
-                t.dontWaitForKeyReleased = true;
-            }
-
-            try {
-                c.requestFocus();
-            } catch(NullPointerException npe) {
-                /*
-                 * MenuBar.updateCommands some times throws nullpointerexception
-                 * for still unknown reason
-                 */
-            }
-       }
        if((actions&TextEditorProvider.TextEditorListener.ACTION_PAINT_REQUEST) != 0
                || (actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
            repaint();
