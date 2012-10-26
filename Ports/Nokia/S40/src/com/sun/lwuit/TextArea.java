@@ -609,13 +609,16 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     if(selectCommand != null) {
                         getComponentForm().removeCommand(selectCommand);
                     }
+                    getComponentForm().removeCommand(getComponentForm().getMenuBar().getSelectCommand());
                     getComponentForm().getMenuBar().addSelectCommand(UIManager.getInstance().localize("OK", "OK"));
                     selectCommand = getComponentForm().getMenuBar().getSelectCommand();
                     focusTextEditor();
+                    
                 }else {
                     if(selectCommand != null) {
                         getComponentForm().removeCommand(selectCommand);
                     }
+                    getComponentForm().removeCommand(getComponentForm().getMenuBar().getSelectCommand());
                     getComponentForm().getMenuBar().addSelectCommand(UIManager.getInstance().localize("Edit", "Edit"));
                     selectCommand = getComponentForm().getMenuBar().getSelectCommand();
                     hideTextEditor();
