@@ -299,6 +299,9 @@ public class MenuBar extends Container implements ActionListener {
      * @param clearCommand the command to treat as the clear Command
      */
     public void setClearCommand(Command clearCommand) {
+        if(clearCommand == null) {
+            return;
+        }
         this.clearCommand = clearCommand;
         if(!commands.contains(clearCommand)) {
             commands.addElement(clearCommand);
@@ -465,9 +468,7 @@ public class MenuBar extends Container implements ActionListener {
     public void setBackCommand(Command backCommand) {
         if(!commands.contains(backCommand)) {
             if(!isNativeCommandBehavior()) {
-                if(Display.getInstance().getCurrent() == parent) {
-                    addCommand(backCommand);
-                }
+                addCommand(backCommand);
             }else {
                 commands.addElement(backCommand);
             }
@@ -489,6 +490,7 @@ public class MenuBar extends Container implements ActionListener {
         if(getCommandBehavior() == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK) {
             int i = commands.indexOf(backCommand);
             if(i > -1) {
+                System.out.println("removing the back for some reason");
                 commands.removeElementAt(i);
             }
         }
@@ -496,7 +498,9 @@ public class MenuBar extends Container implements ActionListener {
         // 'back' gets special treatment so update softkey actions
         if(isNativeCommandBehavior()) {
             S40Implementation impl = (S40Implementation)Display.getInstance().getImplementation();
-            impl.setNativeBackCommand(backCommand);
+            if(Display.getInstance().getCurrent() == parent) {
+                impl.setNativeBackCommand(backCommand);
+            }
         }else{
             updateCommands();
         }
@@ -537,6 +541,7 @@ public class MenuBar extends Container implements ActionListener {
      * Updates the command mapping to the softbuttons
      */
     private void updateCommands() {
+        System.out.println("updateCommands:commands.size:" + commands.size());
         if(isNativeCommandBehavior()) {
             //prevent platform commands from flickering by making sure
             //the form is visible
@@ -812,6 +817,7 @@ public class MenuBar extends Container implements ActionListener {
         //calling parent.createCommandComponent is done only for backward 
         //compatability reasons, in the next version this call be replaced with 
         //calling directly to createCommandComponent
+        System.out.println("showMenu: commands.size:" + commands.size());
         ((Form) d).getMenuBar().commandList = createCommandComponent(commands);
         if (menuCellRenderer != null && ((Form) d).getMenuBar().commandList instanceof List) {
             ((List) ((Form) d).getMenuBar().commandList).setListCellRenderer(menuCellRenderer);
@@ -1640,7 +1646,6 @@ public class MenuBar extends Container implements ActionListener {
             menu.setScrollableY(true);
             for (int iter = 0; iter < commands.size(); iter++) {
                 Command c = (Command)commands.elementAt(iter);
-                
                 if (shouldCommandShowInMenu(c)) {
                     menu.addComponent(createTouchCommandButton(c));
                 }
