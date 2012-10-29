@@ -705,7 +705,7 @@ public class Component implements Animation, StyleListener {
         focusGainedInternal();
         focusGained();
         // Don't perform select command adding for devices that *don't*
-        // have a keyboard. We *do* want it for t&t though.
+        // have a keyboard.
         if (Display.getInstance().getDeviceType() == Display.NON_TOUCH_DEVICE && isSelectableInteraction()) {
             Form f = getComponentForm();
             if (f != null) {
