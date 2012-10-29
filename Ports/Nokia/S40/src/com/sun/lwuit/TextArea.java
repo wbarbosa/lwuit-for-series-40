@@ -1817,8 +1817,14 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     }
                 }
             }
-            textEditor.setVisible(false);            
-            removeClearCommandFromForm();
+            textEditor.setVisible(false);
+            Display.getInstance().callSerially(new Runnable() {
+
+                public void run() {
+                    removeClearCommandFromForm();
+                }
+            });
+            
             setShouldCalcPreferredSize(true);
             Form f = getComponentForm();
             if(f != null) {
@@ -1828,10 +1834,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     private void removeClearCommandFromForm() {
-        Form p = Display.getInstance().getCurrent();
-        if (p.getClearCommand() == clearCommand) {
-            p.setClearCommand(previousClearCommand);
+        Form p = getComponentForm();
+       if (p.getClearCommand() == clearCommand) {
             p.removeCommand(clearCommand);
+            p.setClearCommand(previousClearCommand);
+            
         }
     }
     

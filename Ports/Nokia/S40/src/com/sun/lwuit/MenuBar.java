@@ -1258,6 +1258,7 @@ public class MenuBar extends Container implements ActionListener {
                 }
             }else {
                 updateCommands();
+                repaint();
             }
         }
     }
