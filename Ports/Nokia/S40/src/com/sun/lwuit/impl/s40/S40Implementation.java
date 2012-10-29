@@ -6,6 +6,7 @@ package com.sun.lwuit.impl.s40;
 
 import com.nokia.lwuit.MIDPCommandWrapper;
 import com.nokia.lwuit.TextEditorProvider;
+import com.nokia.mid.ui.LCDUIUtil;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.TextArea;
@@ -385,8 +386,51 @@ public class S40Implementation extends LWUITImplementation {
             S40Implementation.this.showNotify();
         }
         
-        
     }
+    
+    /**
+     * Wrapper for the getObjectTrait method of the com.nokia.mid.ui.LCDUIUtil
+     * class. This method gets the trait of the specified target object as an 
+     * object value. The returned object is a copy of the target's trait value 
+     * and will not change if the corresponding trait changes. 
+     *
+     * @param target the target object to read the trait from
+     * @param trait the name of the trait to be set
+     * @return Object
+     */    
+    public Object getCanvasTrait(String traitName) {
+
+        try {
+            Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
+            return LCDUIUtil.getObjectTrait(canvas, traitName);
+        } catch (ClassNotFoundException ex) {
+            return null;
+        }
+    }
+    
+    /**
+     * Wrapper for the setObjectTrait method of the com.nokia.mid.ui.LCDUIUtil
+     * class. Sets the trait value of the Canvas as Object. Values in the
+     * given "value" Object are copied into the target's trait so subsequent
+     * changes to the "value" Object have no effect on the value of the target's
+     * trait. If the LCDUIUtil class is not present in the target configuration 
+     * the method returns false.
+     *
+     * @param trait the name of the trait to be set
+     * @param value the value of the trait to be set as String
+     * @return boolean
+     */
+    public boolean setCanvasTrait(String traitName, Object value) {
+
+        try {
+            Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
+            LCDUIUtil.setObjectTrait(canvas, traitName, value);
+            return true;
+        } catch (ClassNotFoundException ex) {
+            return false;
+        }
+    }
+    
     private static final AlertType[] TYPES = new AlertType[]{
         AlertType.ALARM, AlertType.CONFIRMATION, AlertType.ERROR,
         AlertType.INFO, AlertType.WARNING

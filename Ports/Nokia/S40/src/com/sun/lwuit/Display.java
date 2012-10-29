@@ -2640,10 +2640,9 @@ public final class Display {
 
     /**
      * Wrapper for the getObjectTrait method of the com.nokia.mid.ui.LCDUIUtil
-     * class. Sets the trait value of the target object as Object. Values in the
-     * given "value" Object are copied into the target's trait so subsequent
-     * changes to the "value" Object have no effect on the value of the target's
-     * trait. 
+     * class. This method gets the trait of the specified target object as an 
+     * object value. The returned object is a copy of the target's trait value 
+     * and will not change if the corresponding trait changes. 
      *
      * @param target the target object to read the trait from
      * @param trait the name of the trait to be set
@@ -2653,6 +2652,9 @@ public final class Display {
 
         try {
             Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
+            if (target instanceof S40Implementation) {
+                return ((S40Implementation)target).getCanvasTrait(traitName);
+            }
             return LCDUIUtil.getObjectTrait(target, traitName);
         } catch (ClassNotFoundException ex) {
             return null;
@@ -2676,6 +2678,10 @@ public final class Display {
 
         try {
             Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
+            if (target instanceof S40Implementation) {
+                ((S40Implementation)target).setCanvasTrait(traitName, value);
+                return true;
+            }            
             LCDUIUtil.setObjectTrait(target, traitName, value);
             return true;
         } catch (ClassNotFoundException ex) {
