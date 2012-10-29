@@ -706,9 +706,10 @@ public class Component implements Animation, StyleListener {
         focusGained();
         // Don't perform select command adding for devices that *don't*
         // have a keyboard. We *do* want it for t&t though.
-        if (Display.getInstance().getKeyboardType() != Display.KEYBOARD_TYPE_VIRTUAL && isSelectableInteraction()) {
+        if (Display.getInstance().getDeviceType() == Display.NON_TOUCH_DEVICE && isSelectableInteraction()) {
             Form f = getComponentForm();
             if (f != null) {
+                
                 f.getMenuBar().addSelectCommand(getSelectCommandText());
                 
                 f.restoreMenu();
