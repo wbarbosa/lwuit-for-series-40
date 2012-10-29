@@ -593,8 +593,13 @@ public class Slider extends Label {
     /**
      * @param maxValue the maxValue to set
      */
-    public void setMaxValue(int maxValue) {
-        this.maxValue = maxValue;
+    public void setMaxValue(int newMaxValue) {
+        if (newMaxValue <= minValue) {
+            throw new IllegalArgumentException("Slider maximum value must be "
+                    + "greater than the minimum value.");
+        } else {
+            this.maxValue = newMaxValue;
+        }
     }
 
     /**
@@ -607,8 +612,13 @@ public class Slider extends Label {
     /**
      * @param minValue the minValue to set
      */
-    public void setMinValue(int minValue) {
-        this.minValue = minValue;
+    public void setMinValue(int newMinValue) {
+        if (newMinValue >= maxValue) {
+            throw new IllegalArgumentException("Slider minimum value must be "
+                    + "less than the maximum value.");
+        } else {
+            this.minValue = newMinValue;
+        }
     }
 
     /**
