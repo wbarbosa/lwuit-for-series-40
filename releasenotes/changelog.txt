@@ -1,5 +1,17 @@
 Changelog
 -------------------------------------------------------------------------------
+0.7.2 Beta.
+	* fixed issues with textarea clear command
+	* changed nontouch button highlight graphic
+	* fixed transparent combobox background
+	* Gesture API can now be used to listen only a particular gesture
+	* Fixed issues with slider only working with values 0-100
+	* Fixed button gradient issue in full touch
+	* Added api support for setting theme to be used only in spesific platform
+	* textarea focusing has changed in non-touch, user now has to press edit to type
+	  text.
+	* Added support for canvas objecttrait method.
+	* fixed issues with "null" menuitem appearing randomly
 0.7.1 Beta.
 	* textarea seteditable fixed.
 	* fixed issue where components forgot their draggable state
