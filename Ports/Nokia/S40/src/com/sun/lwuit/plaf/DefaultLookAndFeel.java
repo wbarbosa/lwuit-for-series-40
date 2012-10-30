@@ -564,6 +564,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                 if(Rectangle.intersects(x, y, ta.getWidth(), fontHeight, oX, oY, oWidth, oHeight)) {
 
                     String rowText = (String) ta.getTextAt(i);
+                    System.out.println("rowText:" + rowText);
                     //display ******** if it is a password field
                     String displayText = "";
                     if ((ta.getConstraint() & TextArea.PASSWORD) != 0) {
@@ -582,8 +583,10 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                             x+= (ta.getWidth()-leftPadding-rightPadding-f.stringWidth(displayText))/2;
                             break;
                     }
+                    int [] oldclip = g.getClip();
+                    g.setClip(new int[] {oldclip[0], oldclip[1], oldclip[2] - leftPadding - rightPadding, oldclip[3]});
                     g.drawString(displayText, x, y ,ta.getStyle().getTextDecoration());
-
+                    g.setClip(oldclip);
                     shouldBreak = true;
                 } else if(shouldBreak) {
                     break;
