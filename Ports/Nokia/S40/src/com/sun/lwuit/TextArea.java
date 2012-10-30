@@ -1566,7 +1566,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @param actions 
      */
     public void inputAction(TextEditorProvider textEditor, int actions) {
-       
        if((actions&TextEditorProvider.TextEditorListener.ACTION_PAINT_REQUEST) != 0
                || (actions&TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE) != 0) {
            repaint();
