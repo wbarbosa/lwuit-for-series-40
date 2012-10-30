@@ -791,6 +791,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     int c = textEditor.getCaretPosition();
                     if(c != 0) {
                         textEditor.delete(c - 1, 1);
+                        textEditor.setCaret(c - 1);
                         if(textEditor.getContent().length()  == 0) {
                             removeClearCommandFromForm();
                         }
