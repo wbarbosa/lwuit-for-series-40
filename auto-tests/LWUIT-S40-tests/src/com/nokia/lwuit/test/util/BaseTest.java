@@ -3,7 +3,7 @@ package com.nokia.lwuit.test.util;
 import java.util.HashMap;
 
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.microemu.device.DeviceFactory;
@@ -25,8 +25,8 @@ public abstract class BaseTest {
 	public BaseTest() {	
 	}
 	 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         
     	HashMap<String, String> properties = new HashMap<String, String>();
     	properties.put("MIDlet-Version", "1.0.0");    	
