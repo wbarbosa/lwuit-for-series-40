@@ -1835,7 +1835,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     private void removeClearCommandFromForm() {
         Form p = getComponentForm();
-       if (p.getClearCommand() == clearCommand) {
+      
+        if (p != null && p.getClearCommand() == clearCommand) {
             p.removeCommand(clearCommand);
             p.setClearCommand(previousClearCommand);
             
