@@ -242,6 +242,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private String clearText = UIManager.getInstance().localize("clear", "Clear");
     
     private Command selectCommand;
+
 	
     /**
      * Used to listen dragevents from parent form.
@@ -249,7 +250,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private ActionListener dragListener = new ActionListener() {
 
         public void actionPerformed(ActionEvent evt) {
-            hideTextEditor();
+            if(isTextEditorActive()) {
+                hideTextEditor();
+            }
+            
         }
     };
     
