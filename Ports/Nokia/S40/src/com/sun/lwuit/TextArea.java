@@ -238,7 +238,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     int bottomPadding;
     
     private Command clearCommand;
-    private Command previousClearCommand;
     private String clearText = UIManager.getInstance().localize("clear", "Clear");
     
     private Command selectCommand;
@@ -800,6 +799,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                             removeClearCommandFromForm();
                         }
                     }
+                    evt.consume();
                 }
             };            
         }        
@@ -1780,9 +1780,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                 
                 if ((constraint & TextArea.UNEDITABLE) == 0) {
                     if (f.getClearCommand() != clearCommand) {
-                        previousClearCommand = f.getClearCommand();
-                    }
-                    if (previousClearCommand != clearCommand) {
                         f.addCommand(clearCommand);
                         f.setClearCommand(clearCommand);
                         f.repaint();
@@ -1839,11 +1836,8 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     private void removeClearCommandFromForm() {
         Form p = getComponentForm();
-      
-        if (p != null && p.getClearCommand() == clearCommand) {
+        if(p != null) {
             p.removeCommand(clearCommand);
-            p.setClearCommand(previousClearCommand);
-            
         }
     }
     
