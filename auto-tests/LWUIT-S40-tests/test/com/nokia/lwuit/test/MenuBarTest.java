@@ -5,9 +5,11 @@
 package com.nokia.lwuit.test;
 
 import com.nokia.lwuit.test.util.BaseTest;
+import com.sun.lwuit.Button;
 import com.sun.lwuit.Command;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
+import com.sun.lwuit.MenuBar;
 import com.sun.lwuit.TextArea;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +46,31 @@ public class MenuBarTest extends BaseTest{
         
     }
     @Test
+    public void testDeviceType() {
+        
+        int type = Display.getInstance().getDeviceType();
+        assertEquals(Display.TOUCH_AND_TYPE_DEVICE, type);
+    }
+    @Test
+    public void testSettingClearOverridesBack() {
+        Form f = new Form();
+        final Command clear = new Command("clear");
+        Command back = new Command("back");
+        f.show();
+        f.setBackCommand(back);
+        f.setClearCommand(clear);
+        MenuBar m = f.getMenuBar();
+        final Button [] softkeys = m.getSoftButtons();
+        Display.getInstance().callSerially(new Runnable() {
+
+            @Override
+            public void run() {
+                assertEquals(clear, softkeys[2].getCommand());
+            }
+        });
+        
+    }
+    @Test
     public void testClearIsShownWhenTextAreaFocused() {
         final Form f = new Form();
 
@@ -52,6 +79,8 @@ public class MenuBarTest extends BaseTest{
         System.out.println("before show");
         f.show();
         System.out.println("after show");
+        area.requestFocus();
+        
         assertNotNull(f.getClearCommand());
        
         

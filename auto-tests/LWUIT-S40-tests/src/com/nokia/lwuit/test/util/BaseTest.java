@@ -30,6 +30,7 @@ public abstract class BaseTest {
         
     	HashMap<String, String> properties = new HashMap<String, String>();
     	properties.put("MIDlet-Version", "1.0.0");    	
+        System.setProperty("com.nokia.keyboard.type", "PhoneKeypad");
     	HeadlessDevice device = new HeadlessDevice(properties);    	
     	DeviceFactory.setDevice(device.createAndInitializeTestDevice());
     	
