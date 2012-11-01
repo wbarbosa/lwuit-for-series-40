@@ -673,7 +673,7 @@ public class MenuBar extends Container implements ActionListener {
         /* Then set texts and icons for all softkeys
          */
         for (int i = 0; i < soft.length; ++i) {
-            if (softCommand[i] != null) {
+            if (softCommand[i] != null) {            
                 soft[i].setText(softCommand[i].getCommandName());
                 soft[i].setIcon(softCommand[i].getIcon());
             }
@@ -1741,5 +1741,12 @@ public class MenuBar extends Container implements ActionListener {
         return getCommandBehavior() == Display.COMMAND_BEHAVIOR_NATIVE;
     }
     
+    /**
+     * Get commands associated with the menubar
+     * @return 
+     */
+    public Command [] getSoftCommands() {
+        return softCommand;
+    }
     
 }

@@ -54,22 +54,23 @@ public class MenuBarTest extends BaseTest{
         assertEquals(Display.TOUCH_AND_TYPE_DEVICE, type);
     }
     @Test
+    public void testCommandBehavior() {
+        int b = Display.getInstance().getCommandBehavior();
+        assertNotSame(10, b);
+    }
+    @Test
     public void testSettingClearOverridesBack() {
-        Form f = new Form();
+        final Form f = new Form();
         final Command clear = new Command("clear");
         Command back = new Command("back");
         f.show();
         f.setBackCommand(back);
         f.setClearCommand(clear);
         MenuBar m = f.getMenuBar();
-        final Button [] softkeys = m.getSoftButtons();
-        Display.getInstance().callSerially(new Runnable() {
 
-            @Override
-            public void run() {
-                assertEquals(clear, softkeys[2].getCommand());
-            }
-        });
+        Command[] softkeys = m.getSoftCommands();
+        assertEquals(clear, softkeys[2]);
+       
         
     }
     @Ignore("no texteditor mock yet")
@@ -79,14 +80,27 @@ public class MenuBarTest extends BaseTest{
 
         TextArea area = new TextArea();
         f.addComponent(area);
-        System.out.println("before show");
         f.show();
-        System.out.println("after show");
         area.requestFocus();
         
         assertNotNull(f.getClearCommand());
        
         
+    }
+    @Test
+    public void testWhenClearRemovedRecoverPreviousBack() {
+        final Form f = new Form();
+        f.show();
+        final Command back = new Command("back");
+        Command clear = new Command("clear");
+        f.setBackCommand(back);
+        f.setClearCommand(clear);
+        f.removeCommand(clear);
+
+        Command[] softs = f.getMenuBar().getSoftCommands();
+        
+        assertEquals(back, softs[2]);
+
     }
     @AfterClass
     public static void killLWUIT() {
