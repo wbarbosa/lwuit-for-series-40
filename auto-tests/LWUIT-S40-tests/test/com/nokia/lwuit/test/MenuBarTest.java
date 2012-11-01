@@ -5,6 +5,7 @@
 package com.nokia.lwuit.test;
 
 import com.nokia.lwuit.test.util.BaseTest;
+import com.nokia.lwuit.test.util.DummyMidlet;
 import com.sun.lwuit.Button;
 import com.sun.lwuit.Command;
 import com.sun.lwuit.Display;
@@ -94,35 +95,4 @@ public class MenuBarTest extends BaseTest{
         }
     }
     
-    private static class DummyMidlet extends MIDlet {
-        @Override
-            protected void startApp() throws MIDletStateChangeException {
-                Display.init(this);
-            }
-
-            @Override
-            protected void pauseApp() {
-
-            }
-
-            @Override
-            protected void destroyApp(boolean bln) throws MIDletStateChangeException {
-                Display.deinitialize();
-            }
-            public void startApplication() {
-            try {
-                startApp();
-            } catch (MIDletStateChangeException ex) {
-                System.out.println("midletstatechangeexception");
-            }
-            }
-            public void stopApplication() {
-                this.notifyDestroyed();
-            try {
-                destroyApp(true);
-            } catch (MIDletStateChangeException ex) {
-                Logger.getLogger(MenuBarTest.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            }
-    }
 }
