@@ -4,6 +4,7 @@
  */
 package com.nokia.lwuit.test;
 
+import com.nokia.lwuit.TextEditorProvider;
 import com.nokia.lwuit.test.util.BaseTest;
 import com.nokia.lwuit.test.util.DummyMidlet;
 import com.sun.lwuit.Button;
@@ -12,8 +13,10 @@ import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
 import com.sun.lwuit.MenuBar;
 import com.sun.lwuit.TextArea;
+import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.microedition.lcdui.Font;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import org.junit.AfterClass;
@@ -21,6 +24,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
+import static org.mockito.Mockito.*;
 
 /**
  *
@@ -73,18 +77,49 @@ public class MenuBarTest extends BaseTest{
        
         
     }
-    @Ignore("no texteditor mock yet")
+    
     @Test
-    public void testClearIsShownWhenTextAreaFocused() {
+    public void testClearIsShownWhenTextAreaFocused() throws InterruptedException, NoSuchFieldException, IllegalAccessException{
         final Form f = new Form();
 
         TextArea area = new TextArea();
+        area.setText("test");
+        TextEditorProvider teprovider = mock(TextEditorProvider.class);
+        when(teprovider.isVisible()).thenReturn(true);
+        when(teprovider.getFont()).thenReturn(Font.getDefaultFont());
+        when(teprovider.getLineMarginHeight()).thenReturn(2);
+        
+        Field texteditor = TextArea.class.getDeclaredField("textEditor");
+        texteditor.setAccessible(true);
+        texteditor.set(area, teprovider);
+        
         f.addComponent(area);
         f.show();
-        area.requestFocus();
+        area.pointerPressed(5, 5);
+        area.pointerReleased(5, 5);
+        area.setFocus(true);
+        final Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                synchronized(this) {
+                    notifyAll();
+                }
+            }
+        };
+        Display.getInstance().callSerially(runnable);
+        synchronized(runnable) {
+            runnable.wait(2000);
+        }
+        assertTrue(f.isVisible());
+        assertTrue(area.isTextEditorActive());
         
-        assertNotNull(f.getClearCommand());
-       
+        
+        MenuBar m = f.getMenuBar();
+        assertNotNull(m.getClearCommand());
+        Command[] softs = m.getSoftCommands();
+        assertEquals("Clear", softs[2].getCommandName());
+        
         
     }
     @Test
