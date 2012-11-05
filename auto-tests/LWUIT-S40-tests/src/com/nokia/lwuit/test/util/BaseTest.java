@@ -1,8 +1,10 @@
 package com.nokia.lwuit.test.util;
 
+import com.sun.lwuit.Display;
 import java.util.HashMap;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -17,6 +19,8 @@ import org.microemu.device.DeviceFactory;
  * @author @author okaj
  */
 public abstract class BaseTest {
+    
+
 
 	/**
 	 * Constructor.
@@ -46,5 +50,5 @@ public abstract class BaseTest {
     public void tearDown() throws Exception {
         
     }
-	
+
 }

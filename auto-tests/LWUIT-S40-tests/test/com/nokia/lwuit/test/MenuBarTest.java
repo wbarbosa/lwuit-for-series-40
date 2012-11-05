@@ -7,6 +7,7 @@ package com.nokia.lwuit.test;
 import com.nokia.lwuit.TextEditorProvider;
 import com.nokia.lwuit.test.util.BaseTest;
 import com.nokia.lwuit.test.util.DummyMidlet;
+import com.nokia.lwuit.test.util.LWUITTest;
 import com.sun.lwuit.Button;
 import com.sun.lwuit.Command;
 import com.sun.lwuit.Display;
@@ -32,18 +33,8 @@ import org.mockito.stubbing.Answer;
  *
  * @author tkor
  */
-public class MenuBarTest extends BaseTest{
-    
-    static DummyMidlet m;
-    
-    @BeforeClass
-    public static  void initMidletAndLWUIT() {
-        if(m == null) {
-        m = new DummyMidlet();
-        m.startApplication();
-        }
-    }
-    
+public class MenuBarTest extends LWUITTest{
+
     @Test
     public void testDefaultCommandIsSet() {
         
@@ -182,29 +173,4 @@ public class MenuBarTest extends BaseTest{
         assertEquals(back, softs[2]);
         
     }
-    
-    private void waitEdt() throws InterruptedException {
-        Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                synchronized(this) {
-                    notifyAll();
-                }
-            }
-        };
-        Display.getInstance().callSerially(runnable);
-        synchronized(runnable) {
-            runnable.wait(2000);
-        }
-    }
-    
-    
-    @AfterClass
-    public static void killLWUIT() {
-        if(m != null) {
-            m.stopApplication();
-        }
-    }
-    
 }
