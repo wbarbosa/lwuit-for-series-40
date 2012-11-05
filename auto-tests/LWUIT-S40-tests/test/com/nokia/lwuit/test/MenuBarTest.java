@@ -25,6 +25,8 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import static org.mockito.Mockito.*;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 /**
  *
@@ -137,6 +139,67 @@ public class MenuBarTest extends BaseTest{
         assertEquals(back, softs[2]);
 
     }
+    @Test
+    public void testClearWillDisappearWhenLastCharDeleted() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, InterruptedException {
+        final Form f = new Form();
+        f.show();
+        final TextArea area = new TextArea("t");
+        Command back = new Command("back");
+        f.setBackCommand(back);
+        
+        final TextEditorProvider teprovider = mock(TextEditorProvider.class);
+        when(teprovider.isVisible()).thenReturn(true);
+        when(teprovider.getFont()).thenReturn(Font.getDefaultFont());
+        when(teprovider.getLineMarginHeight()).thenReturn(2);
+        when(teprovider.getCaretPosition()).thenReturn(1);
+        doAnswer(new Answer() {
+
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                when(teprovider.getContent()).thenReturn("");
+                area.inputAction(teprovider, TextEditorProvider.TextEditorListener.ACTION_CONTENT_CHANGE | TextEditorProvider.TextEditorListener.ACTION_CARET_MOVE);
+                return null;
+            }
+        }).when(teprovider).delete(anyInt(), anyInt());
+        
+        Field texteditor = TextArea.class.getDeclaredField("textEditor");
+        texteditor.setAccessible(true);
+        texteditor.set(area, teprovider);
+        
+        f.addComponent(area);
+        area.pointerPressed(5, 5);
+        area.pointerReleased(5, 5);
+        area.setFocus(true);
+        waitEdt();
+        int h = Display.getInstance().getDisplayHeight();
+        int w = Display.getInstance().getDisplayWidth();
+        assertTrue(area.isTextEditorActive());
+        Command [] softs = f.getMenuBar().getSoftCommands();
+        assertEquals("Clear", softs[2].getCommandName());
+        f.getMenuBar().getSoftButtons()[2].released();
+        waitEdt();
+        softs = f.getMenuBar().getSoftCommands();
+        assertEquals(back, softs[2]);
+        
+    }
+    
+    private void waitEdt() throws InterruptedException {
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                synchronized(this) {
+                    notifyAll();
+                }
+            }
+        };
+        Display.getInstance().callSerially(runnable);
+        synchronized(runnable) {
+            runnable.wait(2000);
+        }
+    }
+    
+    
     @AfterClass
     public static void killLWUIT() {
         if(m != null) {
