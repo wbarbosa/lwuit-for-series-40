@@ -791,12 +791,11 @@ public class UIManager {
         if (Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE) {
             String usePlatformColors = (String)themeProps.get("@NokiaPlatformColors");
             themeProps.put("bgColor", Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_BACKGROUND)));
-            String fg = Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND));
-            System.out.println("fg:"+fg);
+            String fg = Integer.toHexString(nativeDisplay.getColor(javax.microedition.lcdui.Display.COLOR_FOREGROUND));            
             themeProps.put("fgColor", fg);
 
             if (usePlatformColors != null && usePlatformColors.equals("true")) {
-                BorderBlender blender = BorderBlender.getInstance();
+                PlatformColorBlender blender = PlatformColorBlender.getInstance();
                 int theme_color = nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER);
                 Border b = (Border) themeProps.get("Button.press#border");
                 Border buttonMask = (Border) themeProps.get("ButtonMask.border");
@@ -804,8 +803,7 @@ public class UIManager {
                 b = (Border) themeProps.get("Button.border");
                 blender.applyColorToBorder(b, theme_color, buttonMask.images);
                 themeConstants.put("dlgCommandGridBool", "true");
-                b = (Border) themeProps.get("ListRendererFocus.sel#border");
-                blender.applyColorToListItem(b, theme_color);
+                blender.applyBackgroundColorToThemeProp(themeProps, "ListRendererFocus.bgImage", theme_color);
                 b = (Border) themeProps.get("ComboBox.border");
                 blender.applyColorToBorder(b, theme_color, ((Border)themeProps.get("ComboBoxMask.border")).images);
                 b = (Border) themeProps.get("TabSelected.sel#border");
