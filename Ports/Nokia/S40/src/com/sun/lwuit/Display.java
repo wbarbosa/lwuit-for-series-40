@@ -2653,9 +2653,10 @@ public final class Display {
         try {
             Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
             if (target instanceof S40Implementation) {
-                return ((S40Implementation)target).getCanvasTrait(traitName);
+                return ((S40Implementation) target).getCanvasTrait(traitName);
+            } else {
+                return LCDUIUtil.getObjectTrait(target, traitName);
             }
-            return LCDUIUtil.getObjectTrait(target, traitName);
         } catch (ClassNotFoundException ex) {
             return null;
         }
@@ -2679,10 +2680,10 @@ public final class Display {
         try {
             Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
             if (target instanceof S40Implementation) {
-                ((S40Implementation)target).setCanvasTrait(traitName, value);
-                return true;
-            }            
-            LCDUIUtil.setObjectTrait(target, traitName, value);
+                ((S40Implementation) (target)).setCanvasTrait(traitName, value);
+            } else {
+                LCDUIUtil.setObjectTrait(target, traitName, value);
+            }
             return true;
         } catch (ClassNotFoundException ex) {
             return false;

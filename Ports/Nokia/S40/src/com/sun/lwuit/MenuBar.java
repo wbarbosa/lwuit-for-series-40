@@ -673,7 +673,7 @@ public class MenuBar extends Container implements ActionListener {
         /* Then set texts and icons for all softkeys
          */
         for (int i = 0; i < soft.length; ++i) {
-            if (softCommand[i] != null) {
+            if (softCommand[i] != null) {            
                 soft[i].setText(softCommand[i].getCommandName());
                 soft[i].setIcon(softCommand[i].getIcon());
             }
@@ -813,10 +813,7 @@ public class MenuBar extends Container implements ActionListener {
         d.setTransitionOutAnimator(transitionOut);
         d.setLayout(new BorderLayout());
         d.setScrollable(false);
-        //calling parent.createCommandComponent is done only for backward 
-        //compatability reasons, in the next version this call be replaced with 
-        //calling directly to createCommandComponent
-        System.out.println("showMenu: commands.size:" + commands.size());
+        
         ((Form) d).getMenuBar().commandList = createCommandComponent(commands);
         if (menuCellRenderer != null && ((Form) d).getMenuBar().commandList instanceof List) {
             ((List) ((Form) d).getMenuBar().commandList).setListCellRenderer(menuCellRenderer);
@@ -880,7 +877,7 @@ public class MenuBar extends Container implements ActionListener {
         }
     }
 
-    Button[] getSoftButtons() {
+    public Button[] getSoftButtons() {
         return soft;
     }
 
@@ -1742,6 +1739,14 @@ public class MenuBar extends Container implements ActionListener {
     
     protected boolean isNativeCommandBehavior() {
         return getCommandBehavior() == Display.COMMAND_BEHAVIOR_NATIVE;
+    }
+    
+    /**
+     * Get commands associated with the menubar
+     * @return 
+     */
+    public Command [] getSoftCommands() {
+        return softCommand;
     }
     
 }

@@ -23,6 +23,7 @@
  */
 package com.sun.lwuit;
 
+import com.nokia.lwuit.TextEditorProvider;
 import com.sun.lwuit.util.EventDispatcher;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.DataChangedListener;
@@ -1803,5 +1804,11 @@ public class TextField extends TextArea {
     		super.setAlignment(align);
     	}
     }
+
+    public void inputAction(TextEditorProvider textEditor, int actions) {
+        super.inputAction(textEditor, actions);
+        fireDataChanged(DataChangedListener.CHANGED, -1);
+    }
+    
 
 }
