@@ -72,7 +72,7 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         textSpace = textSpace - leftPadding - rightPadding;
         mText = shortenString(mText, textSpace, font);
 
-        int textWidth = font.stringWidth(mText);
+        int textWidth = font.stringWidth(mText);        
         
         int x = 0;
         int y = getY() + topPadding;
@@ -107,17 +107,22 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
                 break;
         }
         if(mImage != null) {
+            // Use middle vertical alignment if icon exists
+            y = getY() + (getHeight() - bottomPadding - topPadding) / 2
+                    - (mImage.getHeight() / 2) + topPadding;
             if(rtl) {
                 g.drawImage(mImage, getX() + getWidth() - rightPadding - mImage.getWidth(),
-                                    getY() + topPadding);
+                                    y);
             }else {
-                g.drawImage(mImage, getX() + leftPadding, getY() + topPadding);
+                g.drawImage(mImage, getX() + leftPadding, y);
             }
+            y = getY() + (getHeight() - bottomPadding - topPadding) / 2
+                - (font.getHeight() / 2) + topPadding;
         }
         g.drawString(mText, x, y, this.getStyle().getTextDecoration());
         
     }
-
+    
     /**
      * override to prevent unnecessary repaints when using list
      */
@@ -171,13 +176,11 @@ public class NokiaListCellRenderer extends Component implements ListCellRenderer
         int h = 0;
         w += s.getPadding(LEFT) + s.getPadding(RIGHT) + f.stringWidth(mText);
         h += s.getPadding(TOP) + s.getPadding(BOTTOM) + f.getHeight();
-        if(mImage != null) {
+        if (mImage != null) {
             h = Math.max(h, mImage.getHeight() + s.getPadding(TOP) + s.getPadding(BOTTOM));
             w = Math.max(w, mImage.getWidth() + f.stringWidth(mText) + s.getPadding(LEFT) + s.getPadding(RIGHT));
         }
         return new Dimension(w, h);
-        
-        
     }
     
     private int reverseAlignForBidi(int align) {
