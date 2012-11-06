@@ -2649,12 +2649,11 @@ public final class Display {
      * @return Object
      */    
     public static Object getObjectTrait(Object target, String traitName) {
-        
+
         try {
             Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
-            if (target instanceof Display
-                    && (((Display) target).impl instanceof S40Implementation)) {
-                return ((S40Implementation) ((Display) target).impl).getCanvasTrait(traitName);
+            if (target instanceof S40Implementation) {
+                return ((S40Implementation) target).getCanvasTrait(traitName);
             } else {
                 return LCDUIUtil.getObjectTrait(target, traitName);
             }
@@ -2680,9 +2679,8 @@ public final class Display {
 
         try {
             Class c = Class.forName("com.nokia.mid.ui.LCDUIUtil");
-            if (target instanceof Display
-                    && (((Display) target).impl instanceof S40Implementation)) {
-                ((S40Implementation) ((Display) target).impl).setCanvasTrait(traitName, value);
+            if (target instanceof S40Implementation) {
+                ((S40Implementation) (target)).setCanvasTrait(traitName, value);
             } else {
                 LCDUIUtil.setObjectTrait(target, traitName, value);
             }
