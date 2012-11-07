@@ -172,7 +172,7 @@
     </target>
 
     <target name="test" depends="build-test">
-        <junit printsummary="yes" fork="no" haltonfailure="no">
+        <junit printsummary="yes" fork="yes" haltonfailure="no">
             <classpath refid="testutils.ref"/>
             <batchtest todir="${testpath}/result">
                 <fileset dir="${testpath}/build" includes="**/*Test.class" excludes="**/util/*" />
