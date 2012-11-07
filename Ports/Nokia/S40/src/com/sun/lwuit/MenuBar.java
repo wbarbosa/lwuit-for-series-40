@@ -1508,7 +1508,6 @@ public class MenuBar extends Container implements ActionListener {
 
         Container dialogContentPane = menu.getDialogComponent();
         if(pref) {
-            System.out.println("showMenuDialog: in pref");
             marginLeft = parent.getWidth() - (dialogContentPane.getPreferredW() +
                     menu.getStyle().getPadding(LEFT) +
                     menu.getStyle().getPadding(RIGHT));
@@ -1520,7 +1519,6 @@ public class MenuBar extends Container implements ActionListener {
             }
             height = Math.max(0, height);
         } else {
-            System.out.println("showMenuDialog: in else");
             // Adjust the menu height according to the amount of commands
             int commandCount = 1;
             int commandHeight = 1;        
@@ -1565,8 +1563,6 @@ public class MenuBar extends Container implements ActionListener {
             if(marginTop < 0) {
                 marginTop = 0;
             }
-            //marginTop = Math.max(0, marginTop);
-            System.out.println("showMenuDialog: first show");
             return menu.show(marginTop, marginBottom, marginLeft, marginRight, false, true);
         }
 
@@ -1575,10 +1571,8 @@ public class MenuBar extends Container implements ActionListener {
             marginLeft = 0;
         }
         if (UIManager.getInstance().getLookAndFeel().isTouchMenus() && UIManager.getInstance().isThemeConstant("PackTouchMenuBool", true)) {
-            System.out.println("showMenuDialog: showPacked");
             return menu.showPacked(BorderLayout.SOUTH, true);
         } else {
-            System.out.println("showMenuDialog: last show");
             return menu.show(height, 0, marginLeft, marginRight, true);
         }
     }
