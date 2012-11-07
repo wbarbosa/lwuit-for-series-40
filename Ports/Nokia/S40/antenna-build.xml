@@ -11,8 +11,10 @@
     
 -->
 <project name="LWUIT-for-Series-40" default="package" basedir=".">
+
     <taskdef resource="antenna.properties"/>
     <property name="src" location="src" />
+    <property name="testpath" location="../../../auto-tests/LWUIT-S40-tests" />
     <property name="wtk.home" value="c:\Nokia\Devices\Nokia_SDK_2_0_Java" />
     <property name="wtk.midp.version" value="2.0" />
     <property name="wtk.cldc.version" value="1.1" />
@@ -20,6 +22,7 @@
     <property name="bin" location="../../../Series-40-binaries/bin" />
     <property name="package-version" value="0.7.1" />
     <property name="template-folder" value="../../../tools/Lwuit-ResourceEditor/src/main/resources/templates" />
+
     <path id="bootclasspath.ref">
         <fileset dir="${wtk.home}/lib" >
             <include name="*.jar" />
@@ -28,6 +31,26 @@
             <include name="UI.jar" />
         </fileset>
     </path>
+
+    <path id="testutils.ref">
+        <pathelement location="${testpath}\build" />
+        <fileset dir="C:\tools\testtools\microemulator-2.0.4">			
+            <include name="microemulator.jar" />
+        </fileset>	
+        <fileset dir="C:\tools\testtools\junit">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${bin}/sdk2.0">
+            <include name="S40-with-themes.jar" />
+        </fileset>
+        <fileset dir="C:\tools\testtools\mockito">
+            <include name="*.jar" />
+        </fileset>		
+        <fileset dir="C:\tools\testtools\microemulator-2.0.4\lib">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
     <target name="clean">
         <delete dir="classes" />
         <delete dir="dist" />
@@ -35,17 +58,19 @@
         <delete dir="${bin}/sdk1.1" />
         <delete dir="${bin}/s40-6th-ed-sdk" />
     </target>
+
     <target name="init">
         <mkdir dir="classes/" />
         <mkdir dir="dist/" />
     </target>
+	
     <target name="build" depends="init">
         <wtkbuild
-                    srcdir="${src}" 
-                    destdir="classes/" 
-                    encoding="UTF-8" 
-                    source="1.3" 
-                    includeAntRuntime="false" >
+            srcdir="${src}" 
+            destdir="classes/" 
+            encoding="UTF-8" 
+            source="1.3" 
+            includeAntRuntime="false" >
             <bootclasspath refid="bootclasspath.ref" />
         </wtkbuild>
         <copy todir="classes/">
@@ -59,24 +84,25 @@
         <copy file="src/nokia_non_touch_theme.res" todir="${template-folder}" overwrite="true" />
         <copy file="src/nokia_theme.res" tofile="${template-folder}/nokia_touch_type_theme.res" overwrite="true" />
     </target>
+	
     <target name="create-jad" depends="init">
         <wtkjad jadfile="dist/S40.jad" name="LWUIT-for-Series-40" vendor="Nokia" version="0.6.1" encoding="UTF-8">
-    
         </wtkjad>
     </target>
+	
     <target name="package" depends="build, create-jad">
         <wtkpackage libclasspath="${UI-MIDP}" preverify="true" jarfile="dist/S40.jar" jadfile="dist/S40.jad">
             <bootclasspath refid="bootclasspath.ref" />
             <fileset dir="classes" />
-
         </wtkpackage>
     </target>
+	
     <target name="release" depends="package">
         <copy file="dist/S40.jar" 
-            tofile="../../../tools/Lwuit-ResourceEditor/src/main/resources/GeneratedProject/S40.jar" />
+              tofile="../../../tools/Lwuit-ResourceEditor/src/main/resources/GeneratedProject/S40.jar" />
         <!-- create sdk2.0 binaries -->
         <copy file="dist/S40.jar" 
-            tofile="${bin}/sdk2.0/S40-with-themes.jar" />
+              tofile="${bin}/sdk2.0/S40-with-themes.jar" />
                 
         <jar destfile="${bin}/sdk2.0/S40-no-themes.jar">
             <zipfileset src="dist/S40.jar" excludes="*.res" />
@@ -93,7 +119,7 @@
         <!-- create sdk1.1 binaries -->
         <jar destfile="${bin}/sdk1.1/S40-with-themes.jar">
             <zipfileset src="dist/S40.jar" 
-                excludes="full_touch_theme.res **/MIDPIconCommandWrapper* **/OrientationProviderImpl* **/S40FullTouchImplementation*" />
+                        excludes="full_touch_theme.res **/MIDPIconCommandWrapper* **/OrientationProviderImpl* **/S40FullTouchImplementation*" />
         </jar>
         <jar destfile="${bin}/sdk1.1/S40-touch-and-type.jar">
             <zipfileset src="${bin}/sdk1.1/S40-with-themes.jar" excludes="nokia_non_touch_theme.res" />
@@ -107,7 +133,7 @@
         <!-- create S40 6th ed. binaries -->
         <jar destfile="${bin}/s40-6th-ed-sdk/S40-with-themes.jar">
             <zipfileset src="${bin}/sdk1.1/S40-with-themes.jar" 
-                excludes="**/GestureHandler* **/TextEditorProviderImpl* **/S40GestureImplementation*" />
+                        excludes="**/GestureHandler* **/TextEditorProviderImpl* **/S40GestureImplementation*" />
         </jar>
         <jar destfile="${bin}/s40-6th-ed-sdk/S40-touch-and-type.jar">
             <zipfileset src="${bin}/s40-6th-ed-sdk/S40-with-themes.jar" excludes="nokia_non_touch_theme.res" />
@@ -118,6 +144,45 @@
         <jar destfile="${bin}/s40-6th-ed-sdk/S40-no-themes.jar">
             <zipfileset src="${bin}/s40-6th-ed-sdk/S40-with-themes.jar" excludes="*.res" />
         </jar>
-        
     </target>
+	
+    <target name="test-clean">
+        <delete dir="${testpath}/build" />
+        <delete dir="${testpath}/result" />
+    </target>
+	
+    <target name="test-init">
+        <mkdir dir="${testpath}/build" />
+        <mkdir dir="${testpath}/result" />
+    </target>
+
+    <target name="build-test" depends="test-init">
+        <javac srcdir="${testpath}\src"
+               destdir="${testpath}\build"
+               source="1.6"
+               target="1.6">	
+            <classpath refid="testutils.ref"/>
+        </javac>
+        <javac srcdir="${testpath}\test"
+               destdir="${testpath}\build"
+               source="1.6"
+               target="1.6">	
+            <classpath refid="testutils.ref"/>
+        </javac>		
+    </target>
+
+    <target name="test" depends="build-test">
+        <junit printsummary="yes" fork="no" haltonfailure="no">
+            <classpath refid="testutils.ref"/>
+            <batchtest todir="${testpath}/result">
+                <fileset dir="${testpath}/build" includes="**/*Test.class" excludes="**/util/*" />
+                <formatter type="xml"/>
+            </batchtest>
+        </junit>
+        <junitreport todir="${testpath}/result">
+            <fileset dir="${testpath}/result"/>
+            <report todir="test-reports"/>
+        </junitreport>
+    </target>
+
 </project>
