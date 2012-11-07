@@ -8,6 +8,7 @@ import com.nokia.lwuit.ImageUtils;
 import com.nokia.mid.ui.DirectUtils;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.util.Resources;
+import java.util.Hashtable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
@@ -16,14 +17,14 @@ import javax.microedition.lcdui.Image;
  * For internal use only. This class is used to apply graphical effects to a border
  * @author tkor
  */
-public class BorderBlender {
+public class PlatformColorBlender {
     
-    private static BorderBlender mSelf;
+    private static PlatformColorBlender mSelf;
     
     /**
      * Default constructor
      */
-    private BorderBlender() {
+    private PlatformColorBlender() {
         
     }
     
@@ -31,9 +32,9 @@ public class BorderBlender {
      * Get instnace of the BorderBlender class.
      * @return singleton instance of the BorderBlender class.
      */
-    public static BorderBlender getInstance() {
+    public static PlatformColorBlender getInstance() {
         if(mSelf == null) {
-            mSelf = new BorderBlender();
+            mSelf = new PlatformColorBlender();
         }
         return mSelf;
     }
@@ -113,5 +114,31 @@ public class BorderBlender {
             b.images[i] = com.sun.lwuit.Image.createImage(img);
         }
     }
-    
+
+    /**
+     * Fill background of image in theme with given color
+     * @param themeProps Collection of theme props
+     * @param key Key pointing to an image used in the theme
+     * @param color Fill color
+     */
+    public void applyBackgroundColorToThemeProp(Hashtable themeProps, String key, final int color) {
+        com.sun.lwuit.Image bg = null;
+        
+        try {
+             bg = (com.sun.lwuit.Image) themeProps.get(key);
+        } catch(ClassCastException cce) {
+            throw new IllegalArgumentException(key + " is not LWUIT Image.");
+        }
+
+        int width = bg.getWidth();
+        int height = bg.getHeight();
+        Image img = null;
+        img = DirectUtils.createImage(width, height, 0x00000000);
+        Graphics g = img.getGraphics();
+        g.setColor(color);
+        g.fillRect(0, 0, img.getWidth(), img.getHeight());
+        g.drawRGB(bg.getRGB(), 0, width, 0, 0, width, height, true);
+        bg = com.sun.lwuit.Image.createImage(img);
+        themeProps.put(key, bg);
+    }
 }
