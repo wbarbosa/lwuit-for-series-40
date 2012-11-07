@@ -1497,7 +1497,7 @@ public class MenuBar extends Container implements ActionListener {
     protected Command showMenuDialog(Dialog menu) {
         boolean pref = UIManager.getInstance().isThemeConstant("menuPrefSizeBool", false);
 
-        Style style = menu.getStyle();
+        Style style = menu.getDialogStyle();
         int height = parent.getHeight();
         int marginLeft = style.getMargin(LEFT);
         int marginRight = style.getMargin(RIGHT);
@@ -1507,7 +1507,8 @@ public class MenuBar extends Container implements ActionListener {
         int paddingBottom = style.getPadding(BOTTOM);
 
         Container dialogContentPane = menu.getDialogComponent();
-        if(pref) {            
+        if(pref) {
+            System.out.println("showMenuDialog: in pref");
             marginLeft = parent.getWidth() - (dialogContentPane.getPreferredW() +
                     menu.getStyle().getPadding(LEFT) +
                     menu.getStyle().getPadding(RIGHT));
@@ -1519,6 +1520,7 @@ public class MenuBar extends Container implements ActionListener {
             }
             height = Math.max(0, height);
         } else {
+            System.out.println("showMenuDialog: in else");
             // Adjust the menu height according to the amount of commands
             int commandCount = 1;
             int commandHeight = 1;        
@@ -1549,16 +1551,22 @@ public class MenuBar extends Container implements ActionListener {
             if (parent.getSoftButtonCount() > 0) {
                 height -= parent.getSoftButton(0).getParent().getPreferredH();
             }
-
-            height -= marginBottom + paddingTop + paddingBottom;
-
+            height -= (marginBottom + paddingTop + paddingBottom);
+            
             int maxVisibleCommands = (height + itemGap) / (commandHeight + itemGap);
 
             commandCount = Math.min(maxVisibleCommands, commandCount);
             int contentHeight = (commandHeight + itemGap) * commandCount - itemGap;
-
-            marginTop = height - contentHeight;
-
+            Container dcp = menu.getContentPane();
+            int innerpadding = dcp.getStyle().getPadding(Component.TOP) +
+                                dcp.getStyle().getPadding(Component.BOTTOM);
+            
+            marginTop = height - contentHeight - innerpadding;
+            if(marginTop < 0) {
+                marginTop = 0;
+            }
+            //marginTop = Math.max(0, marginTop);
+            System.out.println("showMenuDialog: first show");
             return menu.show(marginTop, marginBottom, marginLeft, marginRight, false, true);
         }
 
@@ -1567,8 +1575,10 @@ public class MenuBar extends Container implements ActionListener {
             marginLeft = 0;
         }
         if (UIManager.getInstance().getLookAndFeel().isTouchMenus() && UIManager.getInstance().isThemeConstant("PackTouchMenuBool", true)) {
+            System.out.println("showMenuDialog: showPacked");
             return menu.showPacked(BorderLayout.SOUTH, true);
         } else {
+            System.out.println("showMenuDialog: last show");
             return menu.show(height, 0, marginLeft, marginRight, true);
         }
     }
