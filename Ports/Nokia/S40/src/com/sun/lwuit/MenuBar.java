@@ -1497,7 +1497,7 @@ public class MenuBar extends Container implements ActionListener {
     protected Command showMenuDialog(Dialog menu) {
         boolean pref = UIManager.getInstance().isThemeConstant("menuPrefSizeBool", false);
 
-        Style style = menu.getStyle();
+        Style style = menu.getDialogStyle();
         int height = parent.getHeight();
         int marginLeft = style.getMargin(LEFT);
         int marginRight = style.getMargin(RIGHT);
@@ -1507,7 +1507,7 @@ public class MenuBar extends Container implements ActionListener {
         int paddingBottom = style.getPadding(BOTTOM);
 
         Container dialogContentPane = menu.getDialogComponent();
-        if(pref) {            
+        if(pref) {
             marginLeft = parent.getWidth() - (dialogContentPane.getPreferredW() +
                     menu.getStyle().getPadding(LEFT) +
                     menu.getStyle().getPadding(RIGHT));
@@ -1549,16 +1549,20 @@ public class MenuBar extends Container implements ActionListener {
             if (parent.getSoftButtonCount() > 0) {
                 height -= parent.getSoftButton(0).getParent().getPreferredH();
             }
-
-            height -= marginBottom + paddingTop + paddingBottom;
-
+            height -= (marginBottom + paddingTop + paddingBottom);
+            
             int maxVisibleCommands = (height + itemGap) / (commandHeight + itemGap);
 
             commandCount = Math.min(maxVisibleCommands, commandCount);
             int contentHeight = (commandHeight + itemGap) * commandCount - itemGap;
-
-            marginTop = height - contentHeight;
-
+            Container dcp = menu.getContentPane();
+            int innerpadding = dcp.getStyle().getPadding(Component.TOP) +
+                                dcp.getStyle().getPadding(Component.BOTTOM);
+            
+            marginTop = height - contentHeight - innerpadding;
+            if(marginTop < 0) {
+                marginTop = 0;
+            }
             return menu.show(marginTop, marginBottom, marginLeft, marginRight, false, true);
         }
 
