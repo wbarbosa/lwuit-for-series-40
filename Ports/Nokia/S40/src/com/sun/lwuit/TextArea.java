@@ -793,13 +793,20 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     super.actionPerformed(evt);
                     int c = textEditor.getCaretPosition();
                     if(c != 0) {
-                        textEditor.delete(c - 1, 1);
+                        try {
+                            textEditor.delete(c - 1, 1);
+                        }catch(IllegalArgumentException iae) {
+                            //texteditor does content validation only after you
+                            //have typed text so if the content doesn't fit the 
+                            //constraint delete method will throw this exception
+                            //for now we just ignore it.
+                        }
                         textEditor.setCaret(c - 1);
                         if(textEditor.getContent().length()  == 0) {
                             removeClearCommandFromForm();
                         }
                     }
-                    evt.consume();
+                    evt.consume();                  
                 }
             };            
         }        

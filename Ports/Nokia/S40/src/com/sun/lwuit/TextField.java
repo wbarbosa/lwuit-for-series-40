@@ -1242,7 +1242,6 @@ public class TextField extends TextArea {
      * clear command was installed before or not applicable.
      */
     protected Command installCommands(Command clear, Command t9) {
-        System.out.println("TextField.installCommands");
         Form f = getComponentForm();
         if(f != null) {
             Command original = f.getClearCommand();
@@ -1281,7 +1280,6 @@ public class TextField extends TextArea {
      * @inheritDoc
      */
     protected void fireClicked() {
-        System.out.println("TextField.fireClicked");
         if(useNativeTextInput && Display.getInstance().isNativeInputSupported()) {
             super.fireClicked();
             return;
@@ -1326,7 +1324,6 @@ public class TextField extends TextArea {
      * @param originalClear the command originally assigned as the clear command (or null if no command was assigned before)
      */
     protected void removeCommands(Command clear, Command t9, Command originalClear) {
-        System.out.println("TextField.removeCommands");
         Form f = getComponentForm();
         if(f != null) {
             getComponentForm().getMenuBar().addSelectCommand(getSelectCommandText());

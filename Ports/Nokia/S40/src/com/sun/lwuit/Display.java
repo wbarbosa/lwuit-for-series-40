@@ -802,7 +802,6 @@ public final class Display {
                 }
             }
         } catch(Throwable err) {
-            err.printStackTrace();
             if(!impl.handleEDTException(err)) {
                 if(errorHandler != null) {
                     errorHandler.fireActionEvent(new ActionEvent(err));
@@ -829,7 +828,6 @@ public final class Display {
 
                 edtLoopImpl();
             } catch(Throwable err) {
-                err.printStackTrace();
                 if(!impl.handleEDTException(err)) {
                     if(errorHandler != null) {
                         errorHandler.fireActionEvent(new ActionEvent(err));
