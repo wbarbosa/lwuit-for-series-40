@@ -448,7 +448,12 @@ class ResourceThreadQueue {
          */
         public void run() {
             DocumentInfo docInfo = cssDocInfo != null ? cssDocInfo : new DocumentInfo(imageUrl, DocumentInfo.TYPE_IMAGE);
-            InputStream is = handler.resourceRequested(docInfo);
+            InputStream is = null;
+            try {
+                is = handler.resourceRequested(docInfo);
+            } catch (OutOfMemoryError err) {
+                htmlC.handleOutOfMemoryError(err, "DocumentRequestHandler.resourceRequested() with url " + docInfo.getUrl(), false);
+            }
             streamReady(is, docInfo);
             try {
                 if (is != null) {
@@ -470,15 +475,25 @@ class ResourceThreadQueue {
                     }
                 } else {
                     if(cssDocInfo!=null) { // CSS
-                        if (HTMLComponent.SUPPORT_CSS) { // no need to also check if loadCSS is true, since if we got so far - it is...
-                            CSSElement result = CSSParser.getInstance().parseCSSSegment(new InputStreamReader(is),is,htmlC,cssDocInfo.getUrl());
-                            result.setAttribute(result.getAttributeName(new Integer(CSSElement.CSS_PAGEURL)), cssDocInfo.getUrl());
-                            htmlC.addToExternalCSS(result);
+                        try {
+                            if (HTMLComponent.SUPPORT_CSS) { // no need to also check if loadCSS is true, since if we got so far - it is...
+                                CSSElement result = CSSParser.getInstance().parseCSSSegment(new InputStreamReader(is),is,htmlC,cssDocInfo.getUrl());
+                                result.setAttribute(result.getAttributeName(new Integer(CSSElement.CSS_PAGEURL)), cssDocInfo.getUrl());
+                                htmlC.addToExternalCSS(result);
+                            }
+                            threadQueue.threadFinished(this, true);
+                        } catch (OutOfMemoryError err) {
+                            htmlC.handleOutOfMemoryError(err, "ResourceThreadQueue.streamReady() with CSS", false);
+                            threadQueue.threadFinished(this, false);
+                        } finally {
+                            return;
                         }
-                        threadQueue.threadFinished(this,true);
-                        return;
                     } else {
-                        img=Image.createImage(is);
+                        try {
+                            img=Image.createImage(is);
+                        } catch (OutOfMemoryError err) {
+                            htmlC.handleOutOfMemoryError(err, "ResourceThreadQueue.streamReady() with image", false);
+                        }
                         if (img==null) {
                             if (htmlC.getHTMLCallback()!=null) {
                                 htmlC.getHTMLCallback().parsingError(HTMLCallback.ERROR_IMAGE_BAD_FORMAT, null, null, null, "Image could not be created from "+imageUrl);
