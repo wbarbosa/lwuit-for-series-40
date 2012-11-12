@@ -171,7 +171,7 @@ public class List extends Component {
     /**
      * Indicates the gap between each item in the list
      */
-    private int itemGap = 2;
+    private int itemGap = 0;
 
     private Listeners listener;
     /**
