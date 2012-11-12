@@ -1,5 +1,9 @@
 Changelog
 -------------------------------------------------------------------------------
+0.8.0 Beta.
+	* Fixed many small bugs in TextArea including issues with clear command
+	* Fixed issue with too small options menu when only one menuitem
+	* Fixed issue with datachangedlistener not called in textfield.
 0.7.2 Beta.
 	* fixed issues with textarea clear command
 	* changed nontouch button highlight graphic
