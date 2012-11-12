@@ -1809,7 +1809,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * Hide text editor and update TextArea accordingly
      */
     protected void hideTextEditor() {
+
         if (textEditor != null && textEditor.isVisible()) {
+            textEditor.setTextEditorListener(null);
             setText(textEditor.getContent());
             int c = textEditor.getCaretPosition();
             caretPosition = c;

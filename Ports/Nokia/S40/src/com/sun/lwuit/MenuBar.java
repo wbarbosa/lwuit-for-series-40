@@ -490,7 +490,6 @@ public class MenuBar extends Container implements ActionListener {
         if(getCommandBehavior() == Display.COMMAND_BEHAVIOR_BUTTON_BAR_TITLE_BACK) {
             int i = commands.indexOf(backCommand);
             if(i > -1) {
-                System.out.println("removing the back for some reason");
                 commands.removeElementAt(i);
             }
         }
