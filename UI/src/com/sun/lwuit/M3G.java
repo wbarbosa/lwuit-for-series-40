@@ -24,6 +24,8 @@
  */
 package com.sun.lwuit;
 
+import javax.microedition.m3g.Image2D;
+
 
 /**
  * Support for binding the 3D graphics M3G API (JSR 184), this allows us to integrate
@@ -120,5 +122,9 @@ public class M3G {
      * pipeline separation in any way.
      */
     public static interface Callback {
+    }
+    
+    public Image2D createImage2D(int type, Image img) {
+        return null;
     }
 }
