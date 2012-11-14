@@ -1665,8 +1665,10 @@ public class MenuBar extends Container implements ActionListener {
         //  a) it's not the the default command, and
         //  b) it's not the MSK command on a 3-button layout
         //  (essentially an automagically set 'default command').
+        //  c) it's not a back command
         return !(c == defaultCommand) &&
-               !(soft.length == 3 && c == softCommand[0]);
+               !(soft.length == 3 && c == softCommand[0]) &&
+                c != backCommand && c != clearCommand;
     }
 
     /**

@@ -5,26 +5,22 @@
 package com.nokia.lwuit.test;
 
 import com.nokia.lwuit.TextEditorProvider;
-import com.nokia.lwuit.test.util.BaseTest;
-import com.nokia.lwuit.test.util.DummyMidlet;
 import com.nokia.lwuit.test.util.LWUITTest;
 import com.sun.lwuit.Button;
 import com.sun.lwuit.Command;
+import com.sun.lwuit.Component;
+import com.sun.lwuit.Container;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
 import com.sun.lwuit.MenuBar;
 import com.sun.lwuit.TextArea;
 import java.lang.reflect.Field;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Vector;
 import javax.microedition.lcdui.Font;
-import javax.microedition.midlet.MIDlet;
-import javax.microedition.midlet.MIDletStateChangeException;
-import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import static org.mockito.Mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -172,5 +168,76 @@ public class MenuBarTest extends LWUITTest{
         softs = f.getMenuBar().getSoftCommands();
         assertEquals(back, softs[2]);
         
+    }
+    @Test
+    public void testWhenClearShownBackIsNotInMenu() throws InterruptedException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        final Form f = new Form();
+        f.show();
+        waitEdt();
+        Command back = new Command("Back");
+        Command singlecmd = new Command("item 1");
+        f.addCommand(singlecmd);
+        f.setBackCommand(back);
+        waitEdt();
+        Command clear = new Command("Clear");
+        f.setClearCommand(clear);
+        waitEdt();
+        MenuBar menu = f.getMenuBar();
+        Class clazz = menu.getClass();
+        Method createMenu = clazz.getDeclaredMethod("createCommandComponent", Vector.class);
+        createMenu.setAccessible(true);
+        Method getCommands = clazz.getDeclaredMethod("getCommands");
+        getCommands.setAccessible(true);
+        Component c = (Component)createMenu.invoke(menu, getCommands.invoke(menu));
+        assertNotNull(c);
+        boolean foundback = false;
+        if(c instanceof Container) {
+            Container cont = (Container) c;
+            int l = cont.getComponentCount();
+            for(int i = 0; i < l; i++) {
+                Button b = (Button)cont.getComponentAt(i);
+                if(b.getCommand() == back) {
+                    foundback = true;
+                    break;
+                }
+            }
+        }
+        assertFalse(foundback);
+    }
+    
+    @Test
+    public void testClearIsNotShownInMenu() throws InterruptedException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+         final Form f = new Form();
+        f.show();
+        waitEdt();
+        Command back = new Command("Back");
+        f.setBackCommand(back);
+        Command singleCmd = new Command("item 1");
+        f.addCommand(singleCmd);
+        waitEdt();
+        Command clear = new Command("Clear");
+        f.setClearCommand(clear);
+        waitEdt();
+        MenuBar menu = f.getMenuBar();
+        Class clazz = menu.getClass();
+        Method createMenu = clazz.getDeclaredMethod("createCommandComponent", Vector.class);
+        createMenu.setAccessible(true);
+        Method getCommands = clazz.getDeclaredMethod("getCommands");
+        getCommands.setAccessible(true);
+        Component c = (Component)createMenu.invoke(menu, getCommands.invoke(menu));
+        assertNotNull(c);
+        boolean foundclear = false;
+        if(c instanceof Container) {
+            Container cont = (Container) c;
+            int l = cont.getComponentCount();
+            for(int i = 0; i < l; i++) {
+                Button b = (Button)cont.getComponentAt(i);
+                if(b.getCommand() == clear) {
+                    foundclear = true;
+                    break;
+                }
+            }
+        }
+        assertFalse(foundclear);
     }
 }
