@@ -870,6 +870,8 @@ public final class Display {
                 }
                 return;
             }
+        } catch (OutOfMemoryError err) {
+            // Ignore
         } catch(Exception ignor) {
             ignor.printStackTrace();
         }
@@ -880,26 +882,34 @@ public final class Display {
             inputEvents.removeElementAt(0);
             handleEvent(i);
         }
-        lwuitGraphics.setGraphics(impl.getNativeGraphics());
-        impl.paintDirty();
+        try {
+            lwuitGraphics.setGraphics(impl.getNativeGraphics());
+            impl.paintDirty();
+        } catch (OutOfMemoryError err) {
+            // Ignore
+        }
 
         // draw the animations
         Form current = impl.getCurrentForm();
         if(current != null){
-            current.repaintAnimations();
-            // check key repeat events
-            long t = System.currentTimeMillis();
-            if(keyRepeatCharged && nextKeyRepeatEvent <= t) {
-                current.keyRepeated(keyRepeatValue);
-                nextKeyRepeatEvent = t + keyRepeatNextIntervalTime;
-            }
-            if(longPressCharged && longPressInterval <= t - longKeyPressTime) {
-                longPressCharged = false;
-                current.longKeyPress(keyRepeatValue);
-            }
-            if(longPointerCharged && longPressInterval <= t - longKeyPressTime) {
-                longPointerCharged = false;
-                current.longPointerPress(pointerX, pointerY);
+            try {
+                current.repaintAnimations();
+                // check key repeat events
+                long t = System.currentTimeMillis();
+                if(keyRepeatCharged && nextKeyRepeatEvent <= t) {
+                    current.keyRepeated(keyRepeatValue);
+                    nextKeyRepeatEvent = t + keyRepeatNextIntervalTime;
+                }
+                if(longPressCharged && longPressInterval <= t - longKeyPressTime) {
+                    longPressCharged = false;
+                    current.longKeyPress(keyRepeatValue);
+                }
+                if(longPointerCharged && longPressInterval <= t - longKeyPressTime) {
+                    longPointerCharged = false;
+                    current.longPointerPress(pointerX, pointerY);
+                }
+            } catch (OutOfMemoryError err) {
+                // Ignore
             }
             processSerialCalls();
         }

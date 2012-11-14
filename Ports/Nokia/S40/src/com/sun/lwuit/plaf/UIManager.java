@@ -221,6 +221,10 @@ public class UIManager {
             }
 
             return new Style(style);
+        } catch(OutOfMemoryError err) {
+            // Ignore and return defaultStyle
+            System.gc();
+            return new Style(defaultStyle);
         } catch(Throwable err) {
             // fail gracefully for an illegal style, this is useful for the resource editor
             err.printStackTrace();

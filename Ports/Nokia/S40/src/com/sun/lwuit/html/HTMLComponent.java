@@ -1033,6 +1033,8 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
                     setPageStatus(HTMLCallback.STATUS_ERROR);
                     isr = getStream("Parsing error "+iae.getMessage(), null);
                     newDoc=parser.parseHTML(isr);
+                } catch (OutOfMemoryError err) {
+                    handleOutOfMemoryError(err, "HTMLParser.parseHtml()", true);
                 }
                 
                 if (cancelled) {
@@ -1122,18 +1124,14 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
             rebuildPage();
             //clickTimer("rebuilt");
         } catch (OutOfMemoryError err) { // handle possible OOM when creating UI components
-            threadQueue.clear();
-            System.out.println("Page loading failed with OutOfMemoryError");
-            InputStreamReader isr=getStream("Page loading failed with OutOfMemoryError",null);
-            HTMLElement newDoc=parser.parseHTML(isr);
-            documentReady(docInfo, newDoc);
-            return;
+            handleOutOfMemoryError(err, "HTMLComponent.rebuildPage()", true);
         }
         
-        if ((!cancelled) || (cancelledCaught)) {
-            Display.getInstance().callSerially(new Runnable() {
+        if (pageStatus != HTMLCallback.STATUS_ERROR) {
+            if ((!cancelled) || (cancelledCaught)) {
+                Display.getInstance().callSerially(new Runnable() {
 
-                public void run() {
+                    public void run() {
 
                         if (threadQueue.getCSSCount()==-1) {
                             displayPage();
@@ -1155,14 +1153,15 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
                         }
                         
                         
-                }
-            });
-        } else { // Page was cancelled
+                    }
+                });
+            } else { // Page was cancelled
             InputStreamReader isr=getStream("Page loading cancelled by user",null);
             HTMLElement newDoc=parser.parseHTML(isr);
-            documentReady(docInfo, newDoc);
-        }
+                documentReady(docInfo, newDoc);
+            }
 
+        }
     }
 
 
@@ -1201,7 +1200,7 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
      * @return true if events are enabled, false if not
      */
     public boolean isEventsEnabled() {
-        return isEventsEnabled();
+        return eventsEnabled;
     }
 
     /**
@@ -1218,42 +1217,46 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
      * Actually displays the HTML page - this should be run on EDT
      */
     void displayPage() {
-        removeAll();
-        addComponent(BorderLayout.CENTER,mainContainer);
-        setScrollY(0);
+        try {
+            removeAll();
+            addComponent(BorderLayout.CENTER,mainContainer);
+            setScrollY(0);
 
-        revalidate();
-        repaint();
+            revalidate();
+            repaint();
 
-        //Places the focus on the first link in the page, as long as it is within the visible area of the first page
-        if (getComponentForm()!=null) {
-            getComponentForm().revalidate(); // a revalidate on the component itself does not always result in correct size calculation, thus leaving unreachable elements in the HTML (Note that the first revalidate on the component is also necessary)
-            if (firstFocusable!=null) {
-                if (autoFocus) {
-                    if (firstFocusable.getY()<getHeight()) {
-                        getComponentForm().setFocused(firstFocusable);
-                    } else {
-                        getComponentForm().setFocused(mainContainer);
+            //Places the focus on the first link in the page, as long as it is within the visible area of the first page
+            if (getComponentForm()!=null) {
+                getComponentForm().revalidate(); // a revalidate on the component itself does not always result in correct size calculation, thus leaving unreachable elements in the HTML (Note that the first revalidate on the component is also necessary)
+                if (firstFocusable!=null) {
+                    if (autoFocus) {
+                        if (firstFocusable.getY()<getHeight()) {
+                            getComponentForm().setFocused(firstFocusable);
+                        } else {
+                            getComponentForm().setFocused(mainContainer);
+                        }
                     }
-                }
-            } else {
+                } else {
                     mainContainer.setFocusable(true); // If there are no focused components, the main container will become focusable, thus enabling it to be pixel-scrolled
                     getComponentForm().setFocused(mainContainer);                
-            }
+                }
 
-            if (marqueeComponents.size()>0) {
-                getComponentForm().registerAnimated(HTMLComponent.this);
-                int dir=UIManager.getInstance().getLookAndFeel().isRTL()?1:-1;
-                marqueeMotion=Motion.createLinearMotion(0, dir*HTMLComponent.this.getWidth(), MARQUEE_DELAY/2);
-                marqueeMotion.start();
-            }
+                if (marqueeComponents.size()>0) {
+                    getComponentForm().registerAnimated(HTMLComponent.this);
+                    int dir=UIManager.getInstance().getLookAndFeel().isRTL()?1:-1;
+                    marqueeMotion=Motion.createLinearMotion(0, dir*HTMLComponent.this.getWidth(), MARQUEE_DELAY/2);
+                    marqueeMotion.start();
+                }
 
             
-        }
+            }
 
-        setPageStatus(HTMLCallback.STATUS_DISPLAYED);
-        if (getComponentForm()!=null) {
-            getComponentForm().revalidate();
+            setPageStatus(HTMLCallback.STATUS_DISPLAYED);
+            if (getComponentForm()!=null) {
+                getComponentForm().revalidate();
+            }
+        } catch (OutOfMemoryError err) {
+            handleOutOfMemoryError(err, "HTMLComponent.displayPage()", true);
         }
     }
 
@@ -1664,6 +1667,9 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
             }
         }*/
 
+        // Parsing has failed if document is null
+        if (document == null)
+            return;
         // Get the HTML root tag and extract the HEAD and BODY (Note that the document tag is ROOT which contains HTML and so on.
         //HTMLElement html=document.getChildById(HTMLElement.TAG_HTML);
         HTMLElement html=null;
@@ -1789,7 +1795,11 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
         }
         //clickTimer("B4CSS");
         if (body!=null) {
-            CSSEngine.getInstance().applyCSS(body, this, externalCSS, embeddedCSS);
+            try {
+                CSSEngine.getInstance().applyCSS(body, this, externalCSS, embeddedCSS);
+            } catch (OutOfMemoryError err) {
+                handleOutOfMemoryError(err, "CSSEngine.applyCSS", false);
+            }
         }
     }
 
@@ -3906,7 +3916,11 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
             new Thread() {
                 public void run() {
                     cleanup();
-                    rebuildPage(); //screen form factor changed - landscape/portrait
+                    try {
+                        rebuildPage(); //screen form factor changed - landscape/portrait
+                    } catch (OutOfMemoryError err) {
+                        handleOutOfMemoryError(err, "HTMLComponent.layOutContainer()", true);
+                    }
                 }
             }.start();
         }
@@ -4049,6 +4063,26 @@ public class HTMLComponent extends Container implements ActionListener,AsyncDocu
         }
         Object obj=counters.get(counterName);
         return obj==null?0:((Integer)obj).intValue();
+    }
+
+    /**
+     * This method is called after OutOfMemoryError is catched anywhere
+     * in HTMLComponent or class in com.sun.lwuit.html package
+     * @param err
+     * @param message Method name which caused error
+     * @param fatal Fatal error does full cleanup and sets pageStatus to STATUS_ERROR
+     */
+    void handleOutOfMemoryError(OutOfMemoryError err, String message, boolean fatal)
+    {
+        System.gc();
+        if (fatal) {
+            threadQueue.clear();
+            cleanup();
+            removeAll();
+            document = null;
+            setPageStatus(HTMLCallback.STATUS_ERROR);
+        }
+        System.out.println("OutOfMemoryError while running " + message);
     }
 
     /*********
