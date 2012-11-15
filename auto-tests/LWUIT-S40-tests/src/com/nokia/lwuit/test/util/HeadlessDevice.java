@@ -79,12 +79,9 @@ public class HeadlessDevice {
 	
 		params.add("--rms");
 		params.add("memory");
-		
 		DeviceEntry defaultDevice = new DeviceEntry("Default device", null, DeviceImpl.DEFAULT_LOCATION, true, false);		
 		emulator.initParams(params, defaultDevice, J2SEDevice.class);
-		
-		MIDletBridge.setMicroEmulator(emulator);		
-		
+		MIDletBridge.setMicroEmulator(emulator);
 		return emulator.getDevice();
 	}
 

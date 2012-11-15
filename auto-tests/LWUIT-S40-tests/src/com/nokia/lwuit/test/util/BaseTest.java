@@ -37,7 +37,7 @@ public abstract class BaseTest {
         System.setProperty("com.nokia.keyboard.type", "PhoneKeypad");
     	HeadlessDevice device = new HeadlessDevice(properties);    	
     	DeviceFactory.setDevice(device.createAndInitializeTestDevice());
-    	
+     
     }
     
     /*protected void setUp(HashMap<String, String> properties) throws Exception {
@@ -48,7 +48,7 @@ public abstract class BaseTest {
 
     @After
     public void tearDown() throws Exception {
-        
+        DeviceFactory.getDevice().destroy();
     }
 
 }

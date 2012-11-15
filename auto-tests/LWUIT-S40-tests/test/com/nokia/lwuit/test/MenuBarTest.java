@@ -21,6 +21,7 @@ import java.util.Vector;
 import javax.microedition.lcdui.Font;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import static org.mockito.Mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -52,13 +53,15 @@ public class MenuBarTest extends LWUITTest{
         assertNotSame(10, b);
     }
     @Test
-    public void testSettingClearOverridesBack() {
+    public void testSettingClearOverridesBack() throws InterruptedException {
         final Form f = new Form();
         final Command clear = new Command("clear");
         Command back = new Command("back");
         f.show();
+        waitEdt();
         f.setBackCommand(back);
         f.setClearCommand(clear);
+        waitEdt();
         MenuBar m = f.getMenuBar();
 
         Command[] softkeys = m.getSoftCommands();
@@ -87,19 +90,7 @@ public class MenuBarTest extends LWUITTest{
         area.pointerPressed(5, 5);
         area.pointerReleased(5, 5);
         area.setFocus(true);
-        final Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                synchronized(this) {
-                    notifyAll();
-                }
-            }
-        };
-        Display.getInstance().callSerially(runnable);
-        synchronized(runnable) {
-            runnable.wait(2000);
-        }
+        waitEdt();
         assertTrue(f.isVisible());
         assertTrue(area.isTextEditorActive());
         
@@ -111,16 +102,19 @@ public class MenuBarTest extends LWUITTest{
         
         
     }
+    
     @Test
-    public void testWhenClearRemovedRecoverPreviousBack() {
+    public void testWhenClearRemovedRecoverPreviousBack() throws InterruptedException {
         final Form f = new Form();
         f.show();
         final Command back = new Command("back");
         Command clear = new Command("clear");
         f.setBackCommand(back);
+        waitEdt();
         f.setClearCommand(clear);
+        waitEdt();
         f.removeCommand(clear);
-
+        waitEdt();
         Command[] softs = f.getMenuBar().getSoftCommands();
         
         assertEquals(back, softs[2]);
@@ -155,12 +149,14 @@ public class MenuBarTest extends LWUITTest{
         
         f.addComponent(area);
         area.pointerPressed(5, 5);
+        waitEdt();
         area.pointerReleased(5, 5);
         area.setFocus(true);
         waitEdt();
-        int h = Display.getInstance().getDisplayHeight();
-        int w = Display.getInstance().getDisplayWidth();
         assertTrue(area.isTextEditorActive());
+        waitEdt();
+        waitEdt();
+        waitEdt();
         Command [] softs = f.getMenuBar().getSoftCommands();
         assertEquals("Clear", softs[2].getCommandName());
         f.getMenuBar().getSoftButtons()[2].released();
