@@ -46,8 +46,8 @@ public abstract class BaseTest {
     	DeviceFactory.setDevice(device.createAndInitializeTestDevice());
     }*/
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterClass
+    public static void tearDown() throws Exception {
         DeviceFactory.getDevice().destroy();
     }
 

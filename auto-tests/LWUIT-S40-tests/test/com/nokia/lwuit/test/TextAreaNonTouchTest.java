@@ -73,29 +73,60 @@ public class TextAreaNonTouchTest extends LWUITTest{
         waitEdt();
         f.setFocused(textarea);
         waitEdt();
-        //textarea.setFocus(true);
-        waitEdt();
-        Command[] cmds_before = f.getMenuBar().getSoftCommands();
-        assertEquals("Edit", cmds_before[0].getCommandName());
-        assertEquals("back", cmds_before[2].getCommandName());
-        Class clazz = textarea.getClass();
-        Method onClick = clazz.getDeclaredMethod("onClick");
-        onClick.setAccessible(true);
-        onClick.invoke(textarea);
-        
-        waitEdt();
-        waitEdt();
-        assertTrue(textarea.isTextEditorActive());
-        Command[] cmds_after_click = f.getMenuBar().getSoftCommands();
-        assertEquals("Clear", cmds_after_click[2].getCommandName());
-        Dialog.show("title", "text", Dialog.TYPE_INFO, null, "ok", "cancel", 100);
-        waitEdt();
-        //make sure the dialog is not shown anymore
-        Thread.sleep(100);
+        f.removeComponent(textarea);
         waitEdt();
         MenuBar menubar = f.getMenuBar();
-        Command [] cmds = menubar.getSoftCommands();
-        assertEquals(back, cmds[2]);
-        assertEquals("Edit", cmds[0].getCommandName());
+        Command [] softcmds = menubar.getSoftCommands();
+        assertEquals(back, softcmds[2]);
+        
+    }
+    @Test
+    public void testReinitializingTextAreaResetsEditToMSKMode() throws InterruptedException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        final Form f = new Form();
+        
+        waitEdt();
+        Command back = new Command("back");
+        f.setBackCommand(back);
+        waitEdt();
+        TextArea textarea = new TextArea("text");
+        final TextEditorProvider editor = createMockTextEditor();
+        when(editor.isVisible()).thenReturn(false);
+        when(editor.getContent()).thenReturn("text");
+        doAnswer(new Answer() {
+
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                when(editor.isVisible()).thenReturn(Boolean.TRUE);
+                return null;
+            }
+        }).when(editor).setVisible(true);
+        
+        Field texteditor = TextArea.class.getDeclaredField("textEditor");
+        texteditor.setAccessible(true);
+        texteditor.set(textarea, editor);
+        
+        f.addComponent(textarea);
+        f.show();
+        waitEdt();
+        f.setFocused(textarea);
+        waitEdt();
+        Method onClick = TextArea.class.getDeclaredMethod("onClick");
+        onClick.setAccessible(true);
+        onClick.invoke(textarea);
+        waitEdt();
+        
+        
+        Method deinitialize = TextArea.class.getDeclaredMethod("deinitialize");
+        deinitialize.setAccessible(true);
+        deinitialize.invoke(textarea);
+        waitEdt();
+        Method initComponentImpl = TextArea.class.getDeclaredMethod("initComponentImpl");
+        initComponentImpl.setAccessible(true);
+        initComponentImpl.invoke(textarea);
+        waitEdt();
+        MenuBar menubar = f.getMenuBar();
+        Command[] softcmds = menubar.getSoftCommands();
+        assertEquals("Edit", softcmds[0].getCommandName());
+        
     }
 }

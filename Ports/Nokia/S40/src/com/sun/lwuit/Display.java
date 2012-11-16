@@ -63,7 +63,7 @@ import javax.microedition.midlet.MIDlet;
  *
  * @author Chen Fishbein, Shai Almog
  */
-public final class Display {
+public class Display {
     private EventDispatcher errorHandler;
     boolean lwuitExited;
 

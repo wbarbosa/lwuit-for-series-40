@@ -609,27 +609,42 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }else {
             if(Display.getInstance().getDeviceType() == Display.NON_TOUCH_DEVICE) {
                 if(!isTextEditorActive()) {
-                    if(selectCommand != null) {
-                        getComponentForm().removeCommand(selectCommand);
-                    }
-                    getComponentForm().removeCommand(getComponentForm().getMenuBar().getSelectCommand());
-                    getComponentForm().getMenuBar().addSelectCommand(UIManager.getInstance().localize("OK", "OK"));
-                    selectCommand = getComponentForm().getMenuBar().getSelectCommand();
+                    setOkAsSelectCommand();
                     focusTextEditor();
                     
                 }else {
-                    if(selectCommand != null) {
-                        getComponentForm().removeCommand(selectCommand);
-                    }
-                    getComponentForm().removeCommand(getComponentForm().getMenuBar().getSelectCommand());
-                    getComponentForm().getMenuBar().addSelectCommand(UIManager.getInstance().localize("Edit", "Edit"));
-                    selectCommand = getComponentForm().getMenuBar().getSelectCommand();
+                    setEditAsSelectCommand();
                     hideTextEditor();
                 }
             }
         }
     }
+    
+    private void setOkAsSelectCommand() {
+        if (selectCommand != null) {
+            getComponentForm().removeCommand(selectCommand);
+        }
+        getComponentForm().removeCommand(getComponentForm().getMenuBar().getSelectCommand());
+        getComponentForm().getMenuBar().addSelectCommand(UIManager.getInstance().localize("OK", "OK"));
+        selectCommand = getComponentForm().getMenuBar().getSelectCommand();
+    }
+    private void setEditAsSelectCommand() {
+        if (selectCommand != null) {
+            getComponentForm().removeCommand(selectCommand);
+        }
+        getComponentForm().removeCommand(getComponentForm().getMenuBar().getSelectCommand());
+        getComponentForm().getMenuBar().addSelectCommand(UIManager.getInstance().localize("Edit", "Edit"));
+        selectCommand = getComponentForm().getMenuBar().getSelectCommand();
+    }
 
+    private void changeEditBackIfOkInSelect() {
+        if(selectCommand != null && 
+           selectCommand.getCommandName()
+                .equals(UIManager.getInstance().localize("OK", "OK"))) {
+            setEditAsSelectCommand();
+        } 
+    }
+    
     /**
      * @inheritDoc
      */
@@ -1670,7 +1685,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
 
     protected void deinitialize() {
         if(isTextEditorActive()) {
-            textEditor.setVisible(false);
+            hideTextEditor();
         }
 
         super.deinitialize();
@@ -1711,7 +1726,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * Set focus for the text editor and prepare it to be used
      * for editing this particular TextArea component
      */
-    protected void focusTextEditor() {
+    protected synchronized void focusTextEditor() {
         if (textEditor != null && textEditorEnabled) {
             dontWaitForKeyReleased = false;
             
@@ -1798,7 +1813,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     /**
      * @inheritDoc
      */
-    public void focusLost(Component cmp) {        
+    public void focusLost(Component cmp) {   
         if (textEditor != null && textEditorEnabled) {
             textEditor.setFocus(false);
             hideTextEditor();
@@ -1808,9 +1823,11 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     /**
      * Hide text editor and update TextArea accordingly
      */
-    protected void hideTextEditor() {
-
+    protected synchronized void hideTextEditor() {
         if (textEditor != null && textEditor.isVisible()) {
+            if(Display.getInstance().getDeviceType() == Display.NON_TOUCH_DEVICE) {
+                changeEditBackIfOkInSelect();
+            }
             textEditor.setTextEditorListener(null);
             setText(textEditor.getContent());
             int c = textEditor.getCaretPosition();
