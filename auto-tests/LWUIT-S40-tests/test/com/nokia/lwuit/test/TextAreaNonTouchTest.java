@@ -6,12 +6,14 @@ package com.nokia.lwuit.test;
 
 import com.nokia.lwuit.TextEditorProvider;
 import com.nokia.lwuit.test.util.LWUITTest;
+import com.sun.lwuit.Button;
 import com.sun.lwuit.Command;
-import com.sun.lwuit.Dialog;
 import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
 import com.sun.lwuit.MenuBar;
 import com.sun.lwuit.TextArea;
+import com.sun.lwuit.TextField;
+import com.sun.lwuit.layouts.BoxLayout;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -127,6 +129,30 @@ public class TextAreaNonTouchTest extends LWUITTest{
         MenuBar menubar = f.getMenuBar();
         Command[] softcmds = menubar.getSoftCommands();
         assertEquals("Edit", softcmds[0].getCommandName());
+        
+    }
+    
+    @Test
+    public void testTextFieldReturnsBackToRSKAfterEditWithoutTextEditor() throws InterruptedException {
+        final Form f = new Form();
+        f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        Command back = new Command("back");
+        f.setBackCommand(back);
+        
+        TextField field = new TextField();
+        f.addComponent(field);
+        f.show();
+        waitEdt();
+        f.setFocused(field);
+        MenuBar menubar = f.getMenuBar();
+        Button [] softButtons = menubar.getSoftButtons();
+        softButtons[0].released();
+        waitEdt();
+        softButtons[0].released();
+        waitEdt();
+        Command [] cmds = menubar.getSoftCommands();
+        assertEquals(back, cmds[2]);
+        
         
     }
 }

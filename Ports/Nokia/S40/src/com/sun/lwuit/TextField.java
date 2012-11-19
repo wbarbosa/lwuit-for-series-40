@@ -48,7 +48,7 @@ import java.util.Vector;
  * @author Shai Almog
  */
 public class TextField extends TextArea {
-    private static boolean replaceMenuDefault = true;
+    private static boolean replaceMenuDefault = false;
 
     /**
      * Indicates that native text input should be used in text field when in place editing is supported by the platform
