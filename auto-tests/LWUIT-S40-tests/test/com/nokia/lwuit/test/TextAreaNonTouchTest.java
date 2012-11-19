@@ -132,27 +132,4 @@ public class TextAreaNonTouchTest extends LWUITTest{
         
     }
     
-    @Test
-    public void testTextFieldReturnsBackToRSKAfterEditWithoutTextEditor() throws InterruptedException {
-        final Form f = new Form();
-        f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
-        Command back = new Command("back");
-        f.setBackCommand(back);
-        
-        TextField field = new TextField();
-        f.addComponent(field);
-        f.show();
-        waitEdt();
-        f.setFocused(field);
-        MenuBar menubar = f.getMenuBar();
-        Button [] softButtons = menubar.getSoftButtons();
-        softButtons[0].released();
-        waitEdt();
-        softButtons[0].released();
-        waitEdt();
-        Command [] cmds = menubar.getSoftCommands();
-        assertEquals(back, cmds[2]);
-        
-        
-    }
 }
