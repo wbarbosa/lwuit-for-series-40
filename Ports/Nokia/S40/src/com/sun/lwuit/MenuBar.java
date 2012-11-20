@@ -533,6 +533,7 @@ public class MenuBar extends Container implements ActionListener {
      * @param selectCommand
      */
     public void setSelectCommand(Command selectCommand) {
+        System.out.println("MenuBar.setSelectCommand:" + selectCommand);
         this.selectCommand = selectCommand;
     }
 
@@ -605,19 +606,26 @@ public class MenuBar extends Container implements ActionListener {
                     unassignedMiscCommands++;
                 }
             }
-
-            // Then handle MSK: if there's a default command stick it there
+            //by default we set empty command in MSK
+            if (numberOfMiscCommands > 0) { 
+                softCommand[0] = new Command("");
+            }
+            // Then check default and select cmds. Select has higher
+            //priority than default.
             if (defaultCommand != null) {
+                System.out.println("setting defaultCOmmand");
                 softCommand[0] = defaultCommand;
                 freeButtons--;
             }
-            else if(selectCommand != null) {
+            if(selectCommand != null) {
+                System.out.println("setting selectcommand");
                 softCommand[0] = selectCommand;
                 freeButtons--;
+                if(defaultCommand != null) {
+                    unassignedMiscCommands++;
+                }
             }
-            else if (numberOfMiscCommands > 0) { // if not,set empty command
-                softCommand[0] = new Command("");
-            }
+            
             // If there are more commands left, show a menu
             if (unassignedMiscCommands > 0) {
                 softCommand[1] = menuCommand;
@@ -1259,9 +1267,12 @@ public class MenuBar extends Container implements ActionListener {
     }
 
     void addSelectCommand(String selectText) {
+        System.out.println("addSelectCommand");
         if (selectText != null && selectText.length() > 0) {
             if (thirdSoftButton) {
+                System.out.println("is thirdSoftButton");
                 if (selectCommand == null) {
+                    System.out.println("createSelectCommand starting");
                     selectCommand = createSelectCommand();
                 }
                 selectCommand.setCommandName(selectText);
@@ -1661,13 +1672,13 @@ public class MenuBar extends Container implements ActionListener {
         return createCommandList(commands);
     }
     private boolean shouldCommandShowInMenu(Command c) {
-        // Only add to menu if:
-        //  a) it's not the the default command, and
-        //  b) it's not the MSK command on a 3-button layout
-        //  (essentially an automagically set 'default command').
-        //  c) it's not a back command
-        return !(c == defaultCommand) &&
-               !(soft.length == 3 && c == softCommand[0]) &&
+        /*
+         * Add to menu only if command should not be in RSK or MSK
+         * RSK: clear and back should never be in menu
+         * MSK: default goes to menu if selectcommand is present otherwise
+         * default is shown in MSK. Select never goes to menu.
+         */
+        return !(soft.length == 3 && c == softCommand[0]) &&
                 c != backCommand && c != clearCommand;
     }
 
