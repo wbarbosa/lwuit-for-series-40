@@ -81,4 +81,19 @@ public class MenuBarNonTouchTest extends LWUITTest{
         assertEquals(defaultcmd, cmd);
 
     }
+    @Test
+    public void testDefaultIsInMSKandNoOptionsIsShown() throws InterruptedException {
+        final Form f = new Form();
+        f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        f.show();
+        waitEdt();
+        Command def = new Command("def");
+        f.setDefaultCommand(def);
+        waitEdt();
+        MenuBar menubar = f.getMenuBar();
+        Command [] softcmd = menubar.getSoftCommands();
+        assertEquals(def, softcmd[0]);
+        assertNull(softcmd[1]);
+        assertNull(softcmd[2]);
+    }
 }
