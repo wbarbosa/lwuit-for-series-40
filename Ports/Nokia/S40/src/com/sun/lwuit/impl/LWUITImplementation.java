@@ -243,9 +243,8 @@ public abstract class LWUITImplementation {
         int size = 0;
         synchronized (displayLock) {
             size = paintQueueFill;
-            Animation[] array = paintQueue;
-            paintQueue = paintQueueTemp;
-            paintQueueTemp = array;
+            System.arraycopy(paintQueue, 0, paintQueueTemp, 0, paintQueueFill);
+            paintQueue = new Animation[50];
             paintQueueFill = 0;
         }
         if (size > 0) {

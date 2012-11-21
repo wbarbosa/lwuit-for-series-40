@@ -326,8 +326,9 @@ public class Form extends Container {
         setSize(new Dimension(w, h));
         setShouldCalcPreferredSize(true);
         doLayout();
+        
         repaint();
-        this.scrollComponentToVisible(focused);
+        scrollComponentToVisible(focused);       
     }
 
     /**
