@@ -37,7 +37,11 @@ import com.sun.lwuit.util.EventDispatcher;
  * @author Shai Almog
  */
 public class Slider extends Label {
-
+    // Default maximum value of Slider for boundary conditions
+    private static int MAX_VALUE_LIMIT = Integer.MAX_VALUE;
+    // Default minimum value of Slider for boundary conditions
+    private static int MIN_VALUE_LIMIT = Integer.MIN_VALUE;   
+    
     private int value;
     private int maxValue = 100;
     private int minValue = 0;
@@ -159,6 +163,10 @@ public class Slider extends Label {
                 }
             }
         }
+        if(i){
+            minValue = 0;
+            maxValue = 100;            
+        }
     }
 
     /**
@@ -182,9 +190,20 @@ public class Slider extends Label {
         sliderFull = UIManager.getInstance().getComponentStyle("SliderFull");
         sliderFullSelected = UIManager.getInstance().getComponentSelectedStyle("SliderFull");
     }
+    
+    /**
+     * Indicates the value of slider according to the scale set by minimum and maximum values set.
+     *
+     * @return the value on the slider
+    */
+    public int getSliderValue() {
+        int range = (getMaxValue() - getMinValue());
+        return ( (int) Math.ceil( (float)((value*range)/100F)) + getMinValue());
+    }
+
 
     /**
-     * Indicates the value of progress made
+     * Indicates the value of progress made in percentage
      *
      * @return the progress on the slider
      */
@@ -193,7 +212,7 @@ public class Slider extends Label {
     }
 
     /**
-     * Indicates the value of progress made, this method is thread safe and can
+     * Indicates the value of progress made in percentage, this method is thread safe and can
      * be invoked from any thread although discression should still be kept so
      * one thread doesn't regress progress made by another thread...
      *
@@ -202,20 +221,16 @@ public class Slider extends Label {
     public void setProgress(int value) {
         this.value = value;
         if (renderValueOnTop) {
-            super.setText("" + value);
+            super.setText("" + getSliderValue());
         } else {
             if (renderPercentageOnTop) {
-                super.setText((int)(getRelativeValue() * 100) + "%");
+                super.setText(getProgress() + "%");
             } else {
                 repaint();
             }
         }
     }
     
-    private float getRelativeValue() {
-        return (float)(value - minValue) / (maxValue - minValue);
-    }
-
     /**
      * @inheritDoc
      */
@@ -265,25 +280,33 @@ public class Slider extends Label {
      */
     public void paintBackground(Graphics g) {
         super.paintBackground(g);
-        
         int clipX = g.getClipX();
         int clipY = g.getClipY();
         int clipW = g.getClipWidth();
         int clipH = g.getClipHeight();
         int width = getWidth();
         int height = getHeight();
-
+        
         int y = getY();
-        if (infinite) {
-            int blockSize = getWidth() / 5;
-            int x = getX() + (int) (getRelativeValue() * (getWidth() - blockSize));
+        if(infinite) {
+            int blockSize = getWidth() / 5;            
+            int x = getX() + (int) ((((float) value) / ((float)maxValue - minValue)) * (getWidth() - blockSize));
             g.clipRect(x, y, blockSize, height - 1);
         } else {
-            if (vertical) {
-                int actualHeight = (int) (getRelativeValue() * getHeight());
-                y += height - actualHeight;
-            } else {
-                width = (int) (getRelativeValue() * getWidth());
+            if(vertical) {
+                float pixelValue = (((float) value * (float) getHeight()) / 100F);
+                if( pixelValue < 1F){
+                    y += height - (int) Math.floor( pixelValue );
+                }else{
+                    y += height - (int) Math.ceil( pixelValue );
+                }
+            } else { 
+                float pixelValue = (((float)value * (float)getWidth()) / 100F);                
+                if( pixelValue < 1F){
+                    width = (int) Math.floor( pixelValue );
+                }else{
+                    width = (int) Math.ceil( pixelValue );
+                }                
             }
             g.clipRect(getX(), y, width, height);
         }
@@ -294,19 +317,17 @@ public class Slider extends Label {
         paintingFull = false;
 
         g.setClip(clipX, clipY, clipW, clipH);
-        if (thumbImage != null && !infinite) {
-            if (!vertical) {
+        if(thumbImage != null && !infinite) {
+            if(!vertical) {
                 int xPos = getX() + width - thumbImage.getWidth() / 2;
                 xPos = Math.max(getX(), xPos);
                 xPos = Math.min(getX() + getWidth() - thumbImage.getWidth(), xPos);
-                g.drawImage(thumbImage, xPos,
-                        y + height / 2 - thumbImage.getHeight() / 2);
+                g.drawImage(thumbImage, xPos, y + height / 2 - thumbImage.getHeight() / 2);
             } else {
                 int yPos = y + height - thumbImage.getHeight() / 2;
                 yPos = Math.max(getY(), yPos);
                 yPos = Math.min(getY() + getHeight() - thumbImage.getHeight(), yPos);
-                g.drawImage(thumbImage, getX() + width / 2 - thumbImage.getWidth() / 2,
-                        yPos);
+                g.drawImage(thumbImage, getX() + width / 2 - thumbImage.getWidth() / 2, yPos);
             }
         }
     }
@@ -353,15 +374,23 @@ public class Slider extends Label {
             return;
         }
 
-        int range = maxValue - minValue;
-
-        if (vertical) {
+        if(vertical) {
             // turn the coordinate to a local coordinate and invert it
             y = Math.abs(getHeight() - (y - getAbsoluteY()));
-            setProgress((int) (Math.min(maxValue, ((float) y) / ((float) getHeight()) * range)) + minValue);
+            float percentageValue = ((float)y / (float)getHeight()) * 100F;
+            if( Math.min(100F, percentageValue) < 1F){
+                setProgress((int) Math.floor(Math.min(100F, percentageValue)));
+            }else{
+                setProgress((int) Math.ceil(Math.min(100F, percentageValue)));
+            }            
         } else {
             x = Math.abs(x - getAbsoluteX());
-            setProgress((int) (Math.min(maxValue, ((float) x) / ((float) getWidth()) * range)) + minValue);
+            float percentageValue = ((float)x / (float)getWidth()) * 100F;
+            if(Math.min(100F, percentageValue) < 1F){
+                setProgress( (int) Math.floor( Math.min(100F, percentageValue)));
+            }else{
+                setProgress( (int) Math.ceil( Math.min(100F, percentageValue)));
+            }            
         }
 
         if (vertical) {
@@ -398,19 +427,28 @@ public class Slider extends Label {
             return;
         }
         
-        int val = 0;
-        int range = maxValue - minValue;
-        
-        if (vertical) {
+        int per = 0;
+        if(vertical) {
             // turn the coordinate to a local coordinate and invert it
             y = Math.abs(getHeight() - (y - getAbsoluteY()));
-            val = (int) Math.min(maxValue, ((float) y) / ((float) getHeight()) * range + minValue);
+            float percentageValue = ((float)y / (float)getHeight()) * 100F;
+            if(Math.min(100F, percentageValue) < 1F){
+                per = (int) Math.floor(Math.min(100F, percentageValue));
+            }else{
+                per = (int) Math.ceil(Math.min(100F, percentageValue));
+            }            
         } else {
             x = Math.abs(x - getAbsoluteX());
-            val = (int) Math.min(maxValue, ((float) x) / ((float) getWidth()) * range + minValue);
+            float percentageValue = ((float)x / (float)getWidth()) * 100F;
+            if(Math.min(100F, percentageValue) < 1F){
+                per = (int) Math.floor( Math.min(100F, percentageValue));
+            }else{
+                per = (int) Math.ceil( Math.min(100F, percentageValue));
+            }            
         }
-        if (val != getProgress()) {
-            setProgress(val);
+        
+        if (per != getProgress()) {
+            setProgress(per);
 
             if (vertical) {
                 if (previousY < y) {
@@ -584,6 +622,8 @@ public class Slider extends Label {
     }
 
     /**
+     * Returns the maximum value set for the slider
+     * Default value is 100 
      * @return the maxValue
      */
     public int getMaxValue() {
@@ -591,18 +631,26 @@ public class Slider extends Label {
     }
 
     /**
+     * Indicates the maximum value set for the slider.
+     * This method will be ignored for infinite slider.  
      * @param maxValue the maxValue to set
+     * @throws IllegalArgumentException if maxValue is not in valid integer range
      */
-    public void setMaxValue(int newMaxValue) {
-        if (newMaxValue <= minValue) {
-            throw new IllegalArgumentException("Slider maximum value must be "
-                    + "greater than the minimum value.");
-        } else {
-            this.maxValue = newMaxValue;
+    public void setMaxValue(int maxValue) {        
+        if(!infinite){
+            if( (maxValue > MAX_VALUE_LIMIT) || (maxValue < MIN_VALUE_LIMIT) ){
+                throw new IllegalArgumentException("Maximum value of slider must be in valid integer range");
+            }
+            if(maxValue <= minValue){
+                throw new IllegalArgumentException("Slider maximum value must be greater than the minimum value.");
+            }
+            this.maxValue = maxValue;
         }
     }
 
     /**
+     * Returns the maximum value set for the slider
+     * Default value is 0
      * @return the minValue
      */
     public int getMinValue() {
@@ -610,14 +658,20 @@ public class Slider extends Label {
     }
 
     /**
+     * Indicates the minimum value set for the slider.
+     * This method will be ignored for infinite slider.  
      * @param minValue the minValue to set
+     * @throws IllegalArgumentException if minValue is not in valid integer range
      */
-    public void setMinValue(int newMinValue) {
-        if (newMinValue >= maxValue) {
-            throw new IllegalArgumentException("Slider minimum value must be "
-                    + "less than the maximum value.");
-        } else {
-            this.minValue = newMinValue;
+    public void setMinValue(int minValue) {
+        if(!infinite){
+            if( (minValue > MAX_VALUE_LIMIT) || (minValue < MIN_VALUE_LIMIT) ){
+                throw new IllegalArgumentException("Minimum value of slider must be in valid integer range");
+            }
+            if(minValue >= maxValue){
+                throw new IllegalArgumentException("Slider minimum value must be less than maximum value");
+            }
+            this.minValue = minValue;
         }
     }
 
