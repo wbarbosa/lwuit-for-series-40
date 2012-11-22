@@ -855,7 +855,6 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             }
 
         } else {
-            
             // Calculate size the original way
             Font f = style.getFont();
 

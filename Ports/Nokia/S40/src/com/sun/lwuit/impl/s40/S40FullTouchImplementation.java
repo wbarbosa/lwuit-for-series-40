@@ -25,12 +25,16 @@ public class S40FullTouchImplementation extends S40GestureImplementation impleme
     public void init(Object m) {
         super.init(m);
         
+        com.nokia.mid.ui.orientation.Orientation.setAppOrientation(
+                com.nokia.mid.ui.orientation.Orientation.getAppOrientation());
+        
         OrientationListener ol = new OrientationListener() {
 
             public void displayOrientationChanged(int i) {
                 String orientation = getProperty("Nokia-MIDlet-App-Orientation", "");
                 if (orientation.equals("manual")) {
                     com.nokia.mid.ui.orientation.Orientation.setAppOrientation(i);
+                    
                 }
                 
             }
@@ -39,6 +43,7 @@ public class S40FullTouchImplementation extends S40GestureImplementation impleme
         if(p != null) {
             p.addOrientationListener(ol);
         }
+        
         com.nokia.mid.ui.VirtualKeyboard.hideOpenKeypadCommand(true);
         com.nokia.mid.ui.VirtualKeyboard.setVisibilityListener(this);
     }
