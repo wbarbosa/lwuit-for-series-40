@@ -165,7 +165,9 @@ public class Slider extends Label {
         }
         if(i){
             minValue = 0;
-            maxValue = 100;            
+            maxValue = 100;
+            setRenderPercentageOnTop(false);
+            setRenderValueOnTop(false);
         }
     }
 
@@ -598,13 +600,17 @@ public class Slider extends Label {
     }
 
     /**
-     * Indicates that the value of the slider should be rendered with a
-     * percentage sign on top of the slider.
+     * Indicates that the percentage value of the slider should be rendered with a
+     * percentage sign on top of the slider. For infinite slider this method will have no effect.
      *
      * @param renderPercentageOnTop true to render percentages
      */
     public void setRenderPercentageOnTop(boolean renderPercentageOnTop) {
-        this.renderPercentageOnTop = renderPercentageOnTop;
+        if(infinite){
+            this.renderPercentageOnTop = false;
+        }else{
+            this.renderPercentageOnTop = renderPercentageOnTop;
+        }    
     }
 
     /**
@@ -615,10 +621,17 @@ public class Slider extends Label {
     }
 
     /**
-     * @param renderValueOnTop the renderValueOnTop to set
+     * Indicates that the value of the slider should be rendered with a
+     * on top of the slider. For infinite slider this method will have no effect.
+     *
+     * @param renderValueOnTop true to render value
      */
     public void setRenderValueOnTop(boolean renderValueOnTop) {
-        this.renderValueOnTop = renderValueOnTop;
+        if(infinite){
+            this.renderValueOnTop = false;
+        }else{
+            this.renderValueOnTop = renderValueOnTop;
+        }     
     }
 
     /**
