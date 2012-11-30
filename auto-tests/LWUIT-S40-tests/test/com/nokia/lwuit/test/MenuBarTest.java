@@ -236,4 +236,20 @@ public class MenuBarTest extends LWUITTest{
         }
         assertFalse(foundclear);
     }
+    
+    @Test
+    public void testOptionsIsNotShownIfClearOverridesBack() throws InterruptedException {
+        Form f = new Form();
+        Command back = new Command("back");
+        Command clear = new Command("clear");
+        f.setBackCommand(back);
+        f.setClearCommand(clear);
+        f.show();
+        waitEdt();
+        MenuBar menubar = f.getMenuBar();
+        Command [] cmds = menubar.getSoftCommands();
+        assertNull(cmds[1]);
+        
+        
+    }
 }

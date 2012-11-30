@@ -601,10 +601,7 @@ public class MenuBar extends Container implements ActionListener {
             //if clear command is present, overide RSK to that
             if(clearCommand != null) {
                 softCommand[2] = clearCommand;
-                //make sure user still sees the back button in the menu
-                if(backCommand != null) {
-                    unassignedMiscCommands++;
-                }
+                
             }
             //by default we set empty command in MSK
             if (numberOfMiscCommands > 0) { 
