@@ -709,7 +709,6 @@ public class Component implements Animation, StyleListener {
         if (Display.getInstance().getDeviceType() == Display.NON_TOUCH_DEVICE && isSelectableInteraction()) {
             Form f = getComponentForm();
             if (f != null) {
-                System.out.println("setting select text");
                 f.getMenuBar().addSelectCommand(getSelectCommandText());
                 
                 f.restoreMenu();

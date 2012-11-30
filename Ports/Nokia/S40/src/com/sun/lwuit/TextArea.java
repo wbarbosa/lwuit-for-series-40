@@ -730,8 +730,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      *
      * @return the number of text lines in the TextArea
      */
-    public int getLines(){
-        return getRowStrings().size();
+    public synchronized int getLines(){
+        
+        int l = getRowStrings().size();
+        return l;
     }
 
     /**
@@ -780,7 +782,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
     
     void initComponentImpl() {
-        getRowStrings();
         Form f = getComponentForm();
         if (f != null) {
                 f.addPointerDraggedListener(dragListener);
@@ -827,12 +828,14 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }        
     }
         
-    private Vector getRowStrings() {
+    private synchronized Vector getRowStrings() {
+
         updatePaddings();        
         if (rowStrings == null || widthForRowCalculations != getWidth() - leftPadding - rightPadding){
             initRowString();
             setShouldCalcPreferredSize(true);
         }
+
         return rowStrings;
     }
 
@@ -915,10 +918,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
             return;
         }
         char[] text = preprocess(getText());
-        int rows = this.rows;
-        if(growByContent) {
-            rows = Math.max(rows, getLines());
-        }
         
         Font font = style.getFont();
         int charWidth = font.charWidth(widestChar);
@@ -1066,6 +1065,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         if(text[text.length -1 ] == '\n'){
             rowStrings.addElement("");
         }
+
     }
     
     /**
@@ -1090,7 +1090,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void paint(Graphics g) {
-        UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);                
+        UIManager.getInstance().getLookAndFeel().drawTextArea(g, this);    
         paintHint(g);
     }
     
@@ -1108,13 +1108,14 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     protected Dimension calcPreferredSize(){
-        return UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
+        Dimension d = UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, true);
+        return d;
     }
         
     /**
      * @inheritDoc
      */
-    protected Dimension calcScrollSize(){        
+    protected Dimension calcScrollSize(){ 
         return UIManager.getInstance().getLookAndFeel().getTextAreaSize(this, false);
     }
         
@@ -1664,6 +1665,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void setWidth(int width) {
         super.setWidth(width);
+        setShouldCalcPreferredSize(true);
         if(isTextEditorActive()) {
             updatePaddings();
             textEditor.setSize(width - leftPadding - rightPadding,
@@ -1945,4 +1947,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     public  String getClearText() {
         return clearText;
     }
+    
+    
+    
 }

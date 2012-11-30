@@ -529,9 +529,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
      * @inheritDoc
      */
     public void drawTextArea(Graphics g, TextArea ta) {
-        
         if(ta.isTextEditorActive()) {
-
             // Series 40 TextEditor handles its own drawing
             ta.updateTextAreaStyles();
 
@@ -553,7 +551,6 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             Font f = ta.getStyle().getFont();
             int fontHeight = f.getHeight();
             int align = reverseAlignForBidi(ta);
-
 
             boolean shouldBreak = false;
 
@@ -830,10 +827,8 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
      * @inheritDoc
      */
     public Dimension getTextAreaSize(TextArea ta, boolean pref) {
-
         int prefW = 0;
         int prefH = 0;
-
         Style style = ta.getStyle();
         int leftPadding = style.getPadding(false, Component.LEFT);
         int rightPadding = style.getPadding(false, Component.RIGHT);
@@ -880,17 +875,14 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                 prefW = Math.max(prefW, f.stringWidth(str));
             }
             prefH = Math.max(prefH, rows * f.getHeight());
-            
         }
 
         prefW += leftPadding + rightPadding;
         prefH += topPadding + bottomPadding;
-        
         if(style.getBorder() != null) {
             prefW = Math.max(style.getBorder().getMinimumWidth(), prefW);
             prefH = Math.max(style.getBorder().getMinimumHeight(), prefH);
         }
-        
         return new Dimension(prefW, prefH);
     }
 
