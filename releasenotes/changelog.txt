@@ -1,5 +1,12 @@
 Changelog
 -------------------------------------------------------------------------------
+0.8.1 Beta
+    * Clear and back commands are now handled according to s40 platform guidelines
+    * fixed issue with clear not being removed after dialog is shown
+    * fixed back command issue with textfield in older s40 devices that caused back
+      to go to menu instead of RSK.
+    * Fixed issue with select and defaultcommand priority. 
+    * Fixed issue with textarea not expanding on first display when growbycontent was true.
 0.8.0 Beta.
 	* Fixed many small bugs in TextArea including issues with clear command
 	* Fixed issue with too small options menu when only one menuitem
