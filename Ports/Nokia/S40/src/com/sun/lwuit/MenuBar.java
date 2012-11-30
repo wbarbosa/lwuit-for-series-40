@@ -533,7 +533,6 @@ public class MenuBar extends Container implements ActionListener {
      * @param selectCommand
      */
     public void setSelectCommand(Command selectCommand) {
-        System.out.println("MenuBar.setSelectCommand:" + selectCommand);
         this.selectCommand = selectCommand;
     }
 
@@ -610,12 +609,10 @@ public class MenuBar extends Container implements ActionListener {
             // Then check default and select cmds. Select has higher
             //priority than default.
             if (defaultCommand != null) {
-                System.out.println("setting defaultCOmmand");
                 softCommand[0] = defaultCommand;
                 freeButtons--;
             }
             if(selectCommand != null) {
-                System.out.println("setting selectcommand");
                 softCommand[0] = selectCommand;
                 freeButtons--;
                 if(defaultCommand != null) {
@@ -1264,12 +1261,9 @@ public class MenuBar extends Container implements ActionListener {
     }
 
     void addSelectCommand(String selectText) {
-        System.out.println("addSelectCommand");
         if (selectText != null && selectText.length() > 0) {
             if (thirdSoftButton) {
-                System.out.println("is thirdSoftButton");
                 if (selectCommand == null) {
-                    System.out.println("createSelectCommand starting");
                     selectCommand = createSelectCommand();
                 }
                 selectCommand.setCommandName(selectText);
