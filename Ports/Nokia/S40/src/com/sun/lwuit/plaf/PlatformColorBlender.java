@@ -4,10 +4,8 @@
  */
 package com.sun.lwuit.plaf;
 
+import com.nokia.lwuit.DirectUtilsProvider;
 import com.nokia.lwuit.ImageUtils;
-import com.nokia.mid.ui.DirectUtils;
-import com.sun.lwuit.Display;
-import com.sun.lwuit.util.Resources;
 import java.util.Hashtable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
@@ -21,11 +19,12 @@ public class PlatformColorBlender {
     
     private static PlatformColorBlender mSelf;
     
+    private DirectUtilsProvider du;
     /**
      * Default constructor
      */
     private PlatformColorBlender() {
-        
+        du = DirectUtilsProvider.getDirectUtils();
     }
     
     /**
@@ -48,6 +47,9 @@ public class PlatformColorBlender {
      * @param mask 
      */
     public void applyColorToBorder(Border b, int color, com.sun.lwuit.Image[] mask) {
+        if(du == null) {
+            return;
+        }
         if(mask == null || mask.length == 0) {
             System.out.println("border mask null or length zero");
             return;
@@ -59,12 +61,12 @@ public class PlatformColorBlender {
         Image img = null;
         Image temp = null;
         for(int i = 0; i < l; i++) {
-            img = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
+            img = du.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
             Graphics g = img.getGraphics();
             g.setColor(color);
             g.fillRect(0, 0, img.getWidth(), img.getHeight());            
             
-            temp = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
+            temp = du.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
             temp.getGraphics().drawRGB(maskButton[i].getRGB(), 0, maskButton[i].getWidth(), 0, 0, maskButton[i].getWidth(), maskButton[i].getHeight(), true);
             img = ImageUtils.drawMaskedImage(img, temp);
             img.getGraphics().drawRGB(b.images[i].getRGB(), 0, b.images[i].getWidth(), 0, 0, b.images[i].getWidth(), b.images[i].getHeight(), true);
@@ -77,6 +79,9 @@ public class PlatformColorBlender {
      * @param color the color
      */
     public void applyColorToBorder(Border b, int color) {
+        if(du == null) {
+            return;
+        }
         if(b == null) {
             return;
         }
@@ -84,12 +89,12 @@ public class PlatformColorBlender {
         Image img = null;
         Image temp = null;
         for(int i = 0; i < l; i++) {
-            img = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
+            img = du.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
             Graphics g = img.getGraphics();
             g.setColor(color);
             g.fillRect(0, 0, img.getWidth(), img.getHeight());            
             
-            temp = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
+            temp = du.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
             temp.getGraphics().drawRGB(b.images[i].getRGB(), 0, b.images[i].getWidth(), 0, 0, b.images[i].getWidth(), b.images[i].getHeight(), true);
             img = ImageUtils.drawMaskedImage(img, temp);
             b.images[i] = com.sun.lwuit.Image.createImage(img);
@@ -102,11 +107,14 @@ public class PlatformColorBlender {
      * @param color the color
      */
     public void applyColorToListItem(Border listRendererFocusBorder, final int color) {
+        if(du == null) {
+            return;
+        }
         int l = listRendererFocusBorder.images.length;
         Border b = listRendererFocusBorder;
         Image img = null;
         for(int i = 0; i < l; i++) {
-            img = DirectUtils.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
+            img = du.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
             Graphics g = img.getGraphics();
             g.setColor(color);
             g.fillRect(0, 0, img.getWidth(), img.getHeight());
@@ -122,6 +130,9 @@ public class PlatformColorBlender {
      * @param color Fill color
      */
     public void applyBackgroundColorToThemeProp(Hashtable themeProps, String key, final int color) {
+        if(du == null) {
+            return;
+        }
         com.sun.lwuit.Image bg = null;
         
         try {
@@ -133,7 +144,7 @@ public class PlatformColorBlender {
         int width = bg.getWidth();
         int height = bg.getHeight();
         Image img = null;
-        img = DirectUtils.createImage(width, height, 0x00000000);
+        img = du.createImage(width, height, 0x00000000);
         Graphics g = img.getGraphics();
         g.setColor(color);
         g.fillRect(0, 0, img.getWidth(), img.getHeight());
