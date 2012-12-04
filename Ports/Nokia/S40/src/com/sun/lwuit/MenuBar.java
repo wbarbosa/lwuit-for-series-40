@@ -270,7 +270,7 @@ public class MenuBar extends Container implements ActionListener {
                 impl.setPrimaryNativeCommand(defaultCommand);
             }
         }else {
-            if (getCommandCount() == 0 && parent != null) {
+            if(!isMenuBarInstalled()) {
                 installMenuBar();
             }
             updateCommands();
@@ -307,7 +307,7 @@ public class MenuBar extends Container implements ActionListener {
             commands.addElement(clearCommand);
         }
         updateCommands();
-        if (getCommandCount() == 0 && parent != null) {
+        if (!isMenuBarInstalled()) {
             installMenuBar();
         }
     }
@@ -1078,6 +1078,9 @@ public class MenuBar extends Container implements ActionListener {
                 impl.addNativeCommand(cmd);
             }
         }else {
+            if(!isMenuBarInstalled()) {
+                installMenuBar();
+            }
             updateCommands();
             repaint();
         }
@@ -1109,7 +1112,7 @@ public class MenuBar extends Container implements ActionListener {
      * @param index determines the order of the added commands
      */
     protected void addCommand(Command cmd, int index) {
-        if (getCommandCount() == 0 && parent != null) {
+        if(!isMenuBarInstalled()) {
             installMenuBar();
         }
         // prevent duplicate commands which might happen in some edge cases
@@ -1158,6 +1161,7 @@ public class MenuBar extends Container implements ActionListener {
      * Adds the MenuBar on the parent Form
      */
     protected void installMenuBar() {
+        System.out.println("installMenuBar");
         LWUITImplementation impl = Display.getInstance().getImplementation();
         if (impl instanceof S40Implementation) {
             if (!((S40Implementation) impl).shouldHideMenu()) {
@@ -1756,4 +1760,12 @@ public class MenuBar extends Container implements ActionListener {
         return softCommand;
     }
     
+    public boolean isMenuBarInstalled() {
+        System.out.println("isMenuBarInstalled");
+        if(parent != null) {
+            return parent.contains(this);
+            
+        }
+        return false;
+    }
 }
