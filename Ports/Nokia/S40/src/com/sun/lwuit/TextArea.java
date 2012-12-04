@@ -1853,7 +1853,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     removeClearCommandFromForm();
                 }
             });
-            
             setShouldCalcPreferredSize(true);
             Form f = getComponentForm();
             if(f != null) {
@@ -1865,7 +1864,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     private void removeClearCommandFromForm() {
         Form p = getComponentForm();
         if(p != null) {
-            p.removeCommand(clearCommand);
+            if(p.getClearCommand() == clearCommand) {
+                p.removeCommand(clearCommand);
+            }
         }
     }
     

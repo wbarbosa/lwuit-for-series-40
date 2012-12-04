@@ -1161,7 +1161,6 @@ public class MenuBar extends Container implements ActionListener {
      * Adds the MenuBar on the parent Form
      */
     protected void installMenuBar() {
-        System.out.println("installMenuBar");
         LWUITImplementation impl = Display.getInstance().getImplementation();
         if (impl instanceof S40Implementation) {
             if (!((S40Implementation) impl).shouldHideMenu()) {
@@ -1761,11 +1760,10 @@ public class MenuBar extends Container implements ActionListener {
     }
     
     public boolean isMenuBarInstalled() {
-        System.out.println("isMenuBarInstalled");
         if(parent != null) {
             return parent.contains(this);
             
         }
         return false;
-    }
+    }   
 }
