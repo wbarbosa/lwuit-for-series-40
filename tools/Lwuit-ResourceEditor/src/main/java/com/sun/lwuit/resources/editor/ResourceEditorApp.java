@@ -29,6 +29,8 @@ import com.sun.lwuit.io.NetworkManager;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Arrays;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
@@ -79,6 +81,14 @@ public class ResourceEditorApp extends SingleFrameApplication {
      */
     public static void main(String[] args) {
         Display.init(null);
+         ClassLoader cl = ClassLoader.getSystemClassLoader();
+ 
+        URL[] urls = ((URLClassLoader)cl).getURLs();
+ 
+        for(URL url: urls){
+        	System.out.println("classpath:"+url.getFile());
+        }
+
         NetworkManager.getInstance().start();
         launch(new ResourceEditorApp(), args);
     }

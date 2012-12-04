@@ -1,5 +1,5 @@
 <project name="LWUIT-ResourceEditor" default="package" basedir=".">
-    <property name="uidemo" value="../../Apps/LWUITDemo/build.xml" />
+    <property name="uidemo" value="../../Apps/LWUITDemo-original/LWUITDemoMIDP/build.xml" />
     <property name="MIDP-SE" value="../MIDP_SE/build.xml" />
     <property name="UI" value="../../UI/antenna-build.xml" />
     <property name="IO_SE" value="../../Ports/SE/IO_SE/build.xml" />
@@ -39,7 +39,7 @@
         </antcall>
     <!-- install LWUITDemo to maven repo -->
         <antcall target="install-dependency">
-            <param name="maven-args" value="install:install-file -Dfile=../../Apps/LWUITDemo/dist/LWUITDemo.jar -DgroupId=com.sun.lwuit.uidemo -DartifactId=lwuit-uidemo -Dversion=1.0 -Dpackaging=jar" />
+            <param name="maven-args" value="install:install-file -Dfile=../../Apps/LWUITDemo-original/LWUITDemoMIDP/dist/LWUITDemo.jar -DgroupId=com.sun.lwuit.uidemo -DartifactId=lwuit-uidemo -Dversion=1.0 -Dpackaging=jar" />
         </antcall>
     </target>
     <target name="compile-swingport">
