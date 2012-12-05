@@ -247,11 +247,45 @@ public class MIDPImpl extends IOImplementation {
         while (c.getHeaderFieldKey(i) != null) {
             if (c.getHeaderFieldKey(i).equalsIgnoreCase(name)) {
                 String val = c.getHeaderField(i);
-                r.addElement(val);
+                if (name.equalsIgnoreCase("Set-Cookie")) {
+                    Vector v = new Vector();
+                    // Split val with comma
+                    int comma = val.indexOf(',');
+                    while (comma > -1) {
+                        v.addElement(val.substring(0, comma));
+                        val = val.substring(comma+1);
+                        comma = val.indexOf(',');
+                    }
+                    v.addElement(val);
+
+                    // Construct complete Set-Cookie lines
+                    String cookie = null;
+                    for (Enumeration e = v.elements() ; e.hasMoreElements() ;) {
+                        if (cookie != null) {
+                            String nextElement = (String)e.nextElement();
+                            int equals = nextElement.indexOf('=');
+                            int plaa = nextElement.indexOf(';');
+                            if ((equals == -1) ||(plaa != -1 && equals > plaa)) {
+                                cookie += "," + nextElement;
+                            } else {
+                                r.addElement(cookie);
+                                cookie = nextElement;
+                            }
+
+                        } else {
+                            cookie = (String)e.nextElement();
+                        }
+                        if (!e.hasMoreElements()) {
+                            r.addElement(cookie);
+                        }
+                    }
+                } else {
+                    r.addElement(val);
+                }
             }
             i++;
         }
-        
+
         if(r.size() == 0) {
             return null;
         }

@@ -202,10 +202,12 @@ public class Oauth2 {
 
                     public boolean onRedirect(String url) {
                         if ((url.startsWith(redirectURI))){
-                            boolean success = url.indexOf("#") > -1;
+                            boolean success = url.indexOf(TOKEN) > -1;
                             if(success){
-                                String accessToken = url.substring(url.indexOf("#") + 1);
-                                token = accessToken.substring(accessToken.indexOf("=") + 1, accessToken.indexOf("&"));
+                                String accessToken = url.substring(url.indexOf(TOKEN));
+                                token = accessToken.substring(
+                                        accessToken.indexOf("=") + 1,
+                                        accessToken.indexOf("&") > -1 ? accessToken.indexOf("&") : accessToken.length());
                             }
                             loginCallback.actionPerformed(null);
                             return true;
@@ -222,5 +224,5 @@ public class Oauth2 {
         c.getDocumentInfo().setEncoding("UTF-8");
         return c;
     }
-    
+
 }
