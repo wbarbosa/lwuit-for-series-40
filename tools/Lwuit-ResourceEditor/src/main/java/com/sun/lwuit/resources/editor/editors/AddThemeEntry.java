@@ -794,10 +794,9 @@ public class AddThemeEntry extends javax.swing.JPanel {
             }
         }
         if(!deriveBackground.isSelected()) {
-            // scaled image is the default so there is no need to define the bgType
-            if(backgroundType.getSelectedIndex() != 0) {
-                themeRes.put(uiid + "bgType", new Byte(BACKGROUND_VALUES[backgroundType.getSelectedIndex()]));
-            }
+            
+            themeRes.put(uiid + "bgType", new Byte(BACKGROUND_VALUES[backgroundType.getSelectedIndex()]));
+            
             if(backgroundType.getSelectedIndex() >= BACKGROUND_VALUES_GRADIENT_ARRAY_OFFSET) {
                 // this is a gradient related type
                 themeRes.put(uiid + "bgGradient", new Object[] {

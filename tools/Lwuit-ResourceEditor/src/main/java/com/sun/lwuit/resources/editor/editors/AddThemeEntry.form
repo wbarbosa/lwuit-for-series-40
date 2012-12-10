@@ -57,7 +57,7 @@
                   <Component id="videoTutorial" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="addTabs" pref="353" max="32767" attributes="0"/>
+              <Component id="addTabs" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -130,7 +130,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                               <Component id="deriveBackground" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="346" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="deriveHelp" linkSize="6" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -156,20 +156,24 @@
                                           <EmptySpace max="32767" attributes="1"/>
                                           <Component id="addNewImage" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="gradientStartColor" linkSize="4" min="-2" pref="54" max="-2" attributes="1"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="changeGradientStartColorButton" min="-2" max="-2" attributes="1"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="gradientEndColor" linkSize="4" min="-2" pref="52" max="-2" attributes="0"/>
-                                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                          <Component id="changeGradientEndColorButton" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="228" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="gradientX" linkSize="4" min="-2" max="-2" attributes="1"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="gradientY" linkSize="4" min="-2" max="-2" attributes="1"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="gradientStartColor" linkSize="4" min="-2" pref="54" max="-2" attributes="1"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="changeGradientStartColorButton" min="-2" max="-2" attributes="1"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="gradientEndColor" linkSize="4" min="-2" pref="52" max="-2" attributes="0"/>
+                                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                                  <Component id="changeGradientEndColorButton" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="gradientX" linkSize="4" min="-2" max="-2" attributes="1"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="gradientY" linkSize="4" min="-2" max="-2" attributes="1"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="228" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -749,10 +753,10 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="paddingLeft" alignment="0" pref="40" max="32767" attributes="0"/>
-                                  <Component id="paddingRight" alignment="0" pref="40" max="32767" attributes="0"/>
-                                  <Component id="paddingTop" alignment="0" pref="40" max="32767" attributes="0"/>
-                                  <Component id="paddingBottom" alignment="0" pref="40" max="32767" attributes="0"/>
+                                  <Component id="paddingLeft" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="paddingRight" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="paddingTop" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="paddingBottom" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -1500,7 +1504,6 @@
                           <Component id="deriveTextDecoration" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="deriveFont" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -1519,10 +1522,15 @@
                                       <Component id="addNewBitmapFont" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="bitmapFont" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="deriveFont" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="bitmapFont" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="systemFont" linkSize="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="systemFont" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="187" pref="187" max="187" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1759,7 +1767,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextPane" name="help">
               <Properties>
-                <Property name="contentType" type="java.lang.String" value="text/html"/>
+                <Property name="contentType" type="java.lang.String" value="text/html" noResource="true"/>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="help" noResource="true"/>
               </Properties>
