@@ -1319,7 +1319,9 @@ public class Form extends Container {
         Display.getInstance().flushEdt();
         if (previousForm == null){
             previousForm = Display.getInstance().getCurrent();
-            previousForm.clearTextFieldFocus();
+            if(previousForm != null) {
+                previousForm.clearTextFieldFocus();
+            }
             // special case for application opening with a dialog before any form is shown
             if (previousForm == null) {
                 previousForm = new Form();
