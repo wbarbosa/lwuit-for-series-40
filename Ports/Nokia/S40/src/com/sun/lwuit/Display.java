@@ -2170,7 +2170,6 @@ public class Display {
      * @return the shouldRenderSelection
      */
     public boolean shouldRenderSelection(Component c) {
-        //System.out.println("shouldRenderSelection(c)");
         boolean shouldrender = getDeviceType() == NON_TOUCH_DEVICE;
         if(c.isCellRenderer()) {
             return shouldRenderSelection();
