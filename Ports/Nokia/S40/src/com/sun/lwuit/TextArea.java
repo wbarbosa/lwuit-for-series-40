@@ -1664,6 +1664,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void setWidth(int width) {
+        if(width == getWidth()) {
+            return;
+        }
         super.setWidth(width);
         setShouldCalcPreferredSize(true);
         if(isTextEditorActive()) {
@@ -1677,6 +1680,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void setHeight(int height) {
+        if(height == getHeight()) {
+            return;
+        }
         super.setHeight(height);
         if(isTextEditorActive()) {
             updatePaddings();
