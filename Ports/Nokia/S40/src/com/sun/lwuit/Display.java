@@ -2628,21 +2628,25 @@ public class Display {
         return nokiaResource;
     }
     
+    private int devType = -1;
+    
     public int getDeviceType() {
-        String keyboard = System.getProperty("com.nokia.keyboard.type");
-        if(keyboard == null) {
-            keyboard = "None";
-        }
-        int ret = NON_TOUCH_DEVICE;
-        if(INSTANCE.impl.isTouchDevice()) {
-            //is T&T device
-            if(!keyboard.equals("None")) {
-                ret = TOUCH_AND_TYPE_DEVICE;
-            }else {
-                ret = FULL_TOUCH_DEVICE;
+        if(devType == -1) {
+            String keyboard = System.getProperty("com.nokia.keyboard.type");
+            if (keyboard == null) {
+                keyboard = "None";
+            }
+            devType = NON_TOUCH_DEVICE;
+            if (INSTANCE.impl.isTouchDevice()) {
+                //is T&T device
+                if (!keyboard.equals("None")) {
+                    devType = TOUCH_AND_TYPE_DEVICE;
+                } else {
+                    devType = FULL_TOUCH_DEVICE;
+                }
             }
         }
-        return ret;
+        return devType;
     }
 
     /**
