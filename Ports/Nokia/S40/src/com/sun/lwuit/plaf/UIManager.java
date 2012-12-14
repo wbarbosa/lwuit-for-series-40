@@ -219,7 +219,7 @@ public class UIManager {
                     return createStyle(id, prefix, false);
                 }
             }
-
+            
             return new Style(style);
         } catch(OutOfMemoryError err) {
             // Ignore and return defaultStyle

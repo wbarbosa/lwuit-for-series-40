@@ -340,9 +340,12 @@ public class S40Implementation extends LWUITImplementation {
         C() {
             super(false);
         }
-
+        private Graphics gfx;
         public javax.microedition.lcdui.Graphics getGraphics() {
-            return super.getGraphics();
+            if(gfx == null) {
+                gfx = super.getGraphics();
+            }
+            return gfx;
         }
 
         protected void keyPressed(final int keyCode) {
@@ -368,6 +371,7 @@ public class S40Implementation extends LWUITImplementation {
         }
 
         protected void sizeChanged(int w, int h) {
+            gfx = super.getGraphics();
             S40Implementation.this.sizeChanged(w, h);
         }
 

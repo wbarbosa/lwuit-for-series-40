@@ -773,7 +773,8 @@ public class Resources {
                 case 0xf2:
                     byte[] data = new byte[input.readInt()];
                     input.readFully(data, 0, data.length);
-                    return EncodedImage.create(data);
+                    return Image.createImage(data, 0, data.length);
+                    //return EncodedImage.create(data);
 
                 // Indexed image
                 case 0xF3:
