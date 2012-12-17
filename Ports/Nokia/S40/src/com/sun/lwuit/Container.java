@@ -46,7 +46,7 @@ import java.util.Vector;
  * @author Chen Fishbein
  */
 public class Container extends Component {
-    private static boolean enableLayoutOnPaint = true;
+    private static boolean enableLayoutOnPaint = false;
     private Component leadComponent;
     private Layout layout;
     private java.util.Vector components = new java.util.Vector();
