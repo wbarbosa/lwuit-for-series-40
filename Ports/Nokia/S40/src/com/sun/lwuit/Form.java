@@ -35,6 +35,7 @@ import com.sun.lwuit.impl.LWUITImplementation;
 import com.sun.lwuit.impl.s40.S40Implementation;
 import com.sun.lwuit.list.ListCellRenderer;
 import com.sun.lwuit.layouts.BorderLayout;
+import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.layouts.FlowLayout;
 import com.sun.lwuit.layouts.Layout;
 import com.sun.lwuit.plaf.LookAndFeel;
@@ -69,7 +70,7 @@ import java.util.Vector;
  */
 public class Form extends Container {
     private Painter glassPane;
-    private Container contentPane = new Container(new FlowLayout());
+    private Container contentPane = new Container(new BoxLayout(BoxLayout.Y_AXIS));
     Container titleArea = new Container(new BorderLayout());
     private Label title = new Label("", "Title");
     private MenuBar menuBar;

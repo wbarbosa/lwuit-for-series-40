@@ -871,7 +871,7 @@ public class Display {
                 return;
             }
         } catch (OutOfMemoryError err) {
-            // Ignore
+            System.out.println("outofMemory error");
         } catch(Exception ignor) {
             ignor.printStackTrace();
         }
@@ -886,7 +886,7 @@ public class Display {
             lwuitGraphics.setGraphics(impl.getNativeGraphics());
             impl.paintDirty();
         } catch (OutOfMemoryError err) {
-            // Ignore
+            System.out.println("outofmemory error");
         }
 
         // draw the animations

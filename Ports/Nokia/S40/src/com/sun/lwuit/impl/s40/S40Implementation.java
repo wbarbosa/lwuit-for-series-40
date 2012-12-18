@@ -356,17 +356,26 @@ public class S40Implementation extends LWUITImplementation {
             S40Implementation.this.keyReleased(keyCode);
         }
 
-        protected void pointerDragged(final int x, final int y) {
+        protected void pointerDragged(int x, int y) {
+            if(y > getHeight()) {
+                y = 0;
+            }
             S40Implementation.this.pointerDragged(x, y);
         }
 
-        protected void pointerPressed(final int x, final int y) {
+        protected void pointerPressed(int x, int y) {
+            if(y > getHeight()) {
+                y = 0;
+            }
             //solves an emulator bug(no impact on real devices)
             Display.getInstance().setTouchScreenDevice(true);
             S40Implementation.this.pointerPressed(x, y);
         }
 
-        protected void pointerReleased(final int x, final int y) {
+        protected void pointerReleased(int x,int y) {
+            if(y > getHeight()) {
+                y = 0;
+            }
             S40Implementation.this.pointerReleased(x, y);
         }
 
