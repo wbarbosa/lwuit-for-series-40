@@ -50,11 +50,35 @@ public abstract class CategoryBarProvider {
     
     public abstract void suppressSizeChanged(boolean suppressSizeChange);
     
-    public static CategoryBarProvider getCategoryBarProvider(Command[] elements, boolean useLongLabel) {
-        return null;
+    public abstract void createImplementation(IconCommand[] elements, boolean useLongLabel);
+    public abstract void createImplementation(javax.microedition.lcdui.Image[] unselectedIcons, javax.microedition.lcdui.Image[] selectedIcons, java.lang.String[] labels);
+    
+    public static CategoryBarProvider getCategoryBarProvider(IconCommand[] elements, boolean useLongLabel) {
+        CategoryBarProvider provider = null;
+        try {
+            Class.forName("com.nokia.mid.ui.CategoryBar");
+            Class c = Class.forName("com.nokia.lwuit.CategoryBarProviderImpl");
+            provider = (CategoryBarProvider) c.newInstance();
+            provider.createImplementation(elements, useLongLabel);
+        }catch(Exception cnfe) {
+            System.out.println("CategoryBar API not available.");
+        }
+        
+        return provider;
+        
     }
     public static CategoryBarProvider getCategoryBarProvider(javax.microedition.lcdui.Image[] unselectedIcons, javax.microedition.lcdui.Image[] selectedIcons, java.lang.String[] labels) {
-        return null;
+        CategoryBarProvider provider = null;
+        try {
+            Class.forName("com.nokia.mid.ui.CategoryBar");
+            Class c = Class.forName("com.nokia.lwuit.CategoryBarProviderImpl");
+            provider = (CategoryBarProvider) c.newInstance();
+            provider.createImplementation(unselectedIcons, selectedIcons, labels);
+        }catch(Exception cnfe) {
+            System.out.println("CategoryBar API not available.");
+        }
+        
+        return provider;
     }
     
     public static interface ElementListener {
