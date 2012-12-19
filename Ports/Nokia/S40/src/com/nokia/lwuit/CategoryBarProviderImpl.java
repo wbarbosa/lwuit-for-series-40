@@ -15,7 +15,11 @@ import javax.microedition.lcdui.Image;
  */
 class CategoryBarProviderImpl extends CategoryBarProvider{
     
-    private CategoryBar categorybar;
+    private CategoryBar categorybar = null;
+    
+    public CategoryBarProviderImpl() {
+     
+    }
 
     public int getBestImageHeight(int imageType) {
         return categorybar.getBestImageHeight(imageType);
@@ -88,6 +92,7 @@ class CategoryBarProviderImpl extends CategoryBarProvider{
 
     public void createImplementation(IconCommand[] elements, boolean useLongLabel) {
         categorybar = new CategoryBar(elements, useLongLabel);
+        System.out.println("categorybar instance created");
     }
 
     public void createImplementation(Image[] unselectedIcons, Image[] selectedIcons, String[] labels) {

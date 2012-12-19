@@ -53,13 +53,16 @@ public abstract class CategoryBarProvider {
     public abstract void createImplementation(IconCommand[] elements, boolean useLongLabel);
     public abstract void createImplementation(javax.microedition.lcdui.Image[] unselectedIcons, javax.microedition.lcdui.Image[] selectedIcons, java.lang.String[] labels);
     
-    public static CategoryBarProvider getCategoryBarProvider(IconCommand[] elements, boolean useLongLabel) {
+    public static CategoryBarProvider getCategoryBarProvider(Command[] elements, boolean useLongLabel) {
+        if(elements == null || elements.length == 0) {
+            throw new IllegalArgumentException("elements must not be null or zero length.");
+        }
         CategoryBarProvider provider = null;
         try {
             Class.forName("com.nokia.mid.ui.CategoryBar");
             Class c = Class.forName("com.nokia.lwuit.CategoryBarProviderImpl");
-            provider = (CategoryBarProvider) c.newInstance();
-            provider.createImplementation(elements, useLongLabel);
+            provider = (com.nokia.lwuit.CategoryBarProvider)c.newInstance();
+            provider.createImplementation(wrapCommandToIconCommand(elements), useLongLabel);
         }catch(Exception cnfe) {
             System.out.println("CategoryBar API not available.");
         }
@@ -72,13 +75,21 @@ public abstract class CategoryBarProvider {
         try {
             Class.forName("com.nokia.mid.ui.CategoryBar");
             Class c = Class.forName("com.nokia.lwuit.CategoryBarProviderImpl");
-            provider = (CategoryBarProvider) c.newInstance();
+            provider = (com.nokia.lwuit.CategoryBarProvider) c.newInstance();
             provider.createImplementation(unselectedIcons, selectedIcons, labels);
         }catch(Exception cnfe) {
             System.out.println("CategoryBar API not available.");
         }
         
         return provider;
+    }
+    
+    private static IconCommand[] wrapCommandToIconCommand(Command[] cmds) {
+        IconCommand[] ret = new IconCommand[cmds.length];
+        for(int i = 0; i < ret.length; i++) {
+            ret[i] = (IconCommand)MIDPCommandWrapper.createInstance(cmds[i]).getCommand();
+        }
+        return ret;
     }
     
     public static interface ElementListener {
