@@ -478,6 +478,7 @@ public class Display {
         }else{
             INSTANCE.impl.confirmControlView();
         }
+        UIManager.getInstance().loadLocalization();
     }
 
     /**
