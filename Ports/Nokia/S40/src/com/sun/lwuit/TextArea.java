@@ -44,7 +44,7 @@ import java.util.Vector;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component implements TextEditorProvider.TextEditorListener, FocusListener {
+public class TextArea extends Component implements TextEditorProvider.TextEditorListener {
     private static int defaultValign = TOP;
     
     /**
@@ -384,7 +384,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }catch(IllegalArgumentException iae) {
             iae.printStackTrace();
         }
-        addFocusListener(this);
         setGrowByContent(false);
         setConstraint(constraint);
         
@@ -705,6 +704,9 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     void focusGainedInternal() {
         super.focusGainedInternal();
+        if(Display.getInstance().getDeviceType() != Display.NON_TOUCH_DEVICE) {
+            focusTextEditor();
+        }
         setHandlesInput(isScrollableY());
     }
 
@@ -1718,16 +1720,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     public void setFocus(boolean focused) {
         super.setFocus(focused);        
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public void focusGained(Component cmp) {
-        if(Display.getInstance().getDeviceType() != Display.NON_TOUCH_DEVICE) {
-            focusTextEditor();
-        }
-        
     }
 
     /**
