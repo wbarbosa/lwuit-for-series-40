@@ -80,7 +80,8 @@ public class UIManager {
     private EventDispatcher themelisteners;
     
     private javax.microedition.lcdui.Display nativeDisplay;
-
+    
+    private Resources localeResource = null;
     UIManager() {
     }
 
@@ -1292,4 +1293,26 @@ public class UIManager {
         nativeDisplay = d;
     }
 
+    /**
+     * Loads the localization file locale/locale.res and tries to load a localization
+     * that matches the locale received from system property "microedition.locale".
+     * This method is called automatically when lwuit is initialized. 
+     */
+    public void loadLocalization() {
+        String devlocale = System.getProperty("microedition.locale");
+        if(devlocale == null) {
+            devlocale = "en";
+        }
+        if (localeResource == null) {
+            try {
+                localeResource = Resources.open("/locale/locale.res");
+            } catch (IOException ioe) {
+                System.out.println("no localization file: locale/locale.res. Load localization manually.");
+            }
+        }
+        if(localeResource != null) {
+            Hashtable h = localeResource.getL10N("locale", devlocale);
+            setResourceBundle(h);
+        }
+    }
 }
