@@ -1300,7 +1300,9 @@ public class UIManager {
      */
     public void loadLocalization() {
         String devlocale = System.getProperty("microedition.locale");
-        
+        if(devlocale == null) {
+            devlocale = "en";
+        }
         if (localeResource == null) {
             try {
                 localeResource = Resources.open("/locale/locale.res");
