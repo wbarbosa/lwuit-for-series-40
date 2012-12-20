@@ -715,6 +715,10 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     void focusLostInternal() {
         super.focusLostInternal();
+        if (textEditor != null && textEditorEnabled) {
+            textEditor.setFocus(false);
+            hideTextEditor();
+        }
         setHandlesInput(false);
     }
     
@@ -1808,15 +1812,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     }
                 }
             }
-        }
-    }
-    /**
-     * @inheritDoc
-     */
-    public void focusLost(Component cmp) {   
-        if (textEditor != null && textEditorEnabled) {
-            textEditor.setFocus(false);
-            hideTextEditor();
         }
     }
 
