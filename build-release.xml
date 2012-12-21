@@ -35,7 +35,7 @@ the ResourceEditor without problems you can use this script.
     <property name="RE" location="tools/Lwuit-ResourceEditor" />
     <property name="IO" location="IO" />
     <property name="IO-MIDP" location="Ports/MIDP/IO_MIDP" />
-    <property name="package-version" value="0.8.2-beta" />
+    <property name="package-version" value="0.8.3-beta" />
 
     <target name="init">
         <mkdir dir="${releasepath}" />

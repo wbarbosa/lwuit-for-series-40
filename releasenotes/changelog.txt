@@ -1,5 +1,11 @@
 Changelog
 -------------------------------------------------------------------------------
+0.8.3 Beta
+    * BoxLayout now default layout for Form
+    * Added CategoryBarProvider that acts as a wrapper for CategoryBar API
+    * Added automatic localization support
+    * Performance improvements especially memory usage of theme has been improved.
+    * Fixed issue with scrolling up caused form to suddenly jump back to top.
 0.8.1 Beta
     * Clear and back commands are now handled according to s40 platform guidelines
     * fixed issue with clear not being removed after dialog is shown
