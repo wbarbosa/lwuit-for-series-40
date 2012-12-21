@@ -44,7 +44,7 @@ import java.util.Vector;
  *
  * @author Chen Fishbein
  */
-public class TextArea extends Component implements TextEditorProvider.TextEditorListener {
+public class TextArea extends Component implements TextEditorProvider.TextEditorListener, FocusListener {
     private static int defaultValign = TOP;
     
     /**
@@ -384,6 +384,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         }catch(IllegalArgumentException iae) {
             iae.printStackTrace();
         }
+        addFocusListener(this);
         setGrowByContent(false);
         setConstraint(constraint);
         
@@ -704,9 +705,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     void focusGainedInternal() {
         super.focusGainedInternal();
-        if(Display.getInstance().getDeviceType() != Display.NON_TOUCH_DEVICE) {
-            focusTextEditor();
-        }
         setHandlesInput(isScrollableY());
     }
 
@@ -715,10 +713,6 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      */
     void focusLostInternal() {
         super.focusLostInternal();
-        if (textEditor != null && textEditorEnabled) {
-            textEditor.setFocus(false);
-            hideTextEditor();
-        }
         setHandlesInput(false);
     }
     
@@ -1727,6 +1721,16 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
     }
 
     /**
+     * @inheritDoc
+     */
+    public void focusGained(Component cmp) {
+        if(Display.getInstance().getDeviceType() != Display.NON_TOUCH_DEVICE) {
+            focusTextEditor();
+        }
+        
+    }
+
+    /**
      * Set focus for the text editor and prepare it to be used
      * for editing this particular TextArea component
      */
@@ -1812,6 +1816,15 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
                     }
                 }
             }
+        }
+    }
+    /**
+     * @inheritDoc
+     */
+    public void focusLost(Component cmp) {   
+        if (textEditor != null && textEditorEnabled) {
+            textEditor.setFocus(false);
+            hideTextEditor();
         }
     }
 
