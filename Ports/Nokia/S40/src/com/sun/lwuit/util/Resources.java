@@ -535,21 +535,23 @@ public class Resources {
      * @throws java.io.IOException if opening/reading the resource fails
      */
     public static Resources open(String resource) throws IOException {
+        InputStream is = null;
+        Resources r = null;
         try {
             // Multiple threads calling open at same time can cause OOM
             synchronized (lock) {
                 if (lastLoadedName != null && lastLoadedName.equals(resource)) {
-                    Resources r = (Resources) Display.getInstance().extractHardRef(cachedResource);
+                    r = (Resources) Display.getInstance().extractHardRef(cachedResource);
                     if (r != null) {
                         return r;
                     }
                 }
-                InputStream is = Display.getInstance().getResourceAsStream(classLoader, resource);
+                is = Display.getInstance().getResourceAsStream(classLoader, resource);
                 if (is == null) {
                     throw new IOException(resource + " not found");
                 }
-                Resources r = new Resources(is);
-                is.close();
+                r = new Resources(is);
+                
                 lastLoadedName = resource;
                 cachedResource = Display.getInstance().createSoftWeakRef(r);
                 return r;
@@ -558,6 +560,10 @@ public class Resources {
             // intercept exceptions since user code might not deal well with runtime exceptions 
             err.printStackTrace();
             throw new IOException(err.getMessage());
+        }finally {
+            if(is != null) {
+                is.close();
+            }
         }
     }
 
