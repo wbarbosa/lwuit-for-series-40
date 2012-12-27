@@ -1724,10 +1724,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
      * @inheritDoc
      */
     public void focusGained(Component cmp) {
-        if(Display.getInstance().getDeviceType() != Display.NON_TOUCH_DEVICE) {
-            focusTextEditor();
-        }
-        
+
     }
 
     /**
