@@ -768,7 +768,7 @@ public class Resources {
         if(majorVersion == 0 && minorVersion == 0) {
             byte[] data = new byte[input.readInt()];
             input.readFully(data, 0, data.length);
-            return EncodedImage.create(data);
+            return Image.createImage(data, 0, data.length);
         } else {
             int type = input.readByte() & 0xff;
             switch(type) {
@@ -780,8 +780,6 @@ public class Resources {
                     byte[] data = new byte[input.readInt()];
                     input.readFully(data, 0, data.length);
                     return Image.createImage(data, 0, data.length);
-                    //return EncodedImage.create(data);
-
                 // Indexed image
                 case 0xF3:
                     return createPackedImage8();
@@ -911,7 +909,7 @@ public class Resources {
     }
 
     Image readMultiImage(DataInputStream input, boolean skipAll) throws IOException {
-        EncodedImage resultImage = null;
+        Image resultImage = null;
         int dpi = Display.getInstance().getDeviceDensity();
         int dpiCount = input.readInt();
         int bestFitOffset = 0;
@@ -931,7 +929,7 @@ public class Resources {
             if(!skipAll && bestFitOffset == iter) {
                 byte[] multiImageData = new byte[size];
                 input.readFully(multiImageData, 0, size);
-                resultImage = EncodedImage.create(multiImageData);
+                resultImage = Image.createImage(multiImageData, 0, multiImageData.length);
             } else {
                 while(size > 0) {
                     size -= input.skip(size);
