@@ -921,13 +921,13 @@ public abstract class LookAndFeel {
     }
 
     private void initScroll() {
-        verticalScroll = new Label();
+        verticalScroll = new ScrollComponent();
         verticalScroll.setUIID("Scroll");
-        horizontalScroll = new Label();
+        horizontalScroll = new ScrollComponent();
         horizontalScroll.setUIID("HorizontalScroll");
-        verticalScrollThumb = new Label();;
+        verticalScrollThumb = new ScrollComponent();
         verticalScrollThumb.setUIID("ScrollThumb");
-        horizontalScrollThumb = new Label();
+        horizontalScrollThumb = new ScrollComponent();
         horizontalScrollThumb.setUIID("HorizontalScrollThumb");
     }
 
