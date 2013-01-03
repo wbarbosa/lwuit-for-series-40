@@ -248,9 +248,18 @@ public class GenerateHelper {
                         new File(nbprojectDir, "build-impl.xml"),
                         new File(nbprojectDir, "project.properties"),
                         new File(nbprojectDir, "project.xml"));
-
-                //replaceStringInFiles("DeviceXGenerated", projectName.getText() + "_DeviceX", new File(destFolder, "DeviceX/build.xml"),
-                //        new File(destFolder, "DeviceX/nbproject/project.xml"));
+                String description = (String)selectSDK.getSelectedItem();
+                String[] value = SELECTABLE_SDKS.get(description);
+                String active = value[0];
+                String device = value[1];
+                //replace active
+                replaceStringInFiles("Nokia_SDK_1_1_for_Java", active, new File(nbprojectDir, "project.properties"));
+                //replace description
+                replaceStringInFiles("Nokia SDK 1.1 for Java", description, new File(nbprojectDir, "project.properties"));
+                //replace device
+                replaceStringInFiles("Nokia_SDK_1_1_Java", device, new File(nbprojectDir, "project.properties"));
+                
+                
 
                 replaceStringInFiles("DesktopGenerated", projectName.getText() + "_Desktop", new File(destFolder, "Desktop/build.xml"),
                         new File(destFolder, "Desktop/nbproject/build-impl.xml"),
@@ -272,20 +281,9 @@ public class GenerateHelper {
                         new File(destFolder, "MIDP/nbproject/project.properties"),
                         new File(destFolder, "MIDP/nbproject/project.xml"));
 
-//                replaceStringInFiles("RIMGenerated", projectName.getText() + "_RIM", new File(destFolder, "RIM/build.xml"),
-//                        new File(destFolder, "RIM/nbproject/build-impl.xml"),
-//                        new File(destFolder, "RIM/nbproject/project.properties"),
-//                        new File(destFolder, "RIM/nbproject/project.xml"));
-
-//                replaceStringInFiles("GeneratedProject", projectName.getText(), new File(destFolder, "RIM/build.xml"),
-//                        new File(destFolder, "RIM/nbproject/build-impl.xml"),
-//                        new File(destFolder, "RIM/nbproject/project.properties"),
-//                        new File(destFolder, "RIM/nbproject/project.xml"));
 
                 replaceStringInFiles("res_file.res", loadedFile.getName(), 
                         new File(midletUserclassesDir, "MainMIDlet.java"),
-//                        new File(rimUserclassesDir, "MainMIDlet.java"),
-                        //new File(destFolder, "DeviceX/src/com/mycompany/MainActivity.java"),
                         new File(destFolder, "Desktop/src/desktop/Main.java"),
                         new File(destFolder, "Desktop/src/desktop/LWUITApplet.java"));
 
