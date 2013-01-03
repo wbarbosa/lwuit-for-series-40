@@ -38,7 +38,9 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.net.URI;
 import java.util.Properties;
+import java.util.TreeMap;
 import java.util.prefs.Preferences;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -133,7 +135,16 @@ public class GenerateHelper {
 //        "/GeneratedProject/RIM/src/userclasses/MainMIDlet.java",
         "/GeneratedProject/src/userclasses/StateMachine.java"
     };
+    private static final TreeMap<String, String[]> SELECTABLE_SDKS = new TreeMap<String, String[]>();
+    
 
+    public GenerateHelper() {
+        //In project.properties file:
+        //platform.active.description, platform.active, platform.device
+        SELECTABLE_SDKS.put("Nokia SDK 2.0 for Java", new String[]{"Nokia_SDK_2_0_for_Java", "Nokia_SDK_2_0_Java"});
+        SELECTABLE_SDKS.put("Nokia SDK 1.1 for Java", new String[]{"Nokia_SDK_1_1_for_Java", "Nokia_SDK_1_1_Java"});
+        SELECTABLE_SDKS.put("Series 40 6th Edition SDK", new String[]{"Series_40_6th_Edition_SDK", "S40_6th_Edition_SDK"});
+    }
 
     private void replaceStringInFile(File destinationFile, String sourceValue, String newValue) throws IOException {
         DataInputStream i = new DataInputStream(new FileInputStream(destinationFile));
@@ -168,6 +179,11 @@ public class GenerateHelper {
             JTextField projectName = new JTextField("NewProject");
             int res = JOptionPane.showConfirmDialog(mainPanel, projectName, "Enter Name For Project", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if(res != JOptionPane.OK_OPTION) {
+                return null;
+            }
+            JComboBox selectSDK = new JComboBox(SELECTABLE_SDKS.keySet().toArray());
+            int result = JOptionPane.showConfirmDialog(mainPanel, selectSDK, "Select target SDK", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if(result != JOptionPane.OK_OPTION) {
                 return null;
             }
             File[] f = ResourceEditorView.showSaveDirFileChooser();
