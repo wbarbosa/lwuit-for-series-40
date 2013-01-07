@@ -688,7 +688,10 @@ public class UIManager {
             throws IOException {
         if (deviceType == Display.getInstance().getDeviceType()) {
             Resources r;
+            long time = System.currentTimeMillis();
             r = Resources.open((String) resRef);
+            time = System.currentTimeMillis() - time;
+            System.out.println(resRef + " load time:" + time);
             UIManager.getInstance().setThemeProps(r.getTheme(themeId));
         }
     }

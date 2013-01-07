@@ -446,6 +446,8 @@ public abstract class LookAndFeel {
     private void drawScroll(Graphics g, Component c, float offsetRatio,
             float blockSizeRatio, boolean isVertical, int x, int y, int width, int height,
             Component scroll, Component scrollThumb) {
+        
+        boolean drawScroll = true;
         Style scrollStyle = scroll.getUnselectedStyle();
         Style scrollThumbStyle = scrollThumb.getUnselectedStyle();
 
@@ -453,6 +455,11 @@ public abstract class LookAndFeel {
         int thumbAlpha = scrollThumbStyle.getBgTransparency() & 0xff;
         int originalAlpha = g.getAlpha();
         if(fadeScrollBar) {
+            if(c.getScrollOpacity() > 0) {
+                drawScroll = true;
+            }else {
+                drawScroll = false;
+            }
             scrollStyle.setBgTransparency(c.getScrollOpacity(), true);
             scrollThumbStyle.setBgTransparency(c.getScrollOpacity(), true);
             g.setAlpha(c.getScrollOpacity());
@@ -474,9 +481,9 @@ public abstract class LookAndFeel {
         int cy = g.getClipY();
         int cw = g.getClipWidth();
         int ch = g.getClipHeight();
-
-        scroll.paintComponent(g);
-
+        if(drawScroll) {
+            scroll.paintComponent(g);
+        }
         marginLeft = scrollThumbStyle.getMargin(c.isRTL(), Component.LEFT);
         marginTop = scrollThumbStyle.getMargin(false, Component.TOP);
         x += marginLeft;
@@ -507,7 +514,9 @@ public abstract class LookAndFeel {
         }
         
         g.setClip(cx, cy, cw, ch);
-        scrollThumb.paintComponent(g);
+        if(drawScroll) {
+            scrollThumb.paintComponent(g);
+        }
         g.setClip(cx, cy, cw, ch);
         if(fadeScrollBar) {
             scrollStyle.setBgTransparency(alpha, true);
@@ -952,7 +961,6 @@ public abstract class LookAndFeel {
         fadeScrollEdge = m.isThemeConstant("fadeScrollEdgeBool", false);
         fadeScrollEdgeLength = m.getThemeConstant("fadeScrollEdgeInt", fadeScrollEdgeLength);
         fadeScrollBar = m.isThemeConstant("fadeScrollBarBool", false);
-
         try {
             tickerSpeed = Long.parseLong(m.getThemeConstant("tickerSpeedInt", "" + tickerSpeed));
             if(tickerSpeed < 1) {

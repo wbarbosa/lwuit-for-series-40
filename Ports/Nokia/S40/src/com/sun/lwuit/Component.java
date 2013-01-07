@@ -2046,6 +2046,7 @@ public class Component implements Animation, StyleListener {
      * @param y the pointer y coordinate
      */
     public void pointerPressed(int x, int y) {
+        scrollOpacity = 0xff;
         dragActivated = false;
         clearDrag();
     }
@@ -3819,6 +3820,10 @@ public class Component implements Animation, StyleListener {
 
         public void paint(Graphics g) {
         }
+    }
+    
+    protected void setScrollOpacity(int opacity) {
+        scrollOpacity = opacity;
     }
 
     /**

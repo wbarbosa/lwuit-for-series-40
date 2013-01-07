@@ -465,6 +465,7 @@ public class Display {
                 UIManager.getInstance().loadThemeForDeviceType("/nokia_non_touch_theme.res", NON_TOUCH_DEVICE, "NokiaTheme");
             } catch (IOException e) {
                 System.out.println("Can't load Nokia Theme");
+                e.printStackTrace();
             }
             com.sun.lwuit.VirtualKeyboard vkb = new com.sun.lwuit.VirtualKeyboard();
             INSTANCE.registerVirtualKeyboard(vkb);

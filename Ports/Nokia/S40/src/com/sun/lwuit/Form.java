@@ -1743,6 +1743,7 @@ public class Form extends Container {
      * @inheritDoc
      */
     public void pointerPressed(int x, int y) {
+        contentPane.setScrollOpacity(0xff);
         if(pointerPressedListeners != null) {
             pointerPressedListeners.fireActionEvent(new ActionEvent(this, x, y));
         }
