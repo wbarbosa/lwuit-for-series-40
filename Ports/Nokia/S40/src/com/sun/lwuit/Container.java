@@ -1080,7 +1080,6 @@ public class Container extends Component {
      * @inheritDoc
      */
     public void pointerPressed(int x, int y) {
-        System.out.println("Container pointerpressed:" + Integer.toHexString(hashCode()));
         clearDrag();
         setDragActivated(false);
         Component cmp = getComponentAt(x, y);
