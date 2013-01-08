@@ -23,6 +23,7 @@
  */
 package com.sun.lwuit;
 
+import com.nokia.mid.ui.CategoryBar;
 import com.sun.lwuit.animations.Motion;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
@@ -165,11 +166,22 @@ public class Tabs extends Container {
      */
     protected void initComponent() {
         super.initComponent();
+        
         Form form = this.getComponentForm();
         if (form != null && swipeActivated) {
             form.addPointerPressedListener(press);
             form.addPointerReleasedListener(release);
             form.addPointerDraggedListener(drag);
+        }        
+        
+        if (tabPlacement == BOTTOM && Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE) {
+            if (form != null && form.getMenuBar().getBackCommand() != null) {
+                Style style = tabsContainer.getStyle();
+                int currentPadding = style.getPadding(RIGHT);
+                int backWidth = CategoryBar.getBestImageHeight(CategoryBar.IMAGE_TYPE_BACKGROUND);
+                style.setPadding(RIGHT, backWidth + currentPadding);
+                tabsContainer.layoutContainer();
+            }
         }
     }
 
