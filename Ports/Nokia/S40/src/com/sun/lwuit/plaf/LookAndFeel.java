@@ -460,9 +460,10 @@ public abstract class LookAndFeel {
             }else {
                 drawScroll = false;
             }
-            scrollStyle.setBgTransparency(c.getScrollOpacity(), true);
-            scrollThumbStyle.setBgTransparency(c.getScrollOpacity(), true);
-            g.setAlpha(c.getScrollOpacity());
+            //disabled in S40 since it's very heavy operation to change transparency level
+            //scrollStyle.setBgTransparency(c.getScrollOpacity(), true);
+            //scrollThumbStyle.setBgTransparency(c.getScrollOpacity(), true);
+            //g.setAlpha(c.getScrollOpacity());
         }
         // take margin into consideration when positioning the scroll
         int marginLeft = scrollStyle.getMargin(c.isRTL(), Component.LEFT);
@@ -960,7 +961,7 @@ public abstract class LookAndFeel {
         boolean isTouch = Display.getInstance().isTouchScreenDevice();
         fadeScrollEdge = m.isThemeConstant("fadeScrollEdgeBool", false);
         fadeScrollEdgeLength = m.getThemeConstant("fadeScrollEdgeInt", fadeScrollEdgeLength);
-        fadeScrollBar = m.isThemeConstant("fadeScrollBarBool", false);
+        fadeScrollBar = false;//m.isThemeConstant("fadeScrollBarBool", false);
         try {
             tickerSpeed = Long.parseLong(m.getThemeConstant("tickerSpeedInt", "" + tickerSpeed));
             if(tickerSpeed < 1) {
