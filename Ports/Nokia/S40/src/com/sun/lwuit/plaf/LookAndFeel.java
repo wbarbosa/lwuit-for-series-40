@@ -460,9 +460,10 @@ public abstract class LookAndFeel {
             }else {
                 drawScroll = false;
             }
-            scrollStyle.setBgTransparency(c.getScrollOpacity(), true);
-            scrollThumbStyle.setBgTransparency(c.getScrollOpacity(), true);
-            g.setAlpha(c.getScrollOpacity());
+            //disabled in S40 since it's very heavy operation to change transparency level
+            //scrollStyle.setBgTransparency(c.getScrollOpacity(), true);
+            //scrollThumbStyle.setBgTransparency(c.getScrollOpacity(), true);
+            //g.setAlpha(c.getScrollOpacity());
         }
         // take margin into consideration when positioning the scroll
         int marginLeft = scrollStyle.getMargin(c.isRTL(), Component.LEFT);
