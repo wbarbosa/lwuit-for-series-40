@@ -122,7 +122,8 @@ public class FlowLayout extends Layout{
     }
 
     private void fillRow(Container target, int width, int start, int end) {        
-        if(fillRows) {
+        if(fillRows && end - start > 0) {
+            
             Vector toBeStretched = new Vector();
             int stretchWidth = width / (end - start);
             
@@ -133,15 +134,16 @@ public class FlowLayout extends Layout{
             }
             
             // Determine biggest common width for components in need for stretching
-            for(int i = 0, size = toBeStretched.size(); i < size ; i++) {
+            for(int i = 0, size = toBeStretched.size(); i < size ; i++) {                
                 Component c = (Component) toBeStretched.elementAt(i);
-                int w = c.getWidth();
+                int w = c.getWidth();                
                 if(w >= stretchWidth) {
                     // Start over, ignore oversized component
                     toBeStretched.removeElement(c);
                     size = toBeStretched.size();
-                    if(size > 0) {
-                        width -= c.getWidth();                    
+                    
+                    if(size > 0) {                        
+                        width -= c.getWidth();
                         stretchWidth = width / size;
                         i = 0;
                         continue;
@@ -150,8 +152,7 @@ public class FlowLayout extends Layout{
                         return;
                     }
                 }
-            }
-            
+            }            
             int x = 0;
             
             // Stretch and reposition components
@@ -167,6 +168,7 @@ public class FlowLayout extends Layout{
                 if(toBeStretched.contains(c)) {
                     c.setWidth(stretchWidth);
                 }
+                
                 boolean rtl = target.isRTL();
                 if(rtl) {
                     x -= c.getWidth();
