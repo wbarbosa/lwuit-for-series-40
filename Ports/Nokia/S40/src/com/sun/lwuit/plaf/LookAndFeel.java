@@ -961,7 +961,7 @@ public abstract class LookAndFeel {
         boolean isTouch = Display.getInstance().isTouchScreenDevice();
         fadeScrollEdge = m.isThemeConstant("fadeScrollEdgeBool", false);
         fadeScrollEdgeLength = m.getThemeConstant("fadeScrollEdgeInt", fadeScrollEdgeLength);
-        fadeScrollBar = false;//m.isThemeConstant("fadeScrollBarBool", false);
+        fadeScrollBar = m.isThemeConstant("fadeScrollBarBool", false);
         try {
             tickerSpeed = Long.parseLong(m.getThemeConstant("tickerSpeedInt", "" + tickerSpeed));
             if(tickerSpeed < 1) {
