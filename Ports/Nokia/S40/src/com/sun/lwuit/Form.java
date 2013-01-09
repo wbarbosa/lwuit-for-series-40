@@ -1870,9 +1870,6 @@ public class Form extends Container {
      * @inheritDoc
      */
     public void pointerDragged(int x, int y) {
-        if(pointerDraggedListeners != null) {
-            pointerDraggedListeners.fireActionEvent(new ActionEvent(this, x, y));
-        }
         //check if the drag is relevant to the menu bar.
         if (menuBar.contains(x, y)) {
             Component cmp = menuBar.getComponentAt(x, y);
@@ -1881,6 +1878,11 @@ public class Form extends Container {
             }
             return;
         }
+        
+        if(pointerDraggedListeners != null) {
+            pointerDraggedListeners.fireActionEvent(new ActionEvent(this, x, y));
+        }
+        
         if (dragged != null) {
             dragged.pointerDragged(x, y);
             return;
