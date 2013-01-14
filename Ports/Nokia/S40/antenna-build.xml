@@ -119,7 +119,7 @@
         <!-- create sdk1.1 binaries -->
         <jar destfile="${bin}/sdk1.1/S40-with-themes.jar">
             <zipfileset src="dist/S40.jar" 
-                        excludes="full_touch_theme.res **/MIDPIconCommandWrapper* **/OrientationProviderImpl* **/S40FullTouchImplementation*" />
+                        excludes="full_touch_theme.res **/MIDPIconCommandWrapper* **/OrientationProviderImpl* **/S40FullTouchImplementation* **/CategoryBarProvider*" />
         </jar>
         <jar destfile="${bin}/sdk1.1/S40-touch-and-type.jar">
             <zipfileset src="${bin}/sdk1.1/S40-with-themes.jar" excludes="nokia_non_touch_theme.res" />
