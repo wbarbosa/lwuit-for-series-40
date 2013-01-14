@@ -1,5 +1,24 @@
 Changelog
 -------------------------------------------------------------------------------
+0.9.0 Beta
+    * list component styling finalized for non-touch.
+    * Tab component themed on all platforms.
+    * Fixed issue with texteditor getting focus in pressed event.
+    * Fixed issue with ticker feature breaking on orientation change
+    * Added a dialog for selecting SDK in ResourceEditor when generating
+      new project.
+    * Scrollbar restyled for FT, now it dissappears similary the way platform
+      does it.
+    * Restyled dialogs in FT to match platform style
+    * Fixed issues with flowLayout not working properly with three buttons.
+    * Optimized theme memoryusage, now it consumes almost half less memory.
+      This was achieved by removing EncodedImage usage and replacing that with
+      ordinary Image class. EncodedImage loads the imagebinary to memory but also
+      loads the same data as an Image object which causes excess calls to gc and
+      consumes memory.
+    * Fix for bug(ticket #19) where pressing and dragging over menubar causes
+      menubuttons to change state.
+
 0.8.3 Beta
     * BoxLayout now default layout for Form
     * Added CategoryBarProvider that acts as a wrapper for CategoryBar API
