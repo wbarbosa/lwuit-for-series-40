@@ -22,7 +22,8 @@
     <property name="bin" location="../../../Series-40-binaries/bin" />
     <property name="package-version" value="0.7.1" />
     <property name="template-folder" value="../../../tools/Lwuit-ResourceEditor/src/main/resources/templates" />
-
+    <property name="generated-proc" value="../../../tools/Lwuit-ResourceEditor/src/main/resources/GeneratedProject" />
+    
     <path id="bootclasspath.ref">
         <fileset dir="${wtk.home}/lib" >
             <include name="*.jar" />
