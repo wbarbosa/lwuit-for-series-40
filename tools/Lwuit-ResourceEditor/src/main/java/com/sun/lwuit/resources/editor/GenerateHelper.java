@@ -30,6 +30,7 @@ import java.awt.Desktop;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -84,6 +85,10 @@ public class GenerateHelper {
 //        "/GeneratedProject/RIM/src/userclasses",
         "/GeneratedProject/src/generated",
         "/GeneratedProject/src/userclasses",
+        "/GeneratedProject/binaries",
+        "/GeneratedProject/binaries/s40-6th-ed-sdk",
+        "/GeneratedProject/binaries/sdk1.1",
+        "/GeneratedProject/binaries/sdk2.0"
     };
     static final String[] GENERATED_PROJECT_FILE_NAMES = {
         "/GeneratedProject/build.xml",
@@ -91,7 +96,6 @@ public class GenerateHelper {
         "/GeneratedProject/IO_SE.jar",
         "/GeneratedProject/README.TXT",
         "/GeneratedProject/UI.jar",
-        "/GeneratedProject/S40.jar",
 //        "/GeneratedProject/UI_RIM.jar",
 //        "/GeneratedProject/UI_RIM_Touch.jar",
         "/GeneratedProject/UI_SE.jar",
@@ -133,10 +137,16 @@ public class GenerateHelper {
 //        "/GeneratedProject/RIM/nbproject/project.properties",
 //        "/GeneratedProject/RIM/nbproject/project.xml",
 //        "/GeneratedProject/RIM/src/userclasses/MainMIDlet.java",
-        "/GeneratedProject/src/userclasses/StateMachine.java"
+        "/GeneratedProject/src/userclasses/StateMachine.java",
+        "/GeneratedProject/binaries/s40-6th-ed-sdk/S40-with-themes.jar",
+        "/GeneratedProject/binaries/sdk1.1/S40-with-themes.jar",
+        "/GeneratedProject/binaries/sdk2.0/S40-with-themes.jar"
     };
     private static final TreeMap<String, String[]> SELECTABLE_SDKS = new TreeMap<String, String[]>();
     
+    private static final String S40_JAR_FILE = "S40-with-themes.jar";
+    
+    private static final String[] S40_JAR_FOLDER_NAMES = new String[] {"binaries/s40-6th-ed-sdk", "binaries/sdk1.1", "binaries/sdk2.0"};
 
     public GenerateHelper() {
         //In project.properties file:
@@ -259,6 +269,19 @@ public class GenerateHelper {
                 //replace device
                 replaceStringInFiles("Nokia_SDK_1_1_Java", device, new File(nbprojectDir, "project.properties"));
                 
+                if(description.contains("SDK 2.0")) {
+                    replaceS40JarFilename(new File(nbprojectDir, "project.properties"), S40_JAR_FILE, S40_JAR_FOLDER_NAMES[2]);
+                    replaceS40JarFilename(new File(destFolder, "MIDP/nbproject/project.properties"), S40_JAR_FILE, S40_JAR_FOLDER_NAMES[2]);
+                    
+                }else if(description.contains("SDK 1.1")) {
+                    replaceS40JarFilename(new File(nbprojectDir, "project.properties"), S40_JAR_FILE, S40_JAR_FOLDER_NAMES[1]);
+                    replaceS40JarFilename(new File(destFolder, "MIDP/nbproject/project.properties"), S40_JAR_FILE, S40_JAR_FOLDER_NAMES[1]);
+                    
+                }else if(description.contains("Series 40 6th")) {
+                    replaceS40JarFilename(new File(nbprojectDir, "project.properties"), S40_JAR_FILE, S40_JAR_FOLDER_NAMES[0]);
+                    replaceS40JarFilename(new File(destFolder, "MIDP/nbproject/project.properties"), S40_JAR_FILE, S40_JAR_FOLDER_NAMES[0]);
+                    
+                }
                 
 
                 replaceStringInFiles("DesktopGenerated", projectName.getText() + "_Desktop", new File(destFolder, "Desktop/build.xml"),
@@ -297,6 +320,24 @@ public class GenerateHelper {
             JOptionPane.showMessageDialog(mainPanel, "IO Error occured during creation: " + err, "IO Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
+    }
+    
+    void replaceS40JarFilename(File file, String jarname, String jarfolder) throws FileNotFoundException, IOException{
+        DataInputStream i = new DataInputStream(new FileInputStream(file));
+        byte[] b = new byte[(int)file.length()];
+        i.readFully(b);
+        i.close();
+        String val = new String(b);
+        val = val.replaceAll("file.reference.UI.jar", "file.reference." + jarname);
+        val = val.replaceAll("=UI.jar", "=" + jarfolder + "/" + jarname);
+        val = val.replaceAll("file.reference.S40.jar", "file.reference." + jarname);
+        val = val.replaceAll("=../S40.jar", "=" + "../" + jarfolder + "/" + jarname);
+        
+        
+        
+        Writer out = new FileWriter(file);
+        out.write(val);
+        out.close();
     }
 
     void createFileInDir(String resourceName, File destinationFile) throws IOException {
