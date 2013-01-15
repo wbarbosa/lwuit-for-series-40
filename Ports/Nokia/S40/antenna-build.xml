@@ -144,6 +144,11 @@
         <jar destfile="${bin}/s40-6th-ed-sdk/S40-no-themes.jar">
             <zipfileset src="${bin}/s40-6th-ed-sdk/S40-with-themes.jar" excludes="*.res" />
         </jar>
+        <!-- copy binaries to generated project -->
+        <copy file="dist/S40.jar" tofile="${generated-proc}/S40.jar" />
+        <copy todir="${generated-proc}/binaries">
+            <fileset dir="${bin}" />
+        </copy> 
     </target>
 	
     <target name="test-clean">
