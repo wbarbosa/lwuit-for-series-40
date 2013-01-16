@@ -681,7 +681,23 @@ public class Form extends Container {
         return menuBar.getBackCommand();
     }
 
-
+    /**
+     * Indicates the command that is defined as the select command in this form.
+     * 
+     * @param selectCommand the command to treat as the select Command
+     */
+    public void setSelectCommand(Command selectCommand) {
+        menuBar.setSelectCommand(selectCommand);
+    }
+    
+    /**
+     * Indicates the command that is defined as the select command in this form.
+     * @return the command to treat as the select Command
+     */
+    public Command getSelectCommand() {
+        return menuBar.getSelectCommand();
+    }
+    
     /**
      * Sets the title after invoking the constructor
      * 
