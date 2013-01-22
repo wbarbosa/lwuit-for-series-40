@@ -216,7 +216,7 @@ public class Dialog extends Form {
         this("Dialog", "DialogTitle");
     }
 
-    Dialog(String dialogUIID, String dialogTitleUIID) {
+    protected Dialog(String dialogUIID, String dialogTitleUIID) {
         super();
 
         commandsAsButtons = Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE;
@@ -1428,7 +1428,7 @@ public class Dialog extends Form {
     /**
      * Indicates that this is a menu preventing getCurrent() from ever returning this class
      */
-    void setMenu(boolean menu) {
+    protected void setMenu(boolean menu) {
         this.menu = menu;
     }
 
@@ -1661,5 +1661,10 @@ public class Dialog extends Form {
         this.dialogPosition = dialogPosition;
     }
     
-    
+    public void setDisposeOnRotation(boolean value) {
+        disposeOnRotation = value;
+    }
+    public boolean getDisposeOnRotation() {
+        return disposeOnRotation;
+    }
 }

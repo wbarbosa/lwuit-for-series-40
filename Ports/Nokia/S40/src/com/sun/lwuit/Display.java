@@ -830,6 +830,7 @@ public class Display {
 
                 edtLoopImpl();
             } catch(Throwable err) {
+                err.printStackTrace();
                 if(!impl.handleEDTException(err)) {
                     if(errorHandler != null) {
                         errorHandler.fireActionEvent(new ActionEvent(err));
