@@ -1170,7 +1170,7 @@ public class Border {
                         // we are bellow the component
                         arrowUpImage = specialTile[0];
                         arrowPosition = (trackX + trackComponent.getWidth() / 2) - cabsX - arrowUpImage.getWidth() / 2;
-                    } else {    
+                    }else {
                         if(cabsY + c.getHeight() <= trackY) {
                             // we are above the component
                             arrowDownImage = specialTile[1];
@@ -1187,6 +1187,7 @@ public class Border {
                                     arrowPosition = (trackY + trackComponent.getHeight() / 2) - cabsY - arrowRightImage.getHeight() / 2;
                                 }
                             }
+                            
                         }
                     }
                 }

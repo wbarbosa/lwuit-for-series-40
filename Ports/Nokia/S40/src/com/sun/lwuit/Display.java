@@ -827,7 +827,7 @@ public class Display {
                          impl.edtIdle(false);
                      }
                  }
-
+                 
                 edtLoopImpl();
             } catch(Throwable err) {
                 err.printStackTrace();

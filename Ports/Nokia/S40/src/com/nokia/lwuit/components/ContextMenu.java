@@ -8,9 +8,11 @@ import com.sun.lwuit.Command;
 import com.sun.lwuit.Component;
 import com.sun.lwuit.Dialog;
 import com.sun.lwuit.Display;
+import com.sun.lwuit.Graphics;
 import com.sun.lwuit.Image;
 import com.sun.lwuit.Label;
 import com.sun.lwuit.List;
+import com.sun.lwuit.Painter;
 import com.sun.lwuit.animations.CommonTransitions;
 import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
@@ -34,8 +36,13 @@ public class ContextMenu extends Dialog implements ActionListener{
     private List mList;
     private ContextMenuListener mListener;
     private List mParentList;
+    private final Image mArrow = UIManager.getInstance().getThemeImageConstant("ContextMenuArrowLeftImage");
     
-    
+    /**
+     * we need to skip the next release event since otherwise it will cause
+     * the contextmenu to disappear immediately the user lifts the finger of
+     * the screen.
+     */
     private boolean skipRelease = false;
     
     public ContextMenu(List parentList) {
@@ -43,8 +50,8 @@ public class ContextMenu extends Dialog implements ActionListener{
         getContentPane().setUIID("ContextMenu");
         mParentList = parentList;
         setDisposeWhenPointerOutOfBounds(true);
-        setTransitionInAnimator(CommonTransitions.createEmpty());
-        setTransitionOutAnimator(CommonTransitions.createEmpty());
+        setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, false, 500));
+        setTransitionOutAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, true, 500));
         mList = new List();
         mList.addActionListener(this);
         
@@ -52,15 +59,27 @@ public class ContextMenu extends Dialog implements ActionListener{
         getTitleArea().setVisible(false);
         setScrollable(false);
         DefaultListCellRenderer renderer = new DefaultListCellRenderer();
+        renderer.setShowNumbers(false);
         renderer.setUIID("TouchCommand");
         mList.setListCellRenderer(renderer);
         renderer.getStyle().setFgColor(0x000000, true);
         getContentPane().getStyle().setMargin(0, 0, 0, 0);
+        
+        getContentPane().getStyle().setMargin(Component.LEFT, mArrow.getWidth());
         addComponent(BorderLayout.CENTER, mList);
         skipRelease = true;
         setDisposeOnRotation(true);
+        
        
     }
+
+    public void paint(Graphics g) {
+        super.paint(g);      
+        int y = mList.getAbsoluteY();
+        int x = mList.getAbsoluteX() - mArrow.getWidth();
+        g.drawImage(mArrow, x, y);
+    }
+    
     
     public void setMenuItems(ListModel model) {
         mList.setModel(model);
@@ -75,6 +94,8 @@ public class ContextMenu extends Dialog implements ActionListener{
         }
     }
     public void show() {
+        //if called from gestureevent we need to get back to edt, otherwise
+        //the app will freeze to the platform thread running the gestureevent.
         Display.getInstance().callSerially(new Runnable() {
 
             public void run() {
@@ -83,7 +104,8 @@ public class ContextMenu extends Dialog implements ActionListener{
         });
     }
     private void showImpl() {
-        final int MaxAmountOfListItems = (Display.getInstance().isPortrait()) ? 6 : 3;
+        
+        final double MaxAmountOfListItems = (Display.getInstance().isPortrait()) ? 6.0 : 3.5;
         skipRelease = true;
         this.getStyle().setPadding(0, 0, 0, 0);
         Component contentPane = super.getContentPane();
@@ -91,8 +113,8 @@ public class ContextMenu extends Dialog implements ActionListener{
 
         int listsize = mList.getModel().getSize();
         
-        int itemsToShow = (listsize < MaxAmountOfListItems) ? listsize : MaxAmountOfListItems;
-        int menuHeight = itemsToShow*((Component) mParentList.getRenderer()).getPreferredH();
+        double itemsToShow = (listsize < MaxAmountOfListItems) ? listsize : MaxAmountOfListItems;
+        int menuHeight = (int)(itemsToShow*((Component) mParentList.getRenderer()).getPreferredH());
         
         menuHeight += getStyle().getPadding(Component.TOP) + getStyle().getPadding(Component.BOTTOM);
         menuHeight += getContentPane().getStyle().getPadding(Component.TOP) +
@@ -104,10 +126,8 @@ public class ContextMenu extends Dialog implements ActionListener{
         }
         menuHeight += contentPane.getStyle().getPadding(Component.TOP);
         menuHeight += contentPane.getStyle().getPadding(Component.BOTTOM);
-        //hide title
-        getTitleComponent().setVisible(false);
         
-        // allows a text area to recalculate its preferred size if embedded within a dialog
+        //make sure the components are calculated correctly
         revalidate();
 
         Style contentPaneStyle = getContentPane().getStyle();
@@ -120,8 +140,7 @@ public class ContextMenu extends Dialog implements ActionListener{
         Image r = UIManager.getInstance().getThemeImageConstant("ContextMenuArrowRightImage");
         Border border = contentPaneStyle.getBorder();
         if (border != null) {
-            System.out.println("setting arrows");
-            border.setImageBorderSpecialTile(t, b, l, r, mParentList);
+            border.setImageBorderSpecialTile(t, b, l, r, this);
             restoreArrow = true;
         }
         
@@ -147,15 +166,15 @@ public class ContextMenu extends Dialog implements ActionListener{
         int bottom = displayHeight - (y + menuHeight);
         bottom = (bottom < 0) ? 0 : bottom;
 
-        int left = 0;
+        int right = 0;
         if(availableWidth > displayHeight) {
-            left = displayHeight;
+            right = displayHeight;
         }
-        show(y, bottom, x, left, true, true);
+        show(y, bottom, x, right, true, true);
         
-        if(restoreArrow) {
+        /*if(restoreArrow) {
             contentPaneStyle.getBorder().clearImageBorderSpecialTile();
-        }
+        }*/
         
     }
     
@@ -177,6 +196,8 @@ public class ContextMenu extends Dialog implements ActionListener{
         super.pointerPressed(x, y);
         skipRelease = false;
     }
+    
+    
     
     public static interface ContextMenuListener {
         public void menuItemSelected(int index);
