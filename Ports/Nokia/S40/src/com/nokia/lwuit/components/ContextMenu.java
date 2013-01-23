@@ -48,6 +48,7 @@ public class ContextMenu extends Dialog implements ActionListener{
     public ContextMenu(List parentList) {
         super("", "");
         getContentPane().setUIID("ContextMenu");
+        getContentPane().getParent().getStyle().setBgTransparency(0);
         mParentList = parentList;
         setDisposeWhenPointerOutOfBounds(true);
         setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, false, 500));
@@ -74,8 +75,14 @@ public class ContextMenu extends Dialog implements ActionListener{
     }
 
     public void paint(Graphics g) {
-        super.paint(g);      
-        int y = mList.getAbsoluteY();
+        super.paint(g);
+        Rectangle rect = mParentList.getSelectedRect();
+        int y = rect.getY();
+        if(y < mList.getAbsoluteY()) {
+            y = mList.getAbsoluteY();
+        }else if(y > (mList.getAbsoluteY() + mList.getHeight() - mArrow.getHeight())) {
+            y = mList.getAbsoluteY() + mList.getHeight() - mArrow.getHeight();
+        }
         int x = mList.getAbsoluteX() - mArrow.getWidth();
         g.drawImage(mArrow, x, y);
     }
