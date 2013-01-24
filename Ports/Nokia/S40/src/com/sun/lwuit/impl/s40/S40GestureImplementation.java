@@ -96,6 +96,7 @@ public class S40GestureImplementation extends S40Implementation{
                 break;
             }
         }
+        System.out.println("setting currenthandler");
         currentFormGestureHandler = h;
     }
     
@@ -127,7 +128,9 @@ public class S40GestureImplementation extends S40Implementation{
         public void gestureAction(Object container, GestureInteractiveZone gestureInteractiveZone, GestureEvent gestureEvent) {
             if (currentFormGestureHandler != null) {
                 if((currentFormGestureHandler.getGestures() & gestureEvent.getType()) != 0) {
-                    currentFormGestureHandler.gestureAction(gestureEvent);
+                    if(Display.getInstance().getCurrent() == currentFormGestureHandler.getForm()) {
+                        currentFormGestureHandler.gestureAction(gestureEvent);
+                    }
                 }
             }
             if (globalGestureHandler != null) {

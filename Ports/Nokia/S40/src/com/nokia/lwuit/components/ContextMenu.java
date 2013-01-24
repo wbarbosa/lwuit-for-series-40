@@ -83,7 +83,7 @@ public class ContextMenu extends Dialog implements ActionListener{
         }else if(y > (mList.getAbsoluteY() + mList.getHeight() - mArrow.getHeight())) {
             y = mList.getAbsoluteY() + mList.getHeight() - mArrow.getHeight();
         }
-        int x = mList.getAbsoluteX() - mArrow.getWidth();
+        int x = mList.getAbsoluteX() - mArrow.getWidth()-1;
         g.drawImage(mArrow, x, y);
     }
     
@@ -116,13 +116,13 @@ public class ContextMenu extends Dialog implements ActionListener{
         skipRelease = true;
         this.getStyle().setPadding(0, 0, 0, 0);
         Component contentPane = super.getContentPane();
-        
 
         int listsize = mList.getModel().getSize();
-        
         double itemsToShow = (listsize < MaxAmountOfListItems) ? listsize : MaxAmountOfListItems;
-        int menuHeight = (int)(itemsToShow*((Component) mParentList.getRenderer()).getPreferredH());
-        
+        int menuHeight = (int)(itemsToShow*((Component) mList.getRenderer()).getPreferredH());
+        if(listsize < MaxAmountOfListItems && menuHeight < mList.getScrollDimension().getHeight()) {
+            menuHeight = mList.getScrollDimension().getHeight();
+        }
         menuHeight += getStyle().getPadding(Component.TOP) + getStyle().getPadding(Component.BOTTOM);
         menuHeight += getContentPane().getStyle().getPadding(Component.TOP) +
                         getContentPane().getStyle().getPadding(Component.BOTTOM);
@@ -133,23 +133,14 @@ public class ContextMenu extends Dialog implements ActionListener{
         }
         menuHeight += contentPane.getStyle().getPadding(Component.TOP);
         menuHeight += contentPane.getStyle().getPadding(Component.BOTTOM);
-        
+        menuHeight += mList.getStyle().getPadding(Component.TOP);
+        menuHeight += mList.getStyle().getPadding(Component.BOTTOM);
+        menuHeight += mList.getStyle().getMargin(Component.TOP);
+        menuHeight += mList.getStyle().getMargin(Component.BOTTOM);
         //make sure the components are calculated correctly
         revalidate();
 
         Style contentPaneStyle = getContentPane().getStyle();
-
-        boolean restoreArrow = false;
-        //set the arrow
-        Image t = UIManager.getInstance().getThemeImageConstant("ContextMenuArrowTopImage");
-        Image b = UIManager.getInstance().getThemeImageConstant("ContextMenuArrowBottomImage");
-        Image l = UIManager.getInstance().getThemeImageConstant("ContextMenuArrowLeftImage");
-        Image r = UIManager.getInstance().getThemeImageConstant("ContextMenuArrowRightImage");
-        Border border = contentPaneStyle.getBorder();
-        if (border != null) {
-            border.setImageBorderSpecialTile(t, b, l, r, this);
-            restoreArrow = true;
-        }
         
         int prefHeight = contentPane.getPreferredH();
         int prefWidth = contentPane.getPreferredW();
@@ -178,10 +169,6 @@ public class ContextMenu extends Dialog implements ActionListener{
             right = displayHeight;
         }
         show(y, bottom, x, right, true, true);
-        
-        /*if(restoreArrow) {
-            contentPaneStyle.getBorder().clearImageBorderSpecialTile();
-        }*/
         
     }
     
