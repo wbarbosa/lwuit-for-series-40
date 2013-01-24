@@ -20,6 +20,7 @@ import com.sun.lwuit.geom.Rectangle;
 import com.sun.lwuit.layouts.BorderLayout;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.list.DefaultListCellRenderer;
+import com.sun.lwuit.list.DefaultListModel;
 import com.sun.lwuit.list.ListModel;
 import com.sun.lwuit.plaf.Border;
 import com.sun.lwuit.plaf.DefaultLookAndFeel;
@@ -35,7 +36,7 @@ public class ContextMenu extends Dialog implements ActionListener{
     
     private List mList;
     private ContextMenuListener mListener;
-    private List mParentList;
+    private Component mParentList;
     private final Image mArrow = UIManager.getInstance().getThemeImageConstant("ContextMenuArrowLeftImage");
     
     /**
@@ -45,7 +46,7 @@ public class ContextMenu extends Dialog implements ActionListener{
      */
     private boolean skipRelease = false;
     
-    public ContextMenu(List parentList) {
+    public ContextMenu(Component parentList) {
         super("", "");
         getContentPane().setUIID("ContextMenu");
         getContentPane().getParent().getStyle().setBgTransparency(0);
@@ -94,23 +95,15 @@ public class ContextMenu extends Dialog implements ActionListener{
 
     public void actionPerformed(ActionEvent ae) {
         ae.consume();
-        
-        this.dispose();
-        if(mListener != null) {
-            mListener.menuItemSelected(mList.getSelectedIndex());
-        }
+        lastCommandPressed = (Command) mList.getSelectedItem();
+        dispose();
     }
-    public void show() {
-        //if called from gestureevent we need to get back to edt, otherwise
-        //the app will freeze to the platform thread running the gestureevent.
-        Display.getInstance().callSerially(new Runnable() {
-
-            public void run() {
-                showImpl();
-            }
-        });
+    public static Command show(Command [] cmds, Component parent) {
+        ContextMenu ctx = new ContextMenu(parent);
+        ctx.setMenuItems(new DefaultListModel(cmds));
+        return ctx.showImpl();
     }
-    private void showImpl() {
+    private Command showImpl() {
         
         final double MaxAmountOfListItems = (Display.getInstance().isPortrait()) ? 6.0 : 3.5;
         skipRelease = true;
@@ -168,8 +161,7 @@ public class ContextMenu extends Dialog implements ActionListener{
         if(availableWidth > displayHeight) {
             right = displayHeight;
         }
-        show(y, bottom, x, right, true, true);
-        
+        return show(y, bottom, x, right, true, true);
     }
     
     

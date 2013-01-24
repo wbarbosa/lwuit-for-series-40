@@ -120,7 +120,7 @@ public class Dialog extends Form {
     /**
      * Indicates the last command selected by the user in this form
      */
-    private Command lastCommandPressed;
+    protected Command lastCommandPressed;
     /**
      * Indicates that this is a menu preventing getCurrent() from ever returning this class
      */
