@@ -35,7 +35,6 @@ import com.sun.lwuit.plaf.UIManager;
 public class ContextMenu extends Dialog implements ActionListener{
     
     private List mList;
-    private ContextMenuListener mListener;
     private Component mParentList;
     private final Image mArrow = UIManager.getInstance().getThemeImageConstant("ContextMenuArrowLeftImage");
     
@@ -76,6 +75,7 @@ public class ContextMenu extends Dialog implements ActionListener{
     }
 
     public void paint(Graphics g) {
+        System.out.println("painting...");
         super.paint(g);
         Rectangle rect = mParentList.getSelectedRect();
         int y = rect.getY();
@@ -164,11 +164,6 @@ public class ContextMenu extends Dialog implements ActionListener{
         return show(y, bottom, x, right, true, true);
     }
     
-    
-    
-    public void setListener(ContextMenuListener listener) {
-        mListener = listener;
-    }
     public void pointerReleased(int x, int y) {
         if(!skipRelease) {
             super.pointerReleased(x, y);
@@ -181,11 +176,5 @@ public class ContextMenu extends Dialog implements ActionListener{
     public void pointerPressed(int x, int y) {
         super.pointerPressed(x, y);
         skipRelease = false;
-    }
-    
-    
-    
-    public static interface ContextMenuListener {
-        public void menuItemSelected(int index);
     }
 }
