@@ -1030,6 +1030,11 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                     x = cmpX + cmpWidth - rightPadding - iconWidth - textWidth;
                     if(l.isRTL()) {
                         x = Math.max(x - preserveSpaceForState, cmpX + leftPadding);
+                        if(l instanceof Button) {
+                            if(((Button)l).isOppositeSide()) {
+                                x = cmpX + l.getWidth() - rightPadding - textWidth;
+                            }
+                        }
                     } else {
                         x = Math.max(x, cmpX + leftPadding + preserveSpaceForState);
                     }
