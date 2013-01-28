@@ -96,7 +96,6 @@ public class S40GestureImplementation extends S40Implementation{
                 break;
             }
         }
-        System.out.println("setting currenthandler");
         currentFormGestureHandler = h;
     }
     
