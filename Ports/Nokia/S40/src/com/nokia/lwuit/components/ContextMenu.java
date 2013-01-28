@@ -75,7 +75,6 @@ public class ContextMenu extends Dialog implements ActionListener{
     }
 
     public void paint(Graphics g) {
-        System.out.println("painting...");
         super.paint(g);
         Rectangle rect = mParentList.getSelectedRect();
         int y = rect.getY();
