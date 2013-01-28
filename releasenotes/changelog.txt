@@ -1,5 +1,10 @@
 Changelog
 -------------------------------------------------------------------------------
+0.9.1 Beta
+    * New component: ContextMenu, a menu that is styled according to Full touch
+      platform.
+    * Bugfixes for slider component
+    * fix for checkbox/radiobutton margins when rtl is true
 0.9.0 Beta
     * list component styling finalized for non-touch.
     * Tab component themed on all platforms.
