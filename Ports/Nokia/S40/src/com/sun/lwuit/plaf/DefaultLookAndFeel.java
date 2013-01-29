@@ -969,7 +969,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
 
         final int textPos= reverseAlignForBidi(l, l.getTextPosition());
         //calculate the space for text
-        int textSpaceW = cmpWidth - rightPadding - leftPadding;
+        int textSpaceW = l.getWidth() - rightPadding - leftPadding;
         
         if (icon != null && (textPos == Label.RIGHT || textPos == Label.LEFT)) {
             textSpaceW = textSpaceW - icon.getWidth();
