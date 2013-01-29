@@ -65,9 +65,6 @@ public class ContextMenu extends Dialog implements ActionListener{
         mList.setListCellRenderer(renderer);
         renderer.getStyle().setFgColor(0x000000, true);
         getContentPane().getStyle().setMargin(0, 0, 0, 0);
-        if(Display.getInstance().getDeviceType() == Display.TOUCH_AND_TYPE_DEVICE) {
-            mList.getStyle().setMargin(5, 5, 10, 5);
-        }
         if(mArrow != null) {
             getContentPane().getStyle().setMargin(Component.LEFT, mArrow.getWidth());
         }
