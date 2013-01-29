@@ -55,7 +55,7 @@ public class ContextMenu extends Dialog implements ActionListener{
         setTransitionOutAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, true, 500));
         mList = new List();
         mList.addActionListener(this);
-        
+        mList.getStyle().setPadding(0, 0, 0, 0);
         setLayout(new BorderLayout());
         getTitleArea().setVisible(false);
         setScrollable(false);
@@ -111,7 +111,11 @@ public class ContextMenu extends Dialog implements ActionListener{
     }
     private Command showImpl() {
         
-        final double MaxAmountOfListItems = (Display.getInstance().isPortrait()) ? 6.0 : 3.5;
+        final double t_and_tLimit = 4.0;
+        double MaxAmountOfListItems = (Display.getInstance().isPortrait()) ? 6.0 : 3.5;
+        if(Display.getInstance().getDeviceType() == Display.TOUCH_AND_TYPE_DEVICE) {
+            MaxAmountOfListItems = t_and_tLimit;
+        }
         skipRelease = true;
         this.getStyle().setPadding(0, 0, 0, 0);
         Component contentPane = super.getContentPane();
