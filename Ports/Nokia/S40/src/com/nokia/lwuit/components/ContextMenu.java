@@ -65,8 +65,12 @@ public class ContextMenu extends Dialog implements ActionListener{
         mList.setListCellRenderer(renderer);
         renderer.getStyle().setFgColor(0x000000, true);
         getContentPane().getStyle().setMargin(0, 0, 0, 0);
-        
-        getContentPane().getStyle().setMargin(Component.LEFT, mArrow.getWidth());
+        if(Display.getInstance().getDeviceType() == Display.TOUCH_AND_TYPE_DEVICE) {
+            mList.getStyle().setMargin(5, 5, 10, 5);
+        }
+        if(mArrow != null) {
+            getContentPane().getStyle().setMargin(Component.LEFT, mArrow.getWidth());
+        }
         addComponent(BorderLayout.CENTER, mList);
         skipRelease = true;
         setDisposeOnRotation(true);
@@ -76,14 +80,20 @@ public class ContextMenu extends Dialog implements ActionListener{
 
     public void paint(Graphics g) {
         super.paint(g);
+        if (Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE) {
+            paintArrow(g);
+        }
+    }
+    
+    private void paintArrow(Graphics g) {
         Rectangle rect = mParentList.getSelectedRect();
         int y = rect.getY();
-        if(y < mList.getAbsoluteY()) {
+        if (y < mList.getAbsoluteY()) {
             y = mList.getAbsoluteY();
-        }else if(y > (mList.getAbsoluteY() + mList.getHeight() - mArrow.getHeight())) {
+        } else if (y > (mList.getAbsoluteY() + mList.getHeight() - mArrow.getHeight())) {
             y = mList.getAbsoluteY() + mList.getHeight() - mArrow.getHeight();
         }
-        int x = mList.getAbsoluteX() - mArrow.getWidth()-1;
+        int x = mList.getAbsoluteX() - mArrow.getWidth() - 1;
         g.drawImage(mArrow, x, y);
     }
     
