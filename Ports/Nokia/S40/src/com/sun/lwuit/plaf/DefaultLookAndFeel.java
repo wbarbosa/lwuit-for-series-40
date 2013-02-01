@@ -1027,12 +1027,13 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                     int iconWidth = (icon != null) ? (icon.getWidth() + gap) : 0;
                     String shortened = shortenString(text, textSpaceW, font);
                     int textWidth = font.stringWidth(shortened);
-                    x = cmpX + cmpWidth - rightPadding - iconWidth - textWidth;
+                    x = cmpX + l.getWidth() - rightPadding - textWidth -iconWidth;
                     if(l.isRTL()) {
                         x = Math.max(x - preserveSpaceForState, cmpX + leftPadding);
                         if(l instanceof Button) {
                             if(((Button)l).isOppositeSide()) {
-                                x = cmpX + l.getWidth() - rightPadding - textWidth;
+                                x = cmpX + l.getWidth() - textWidth - rightPadding;
+                                textSpaceW = textWidth;
                             }
                         }
                     } else {
@@ -1196,9 +1197,9 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             	if (rtl) {
                 	if ((!isTickerRunning) && (l.isEndsWith3Points())) {
 	            		String points = "...";
-	                	int pointsW = f.stringWidth(points);
+	                	int pointsW = f.stringWidth(points);                                
 	            		g.drawString(points, l.getShiftText() + x, y,l.getStyle().getTextDecoration());
-	            		g.clipRect(pointsW+l.getShiftText() + x, y, textSpaceW - pointsW, f.getHeight());
+	            		g.clipRect(pointsW+l.getShiftText() + x, y, textSpaceW - pointsW, f.getHeight());   
                 	}
             		x = x - txtW + textSpaceW;
                 } else {
@@ -1208,7 +1209,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                 }
             }
         }
-
+        
         g.drawString(text, l.getShiftText() + x, y,style.getTextDecoration());
         return Math.min(txtW, textSpaceW);
     }
