@@ -908,6 +908,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         Style style = getStyle();
         rowStrings= new Vector();
         widthForRowCalculations = getWidth() - leftPadding - rightPadding;
+        System.out.println("leftpadding:" + leftPadding + " rightPadding:" + rightPadding);
         // single line text area is essentially a text field, we call the method
         // to allow subclasses to override it
         if ((isSingleLineTextArea()) || (widthForRowCalculations<=0)) {
@@ -922,8 +923,7 @@ public class TextArea extends Component implements TextEditorProvider.TextEditor
         Font font = style.getFont();
         int charWidth = font.charWidth(widestChar);
         
-        int tPadding = style.getPadding(false, RIGHT) + style.getPadding(false, LEFT);
-        int textAreaWidth = getWidth() - tPadding;
+        int textAreaWidth = getWidth() - leftPadding - rightPadding;
                 
         int minCharactersInRow = Math.max(1, textAreaWidth / charWidth);
         int rowIndex=0;
