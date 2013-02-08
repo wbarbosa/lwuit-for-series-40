@@ -580,7 +580,7 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
                             break;
                     }
                     int [] oldclip = g.getClip();
-                    g.setClip(new int[] {oldclip[0], oldclip[1], oldclip[2] - leftPadding - rightPadding, oldclip[3]});
+                    g.setClip(new int[] {oldclip[0] + rightPadding, oldclip[1], oldclip[2] - leftPadding - rightPadding, oldclip[3]});
                     g.drawString(displayText, x, y ,ta.getStyle().getTextDecoration());
                     g.setClip(oldclip);
                     shouldBreak = true;
