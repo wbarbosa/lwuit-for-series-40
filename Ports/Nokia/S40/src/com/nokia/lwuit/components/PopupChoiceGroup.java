@@ -16,7 +16,7 @@ import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.layouts.BoxLayout;
 
 /**
- *
+ * NOT USABLE YET
  * @author tkor
  */
 public class PopupChoiceGroup extends Container{
