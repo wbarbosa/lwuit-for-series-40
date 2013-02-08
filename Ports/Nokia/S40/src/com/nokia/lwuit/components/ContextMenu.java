@@ -51,8 +51,8 @@ public class ContextMenu extends Dialog implements ActionListener{
         getContentPane().getParent().getStyle().setBgTransparency(0);
         mParentList = parentList;
         setDisposeWhenPointerOutOfBounds(true);
-        setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, false, 500));
-        setTransitionOutAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, true, 500));
+        setTransitionInAnimator(CommonTransitions.createEmpty());
+        setTransitionOutAnimator(CommonTransitions.createEmpty());
         mList = new List();
         mList.addActionListener(this);
         mList.getStyle().setPadding(0, 0, 0, 0);
