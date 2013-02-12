@@ -921,7 +921,6 @@ public class Component implements Animation, StyleListener {
         int oHeight = g.getClipHeight();
         updateNativeComponentPosition();
         if (bounds.intersects(oX, oY, oWidth, oHeight)) {
-            
             g.clipRect(getX(), getY(), getWidth(), getHeight());
             
             paintBackground(g);

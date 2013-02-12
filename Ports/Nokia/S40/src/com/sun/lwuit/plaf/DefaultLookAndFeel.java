@@ -37,6 +37,7 @@ import com.sun.lwuit.TextArea;
 import com.sun.lwuit.list.ListCellRenderer;
 import com.sun.lwuit.list.ListModel;
 import com.sun.lwuit.Font;
+import com.sun.lwuit.RadioButton;
 import com.sun.lwuit.TabbedPane;
 import com.sun.lwuit.events.FocusListener;
 import com.sun.lwuit.geom.Rectangle;
@@ -695,7 +696,6 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             prefW = Math.max(style.getBorder().getMinimumWidth(), prefW);
             prefH = Math.max(style.getBorder().getMinimumHeight(), prefH);
         }
-
         return new Dimension(prefW, prefH);
     }
 
