@@ -58,10 +58,10 @@ public abstract class LWUITImplementation {
     private Hashtable radialGradientCache;
 
     private boolean builtinSoundEnabled = true;
-    private int dragActivationCounter = 0;
-    private int dragActivationX = 0;
-    private int dragActivationY = 0;
-    private int dragStartPercentage = 3;
+    private int dragEventCounter = 0;
+    private int dragStartPercentage = 5;
+    private int dragStartPixels = 20;
+    private boolean dragStarted = false;
     private Form currentForm;
     private static Object displayLock;
     private Animation[] paintQueue = new Animation[50];
@@ -1248,6 +1248,8 @@ public abstract class LWUITImplementation {
     protected void pointerPressed(final int x, final int y) {
         xPointerEvent[0] = x;
         yPointerEvent[0] = y;
+        dragStarted = false;
+        dragEventCounter = 0;
         pointerPressed(xPointerEvent, yPointerEvent);
     }
 
@@ -1376,31 +1378,20 @@ public abstract class LWUITImplementation {
      */
     protected boolean hasDragStarted(final int x, final int y) {
 
-        if (dragActivationCounter == 0) {
-            dragActivationX = x;
-            dragActivationY = y;
-            dragActivationCounter++;
-            return false;
-        }
-        //send the drag events to the form only after latency of 7 drag events,
-        //most touch devices are too sensitive and send too many drag events.
-        //7 is just a latency const number that is pretty good for most devices
-        //this may be tuned for specific devices.
-        dragActivationCounter++;
-        if (dragActivationCounter > getDragAutoActivationThreshold()) {
-            return true;
-        }
-        // have we passed the motion threshold on the X axis?
-        if (((float) getDisplayWidth()) / 100.0f * ((float) getDragStartPercentage()) <=
-                Math.abs(dragActivationX - x)) {
-            dragActivationCounter = getDragAutoActivationThreshold() + 1;
-            return true;
+        // Advance event counter. The first event or two are ignored to improve
+        // reliability of drag detection.
+        dragEventCounter++;
+
+        // Calculate distance from drag start point, dragging is enabled only
+        // when certain distance has been exceeded.
+        if (!dragStarted
+                && Math.sqrt(Math.abs(x - pointerPressedX) * Math.abs(x - pointerPressedX)
+                + Math.abs(y - pointerPressedY) * Math.abs(y - pointerPressedY))
+                > dragStartPixels) {
+            dragStarted = true;
         }
 
-        // have we passed the motion threshold on the Y axis?
-        if (((float) getDisplayHeight()) / 100.0f * ((float) getDragStartPercentage()) <=
-                Math.abs(dragActivationY - y)) {
-            dragActivationCounter = getDragAutoActivationThreshold() + 1;
+        if (dragStarted && dragEventCounter > getDragAutoActivationThreshold()) {
             return true;
         }
 
@@ -1427,6 +1418,9 @@ public abstract class LWUITImplementation {
      */
     public void setDragStartPercentage(int dragStartPercentage) {
         this.dragStartPercentage = dragStartPercentage;
+        int displayW = Display.getInstance().getDisplayWidth();
+        int displayH = Display.getInstance().getDisplayHeight();
+        dragStartPixels = (int)Math.sqrt(displayW * displayW + displayH * displayH) * dragStartPercentage;
     }
 
     /**
@@ -1437,7 +1431,7 @@ public abstract class LWUITImplementation {
      * @return number representing a minimum number of motion events to start a drag operation
      */
     protected int getDragAutoActivationThreshold() {
-        return 7;
+        return 2;
     }
 
     /**
@@ -1450,6 +1444,8 @@ public abstract class LWUITImplementation {
     protected void pointerPressed(final int[] x, final int[] y) {
         pointerPressedX = x[0];
         pointerPressedY = y[0];
+        dragStarted = false;
+        dragEventCounter = 0;
         Display.getInstance().pointerPressed(x, y);
     }
 
@@ -1461,17 +1457,6 @@ public abstract class LWUITImplementation {
      * @param y the position of the event
      */
     protected void pointerReleased(final int[] x, final int[] y) {
-        // this is a special case designed to detect a "flick" event on some Samsung devices
-        // that send a pointerPressed/Released with widely differing X/Y values but don't send
-        // the pointerDrag events in between
-        if(dragActivationCounter == 0 && x[0] != pointerPressedX && y[0] != pointerPressedY) {
-            hasDragStarted(pointerPressedX, pointerPressedY);
-            if(hasDragStarted(x, y)) {
-                pointerDragged(pointerPressedX, pointerPressedY);
-                pointerDragged(x, y);
-            }
-        }
-        dragActivationCounter = 0;
         Display.getInstance().pointerReleased(x, y);
     }
 
