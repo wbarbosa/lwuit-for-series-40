@@ -46,12 +46,18 @@ public class PopupChoiceGroup extends Container{
     
     public PopupChoiceGroup(String title, RadioButton[] choices) {
         super();
+        if(choices == null || choices.length == 0) {
+            throw new IllegalArgumentException("choices can't be null or empty");
+        }
         setUIID("PopupChoiceGroup");
+
         mButtons = choices;
         mGroup = new ButtonGroup();
         mGroupContainer = new GroupContainer(mButtons);
         mGroupContainer.getStyle().setBgColor(0x000000);
         mGroupContainer.getStyle().setBgTransparency(255);
+        mGroupContainer.getStyle().setMargin(Component.LEFT, 0);
+        mGroupContainer.getStyle().setMargin(Component.RIGHT, 0);
         mSelection = new Label();
         mSelection.getStyle().setFont(Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL));
         //add choicelistener
@@ -74,6 +80,7 @@ public class PopupChoiceGroup extends Container{
             mGroup.add(choices[i]);
         }
         mGroup.getRadioButton(0).setSelected(true);
+        mSelection.setText(mGroup.getRadioButton(0).getText());
         
         //create the toparea that will open the selections
         mOpenButton = new Button(title) {
@@ -103,6 +110,7 @@ public class PopupChoiceGroup extends Container{
 
             public void pressed() {
                 super.pressed();
+                //this is done so that the pressed style is repainted immediately for the parent container
                 PopupChoiceGroup.this.repaint();
             }
             
@@ -131,6 +139,7 @@ public class PopupChoiceGroup extends Container{
     }
     
     private void removeChoices() {
+        getStyle().setPadding(Component.BOTTOM, 2);
         int l = mButtons.length;
         for (int i = 0; i < l; i++) {
             removeComponent(mGroupContainer);
@@ -140,6 +149,7 @@ public class PopupChoiceGroup extends Container{
     }
 
     private void addChoices() {
+        getStyle().setPadding(Component.BOTTOM, 5);
         int l = mButtons.length;
         addComponent(mGroupContainer);
         
