@@ -209,7 +209,6 @@ public class PopupChoiceGroup extends Container{
                 }
             }
             setPreferredH(height);
-            System.out.println("buttons:" + mButtons.length);
             
             setLayout(new SimpleLayout());
             for(int i = 0; i < buttons.length; i++) {
