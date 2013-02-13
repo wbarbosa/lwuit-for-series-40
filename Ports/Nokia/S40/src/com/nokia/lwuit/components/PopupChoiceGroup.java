@@ -73,15 +73,15 @@ public class PopupChoiceGroup extends Container{
             choices[i].addActionListener(choicelistener);
             mGroup.add(choices[i]);
         }
+        mGroup.getRadioButton(0).setSelected(true);
+        
         //create the toparea that will open the selections
         mOpenButton = new Button(title) {
             
             private Image mCurrentArrow = mArrowClosedImage;
             
             public void paint(Graphics g) {
-                System.out.println("button state:" + getState());
                 if(getState() == Button.STATE_PRESSED) {
-                    System.out.println("setting pressed arrow");
                     mCurrentArrow = mArrowClosedPressedImage;
                     PopupChoiceGroup.this.repaint();
                 }else {
@@ -155,7 +155,15 @@ public class PopupChoiceGroup extends Container{
         return super.getStyle();
     }
     
-    
+    public int getSelectedIndex() {
+        return mGroup.getSelectedIndex();
+    }
+    public RadioButton getSelected() {
+        return mGroup.getRadioButton(mGroup.getSelectedIndex());
+    }
+    public void setSelected(int index) {
+        mGroup.getRadioButton(index).setSelected(true);
+    }
     
     private static class GroupContainer extends Container {
         
