@@ -31,6 +31,8 @@ public class PopupChoiceGroup extends Container{
     private RadioButton[] mButtons;
     private GroupContainer mGroupContainer;
     
+    private Button mOpenButton;
+    
     private Label mSelection;
     
     private final int OPEN = 0;
@@ -72,13 +74,16 @@ public class PopupChoiceGroup extends Container{
             mGroup.add(choices[i]);
         }
         //create the toparea that will open the selections
-        Button b = new Button(title) {
+        mOpenButton = new Button(title) {
+            
             private Image mCurrentArrow = mArrowClosedImage;
+            
             public void paint(Graphics g) {
                 System.out.println("button state:" + getState());
                 if(getState() == Button.STATE_PRESSED) {
                     System.out.println("setting pressed arrow");
                     mCurrentArrow = mArrowClosedPressedImage;
+                    PopupChoiceGroup.this.repaint();
                 }else {
                     mCurrentArrow = mArrowClosedImage;
                 }
@@ -95,8 +100,15 @@ public class PopupChoiceGroup extends Container{
                 g.drawImage(mCurrentArrow, x, y);
                 
             }
+
+            public void pressed() {
+                super.pressed();
+                PopupChoiceGroup.this.repaint();
+            }
+            
+            
         };
-        b.addActionListener(new ActionListener() {
+        mOpenButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent evt) {
                 if(mCurrentState == CLOSED) {
@@ -107,14 +119,14 @@ public class PopupChoiceGroup extends Container{
                 
             }
         });
-        b.setUIID("Label");
-        b.getStyle().setBgTransparency(0);
-        b.getPressedStyle().setBgTransparency(0);
-        b.getSelectedStyle().setBgTransparency(0);
+        mOpenButton.setUIID("Label");
+        mOpenButton.getStyle().setBgTransparency(0);
+        mOpenButton.getPressedStyle().setBgTransparency(0);
+        mOpenButton.getSelectedStyle().setBgTransparency(0);
         setScrollable(false);
         //add everything to container
         setLayout(new BoxLayout(BoxLayout.Y_AXIS));
-        addComponent(b);
+        addComponent(mOpenButton);
         addComponent(mSelection);
     }
     
@@ -134,6 +146,16 @@ public class PopupChoiceGroup extends Container{
         mCurrentState = OPEN;
         revalidate();
     }
+
+    public Style getStyle() {
+        if(mOpenButton.getState() == Button.STATE_PRESSED) {
+            
+            return getPressedStyle();
+        }
+        return super.getStyle();
+    }
+    
+    
     
     private static class GroupContainer extends Container {
         
