@@ -18,6 +18,7 @@ import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.layouts.Layout;
+import com.sun.lwuit.plaf.Border;
 import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
 
@@ -40,6 +41,10 @@ public class PopupChoiceGroup extends Container{
     
     private int mCurrentState = CLOSED;
     
+    private Border mClosedBorder;
+    private Border mPressedBorder;
+    private Border mOpenBorder;
+    
     private Image mArrowOpenImage = UIManager.getInstance().getThemeImageConstant("PopupChoiceGroupOpenArrowImage");
     private Image mArrowClosedImage = UIManager.getInstance().getThemeImageConstant("PopupChoiceGroupClosedArrowImage");
     private Image mArrowClosedPressedImage = UIManager.getInstance().getThemeImageConstant("PopupChoiceGroupPressedArrowImage");
@@ -50,7 +55,7 @@ public class PopupChoiceGroup extends Container{
             throw new IllegalArgumentException("choices can't be null or empty");
         }
         setUIID("PopupChoiceGroup");
-
+        
         mButtons = choices;
         mGroup = new ButtonGroup();
         mGroupContainer = new GroupContainer(mButtons);
@@ -136,6 +141,11 @@ public class PopupChoiceGroup extends Container{
         setLayout(new BoxLayout(BoxLayout.Y_AXIS));
         addComponent(mOpenButton);
         addComponent(mSelection);
+        
+        Style openStyle = UIManager.getInstance().getComponentStyle("PopupChoiceGroupOpen");
+        mOpenBorder = openStyle.getBorder();
+        mClosedBorder = getUnselectedStyle().getBorder();
+        mPressedBorder = getPressedStyle().getBorder();
     }
     
     private void removeChoices() {
@@ -145,15 +155,18 @@ public class PopupChoiceGroup extends Container{
             removeComponent(mGroupContainer);
         }
         mCurrentState = CLOSED;
+        getStyle().setBorder(mClosedBorder);
         revalidate();
     }
 
     private void addChoices() {
         getStyle().setPadding(Component.BOTTOM, 5);
+        getStyle().setBorder(mOpenBorder);
         int l = mButtons.length;
         addComponent(mGroupContainer);
         
         mCurrentState = OPEN;
+        
         revalidate();
     }
 
