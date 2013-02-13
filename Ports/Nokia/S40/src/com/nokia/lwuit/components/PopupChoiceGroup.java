@@ -73,14 +73,22 @@ public class PopupChoiceGroup extends Container{
         }
         //create the toparea that will open the selections
         Button b = new Button(title) {
+            private Image mCurrentArrow = mArrowClosedImage;
             public void paint(Graphics g) {
+                System.out.println("button state:" + getState());
+                if(getState() == Button.STATE_PRESSED) {
+                    System.out.println("setting pressed arrow");
+                    mCurrentArrow = mArrowClosedPressedImage;
+                }else {
+                    mCurrentArrow = mArrowClosedImage;
+                }
                 super.paint(g);
                 int x = getX();
                 int y = getY();
                 int rightpadding = getStyle().getPadding(Component.RIGHT);
-                x = x + getWidth() - rightpadding - mArrowClosedImage.getWidth();
-                y += (getHeight() / 2) - (mArrowClosedImage.getHeight() / 2);
-                g.drawImage(mArrowClosedImage, x, y);
+                x = x + getWidth() - rightpadding - mCurrentArrow.getWidth();
+                y += (getHeight() / 2) - (mCurrentArrow.getHeight() / 2);
+                g.drawImage(mCurrentArrow, x, y);
                 
             }
         };
@@ -96,7 +104,9 @@ public class PopupChoiceGroup extends Container{
             }
         });
         b.setUIID("Label");
-        
+        b.getStyle().setBgTransparency(0);
+        b.getPressedStyle().setBgTransparency(0);
+        b.getSelectedStyle().setBgTransparency(0);
         setScrollable(false);
         //add everything to container
         setLayout(new BoxLayout(BoxLayout.Y_AXIS));
