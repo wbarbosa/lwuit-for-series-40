@@ -82,6 +82,10 @@ public class PopupChoiceGroup extends Container{
                 }else {
                     mCurrentArrow = mArrowClosedImage;
                 }
+                
+                if(mCurrentState == OPEN) {
+                    mCurrentArrow = mArrowOpenImage;
+                }
                 super.paint(g);
                 int x = getX();
                 int y = getY();
