@@ -185,7 +185,11 @@ public class PopupChoiceGroup extends Container{
         return mGroup.getRadioButton(mGroup.getSelectedIndex());
     }
     public void setSelected(int index) {
+        if(index >= mGroup.getButtonCount()) {
+            throw new IllegalArgumentException("index must be less than length of radiobuttons");
+        }
         mGroup.getRadioButton(index).setSelected(true);
+        mSelection.setText(mGroup.getRadioButton(index).getText());
     }
     
     private static class GroupContainer extends Container {
