@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.nokia.lwuit.components;
 
 import com.sun.lwuit.Button;
@@ -23,7 +19,11 @@ import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
 
 /**
- * NOT USABLE YET
+ * A PopupChoiceGroup is similar component to the full touch platform PopupChoiceGroup
+ * component. It can be used to provide more platform look and feel to application
+ * as a replacement of the ComboBox component. The component opens up to show selectable
+ * radiobuttons when the user presses the component. The component closes when another press
+ * is done over the top area of the component.
  * @author tkor
  */
 public class PopupChoiceGroup extends Container{
@@ -49,6 +49,11 @@ public class PopupChoiceGroup extends Container{
     private Image mArrowClosedImage = UIManager.getInstance().getThemeImageConstant("PopupChoiceGroupClosedArrowImage");
     private Image mArrowClosedPressedImage = UIManager.getInstance().getThemeImageConstant("PopupChoiceGroupPressedArrowImage");
     
+    /**
+     * Creates a new PopupChoiceGroup with the given title and choices.
+     * @param title The title of the group
+     * @param choices choices a RadioButton array of the choices
+     */
     public PopupChoiceGroup(String title, RadioButton[] choices) {
         super();
         if(choices == null || choices.length == 0) {
@@ -170,6 +175,9 @@ public class PopupChoiceGroup extends Container{
         revalidate();
     }
 
+    /**
+     * @inheritDoc
+     */
     public Style getStyle() {
         if(mOpenButton.getState() == Button.STATE_PRESSED) {
             
@@ -178,12 +186,24 @@ public class PopupChoiceGroup extends Container{
         return super.getStyle();
     }
     
+    /**
+     * get currently selected radiobutton index.
+     * @return the selected index integer from 0 to radiobutton array length-1
+     */
     public int getSelectedIndex() {
         return mGroup.getSelectedIndex();
     }
+    /**
+     * Get the selected RadioButton component.
+     * @return selected RadioButton object.
+     */
     public RadioButton getSelected() {
         return mGroup.getRadioButton(mGroup.getSelectedIndex());
     }
+    /**
+     * Set selected radiobutton.
+     * @param index index of the radiobutton in zero based array (0...array.length-1)
+     */
     public void setSelected(int index) {
         if(index >= mGroup.getButtonCount()) {
             throw new IllegalArgumentException("index must be less than length of radiobuttons");
@@ -192,6 +212,10 @@ public class PopupChoiceGroup extends Container{
         mSelection.setText(mGroup.getRadioButton(index).getText());
     }
     
+    /**
+     * Basically the same as Container with the exception of height being only maximum
+     * of 3 * radiobutton height or less if under 3 components in container.
+     */
     private static class GroupContainer extends Container {
         
         private RadioButton[] mButtons;
@@ -218,10 +242,6 @@ public class PopupChoiceGroup extends Container{
             setScrollableY(true);
             
 
-        }
-
-        protected Dimension calcScrollSize() {
-            return super.calcPreferredSize();
         }
         
         /**
