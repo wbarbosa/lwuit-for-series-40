@@ -24,13 +24,21 @@ import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
 
 /**
- *
+ * ContextMenu is a component similar to the Full Touch ContextMenu. Developer is 
+ * free to show the menu the most suitable way for the application. The menu extends
+ * from dialog so the API is very similar. To have the same behavior as the platform
+ * menu, the developer should use the LONG_TAP gesture to show the menu. ContextMenu 
+ * has a "tail" which is an arrow that points to the parent component similary to the
+ * platform menu.
+ * 
+ * The easiest way to use the menu is to call the static show-method which will return
+ * the selected command.
  * @author tkor
  */
 public class ContextMenu extends Dialog implements ActionListener{
     
     private List mList;
-    private Component mParentList;
+    private Component mParent;
     private final Image mArrow = UIManager.getInstance().getThemeImageConstant("ContextMenuArrowLeftImage");
     
     /**
@@ -40,11 +48,15 @@ public class ContextMenu extends Dialog implements ActionListener{
      */
     private boolean skipRelease = false;
     
-    public ContextMenu(Component parentList) {
+    /**
+     * Create a new ContextMenu object.
+     * @param parent the parent component that will be used to calculate menu position.
+     */
+    public ContextMenu(Component parent) {
         super("", "");
         getContentPane().setUIID("ContextMenu");
         getContentPane().getParent().getStyle().setBgTransparency(0);
-        mParentList = parentList;
+        mParent = parent;
         setDisposeWhenPointerOutOfBounds(true);
         setTransitionInAnimator(CommonTransitions.createEmpty());
         setTransitionOutAnimator(CommonTransitions.createEmpty());
@@ -70,6 +82,9 @@ public class ContextMenu extends Dialog implements ActionListener{
        
     }
 
+    /**
+     * @inheritDoc
+     */
     public void paint(Graphics g) {
         super.paint(g);
         if (Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE) {
@@ -78,7 +93,7 @@ public class ContextMenu extends Dialog implements ActionListener{
     }
     
     private void paintArrow(Graphics g) {
-        Rectangle rect = mParentList.getSelectedRect();
+        Rectangle rect = mParent.getSelectedRect();
         int y = rect.getY();
         if (y < mList.getAbsoluteY()) {
             y = mList.getAbsoluteY();
@@ -89,16 +104,30 @@ public class ContextMenu extends Dialog implements ActionListener{
         g.drawImage(mArrow, x, y);
     }
     
-    
+    /**
+     * Set menu commands
+     * @param model ListModel containing the menu commands
+     */
     public void setMenuItems(ListModel model) {
         mList.setModel(model);
     }
 
+    /**
+     * @inheritDoc
+     */
     public void actionPerformed(ActionEvent ae) {
         ae.consume();
         lastCommandPressed = (Command) mList.getSelectedItem();
         dispose();
     }
+    /**
+     * show the ContextMenu. Creates a new ContextMenu object and adds the given
+     * Commands as menuitems and uses the parent to calculate the position of the
+     * new ContextMenu component.
+     * @param cmds Commands to be added to the menu
+     * @param parent component used to calculate ContextMenu position on the screen.
+     * @return selected Command or null if none was selected.
+     */
     public static Command show(Command [] cmds, Component parent) {
         ContextMenu ctx = new ContextMenu(parent);
         ctx.setMenuItems(new DefaultListModel(cmds));
@@ -147,7 +176,7 @@ public class ContextMenu extends Dialog implements ActionListener{
             prefHeight = Math.max(contentPaneStyle.getBorder().getMinimumHeight(), prefHeight);
         }
 
-        Rectangle componentPos = mParentList.getSelectedRect();
+        Rectangle componentPos = mParent.getSelectedRect();
         int displayHeight = Display.getInstance().getDisplayHeight();
         int availableWidth = Display.getInstance().getDisplayWidth();
         int x = 0;
@@ -169,15 +198,24 @@ public class ContextMenu extends Dialog implements ActionListener{
         return show(y, bottom, x, right, true, true);
     }
     
+    /**
+     * @inheritDoc
+     */
     public void pointerReleased(int x, int y) {
         if(!skipRelease) {
             super.pointerReleased(x, y);
         }
     }
+    /**
+     * @inheritDoc
+     */
     public void pointerDragged(int x, int y) {
         super.pointerDragged(x, y);
         skipRelease = false;
     }
+    /**
+     * @inheritDoc
+     */
     public void pointerPressed(int x, int y) {
         super.pointerPressed(x, y);
         skipRelease = false;
