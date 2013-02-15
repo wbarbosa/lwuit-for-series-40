@@ -16,6 +16,7 @@ import com.sun.lwuit.events.ActionEvent;
 import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.geom.Rectangle;
 import com.sun.lwuit.layouts.BorderLayout;
+import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.list.DefaultListCellRenderer;
 import com.sun.lwuit.list.DefaultListModel;
 import com.sun.lwuit.list.ListModel;
@@ -63,7 +64,7 @@ public class ContextMenu extends Dialog implements ActionListener{
         mList = new List();
         mList.addActionListener(this);
         mList.getStyle().setPadding(0, 0, 0, 0);
-        setLayout(new BorderLayout());
+        setLayout(new BoxLayout(BoxLayout.Y_AXIS));
         getTitleArea().setVisible(false);
         setScrollable(false);
         DefaultListCellRenderer renderer = new DefaultListCellRenderer();
@@ -75,7 +76,7 @@ public class ContextMenu extends Dialog implements ActionListener{
         if(mArrow != null) {
             getContentPane().getStyle().setMargin(Component.LEFT, mArrow.getWidth());
         }
-        addComponent(BorderLayout.CENTER, mList);
+        addComponent(mList);
         skipRelease = true;
         setDisposeOnRotation(true);
         
@@ -142,7 +143,7 @@ public class ContextMenu extends Dialog implements ActionListener{
         }
         skipRelease = true;
         this.getStyle().setPadding(0, 0, 0, 0);
-        Component contentPane = super.getContentPane();
+        Component contentPane = getContentPane();
 
         int listsize = mList.getModel().getSize();
         double itemsToShow = (listsize < MaxAmountOfListItems) ? listsize : MaxAmountOfListItems;
@@ -182,8 +183,8 @@ public class ContextMenu extends Dialog implements ActionListener{
         int x = 0;
         int y = 0;
 
-        x = componentPos.getX();
-        y = componentPos.getY();
+        x = (componentPos.getX() < 0) ? 0 : x;
+        y = (componentPos.getY() < 0) ? 0 : y;
         if(y + menuHeight > displayHeight) {
             y -= ((y + menuHeight) - displayHeight);
         }
