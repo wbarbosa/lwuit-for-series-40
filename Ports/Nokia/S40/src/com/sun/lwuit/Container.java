@@ -1163,6 +1163,10 @@ public class Container extends Component {
      * @inheritDoc
      */
     public int getSideGap() {
+         //for full touch we don't have margin for scrollbar since it disappears
+        if(Display.getInstance().getDeviceType() == Display.FULL_TOUCH_DEVICE) {
+            return 0;
+        }
         // isScrollableY() in the base method is very expensive since it triggers getScrollDimension before the layout is complete!
         if(scrollSize == null) {
             if (scrollableY && isScrollVisible()) {
