@@ -32,7 +32,9 @@ import javax.microedition.media.control.VideoControl;
 import javax.microedition.midlet.MIDlet;
 
 /**
- *
+ * LWUITImplementation class for Series 40 platform. This class is the base class for all
+ * S40 platforms. It's mostly copy and paste from the LWUIT-MIDP project's implementation class
+ * with minor adjustements for S40.
  * @author tkor
  */
 public class S40Implementation extends LWUITImplementation {

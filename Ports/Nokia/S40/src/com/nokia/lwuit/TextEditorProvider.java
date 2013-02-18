@@ -279,7 +279,10 @@ public abstract class TextEditorProvider {
         }
         return provider;
     }
-    
+    /**
+     * A listener for receiving notification of content changes and other editor events from TextEditor objects. 
+     * The events are generated on content changes that are either a result of a programmatical change or due to an user input.
+     */
     public static interface TextEditorListener {
         /**
          * Indicates that the caret in this TextEditor has moved.

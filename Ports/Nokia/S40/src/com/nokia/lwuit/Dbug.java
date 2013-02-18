@@ -7,11 +7,19 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Vector;
 
+/**
+ * Simple debugging utility. Give it an outputstream and use the log method to
+ * write to that output.
+ * @author tkor
+ */
 public class Dbug {
     
     private  static final Vector logs = new Vector(100);
     private static Writer writer = null;
     
+    /**
+     * Remove all logs from memory.
+     */
     public synchronized static void clear() {
     	logs.removeAllElements();
     }
@@ -65,6 +73,10 @@ public class Dbug {
         return ret;
     }
     
+    /**
+     * Return all logs in a String array
+     * @return a String array of all logs
+     */
     public static synchronized String[] getAllLogs() {
     	String [] ret = new String[logs.size()];
     	logs.copyInto(ret);
@@ -72,6 +84,10 @@ public class Dbug {
     	
     }
     
+    /**
+     * Set the outputStream to be used for printing logs
+     * @param out the stream where all logs are pushed.
+     */
     public static synchronized void setOutputStream(OutputStream out) {
         if (writer != null) {
             try {

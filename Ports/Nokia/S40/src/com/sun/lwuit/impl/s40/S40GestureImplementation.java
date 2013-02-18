@@ -13,7 +13,7 @@ import com.sun.lwuit.Display;
 import java.util.Vector;
 
 /**
- *
+ * This class extends the base S40 implementation with Gesture support.
  * @author tkor
  */
 public class S40GestureImplementation extends S40Implementation{

@@ -10,7 +10,8 @@ import com.sun.lwuit.Display;
 import com.sun.lwuit.Form;
 
 /**
- *
+ * This class extends the S40GestureImplementation with Full Touch platform spesific API
+ * calls like Orientation support and Virtual Keyboard visibility listener. 
  * @author tkor
  */
 public class S40FullTouchImplementation extends S40GestureImplementation implements com.nokia.mid.ui.KeyboardVisibilityListener{

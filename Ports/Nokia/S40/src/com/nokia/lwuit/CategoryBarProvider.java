@@ -203,9 +203,21 @@ public abstract class CategoryBarProvider {
         return ret;
     }
     
+    /**
+     * ElementListener enables an application to discover when the user has selected an element from a CategoryBar.
+     */
     public static interface ElementListener {
+        /**
+         * Constant indicating that the predefined BACK element has been selected.
+         */
         public static int BACK = -1;
-        
+        /**
+         * Notifies the listener that an element belonging to the given CategoryBar was selected.
+         * Every CategoryBar features a predefined element that cannot be removed. 
+         * If this element is selected then the special value BACK is supplied in the parameter.
+         * @param bar the instance of CategoryBar whose element was selected.
+         * @param selectedIndex the index of the selected element, or BACK in the case that the predefined BACK element was selected.
+         */
         public void notifyElementSelected(CategoryBarProvider bar, int selectedIndex);
     }
 }
