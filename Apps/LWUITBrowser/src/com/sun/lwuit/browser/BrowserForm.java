@@ -96,6 +96,7 @@ public class BrowserForm extends Form implements HTMLCallback,ActionListener {
     Command toggleCSSCmd=new Command("Toggle CSS");
     Command searchCmd=new Command("Search");
     Command pointerCmd=new Command("Toggle Pointer");
+    Command goCmd=new Command("Go");
 
     /**
      * If true the navigation bar will be shown on application start.
@@ -199,7 +200,6 @@ public class BrowserForm extends Form implements HTMLCallback,ActionListener {
         } catch (IOException ex) {
             ex.printStackTrace();
         }*/
-
     }
 
     void addCommands(boolean addBack) {
@@ -219,6 +219,7 @@ public class BrowserForm extends Form implements HTMLCallback,ActionListener {
         addCommand(toggleCSSCmd);
         addCommand(searchCmd);
         addCommand(pointerCmd);
+        addCommand(goCmd);
     }
 
     void setCancelCmdOnly() {
@@ -317,7 +318,6 @@ public class BrowserForm extends Form implements HTMLCallback,ActionListener {
                 case Canvas.KEY_NUM8: //Toggle pointer mode
                     htmlC.setPointerEnabled(!htmlC.isPointerEnabled());
                     break;
-
             }
         }
     }
@@ -481,7 +481,8 @@ public class BrowserForm extends Form implements HTMLCallback,ActionListener {
             Storage.clearCookies();
             Storage.clearFormData();
             HttpRequestHandler.visitedLinks=Storage.clearHistory();
-
+        } else if (cmd==goCmd) {
+            toolBar.go();
         }
     }
 

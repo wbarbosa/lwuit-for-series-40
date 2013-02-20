@@ -62,7 +62,9 @@ public class BrowserToolbar extends Container implements ActionListener {
 
     Button[] navButtons = new Button[imgFiles.length];
     Image[] buttonsImages = new Image[imgFiles.length];
+    Button goButton;
     TextArea address;
+
     HTMLComponent htmlC;
     Vector back=new Vector();
     Vector forward=new Vector();
@@ -104,8 +106,18 @@ public class BrowserToolbar extends Container implements ActionListener {
         htmlC=htmlComponent;
         setLayout(new BorderLayout());
 
-        address = new TextField() {
+        Container addressAndGo = new Container();
+        addressAndGo.setLayout(new BoxLayout(BoxLayout.X_AXIS));
 
+        Image goImg=toolBarRes.getImage("browser_go_button.png");
+        Image goSelImg=toolBarRes.getImage("browser_go_button_highlighted.png");
+        Image goDisImg=toolBarRes.getImage("browser_go_button_disabled.png");
+        goButton=new NavButton(goImg, goSelImg, goDisImg);
+        goButton.addActionListener(this);
+        goButton.setEnabled(true);
+        addressAndGo.addComponent(goButton);
+
+        address = new TextField() {
             public void keyReleased(int keyCode) {
                 int action=Display.getInstance().getGameAction(keyCode);
                 super.keyReleased(keyCode);
@@ -114,13 +126,13 @@ public class BrowserToolbar extends Container implements ActionListener {
                         setEnabled(false);
                 }
             }
-
         };
+        addressAndGo.addComponent(address);
 
         Container buttons=new Container();
         buttons.setHandlesInput(true); //to ignore the initial page load
-
         buttons.setLayout(new BoxLayout(BoxLayout.X_AXIS));
+
         for(int i=0;i<imgFiles.length;i++) {
             Image img=null;
             Image disabledImg=null;
@@ -140,10 +152,9 @@ public class BrowserToolbar extends Container implements ActionListener {
             buttons.addComponent(navButtons[i]);
             navButtons[i].addActionListener(this);
             navButtons[i].setEnabled(false);
-
         }
 
-        addComponent(BorderLayout.CENTER, address);
+        addComponent(BorderLayout.CENTER, addressAndGo);
         addComponent(BorderLayout.SOUTH,buttons);
 
     }
@@ -167,6 +178,7 @@ public class BrowserToolbar extends Container implements ActionListener {
         navButtons[BTN_NEXT].setEnabled(false);
         navButtons[BTN_HOME].setEnabled(false);
         navButtons[BTN_REFRESH].setEnabled(false);
+        goButton.setEnabled(false);
         form.setCancelCmdOnly();
     }
 
@@ -180,6 +192,7 @@ public class BrowserToolbar extends Container implements ActionListener {
             navButtons[BTN_NEXT].setEnabled(!forward.isEmpty());
             navButtons[BTN_HOME].setEnabled(homePage!=null);
             navButtons[BTN_REFRESH].setEnabled(true);
+            goButton.setEnabled(true);
 
             if (!backRequested) {
                 back.addElement(currentURL);
@@ -209,8 +222,9 @@ public class BrowserToolbar extends Container implements ActionListener {
             refresh();
         } else if (evt.getSource()==navButtons[BTN_CANCEL]) {
             stop();
+        } else if (evt.getSource()==goButton) {
+            go();
         }
-
     }
 
     /**
@@ -274,8 +288,12 @@ public class BrowserToolbar extends Container implements ActionListener {
             htmlC.cancel();
     }
 
-
-
+    /**
+     * Goes to typed web address
+     */
+    public void go() {
+        htmlC.setPage(address.getText());
+    }
 
     /**
      * Starts the a slide in animation of the toolbar
