@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
-	<classpathentry exported="true" kind="lib" path="lib/S40-with-themes.jar"/>
 	<classpathentry kind="con" path="org.elipse.mtj.JavaMEContainer/Nokia SDK 2.0 for Java/Nokia_SDK_2_0_Java"/>
+	<classpathentry exported="true" kind="lib" path="C:/work/S40/nokia_lwuit/Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
