@@ -1,0 +1,6 @@
+syntax: glob
+build
+dist
+nbproject
+bin
+.mtj.tmp

@@ -1,0 +1,7 @@
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: MIDlet Suite Vendor
+MIDlet-Jar-URL: LWUIT_CategoryBarDemo.jar
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.1
+MIDlet-1: DemoMidlet,,com.nokia.example.categorybardemo.DemoMidlet
+MIDlet-Name: LWUIT_CategoryBarDemo MIDlet Suite

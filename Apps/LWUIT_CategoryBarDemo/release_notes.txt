@@ -1,0 +1,102 @@
+LWUIT Category Bar Demo
+=======================
+
+An example application to demonstrate how to use a category bar together with
+the LWUIT framework.
+
+This example application is hosted in Nokia Developer Projects:
+- http://projects.developer.nokia.com/LWUIT_CategoryBarDemo
+
+For more information on implementation and porting, visit the wiki pages:
+- http://projects.developer.nokia.com/LWUIT_CategoryBarDemo/wiki
+
+
+1. Usage
+-------------------------------------------------------------------------------
+
+The MIDlet starts in the "add content" view demonstrating how the action #1
+button can be used with category bar and LWUIT. The other two examples can be 
+reached from the category bar that is visible throughout the demo.
+
+LWUIT, views and a category bar are initialised when the MIDlet starts. The
+main MIDlet implements an ElementListener and receives updates about category
+changes from the CategoryBar.
+
+
+2. Prerequisites
+-------------------------------------------------------------------------------
+
+Java ME basics
+LWUIT basics
+
+
+3. Important files
+-------------------------------------------------------------------------------
+
+DemoMidlet.java: The MIDlet entry point handling the CategoryBar
+S40-with-themes.jar: the Series 40 LWUIT distributable with theme support
+
+
+4. Compatibility
+-------------------------------------------------------------------------------
+
+Series 40 phones with full touch capabilities, e.g. Nokia Asha 311.
+
+Developed with Netbeans 7.2 and Nokia SDK 2.0 for Java.
+
+4.1 Required Capabilities
+-------------------------
+
+CLDC 1.1, and MIDP 2.0.
+
+4.2 Known Issues
+----------------
+
+None.
+
+
+5. Building, installing, and running the application
+-------------------------------------------------------------------------------
+
+5.1 Preparations
+----------------
+
+Before opening the project, make sure Nokia SDK 2.0 for Java is installed and
+added to NetBeans.
+
+5.2 Building
+--------------------
+
+The project can be easily opened in NetBeans by selecting 'Open Project' from
+the File menu and selecting the application. Building is done by selecting
+'Build main project'.
+
+5.3 Series 40 device
+------------------
+
+You can install the application on a phone by transferring the JAR file
+via Nokia Suite or over Bluetooth.
+
+
+6. License
+-------------------------------------------------------------------------------
+
+See the license text file delivered with this project. The license file is also
+available online at
+http://projects.developer.nokia.com/LWUIT_CategoryBarDemo/browser/LICENSE.TXT
+
+
+7. Related documentation
+-------------------------------------------------------------------------------
+
+LWUIT for S40
+- http://projects.developer.nokia.com/LWUIT_for_Series_40
+
+Nokia SDK for Java
+- http://www.developer.nokia.com/Develop/Java/Tools/
+
+
+8. Version history
+-------------------------------------------------------------------------------
+
+1.0 Initial release in Nokia Developer projects.
