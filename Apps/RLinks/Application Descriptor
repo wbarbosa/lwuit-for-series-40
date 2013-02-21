@@ -1,0 +1,8 @@
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: Nokia
+MIDlet-Jar-URL: RLinks.jar
+MicroEdition-Configuration: CLDC-1.0
+Nokia-MIDlet-App-Orientation: manual
+MicroEdition-Profile: MIDP-2.1
+MIDlet-1: MIDlet-1,/app_icon.png,com.nokia.example.lwuit.rlinks.Main
+MIDlet-Name: RLinks
