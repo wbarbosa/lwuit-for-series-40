@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.elipse.mtj.JavaMEContainer/Nokia SDK 2.0 for Java/Nokia_SDK_2_0_Java"/>
 	<classpathentry exported="true" kind="lib" path="lib/json-1.0.jar"/>
-	<classpathentry kind="lib" path="C:/work/S40/nokia_lwuit/Series-40-binaries/bin/sdk2.0/S40-no-themes.jar"/>
+	<classpathentry exported="true" kind="lib" path="S40-no-themes.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
