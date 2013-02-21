@@ -127,8 +127,43 @@ the ResourceEditor without problems you can use this script.
             value="../../bin/IO/IO-MIDP.jar"
             token="../../Series-40-binaries/bin/IO/IO-MIDP.jar"
         />
+        <!-- birthdays -->
+        <antcall target="fix-properties">
+            <param name="app-path" value="${releasepath}/examples/LWUIT_Birthdays" />
+        </antcall>
+        <!-- categorybardemo -->
+        <antcall target="fix-properties">
+            <param name="app-path" value="${releasepath}/examples/LWUIT_CategoryBarDemo" />
+        </antcall>
+        <!-- gesturesDemo -->
+        <antcall target="fix-properties">
+            <param name="app-path" value="${releasepath}/examples/LWUIT_GesturesDemo" />
+        </antcall>
+        <!-- listdemo -->
+        <antcall target="fix-properties">
+            <param name="app-path" value="${releasepath}/examples/LWUIT_ListDemo" />
+        </antcall>
+        <!-- puzzle -->
+        <antcall target="fix-properties">
+            <param name="app-path" value="${releasepath}/examples/LWUIT_Puzzle" />
+        </antcall>
+        <!-- Tourist -->
+        <antcall target="fix-properties">
+            <param name="app-path" value="${releasepath}/examples/LWUIT_TouristAttractions" />
+        </antcall>
+        <!-- Rlinks, has special replace since not the default jar -->
+        <replace file="${releasepath}/examples/RLinks/nbproject/project.properties"
+            value="../../bin/sdk2.0/S40-no-themes.jar"
+            token="../../Series-40-binaries/bin/sdk2.0/S40-no-themes.jar"
+        /> 
     </target>
 
+    <target name="fix-properties">
+        <replace file="${app-path}/nbproject/project.properties"
+            value="../../bin/sdk2.0/S40-with-themes.jar"
+            token="../../Series-40-binaries/bin/sdk2.0/S40-with-themes.jar"
+        />
+    </target>
     <target name="dist" depends="S40-build, IO-build, copy-examples, copy-docs, ResourceEditor, fix-paths, copy-notes" />
 
     <!-- create a single zip package from Series-40-binaries folder -->
