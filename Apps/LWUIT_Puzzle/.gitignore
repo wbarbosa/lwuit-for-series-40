@@ -1,0 +1,7 @@
+*.class
+build/
+dist/
+nbproject/private
+*nbrun*
+bin
+.mtj.tmp

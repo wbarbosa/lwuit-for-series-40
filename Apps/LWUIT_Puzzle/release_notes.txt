@@ -1,0 +1,154 @@
+LWUIT Slide Puzzle v1.1
+=======================
+
+Slide Puzzle is a simple LWUIT-based puzzle game for Series 40 devices. It 
+demonstrates how LWUIT components can be used in a game context. Both non-
+touch and touch devices are supported, with drag gestures where available. 
+It also gives an idea of how to use the device camera and helper threads for 
+animating the interface.
+
+This example application demonstrates:
+- LWUIT components in a game context
+- Layouts
+- Drag gestures on touch UI
+- Keyboard events
+- Embedding camera viewfinder
+- Animations
+- Fullscreen mode
+
+The application is hosted in Nokia Developer Projects:
+http://projects.developer.nokia.com/LWUIT_Puzzle
+
+For more information on the implementation, visit the wiki page: 
+http://projects.developer.nokia.com/LWUIT_Puzzle/wiki
+
+
+1. Usage
+-------------------------------------------------------------------------------
+
+The game is a classical puzzle game where you have a 3x3 grid with 8 tiles. 
+The goal of the player is to slide the tiles so that they are in the correct 
+order. There are 3 puzzles with different pictures. When you start the game, 
+you can continue from the state where you left the game last time. You can 
+also take pictures with the camera in your phone and generate puzzles from 
+them.
+
+2. Prerequisites
+-------------------------------------------------------------------------------
+
+Java ME basics
+LWUIT basics
+
+
+3. Important classes
+-------------------------------------------------------------------------------
+
+PuzzleMidlet:  The midlet class that initialises the display and starts the 
+application.
+GameView:  The main game area and input handling.
+PuzzleComponent:  LWUIT component representing the Puzzle, handling game state 
+persistence.
+Puzzle:  Logical controller component for the puzzle state, used by 
+PuzzleComponent.
+TileMover:  Helper component for moving tiles around the puzzle.
+CameraComponent:  LWUIT component for controlling the camera.
+
+
+3.1 Design considerations
+-------------------------
+
+At the top of the structure hierarchy there is PuzzleMidlet. It checks device 
+characteristics and initialises the application but also takes care of 
+operations needed when it is being closed.
+
+PuzzleMidlet constructs a GameView (extends LWUIT Form) which functions as the 
+main view in the game. In the middle of the view there is a container which 
+holds the puzzle component and different menu components and shows them 
+depending on the state. More details about the view is available online at 
+http://projects.developer.nokia.com/LWUIT_Puzzle/wiki/structure#layout 
+
+PuzzleComponent has a list of Puzzles instances of which one is active at a 
+time. Puzzle holds the data and logic of puzzles. Every Puzzle has a two-
+dimensional array of Tile instances. When a Puzzle is set active, its image 
+is loaded and split to tiles.
+
+LWUIT mostly handles the painting but there is also a thread repainting them 
+(for example, when the tiles are moved).
+
+
+4. Compatibility
+-------------------------------------------------------------------------------
+
+All Series 40 and Symbian platforms with CLDC 1.1, MIDP 2.0, Mobile Media API 
+(JSR-135), and camera. Max heap memory of the device needs to be at least 2 MB.
+
+Tested on:
+- Nokia Asha 303, 305, 311
+- Nokia X3
+- Nokia 7230
+- Nokia C3
+
+Developed with:
+Netbeans 7.1
+Nokia SDK 2.0
+
+4.1 Required capabilities
+-------------------------
+
+CLDC 1.1, MIDP 2.0
+
+
+4.2 Known issues
+----------------
+
+- On Nokia 6700 Classic, there is a memory issue when changing current puzzle.
+- On C2-03, the link in info component cannot be opened.
+- Asha 203 has an issue with rapidly moving between Next and Menu selections.
+
+
+5. Building, installing, and running the application
+-------------------------------------------------------------------------------
+
+The example has been made with NetBeans 7.1 and Nokia SDK 2.0. The project can 
+be easily opened in NetBeans by selecting 'Open Project' from the File menu 
+and selecting the application.
+
+Before opening the project, make sure the Nokia SDK 2.0 is installed and added 
+to NetBeans. Ensure that LWUIT for Series 40 library is added in the Libraries 
+section. Building is done by selecting 'Build main project'.
+
+Installing the application on a phone can be done by transferring the JAR file 
+via Nokia Ovi Suite or via Bluetooth.
+
+The application can also be run with Eclipse.
+
+If you are playing with a device with touch screen, the tiles are moved by 
+dragging them. On non-touch devices, the tiles are moved with navi-key or 
+numbers 4, 8, 6, and 2. The menu and back buttons can be clicked with command 
+keys on non-touch devices.
+
+
+6. License
+-------------------------------------------------------------------------------
+
+See the license text file delivered with this project. The license file is 
+also available online at 
+http://projects.developer.nokia.com/LWUIT_Puzzle/browser/LICENSE.TXT
+
+
+7. Related documentation
+-------------------------------------------------------------------------------
+
+Slide Puzzle
+- http://projects.developer.nokia.com/LWUIT_Puzzle/wiki
+
+Nokia SDK for Java
+- http://www.developer.nokia.com/Develop/Java/Tools/
+
+
+8. Version history
+-------------------------------------------------------------------------------
+
+v1.1    Added camera feature, bug fixes. Published at  
+        developer.nokia.com.
+v1.0    First release (at Nokia Developer projects only).

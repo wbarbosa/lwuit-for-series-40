@@ -1,0 +1,7 @@
+MIDlet-Version: 1.1
+MIDlet-Vendor: MIDlet Suite Vendor
+MIDlet-Jar-URL: SlidePuzzle.jar
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.1
+MIDlet-1: PuzzleMidlet,,com.nokia.example.slidepuzzle.main.PuzzleMidlet
+MIDlet-Name: SlidePuzzle MIDlet Suite
