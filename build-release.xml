@@ -35,7 +35,7 @@ the ResourceEditor without problems you can use this script.
     <property name="RE" location="tools/Lwuit-ResourceEditor" />
     <property name="IO" location="IO" />
     <property name="IO-MIDP" location="Ports/MIDP/IO_MIDP" />
-    <property name="package-version" value="0.9.1-beta" />
+    <property name="package-version" value="1.0" />
 
     <target name="init">
         <mkdir dir="${releasepath}" />
@@ -157,6 +157,11 @@ the ResourceEditor without problems you can use this script.
             value="../../bin/sdk2.0/S40-no-themes.jar"
             token="../../Series-40-binaries/bin/sdk2.0/S40-no-themes.jar"
         /> 
+        <!-- Lwuitspeed -->
+        <replace file="${releasepath}/examples/LWUITSpeed/nbproject/project.properties"
+            value="../../bin/sdk2.0/S40-no-themes.jar"
+            token="../../Series-40-binaries/bin/sdk2.0/S40-no-themes.jar"
+        />
     </target>
 
     <target name="fix-properties">
