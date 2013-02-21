@@ -13,3 +13,5 @@ Series-40-binaries
 !editor.jar
 .mtj.tmp
 bin
+!Maps_API.jar
+!Apps/**/*themes.jar
