@@ -1,0 +1,103 @@
+LWUIT Birthdays
+===============
+
+LWUIT Birthdays is a MIDlet that demonstrates how to use the LWUIT Calendar 
+component together with the Java ME PIM API (JSR-75) to create a simple 
+Birthdays application.
+
+This example application is hosted in Nokia Developer Projects:
+- http://projects.developer.nokia.com/LWUIT_Birthdays
+
+For more information on implementation and porting, visit the wiki pages:
+- http://projects.developer.nokia.com/LWUIT_Birthdays/wiki
+
+
+1. Usage
+-------------------------------------------------------------------------------
+
+The MIDlet starts in a "show upcoming birthdays" view that populates a list
+of upcoming birthdays with data from the phone address book. The user can
+choose to add new birthday entries by either creating a new contact, or 
+assigning a birthday to an existing PIM contact, using the LWUIT Calendar
+component.
+
+
+2. Prerequisites
+-------------------------------------------------------------------------------
+
+Java ME basics
+LWUIT basics
+
+
+3. Important files
+-------------------------------------------------------------------------------
+
+BirthdayMidlet.java: MIDlet entry point, handling transition between views
+BirthdayListModel.java: manages the list of birthdays and their contacts
+BirthdaySorter.java: sorts a Vector of birthdays in the order of future occurrence
+PIMContactHandler.java: accessing PIM APIs
+
+4. Compatibility
+-------------------------------------------------------------------------------
+
+Series 40 phones with touch capabilities, e.g. Nokia Asha 311 or Nokia X3-02.
+
+Developed with Netbeans 7.2 and Nokia SDK 2.0 for Java.
+
+4.1 Required capabilities
+-------------------------
+
+CLDC 1.1, MIDP 2.0, and PIM API (JSR-75).
+
+4.2 Known issues
+----------------
+
+- The Calendar application on Series 40 6th edition devices may sometimes show
+  birthdays to appear on a different date than the one where they're created.
+
+
+5. Building, installing, and running the application
+-------------------------------------------------------------------------------
+
+5.1 Preparations
+----------------
+
+Before opening the project, make sure Nokia SDK 2.0 for Java is installed and 
+added to NetBeans.
+
+5.2 Building
+------------
+
+The project can be easily opened in NetBeans by selecting 'Open Project' from
+the File menu and selecting the application. Building is done by selecting
+'Build main project'.
+
+5.3 Series 40 device
+--------------------
+
+You can install the application on a phone by transferring the JAR file
+via Nokia Suite or over Bluetooth.
+
+
+6. License
+-------------------------------------------------------------------------------
+
+See the license text file delivered with this project. The license file is also 
+available online at 
+http://projects.developer.nokia.com/LWUIT_Birthdays/browser/LICENSE.TXT
+
+
+7. Related documentation
+-------------------------------------------------------------------------------
+
+LWUIT for Series 40
+- http://projects.developer.nokia.com/LWUIT_for_Series_40
+
+Nokia SDK for Java
+- http://www.developer.nokia.com/Develop/Java/Tools/
+
+
+8. Version history
+-------------------------------------------------------------------------------
+
+1.0 Initial release in Nokia Developer projects.
