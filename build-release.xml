@@ -61,6 +61,7 @@ the ResourceEditor without problems you can use this script.
         <copy todir="${releasepath}/examples">
             <fileset dir="${examples}" >
                 <exclude name="**/TimeZone/**" />
+                <exclude name="**/LWUITDemo-original/**" />
                 <exclude name="**/build/**" />
                 <exclude name="**/dist/**" />
             </fileset>
