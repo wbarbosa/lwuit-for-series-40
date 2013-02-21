@@ -1,5 +1,15 @@
 Changelog
 -------------------------------------------------------------------------------
+1.0
+    * New Component: PopupChoiceGroup, an alternative for combobox to get more 
+      native look and feel to the application.
+    * added more example applications
+    * scrolling and focusing has been improved for touch devices.
+    * crash fix for ContextMenu
+    * Browser example now contains "Go" for easier usage of page loading.
+    * marginal removed from scrollbar in full touch devices
+    * fixed bug in textarea drawing where part of the text was cut of if
+      padding was added.
 0.9.1 Beta
     * New component: ContextMenu, a menu that is styled according to Full touch
       platform.
