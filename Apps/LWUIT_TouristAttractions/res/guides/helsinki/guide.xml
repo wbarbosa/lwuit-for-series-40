@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<guide city="Helsinki" country="FI" latitude="60.171617" longitude="24.941368" urlPrefix="/guides/helsinki/">
+  <attractions>
+    <attraction id="1" name="Suomenlinna" thumbnailUrl="Suomenlinna_tn.png" type="orange">  
+      <location>
+        <street>Suomenlinna</street>
+        <latitude>60.145692</latitude>
+        <longitude>24.987416</longitude>
+      </location>
+      <imageUrl>Suomenlinna.jpg</imageUrl>
+      <description>The "Gibraltar of the North" was once the greatest sea fortress in the Baltic, built by the Swedish in the mid-1700s at great expense to protect their eastern flank. But when the Russians invaded in February 1808, the bulk of the unprepared and bankrupt Swedish army hastily withdrew, allowing the Russians to conquer Helsinki without a fight and besiege the fortress. With no reinforcements in sight, commander Carl Olof Cronstedt surrendered unconditionally two months later, and Finland was ceded to the Russians. Cronstedt's actions probably saved countless civilian lives, but King Gustav IV needed a scapegoat and sentenced him to death for treason; fortunately, the losing king was himself soon overthrown, and Cronstadt lived out his years gardening.
+Today's Suomenlinna is still living in its own time with only old buildings, few cars, fewer than a thousand inhabitants and lots of old fortifications, catacombs and cast iron cannons. But it's not just a museum: the sprawling complex houses restaurants, cafes, theaters and museums, and is a very popular place for a picnic on a fine summer day, watching the vast passenger ferries drift by on their way to Estonia and St Petersburg. It was included in UNESCO’s World Heritage List in 1991 as a unique monument to European military architecture.
+Entry to the island is free. The HSL ferry from Market Square is the cheapest and most convenient way of getting there at €4 for a 12-hour tourist return. If you have an HSL Day Ticket it includes ferry travel. Guided tours in English are available daily at 11AM and 2PM in Jun-Aug and on Sat/Sun only at 1:30PM the rest of the year, €7/person, and history buffs will want to drop into the Suomenlinna Museum at the Visitor Centre (€5).</description>
+    </attraction>
+    <attraction id="2" name="Seurasaari" thumbnailUrl="Seurasaari_tn.png" type="orange">  
+      <location>
+        <street>Seurasaari</street>
+        <latitude>60.181477</latitude>
+        <longitude>24.884119</longitude>
+      </location>
+      <imageUrl>Seurasaari.jpg</imageUrl>
+      <description>A pleasant little island to the north of the center, filled with walking trails and authentic old Finnish houses collected from all over the country. An excellent half-day trip, especially in the summer, when many buildings have guides practising crafts in traditional dress. There's a very pleasant if somewhat pricy summer cafe/restaurant atop a small hill at the center of the island. Entry to the park free, entry into the museum buildings costs €6 (€5 concession), buy tickets at entrance. Take bus 24 from Erottaja at the northern end of Esplanadi to the terminus (20-30 minutes), then walk across the bridge. Beware of mercenary squirrels that will raid your bags if you carry any food.</description>
+    </attraction>
+    <attraction id="3" name="Lutheran Cathedral" thumbnailUrl="Lutheran_Cathedral_tn.png" type="violet">  
+      <location>    
+        <street>Unioninkatu 29</street>
+        <latitude>60.169973</latitude>
+        <longitude>24.952183</longitude>
+      </location>
+      <imageUrl>Lutheran_Cathedral.jpg</imageUrl>
+      <description>The unofficial symbol of the city, this striking white cathedral dominates the central Senate Square. Based on designs by Carl Ludvig Engel and completed in 1852, the cathedral has recently been refurbished and looks better than ever, with the 12 apostles on the roof once again looking down at the world below. Open 9AM-6PM daily. Free.</description>
+    </attraction>
+    <attraction id="4" name="The Church in the Rock" thumbnailUrl="Church_in_the_Rock_tn.png" type="violet">  
+      <location>    
+        <street>Lutherinkatu 3</street>
+        <latitude>60.172567</latitude>
+        <longitude>24.925253</longitude>
+      </location>
+      <imageUrl>Church_in_the_Rock.jpg</imageUrl>
+      <description>An atmospheric if minimalistic church, this church was literally dug out of solid rock. From above, it resembles a crashed UFO. The roof is made of 22 kms of copper strips. Completed in 1969, this has become one of Helsinki's most popular attractions. Concerts are often held here thanks to the excellent acoustics. 10AM-5PM daily. Free. English services on Sundays at 2PM, open to the public.</description>
+    </attraction>
+    <attraction id="5" name="Uspenski Cathedral" thumbnailUrl="Uspenski_Cathedral_tn.png" type="violet">  
+      <location>
+        <street>Kanavakatu 1</street>
+        <latitude>60.168308</latitude>
+        <longitude>24.959865</longitude>
+      </location>
+      <imageUrl>Uspenski_Cathedral.jpg</imageUrl>
+      <description>A classical onion-domed Russian church prominently located near the Market Square, Uspenski Cathedral serves Finland's small Orthodox minority and is the largest Orthodox church in Western Europe. The name comes from the Russian uspenie, from the Dormition (death) of the Virgin Mary. The five domes are topped with 22-carat gold, and some of the icons within are held to be miraculous. Open Tu-F 9:30AM-4PM, Sat 9:30AM-2PM, Su 12PM-3PM. May-Sep Mon,Wed, Sat 9:30AM-4PM, Tue 9:30AM-6PM, Sun 12PM-3PM. Free.</description>
+    </attraction>
+    <attraction id="6" name="Ateneum Art Museum" thumbnailUrl="Ateneum_tn.png" type="green">  
+      <location>    
+        <street>Kaivokatu 2</street>
+        <latitude>60.170176</latitude>
+        <longitude>24.943986</longitude>
+      </location>
+      <imageUrl>Ateneum.jpg</imageUrl>
+      <description>Ateneum can be considered the most nationally significant art museum, and it has the largest collection of paintings and sculptures in Finland. Particularly notable is the collection of works by major Finnish artists. Works include renowned interpretations of the national epic Kalevala. Open Tu-F 9AM-6PM, W-Th 9AM-8PM, Sa-Su 11AM-5PM. Closed Mon.Adults €6, under 18 free, special prices may apply during major exhibitions. First Wednesday of the month 5PM-8PM free admission.</description>
+    </attraction>
+    <attraction id="7" name="Kiasma" thumbnailUrl="Kiasma_tn.png" type="green">  
+      <location>    
+        <street>Mannerheiminaukio 2</street>
+        <latitude>60.171659</latitude>
+        <longitude>24.936733</longitude>
+      </location>
+      <imageUrl>Kiasma.jpg</imageUrl>
+      <description>The sometimes unusual collections mostly include works by contemporary Finnish artists and artists from nearby countries. There are also periodical exhibitions. The building itself is arguably a work of art. Open Tu 10AM-5PM, W-Su 10AM-8:30PM. Closed Mondays. €7 for adults, €5 for undergraduate students, senior citizens, visual artists, and groups with at least 7 people. Free admission for visitors under 18. First Wed of the month is free from 5PM-8PM.</description>
+    </attraction>
+    <attraction id="8" name="National Museum" thumbnailUrl="National_Museum_tn.png" type="green">  
+      <location>
+        <street>Mannerheimintie 34</street>
+        <latitude>60.174797</latitude>
+        <longitude>24.932077</longitude>
+      </location>
+      <imageUrl>National_Museum.jpg</imageUrl>
+      <description>A beautiful classical building houses this old museum, which has recently been renovated. The exhibit includes displays of artifacts and items relating to Finland's history. Open Tu-W 11AM-8PM, Th-Su 11AM-6PM, Closed Mon.  €6/4 adult/child. Free admission for visitors under 18. Tuesday has free admission from 5:30PM-8PM.</description>
+    </attraction>
+    <attraction id="9" name="Olympic Stadium" thumbnailUrl="Olympic_Stadium_tn.png" type="pink">  
+      <location>    
+        <street>Paavo Nurmen Tie 1</street>
+        <latitude>60.186561</latitude>
+        <longitude>24.92564</longitude>
+      </location>
+      <imageUrl>Olympic_Stadium.jpg</imageUrl>
+      <description>Originally built for the Olympics and renovated for the 2005 World Athletic Championships. Next to the stadium are soccer fields. There is Museum of Sport in the stadium building. Another stadium called Sonera stadium is not far from the Olympic site. The most popular building in the complex, though, is the Uimastadion, Helsinki's largest outdoor pool (open May-Sep), whose three pools and water slides draw around 5,000 visitors a day in the summer. After the war, the pool was used to store herring and potatoes! Open M-F 9AM-8PM, Sa-Su 9AM-6PM. The stadium features 72m high tower that offers a great view over the city. €2 (adults) / €1 (children). Now temporarily closed (April 2011).</description>
+    </attraction>
+    <attraction id="10" name="Sibelius Monument" thumbnailUrl="Sibeliusmonumentti_tn.png" type="pink">  
+      <location>    
+        <street>Sibeliusmonumentti</street>
+        <latitude>60.182072</latitude>
+        <longitude>24.913656</longitude>
+      </location>
+      <imageUrl>Sibeliusmonumentti.jpg</imageUrl>
+      <description>The world-famous composer Jean Sibelius' monument was designed by sculptress Eila Hiltunen and unveiled in 1967. It is one of the most well-known tourist attractions in Helsinki as nearly every guided tourist tour is brought to Sibelius Park to marvel at this unique work of art resembling organ pipes, welded together from 600 pipes and weighing over 24 metric tons.</description>
+    </attraction>
+    <attraction id="11" name="Parliament House" thumbnailUrl="Parliament_House_tn.png" type="pink">  
+      <location>    
+        <street>Mannerheimintie 30</street>
+        <latitude>60.17262</latitude>
+        <longitude>24.933359</longitude>
+      </location>
+      <imageUrl>Parliament_House.jpg</imageUrl>
+      <description>The House of the 200-seat Parliament of Finland was designed by J.S. Sirén in the classic style of the 1920s and officially inaugurated in 1931. The interior is classical with a touch of functionalism and art deco. Tours in English at 11AM and 12PM on Sat, 12PM and 1PM on Sun. During the months of Jul and Aug English tours are at 1PM on weekdays (and not available on weekends). Free. Under extensive renovation 2007–2017</description>
+    </attraction>
+  </attractions>
+</guide>
