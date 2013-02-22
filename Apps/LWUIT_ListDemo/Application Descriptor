@@ -1,4 +1,4 @@
-MIDlet-Version: 0.1.0
+MIDlet-Version: 1.0.0
 MIDlet-Vendor: Nokia
 MIDlet-Jar-URL: LWUIT_ListDemo.jar
 MicroEdition-Configuration: CLDC-1.1
