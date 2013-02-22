@@ -93,7 +93,7 @@ Integration instructions to developers:
   - In Package Explorer, select the Referenced Libraries and right click on the
     S40-with-themes JAR and select Properties.
   - Select Javadoc Location and click 'Browse'.
-  - Select the LWUIT library from <LWUIT_directory>/doc/LWUIT-UI/doc and click 'OK'.
+  - Select the LWUIT library from <LWUIT_directory>/doc/LWUIT-UI/ and click 'OK'.
   - Click 'OK' once more and you are ready to go.
 
 • To include LWUIT for Series 40 libraries and documentation to NetBeans IDE
@@ -111,6 +111,8 @@ Integration instructions to developers:
   - Right click your project and select Properties.
   - Select Build -> Libraries & Resources and click 'Add Library...'.
   - Select the library you created and click 'Add Library' and then 'OK'.
+
+To run example applications, go to \examples directory and follow instructions of the README.txt file of each project.
 
 Known Problems and Limitations:
 ===============================
