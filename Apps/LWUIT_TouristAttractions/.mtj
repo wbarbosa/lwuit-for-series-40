@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mtjMetadata jad="LWUITTouristAttractions.jad" version="1.2.2.201208211543">
+<mtjMetadata jad="LWUITTouristAttractions.jad" version="1.2.2.201301181350">
    <device group="Nokia SDK 2.0 for Java" name="Nokia_SDK_2_0_Java"/>
    <signing projectSpecific="false" signProject="false">
       <alias/>
@@ -33,8 +33,8 @@
             <symbol name="JSR75" value="1.0"/>
             <symbol name="SVG" value="1.1"/>
             <symbol name="Mobile_Sensor_API" value="1.0"/>
-            <symbol name="SATSA-CRYPTO" value="1.0"/>
             <symbol name="JSR184" value="1.1"/>
+            <symbol name="SATSA-CRYPTO" value="1.0"/>
             <symbol name="version.configuration" value="CDLC-1.1"/>
             <symbol name="jsr172_xmlparser" value="1.1"/>
             <symbol name="version.profile" value="MIDP-2.1"/>
