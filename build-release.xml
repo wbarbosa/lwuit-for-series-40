@@ -65,6 +65,8 @@ the ResourceEditor without problems you can use this script.
                 <exclude name="**/LWUITSpeed/**" />
                 <exclude name="**/build/**" />
                 <exclude name="**/dist/**" />
+                <exclude name="**/bin/**" />
+                <exclude name="**/.mtj.tmp/**" />
             </fileset>
         </copy>
     </target>
@@ -159,10 +161,10 @@ the ResourceEditor without problems you can use this script.
             token="../../Series-40-binaries/bin/sdk2.0/S40-no-themes.jar"
         /> 
         <!-- Lwuitspeed -->
-        <replace file="${releasepath}/examples/LWUITSpeed/nbproject/project.properties"
+        <!--<replace file="${releasepath}/examples/LWUITSpeed/nbproject/project.properties"
             value="../../bin/sdk2.0/S40-no-themes.jar"
             token="../../Series-40-binaries/bin/sdk2.0/S40-no-themes.jar"
-        />
+        />-->
     </target>
 
     <target name="fix-properties">
