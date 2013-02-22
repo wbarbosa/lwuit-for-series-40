@@ -62,6 +62,7 @@ the ResourceEditor without problems you can use this script.
             <fileset dir="${examples}" >
                 <exclude name="**/TimeZone/**" />
                 <exclude name="**/LWUITDemo-original/**" />
+                <exclude name="**/LWUITSpeed/**" />
                 <exclude name="**/build/**" />
                 <exclude name="**/dist/**" />
             </fileset>
