@@ -182,9 +182,6 @@ public class Form extends Container {
         title.setEndsWith3Points(false);
         titleArea.addComponent(BorderLayout.CENTER, title);
         titleArea.setUIID("TitleArea"); 
-        if(Display.getInstance().getDeviceType() != Display.FULL_TOUCH_DEVICE) {
-            addComponentToForm(BorderLayout.NORTH, titleArea);
-        }
         addComponentToForm(BorderLayout.CENTER, contentPane);
         
         contentPane.setUIID("ContentPane");
@@ -706,6 +703,10 @@ public class Form extends Container {
     public Form(String title) {
         this();
         this.title.setText(title);
+        if(Display.getInstance().getDeviceType() != Display.FULL_TOUCH_DEVICE
+           && !title.equals("")) {
+            addComponentToForm(BorderLayout.NORTH, titleArea);
+        }
     }
 
     /**
