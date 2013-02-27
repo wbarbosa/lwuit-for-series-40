@@ -72,6 +72,7 @@ public class Form extends Container {
     private Painter glassPane;
     private Container contentPane = new Container(new BoxLayout(BoxLayout.Y_AXIS));
     Container titleArea = new Container(new BorderLayout());
+    private boolean titleAreaInitialized = false;
     private Label title = new Label("", "Title");
     private MenuBar menuBar;
     private Component dragged;
@@ -706,6 +707,7 @@ public class Form extends Container {
         if(Display.getInstance().getDeviceType() != Display.FULL_TOUCH_DEVICE
            && !title.equals("")) {
             addComponentToForm(BorderLayout.NORTH, titleArea);
+            titleAreaInitialized = true;
         }
     }
 
@@ -768,6 +770,13 @@ public class Form extends Container {
                 }
             }
         } 
+        if(Display.getInstance().getDeviceType() != Display.FULL_TOUCH_DEVICE
+           && !title.equals("")) {
+            if(!titleAreaInitialized) {
+                addComponentToForm(BorderLayout.NORTH, titleArea);
+                titleAreaInitialized = true;
+            }
+        }
     }
 
     /**
