@@ -7,12 +7,12 @@ import com.sun.lwuit.plaf.UIManager;
 
 /**
  * A component that visually displays the progress of an operation. The
- * component can be used in indeterministic or deterministic mode.
+ * component can be used in indeterminate or determinate mode.
  * 
  * In indeterminate mode the progress is indicated by spinning animation. It
  * is meant for cases where the progress cannot be reliably measured.
  * 
- * In deterministic mode the progress is represented by a progress bar. This
+ * In determinate mode the progress is represented by a progress bar. This
  * mode simply delegates the functionality to Slider component.
  * 
  */
