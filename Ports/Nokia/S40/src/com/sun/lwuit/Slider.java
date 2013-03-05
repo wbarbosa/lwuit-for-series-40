@@ -89,7 +89,7 @@ public class Slider extends Label {
      */
     public void initComponent() {
         if (infinite) {
-            getComponentForm().registerAnimatedInternal(this);
+            getComponentForm().registerAnimated(this);
         }
     }
 
@@ -100,7 +100,7 @@ public class Slider extends Label {
         if (infinite) {
             Form f = getComponentForm();
             if (f != null) {
-                f.deregisterAnimatedInternal(this);
+                f.deregisterAnimated(this);
             }
         }
     }
