@@ -184,7 +184,9 @@ public class ProgressIndicator extends Component {
      */
     public void paint(Graphics g) {
         if (indeterminate && rotatedImage != null) {
-            g.drawImage(rotatedImage, this.getX(), this.getY());
+            int x = getX() + (getWidth() / 2) - (rotatedImage.getWidth() / 2);
+            int y = getY() + (getHeight() / 2) - (rotatedImage.getHeight() / 2);
+            g.drawImage(rotatedImage, x, y);
         }
     }
 
