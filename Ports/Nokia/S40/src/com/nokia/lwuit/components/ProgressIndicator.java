@@ -139,6 +139,25 @@ public class ProgressIndicator extends Component {
     }
 
     /**
+     * Indicates that the percentage value of the progress bar should be
+     * rendered with percentage sign on top of the progress bar. For indefinite
+     * progress indicator this method will have no effect.
+     *
+     * @param renderPercentageOnTop true to render percentages
+     */
+    public void setRenderPercentageOnTop(boolean renderPercentageOnTop) {
+        progressBar.setRenderPercentageOnTop(renderPercentageOnTop);
+        repaint();
+    }
+    
+    /**
+     * @return true if percentage value is rendered
+     */
+    public boolean isRenderPercentageOnTop() {
+        return progressBar.isRenderPercentageOnTop();
+    }
+
+    /**
      * Indicates that the value of the progress bar should be rendered on top
      * of the progress bar. For indeterminate progress indicator this method
      * will have no effect.
