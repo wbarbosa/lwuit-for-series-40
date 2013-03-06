@@ -414,6 +414,13 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
     /**
      * @inheritDoc
      */
+    public void drawSegmentedButton(Graphics g, Button sb) {
+        drawComponent(g, sb, sb.getIconFromState(), null, 0);
+    }
+    
+    /**
+     * @inheritDoc
+     */
     public void drawComboBox(Graphics g, List cb) {
         int border = 2;
         Style style = cb.getStyle();
@@ -823,6 +830,18 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         return d;
     }
 
+    /**
+     * @inheritDoc
+     */
+    // XXX  TODO tarkasta tämä
+    public Dimension getSegmentedButtonPreferredSize(Button sb) {
+        if(sb.isToggle()) {
+            return getButtonPreferredSize(sb);
+        }
+
+        return getPreferredSize(sb, new Image[]{sb.getIcon(), sb.getRolloverIcon(), sb.getPressedIcon()}, null);
+    }
+    
     /**
      * @inheritDoc
      */

@@ -225,6 +225,13 @@ public abstract class LookAndFeel {
     public abstract void drawRadioButton(Graphics g, Button rb);
 
     /**
+     * Invoked for drawint a segmented button widget
+     * @param g graphics context
+     * @param sb component to draw
+     */
+    public abstract void drawSegmentedButton(Graphics g, Button rb);
+    
+    /**
      * Draw the given text area
      * 
      * @param g graphics context
@@ -299,6 +306,14 @@ public abstract class LookAndFeel {
      */
     public abstract Dimension getRadioButtonPreferredSize(Button rb);
 
+    /**
+     * Calculate the preferred size of the component
+     * 
+     * @param sb component whose size should be calculated
+     * @return the preferred size for the component
+     */
+    public abstract Dimension getSegmentedButtonPreferredSize(Button sb);
+    
     //public abstract Dimension getSpinnerPreferredSize(Spinner sp);
     /**
      * Calculate the preferred size of the component
