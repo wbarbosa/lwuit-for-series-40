@@ -75,26 +75,84 @@ public class ProgressIndicator extends Component {
     }
 
     /**
-     * Sets the value of the determinate progress bar. The value must be in 0 - 100 range.
+     * Sets the value of the progress bar.
      *
-     * @param value percentage value
+     * @param value value
      */
-    public void setProgress(int progress) {
-        progressBar.setSliderValue(progress);
+    public void setValue(int value) {
+        progressBar.setSliderValue(value);
         repaint();
     }
 
     /**
-     * Indicates the value of the determinate progress bar.
+     * Indicates the value of the progress bar.
      *
      * @return the value of the progress bar.
      */    
-    public int getProgress() {
+    public int getValue() {
         return progressBar.getSliderValue();
+    }
+    
+    /**
+     * Returns the maximum value set for the progress bar. Default value is 100.
+     *
+     * @return the maximum value
+     */
+    public int getMaxValue() {
+        return progressBar.getMaxValue();
     }
 
     /**
-     * Tells whether the progress indicator is in indeterminate or determinate mode.
+     * Indicates the maximum value set for the progress bar.
+     *
+     * @param maxValue the maxValue to set
+     */
+    public void setMaxValue(int maxValue) {
+        progressBar.setMaxValue(maxValue);
+        repaint();
+    }
+
+    /**
+     * Returns the minimum value set for the progress bar. Default value is 0.
+     *
+     * @return the minimum value
+     */
+    public int getMinValue() {
+        return progressBar.getMinValue();
+    }
+
+    /**
+     * Indicates the minimum value set for the progress bar.
+     *
+     * @param minValue the minimum value
+     */
+    public void setMinValue(int minValue) {
+        progressBar.setMinValue(minValue);
+        repaint();
+    }    
+
+    /**
+     * @return the renderValueOnTop
+     */
+    public boolean isRenderValueOnTop() {
+        return progressBar.isRenderValueOnTop();
+    }
+
+    /**
+     * Indicates that the value of the progress bar should be rendered on top
+     * of the progress bar. For indeterminate progress indicator this method
+     * will have no effect.
+     *
+     * @param renderValueOnTop true to render value
+     */
+    public void setRenderValueOnTop(boolean renderValueOnTop) {
+        progressBar.setRenderValueOnTop(renderValueOnTop);
+        repaint();
+    }
+    
+    /**
+     * Tells whether the progress indicator is in indeterminate or determinate
+     * mode.
      *
      * @return true if the progress indicator is in indeterminate mode.
      */ 
@@ -105,7 +163,8 @@ public class ProgressIndicator extends Component {
     /**
      * Sets the mode of the progress indicator.
      *
-     * @param indeterminate if true the progress indicator will be set to indeterminate mode.
+     * @param indeterminate if true the progress indicator will be set to 
+     * indeterminate mode.
      */ 
     public void setIndeterminate(boolean indeterminate) {
         this.indeterminate = indeterminate;
@@ -188,13 +247,15 @@ public class ProgressIndicator extends Component {
             int y = getY() + (getHeight() / 2) - (rotatedImage.getHeight() / 2);
             g.drawImage(rotatedImage, x, y);
         }
+        else {
+            progressBar.paint(g);
+        }
     }
 
     /**
      * @inheritDoc
      */
     public Dimension calcPreferredSize() {
-
         if (indeterminate && image != null) {
             int prefW = 0, prefH = 0;
             if (indeterminateStyle.getBorder() != null) {
