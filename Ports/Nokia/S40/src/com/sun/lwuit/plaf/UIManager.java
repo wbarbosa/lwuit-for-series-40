@@ -421,6 +421,39 @@ public class UIManager {
             themeProps.put("ScrollThumb.bgColor", "0");
         }
 
+        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemCenter.derive")) {
+            themeProps.put("SegmentedButtonItemCenter.border", Border.getDefaultBorder());
+            themeProps.put("SegmentedButtonItemCenter.padding", "4,4,4,4");
+        }
+        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemCenter.press#derive")) {
+            themeProps.put("SegmentedButtonItemCenter.press#border", Border.getDefaultBorder().createPressedVersion());
+            themeProps.put("SegmentedButtonItemCenter.press#derive", "SegmentedButtonItemCenter");
+        }
+        themeProps.put("SegmentedButtonItemCenter.sel#derive", "SegmentedButtonItemCenter");
+        themeProps.put("SegmentedButtonItemCenter.dis#derive", "SegmentedButtonItemCenter");
+
+        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemLeft.derive")) {
+            themeProps.put("SegmentedButtonItemLeft.border", Border.getDefaultBorder());
+            themeProps.put("SegmentedButtonItemLeft.padding", "4,4,4,4");
+        }
+        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemLeft.press#derive")) {
+            themeProps.put("SegmentedButtonItemLeft.press#border", Border.getDefaultBorder().createPressedVersion());
+            themeProps.put("SegmentedButtonItemLeft.press#derive", "SegmentedButtonItemLeft");
+        }
+        themeProps.put("SegmentedButtonItemLeft.sel#derive", "SegmentedButtonItemLeft");
+        themeProps.put("SegmentedButtonItemLeft.dis#derive", "SegmentedButtonItemLeft");
+
+        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemRight.derive")) {
+            themeProps.put("SegmentedButtonItemRight.border", Border.getDefaultBorder());
+            themeProps.put("SegmentedButtonItemRight.padding", "4,4,4,4");
+        }
+        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemRight.press#derive")) {
+            themeProps.put("SegmentedButtonItemRight.press#border", Border.getDefaultBorder().createPressedVersion());
+            themeProps.put("SegmentedButtonItemRight.press#derive", "SegmentedButtonItemRight");
+        }
+        themeProps.put("SegmentedButtonItemRight.sel#derive", "SegmentedButtonItemRight");
+        themeProps.put("SegmentedButtonItemRight.dis#derive", "SegmentedButtonItemRight");
+
         if(installedTheme == null || !installedTheme.containsKey("SliderFull.derive")) {
             themeProps.put("SliderFull.bgColor", "0");
         }
@@ -817,6 +850,21 @@ public class UIManager {
                 b = (Border) themeProps.get("TabSelected.sel#border");
                 blender.applyColorToBorder(b, theme_color);
                 themeProps.put("TabSelected.sel#fgColor", Integer.toHexString(theme_color));
+                b = (Border) themeProps.get("SegmentedButtonItemLeft.press#border");
+                buttonMask = (Border) themeProps.get("SegmentedButtonItemLeftMask.border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                b = (Border) themeProps.get("SegmentedButtonItemLeft.sel#border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);               
+                b = (Border) themeProps.get("SegmentedButtonItemCenter.press#border");
+                buttonMask = (Border) themeProps.get("SegmentedButtonItemCenterMask.border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                b = (Border) themeProps.get("SegmentedButtonItemCenter.sel#border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);  
+                b = (Border) themeProps.get("SegmentedButtonItemRight.press#border");
+                buttonMask = (Border) themeProps.get("SegmentedButtonItemRightMask.border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                b = (Border) themeProps.get("SegmentedButtonItemRight.sel#border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);
             }
         }
         buildTheme(themeProps);

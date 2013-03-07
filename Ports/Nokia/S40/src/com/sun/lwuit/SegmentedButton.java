@@ -37,8 +37,9 @@ public class SegmentedButton extends Container {
             SegmentedButtonItem sb = items[i];
             this.addComponent(sb);
             group.add(sb);
+            sb.setTickerEnabled(false);
             sb.setButtonGroup(group);
-            sb.setToggleMode(toggleMode);
+            sb.setToggle(toggleMode);
         }
         
         this.setLayout(new GridLayout(1, itemsCount));

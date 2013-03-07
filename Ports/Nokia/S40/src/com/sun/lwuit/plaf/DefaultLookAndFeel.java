@@ -833,12 +833,10 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
     /**
      * @inheritDoc
      */
-    // XXX  TODO tarkasta tämä
     public Dimension getSegmentedButtonPreferredSize(Button sb) {
         if(sb.isToggle()) {
             return getButtonPreferredSize(sb);
         }
-
         return getPreferredSize(sb, new Image[]{sb.getIcon(), sb.getRolloverIcon(), sb.getPressedIcon()}, null);
     }
     

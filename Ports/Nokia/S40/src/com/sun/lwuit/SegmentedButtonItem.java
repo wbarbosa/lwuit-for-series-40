@@ -1,7 +1,6 @@
 package com.sun.lwuit;
 
 import com.sun.lwuit.geom.Dimension;
-import com.sun.lwuit.plaf.Style;
 import com.sun.lwuit.plaf.UIManager;
 
 /**
@@ -9,12 +8,8 @@ import com.sun.lwuit.plaf.UIManager;
  * within a specific {@link ButtonGroup}
  */
 public class SegmentedButtonItem extends RadioButton {
-    private Style selectedStyle;
-    private Style unselectedStyle;
-    
-    private int alignment = 0;
+
     private boolean selected = false;
-    private boolean toggleMode = false;
     private ButtonGroup group;
 
     /**
@@ -50,26 +45,20 @@ public class SegmentedButtonItem extends RadioButton {
      */
     public SegmentedButtonItem(String text, Image icon, int alignment) {
         super(text, icon);
-        this.alignment = alignment;
         
         switch(alignment) {
             case Component.CENTER:
-                setUIID("SegmentedButtonCenter");
+                setUIID("SegmentedButtonItemCenter");
                 break;
             case Component.LEFT:
-                setUIID("SegmentedButtonLeft");
+                setUIID("SegmentedButtonItemLeft");
                 break;
             case Component.RIGHT:
-                setUIID("SegmentedButtonRight");
+                setUIID("SegmentedButtonItemRight");
                 break;
             default:
                 throw new RuntimeException("Unsupported alignment");
         }       
-        
-        selectedStyle = getSelectedStyle();
-        unselectedStyle = getUnselectedStyle();
-        
-        setPressedStyle(selectedStyle); // XXX TODO for now
     }
     
     /**
@@ -90,13 +79,6 @@ public class SegmentedButtonItem extends RadioButton {
 
     void setSelectedImpl(boolean selected) {
         this.selected = selected;
-        if (toggleMode) {
-            if (selected) {
-                setUnselectedStyle(selectedStyle);
-            } else {
-                setUnselectedStyle(unselectedStyle);
-            }
-        }
         repaint();
     }
     
@@ -117,12 +99,11 @@ public class SegmentedButtonItem extends RadioButton {
      */
     public void released(int x, int y) {
         // prevent the segmented button item from being "turned off"
-        // if in toggleMode
-        if (toggleMode) {
+        if (isToggle()) {
             if (!isSelected()) {
                 setSelected(true);
             }
-        }
+        }     
         super.released(x, y);
     }
     
@@ -155,8 +136,7 @@ public class SegmentedButtonItem extends RadioButton {
     void fireActionEvent() {        
         if(group != null) {
             group.setSelected(this);
-        }
-        
+        }      
         super.fireActionEvent();
     }
 
@@ -165,32 +145,5 @@ public class SegmentedButtonItem extends RadioButton {
      */
     public void refreshTheme() {
         super.refreshTheme();
-    }
-  
-    /**
-     * Returns true if the alignment of the object is the same as in parameter
-     * @param al alignment to compare with 
-     * @return true if the alignment of the object is the same as in parameter
-     */
-    public boolean isAlignment(int al) {
-        return alignment == al;
-    }
-
-    /**
-     * Setting toggle mode
-     * 
-     * @param group toggle or not
-     */  
-    protected void setToggleMode(boolean mode) {
-        this.toggleMode = mode;
-    }
-    
-    /**
-     * Returns true if in toggle mode
-     * 
-     * @return true if in toggle mode
-     */
-    protected boolean isToggleMode() {
-        return toggleMode;
     }
 }
