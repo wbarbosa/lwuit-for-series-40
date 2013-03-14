@@ -23,6 +23,7 @@
  */
 package com.sun.lwuit.plaf;
 
+import com.nokia.lwuit.components.DualButton;
 import com.sun.lwuit.geom.Dimension;
 import com.sun.lwuit.*;
 import com.sun.lwuit.animations.CommonTransitions;
@@ -199,7 +200,14 @@ public abstract class LookAndFeel {
      * @param cb component to draw
      */
     public abstract void drawComboBox(Graphics g, List cb);
-
+    
+    /**
+     * Invoked for drawing a DualButton widget
+     * @param g graphics context
+     * @param db component to draw
+     */
+    public abstract void drawDualButton(Graphics g, Button db);
+    
     /**
      * Invoked for drawing a label widget
      * 
@@ -223,13 +231,6 @@ public abstract class LookAndFeel {
      * @param rb component to draw
      */
     public abstract void drawRadioButton(Graphics g, Button rb);
-
-    /**
-     * Invoked for drawint a segmented button widget
-     * @param g graphics context
-     * @param sb component to draw
-     */
-    public abstract void drawSegmentedButton(Graphics g, Button rb);
     
     /**
      * Draw the given text area
@@ -267,6 +268,13 @@ public abstract class LookAndFeel {
     public abstract void drawTabbedPane(Graphics g, TabbedPane tp);
 
     /**
+     * Invoked for drawing a ToggleButton widget
+     * @param g graphics context
+     * @param tb component to draw
+     */
+    public abstract void drawToggleButton(Graphics g, Button tb);
+    
+    /**
      * Calculate the preferred size of the component
      * 
      * @param b component whose size should be calculated
@@ -282,6 +290,14 @@ public abstract class LookAndFeel {
      */
     public abstract Dimension getCheckBoxPreferredSize(Button cb);
 
+    /**
+     * Calculate the preferred size of the component
+     * 
+     * @param db component whose size should be calculated
+     * @return the preferred size for the component
+     */
+    public abstract Dimension getDualButtonPreferredSize(Button db);
+    
     /**
      * Calculate the preferred size of the component
      * 
@@ -305,14 +321,6 @@ public abstract class LookAndFeel {
      * @return the preferred size for the component
      */
     public abstract Dimension getRadioButtonPreferredSize(Button rb);
-
-    /**
-     * Calculate the preferred size of the component
-     * 
-     * @param sb component whose size should be calculated
-     * @return the preferred size for the component
-     */
-    public abstract Dimension getSegmentedButtonPreferredSize(Button sb);
     
     //public abstract Dimension getSpinnerPreferredSize(Spinner sp);
     /**
@@ -332,6 +340,14 @@ public abstract class LookAndFeel {
      */
     public abstract Dimension getTextFieldPreferredSize(TextArea ta);
 
+    /**
+     * Calculate the preferred size of the component
+     * 
+     * @param tb component whose size should be calculated
+     * @return the preferred size for the component
+     */
+    public abstract Dimension getToggleButtonPreferredSize(Button tb);
+    
     /**
      * Calculate the preferred size of the component
      * 

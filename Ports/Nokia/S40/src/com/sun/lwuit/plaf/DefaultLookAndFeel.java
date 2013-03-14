@@ -410,12 +410,19 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
             }
         }
     }
-
+    
     /**
      * @inheritDoc
      */
-    public void drawSegmentedButton(Graphics g, Button sb) {
-        drawComponent(g, sb, sb.getIconFromState(), null, 0);
+    public void drawDualButton(Graphics g, Button db) {
+        drawComponent(g, db, db.getIconFromState(), null, 0);
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public void drawToggleButton(Graphics g, Button tb) {
+        drawComponent(g, tb, tb.getIconFromState(), null, 0);
     }
     
     /**
@@ -628,7 +635,13 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         d.setWidth(d.getWidth() + checkBoxSquareSize + cb.getGap());
         return d;
     }
-
+    /**
+     * @inheritDoc
+     */
+    public Dimension getDualButtonPreferredSize(Button db) {
+        return getPreferredSize(db, new Image[]{db.getIcon(), db.getRolloverIcon(), db.getPressedIcon()}, null);
+    }
+    
     /**
      * @inheritDoc
      */
@@ -829,16 +842,6 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         d.setWidth(d.getWidth() + height + rb.getGap());
         return d;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public Dimension getSegmentedButtonPreferredSize(Button sb) {
-        if(sb.isToggle()) {
-            return getButtonPreferredSize(sb);
-        }
-        return getPreferredSize(sb, new Image[]{sb.getIcon(), sb.getRolloverIcon(), sb.getPressedIcon()}, null);
-    }
     
     /**
      * @inheritDoc
@@ -903,6 +906,13 @@ public class DefaultLookAndFeel extends LookAndFeel implements FocusListener {
         return new Dimension(prefW, prefH);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public Dimension getToggleButtonPreferredSize(Button tb) {
+        return getButtonPreferredSize(tb);
+    }
+    
     /**
      * Reverses alignment in the case of bidi
      */

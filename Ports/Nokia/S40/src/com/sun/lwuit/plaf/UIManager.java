@@ -370,6 +370,28 @@ public class UIManager {
             themeProps.put("DialogTitle.align", centerAlign);
         }
 
+        if(installedTheme == null || !installedTheme.containsKey("DualButtonItemLeft.derive")) {
+            themeProps.put("DualButtonItemLeft.border", Border.getDefaultBorder());
+            themeProps.put("DualButtonItemLeft.padding", "4,4,4,4");
+        }
+        if(installedTheme == null || !installedTheme.containsKey("DualButtonItemLeft.press#derive")) {
+            themeProps.put("DualButtonItemLeft.press#border", Border.getDefaultBorder().createPressedVersion());
+            themeProps.put("DualButtonItemLeft.press#derive", "DualButtonItemLeft");
+        }
+        themeProps.put("DualButtonItemLeft.sel#derive", "DualButtonItemLeft");
+        themeProps.put("DualButtonItemLeft.dis#derive", "DualButtonItemLeft");
+        
+        if(installedTheme == null || !installedTheme.containsKey("DualButtonItemRight.derive")) {
+            themeProps.put("DualButtonItemRight.border", Border.getDefaultBorder());
+            themeProps.put("DualButtonItemRight.padding", "4,4,4,4");
+        }
+        if(installedTheme == null || !installedTheme.containsKey("DualButtonItemRight.press#derive")) {
+            themeProps.put("DualButtonItemRight.press#border", Border.getDefaultBorder().createPressedVersion());
+            themeProps.put("DualButtonItemRight.press#derive", "DualButtonItemRight");
+        }
+        themeProps.put("DualButtonItemRight.sel#derive", "DualButtonItemRight");
+        themeProps.put("DualButtonItemRight.dis#derive", "DualButtonItemRight");
+        
         if(installedTheme == null || !installedTheme.containsKey("Form.derive")) {
             themeProps.put("Form.padding", "0,0,0,0");
             themeProps.put("Form.margin", "0,0,0,0");
@@ -421,39 +443,28 @@ public class UIManager {
             themeProps.put("ScrollThumb.bgColor", "0");
         }
 
-        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemCenter.derive")) {
-            themeProps.put("SegmentedButtonItemCenter.border", Border.getDefaultBorder());
-            themeProps.put("SegmentedButtonItemCenter.padding", "4,4,4,4");
+        if(installedTheme == null || !installedTheme.containsKey("ToggleButtonItemLeft.derive")) {
+            themeProps.put("ToggleButtonItemLeft.border", Border.getDefaultBorder());
+            themeProps.put("ToggleButtonItemLeft.padding", "4,4,4,4");
         }
-        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemCenter.press#derive")) {
-            themeProps.put("SegmentedButtonItemCenter.press#border", Border.getDefaultBorder().createPressedVersion());
-            themeProps.put("SegmentedButtonItemCenter.press#derive", "SegmentedButtonItemCenter");
+        if(installedTheme == null || !installedTheme.containsKey("ToggleButtonItemLeft.press#derive")) {
+            themeProps.put("ToggleButtonItemLeft.press#border", Border.getDefaultBorder().createPressedVersion());
+            themeProps.put("ToggleButtonItemLeft.press#derive", "ToggleButtonItemLeft");
         }
-        themeProps.put("SegmentedButtonItemCenter.sel#derive", "SegmentedButtonItemCenter");
-        themeProps.put("SegmentedButtonItemCenter.dis#derive", "SegmentedButtonItemCenter");
+        themeProps.put("ToggleButtonItemLeft.sel#derive", "ToggleButtonItemLeft");
+        themeProps.put("ToggleButtonItemLeft.dis#derive", "ToggleButtonItemLeft");
 
-        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemLeft.derive")) {
-            themeProps.put("SegmentedButtonItemLeft.border", Border.getDefaultBorder());
-            themeProps.put("SegmentedButtonItemLeft.padding", "4,4,4,4");
+        if(installedTheme == null || !installedTheme.containsKey("ToggleButtonItemRight.derive")) {
+            themeProps.put("ToggleButtonItemRight.border", Border.getDefaultBorder());
+            themeProps.put("ToggleButtonItemRight.padding", "4,4,4,4");
         }
-        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemLeft.press#derive")) {
-            themeProps.put("SegmentedButtonItemLeft.press#border", Border.getDefaultBorder().createPressedVersion());
-            themeProps.put("SegmentedButtonItemLeft.press#derive", "SegmentedButtonItemLeft");
+        if(installedTheme == null || !installedTheme.containsKey("ToggleButtonItemRight.press#derive")) {
+            themeProps.put("ToggleButtonItemRight.press#border", Border.getDefaultBorder().createPressedVersion());
+            themeProps.put("ToggleButtonItemRight.press#derive", "ToggleButtonItemRight");
         }
-        themeProps.put("SegmentedButtonItemLeft.sel#derive", "SegmentedButtonItemLeft");
-        themeProps.put("SegmentedButtonItemLeft.dis#derive", "SegmentedButtonItemLeft");
-
-        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemRight.derive")) {
-            themeProps.put("SegmentedButtonItemRight.border", Border.getDefaultBorder());
-            themeProps.put("SegmentedButtonItemRight.padding", "4,4,4,4");
-        }
-        if(installedTheme == null || !installedTheme.containsKey("SegmentedButtonItemRight.press#derive")) {
-            themeProps.put("SegmentedButtonItemRight.press#border", Border.getDefaultBorder().createPressedVersion());
-            themeProps.put("SegmentedButtonItemRight.press#derive", "SegmentedButtonItemRight");
-        }
-        themeProps.put("SegmentedButtonItemRight.sel#derive", "SegmentedButtonItemRight");
-        themeProps.put("SegmentedButtonItemRight.dis#derive", "SegmentedButtonItemRight");
-
+        themeProps.put("ToggleButtonItemRight.sel#derive", "ToggleButtonItemRight");
+        themeProps.put("ToggleButtonItemRight.dis#derive", "ToggleButtonItemRight");
+        
         if(installedTheme == null || !installedTheme.containsKey("SliderFull.derive")) {
             themeProps.put("SliderFull.bgColor", "0");
         }
@@ -849,21 +860,26 @@ public class UIManager {
                 blender.applyColorToBorder(b, theme_color, ((Border)themeProps.get("ComboBoxMask.border")).images);
                 b = (Border) themeProps.get("TabSelected.sel#border");
                 blender.applyColorToBorder(b, theme_color);
-                themeProps.put("TabSelected.sel#fgColor", Integer.toHexString(theme_color));
-                b = (Border) themeProps.get("SegmentedButtonItemLeft.press#border");
-                buttonMask = (Border) themeProps.get("SegmentedButtonItemLeftMask.border");
+                themeProps.put("TabSelected.sel#fgColor", Integer.toHexString(theme_color));               
+                b = (Border) themeProps.get("DualButtonItemLeft.press#border");
+                buttonMask = (Border) themeProps.get("DualButtonItemLeftMask.border");
                 blender.applyColorToBorder(b, theme_color, buttonMask.images);
-                b = (Border) themeProps.get("SegmentedButtonItemLeft.sel#border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);               
-                b = (Border) themeProps.get("SegmentedButtonItemCenter.press#border");
-                buttonMask = (Border) themeProps.get("SegmentedButtonItemCenterMask.border");
+                b = (Border) themeProps.get("DualButtonItemLeft.border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);              
+                b = (Border) themeProps.get("DualButtonItemRight.press#border");
+                buttonMask = (Border) themeProps.get("DualButtonItemRightMask.border");
                 blender.applyColorToBorder(b, theme_color, buttonMask.images);
-                b = (Border) themeProps.get("SegmentedButtonItemCenter.sel#border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);  
-                b = (Border) themeProps.get("SegmentedButtonItemRight.press#border");
-                buttonMask = (Border) themeProps.get("SegmentedButtonItemRightMask.border");
+                b = (Border) themeProps.get("DualButtonItemRight.border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);              
+                b = (Border) themeProps.get("ToggleButtonItemLeft.press#border");
+                buttonMask = (Border) themeProps.get("ToggleButtonItemLeftMask.border");
                 blender.applyColorToBorder(b, theme_color, buttonMask.images);
-                b = (Border) themeProps.get("SegmentedButtonItemRight.sel#border");
+                b = (Border) themeProps.get("ToggleButtonItemLeft.sel#border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);                              
+                b = (Border) themeProps.get("ToggleButtonItemRight.press#border");
+                buttonMask = (Border) themeProps.get("ToggleButtonItemRightMask.border");
+                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                b = (Border) themeProps.get("ToggleButtonItemRight.sel#border");
                 blender.applyColorToBorder(b, theme_color, buttonMask.images);
             }
         }
