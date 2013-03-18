@@ -27,18 +27,27 @@ public class ToggleButton extends Container {
      * 
      * @param leftItem item of the left hand side
      * @param rightItem item of the right hand side
+     * @param leftItemSelected should left item be selected initially
      */
-    public ToggleButton(ToggleButtonItem leftItem, ToggleButtonItem rightItem) {
+    public ToggleButton(
+            ToggleButtonItem leftItem,
+            ToggleButtonItem rightItem,
+            boolean leftItemSelected) {
+        
         if ((leftItem == null) || (rightItem == null)) {
             throw new RuntimeException("Invalid ToggleButtonItem.");
         }
         
         this.group = new ButtonGroup();
-        group.add(leftItem);
-        group.add(rightItem);
-        
         leftItem.setToggle(true);
         rightItem.setToggle(true);
+
+        leftItem.setSelected(leftItemSelected);
+        rightItem.setSelected(!leftItemSelected);
+        
+        group.add(leftItem);
+        group.add(rightItem);      
+        
         this.addComponent(leftItem);
         this.addComponent(rightItem);
         
