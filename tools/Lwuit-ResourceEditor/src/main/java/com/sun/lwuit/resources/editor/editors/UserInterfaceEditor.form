@@ -441,7 +441,7 @@
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                <TitledBorder title="Extra Components"/>
+                                <TitledBorder title="IO Components"/>
                               </Border>
                             </Property>
                             <Property name="name" type="java.lang.String" value="lwuit4IOComponents" noResource="true"/>
@@ -641,7 +641,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="bindOnCreate" alignment="0" pref="277" max="32767" attributes="0"/>
                                   <Component id="bindActionEvent" alignment="0" pref="277" max="32767" attributes="0"/>
-                                  <Component id="bindBeforeShow" alignment="0" pref="277" max="32767" attributes="0"/>
+                                  <Component id="bindBeforeShow" alignment="0" pref="281" max="32767" attributes="0"/>
                                   <Component id="bindPostShow" alignment="0" pref="277" max="32767" attributes="0"/>
                                   <Component id="bindExitForm" alignment="0" pref="277" max="32767" attributes="0"/>
                                   <Component id="bindListModel" alignment="0" pref="277" max="32767" attributes="0"/>
@@ -665,7 +665,7 @@
                               <Component id="bindExitForm" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="bindListModel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="237" max="32767" attributes="0"/>
+                              <EmptySpace pref="216" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -746,7 +746,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTextPane" name="help">
                       <Properties>
-                        <Property name="contentType" type="java.lang.String" value="text/html"/>
+                        <Property name="contentType" type="java.lang.String" value="text/html" noResource="true"/>
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xd;&#xa;  &lt;head&gt;&#xd;&#xa;&#xd;&#xa;  &lt;/head&gt;&#xd;&#xa;  &lt;body&gt;&#xd;&#xa;    &lt;p style=&quot;margin-top: 0&quot;&gt;&#xd;&#xa;      &#xd;To use the GUI builder drag components from the component palette at the bottom to either&#xa;the component tree on the right or into the actual UI. Components are arranged in a hierarchy &#xa;within containers, you can nest containers and components to create all forms of elaborate UI&apos;s.&#xa;To determine how components are arranged within a Container you need to determine the layout&#xa;manager of the container (click the layout field in the Properties section while a container is &#xa;selected, there is more documentation on layouts there).&#xa;    &lt;/p&gt;&#xd;&#xa;    &lt;p&gt;&#xa;      Attributes of a component can be customized when its selected in the tree or in the UI by &#xa;editing the properties tab content. Components can be dragged and rearranged both within the&#xa;UI preview and within the tree, a right click (meta-click) menu also exists to delete/copy/paste etc.&#xa;the existing components. To change the appearance of a component you need to work with&#xa;a theme, to apply a change only to a specific component you can change its UIID attribute and&#xa;edit that UIID in the theme (read more about UIID&apos;s in the theme section).&#xa;    &lt;/p&gt;&#xa;    &lt;p&gt;&#xa;      Navigation between forms in the GUI builder is possible with commands, in order to view the resulting UI &#xa;the theme can be selected (select the UI from the Preview Options area). In order for events to be mappable&#xa; via the GUI builder use the generate netbeans project functionality in the Application menu.&#xa;    &lt;/p&gt;&#xa;  &lt;/body&gt;&#xd;&#xa;&lt;/html&gt;&#xd;&#xa;" noResource="true"/>
                         <Property name="name" type="java.lang.String" value="help" noResource="true"/>

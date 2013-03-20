@@ -4146,7 +4146,7 @@ public class UserInterfaceEditor extends javax.swing.JPanel {
 
         componentPalette.add(lwuitExtraComponents);
 
-        lwuit4IOComponents.setBorder(javax.swing.BorderFactory.createTitledBorder("Extra Components"));
+        lwuit4IOComponents.setBorder(javax.swing.BorderFactory.createTitledBorder("IO Components"));
         lwuit4IOComponents.setName("lwuit4IOComponents"); // NOI18N
         lwuit4IOComponents.setLayout(new java.awt.GridLayout(0, 2));
 
@@ -4250,7 +4250,7 @@ public class UserInterfaceEditor extends javax.swing.JPanel {
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(bindOnCreate, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                     .add(bindActionEvent, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-                    .add(bindBeforeShow, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .add(bindBeforeShow, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                     .add(bindPostShow, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                     .add(bindExitForm, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                     .add(bindListModel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
@@ -4271,14 +4271,14 @@ public class UserInterfaceEditor extends javax.swing.JPanel {
                 .add(bindExitForm)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(bindListModel)
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addContainerGap(216, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Events", jPanel4);
 
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
-        help.setContentType("text/html");
+        help.setContentType("text/html"); // NOI18N
         help.setEditable(false);
         help.setText("<html>\r\n  <head>\r\n\r\n  </head>\r\n  <body>\r\n    <p style=\"margin-top: 0\">\r\n      \rTo use the GUI builder drag components from the component palette at the bottom to either\nthe component tree on the right or into the actual UI. Components are arranged in a hierarchy \nwithin containers, you can nest containers and components to create all forms of elaborate UI's.\nTo determine how components are arranged within a Container you need to determine the layout\nmanager of the container (click the layout field in the Properties section while a container is \nselected, there is more documentation on layouts there).\n    </p>\r\n    <p>\n      Attributes of a component can be customized when its selected in the tree or in the UI by \nediting the properties tab content. Components can be dragged and rearranged both within the\nUI preview and within the tree, a right click (meta-click) menu also exists to delete/copy/paste etc.\nthe existing components. To change the appearance of a component you need to work with\na theme, to apply a change only to a specific component you can change its UIID attribute and\nedit that UIID in the theme (read more about UIID's in the theme section).\n    </p>\n    <p>\n      Navigation between forms in the GUI builder is possible with commands, in order to view the resulting UI \nthe theme can be selected (select the UI from the Preview Options area). In order for events to be mappable\n via the GUI builder use the generate netbeans project functionality in the Application menu.\n    </p>\n  </body>\r\n</html>\r\n"); // NOI18N
         help.setName("help"); // NOI18N
