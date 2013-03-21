@@ -27,8 +27,9 @@ public class DualButton extends Container {
     public DualButton(DualButtonItem leftItem, DualButtonItem rightItem) {
         
         if ((leftItem == null) || (rightItem == null)) {
-            throw new RuntimeException("Invalid DualButtonItem.");
+            throw new IllegalArgumentException("Invalid DualButtonItem.");
         }
+        setUIID("DualButton");
         
         leftItem.setToggle(false);
         rightItem.setToggle(false);

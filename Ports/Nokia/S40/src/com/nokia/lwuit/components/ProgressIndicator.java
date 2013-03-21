@@ -41,6 +41,7 @@ public class ProgressIndicator extends Component {
      * @param indeterminate if true the progress indicator will be indeterminate.
      */
     public ProgressIndicator(boolean indeterminate) {
+        setUIID("ProgressIndicator");
         this.indeterminate = indeterminate;
         indeterminateStyle = UIManager.getInstance().getComponentStyle("ProgressIndicator");
         image = indeterminateStyle.getBgImage();

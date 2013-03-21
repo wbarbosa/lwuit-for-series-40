@@ -35,8 +35,9 @@ public class ToggleButton extends Container {
             boolean leftItemSelected) {
         
         if ((leftItem == null) || (rightItem == null)) {
-            throw new RuntimeException("Invalid ToggleButtonItem.");
+            throw new IllegalArgumentException("Invalid ToggleButtonItem.");
         }
+        setUIID("ToggleButton");
         
         this.group = new ButtonGroup();
         leftItem.setToggle(true);
