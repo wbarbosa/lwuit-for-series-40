@@ -849,38 +849,59 @@ public class UIManager {
             if (usePlatformColors != null && usePlatformColors.equals("true")) {
                 PlatformColorBlender blender = PlatformColorBlender.getInstance();
                 int theme_color = nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BORDER);
-                Border b = (Border) themeProps.get("Button.press#border");
-                Border buttonMask = (Border) themeProps.get("ButtonMask.border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                int theme_color_unselected = nativeDisplay.getColor(nativeDisplay.COLOR_HIGHLIGHTED_BACKGROUND);
+
+                Border b;
+                Border bMask;
+                
+                bMask = (Border) themeProps.get("ButtonMask.border");
                 b = (Border) themeProps.get("Button.border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                blender.applyColorToBorder(b, theme_color, bMask.images);
+                b = (Border) themeProps.get("Button.sel#border");
+                blender.applyColorToBorder(b, theme_color, bMask.images);
+                b = (Border) themeProps.get("Button.press#border");
+                blender.applyColorToBorder(b, theme_color, bMask.images);
+                
                 themeConstants.put("dlgCommandGridBool", "true");
+                
                 blender.applyBackgroundColorToThemeProp(themeProps, "ListRendererFocus.bgImage", theme_color);
+                
                 b = (Border) themeProps.get("ComboBox.border");
-                blender.applyColorToBorder(b, theme_color, ((Border)themeProps.get("ComboBoxMask.border")).images);
+                bMask = (Border) themeProps.get("ComboBoxMask.border");
+                blender.applyColorToBorder(b, theme_color, bMask.images);
+                
                 b = (Border) themeProps.get("TabSelected.sel#border");
                 blender.applyColorToBorder(b, theme_color);
-                themeProps.put("TabSelected.sel#fgColor", Integer.toHexString(theme_color));               
+                themeProps.put("TabSelected.sel#fgColor", Integer.toHexString(theme_color));
+                
                 b = (Border) themeProps.get("DualButtonItemLeft.press#border");
-                buttonMask = (Border) themeProps.get("DualButtonItemLeftMask.border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                bMask = (Border) themeProps.get("DualButtonItemLeftMask.border");
+                blender.applyColorToBorder(b, theme_color, bMask.images);
                 b = (Border) themeProps.get("DualButtonItemLeft.border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);              
+                blender.applyColorToBorder(b, theme_color, bMask.images);  
+                
                 b = (Border) themeProps.get("DualButtonItemRight.press#border");
-                buttonMask = (Border) themeProps.get("DualButtonItemRightMask.border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                bMask = (Border) themeProps.get("DualButtonItemRightMask.border");
+                blender.applyColorToBorder(b, theme_color, bMask.images);
                 b = (Border) themeProps.get("DualButtonItemRight.border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);              
+                blender.applyColorToBorder(b, theme_color, bMask.images);
+                              
                 b = (Border) themeProps.get("ToggleButtonItemLeft.press#border");
-                buttonMask = (Border) themeProps.get("ToggleButtonItemLeftMask.border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                bMask = (Border) themeProps.get("ToggleButtonItemLeftMask.border");
+                blender.applyColorToBorder(b, theme_color, bMask.images);
                 b = (Border) themeProps.get("ToggleButtonItemLeft.sel#border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);                              
+                blender.applyColorToBorder(b, theme_color, bMask.images);                   
+                b = (Border) themeProps.get("ToggleButtonItemLeft.border");
+                blender.applyColorToBorder(b, theme_color_unselected, bMask.images);             
+                
                 b = (Border) themeProps.get("ToggleButtonItemRight.press#border");
-                buttonMask = (Border) themeProps.get("ToggleButtonItemRightMask.border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                bMask = (Border) themeProps.get("ToggleButtonItemRightMask.border");
+                blender.applyColorToBorder(b, theme_color, bMask.images);
                 b = (Border) themeProps.get("ToggleButtonItemRight.sel#border");
-                blender.applyColorToBorder(b, theme_color, buttonMask.images);
+                blender.applyColorToBorder(b, theme_color, bMask.images);               
+                b = (Border) themeProps.get("ToggleButtonItemRight.border");
+                blender.applyColorToBorder(b, theme_color_unselected, bMask.images);
+                
             }
         }
         buildTheme(themeProps);

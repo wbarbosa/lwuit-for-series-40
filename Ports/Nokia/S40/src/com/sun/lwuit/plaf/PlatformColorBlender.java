@@ -39,9 +39,10 @@ public class PlatformColorBlender {
     }
     
     /**
-     * Apply color to border. The algorithm works in a way that first the mask is used
-     * color the background and after that the border is drawn over the colored mask.
-     * In order to get a good result the border has to be semitransparent.
+     * Apply color to border. The algorithm works in a way that first the mask
+     * is used color the background and after that the border is drawn over the
+     * colored mask. In order to get a good result the border has to be
+     * semitransparent.
      * @param b
      * @param color
      * @param mask 
@@ -50,27 +51,56 @@ public class PlatformColorBlender {
         if(du == null) {
             return;
         }
+        
         if(mask == null || mask.length == 0) {
             System.out.println("border mask null or length zero");
             return;
         }
-            
-        com.sun.lwuit.Image[] maskButton = mask;
         
         int l = b.images.length;
-        Image img = null;
-        Image temp = null;
+        Image gfxLayer, maskLayer;
+        
         for(int i = 0; i < l; i++) {
-            img = du.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
-            Graphics g = img.getGraphics();
-            g.setColor(color);
-            g.fillRect(0, 0, img.getWidth(), img.getHeight());            
+            com.sun.lwuit.Image maskTile = mask[i];
+            com.sun.lwuit.Image sourceTile = b.images[i];
             
-            temp = du.createImage(b.images[i].getWidth(), b.images[i].getHeight(), 0x00000000);
-            temp.getGraphics().drawRGB(maskButton[i].getRGB(), 0, maskButton[i].getWidth(), 0, 0, maskButton[i].getWidth(), maskButton[i].getHeight(), true);
-            img = ImageUtils.drawMaskedImage(img, temp);
-            img.getGraphics().drawRGB(b.images[i].getRGB(), 0, b.images[i].getWidth(), 0, 0, b.images[i].getWidth(), b.images[i].getHeight(), true);
-            b.images[i] = com.sun.lwuit.Image.createImage(img);
+            // create images representing layers
+            maskLayer = du.createImage(
+                    sourceTile.getWidth(), sourceTile.getHeight(), 0x00000000);                  
+            gfxLayer = du.createImage(
+                    sourceTile.getWidth(), sourceTile.getHeight(), 0x00000000);
+            
+            // fill mask layer image with mask data
+            maskLayer.getGraphics().drawRGB(
+                    maskTile.getRGB(),          // rgb data
+                    0,                          // offset
+                    maskTile.getWidth(),        // scanlength
+                    0,                          // x
+                    0,                          // y
+                    maskTile.getWidth(),        // width
+                    maskTile.getHeight(),       // height
+                    true);                      // do process alpha
+            
+            // fill graphics layer image with background color
+            Graphics g = gfxLayer.getGraphics();
+            g.setColor(color);
+            g.fillRect(0, 0, gfxLayer.getWidth(), gfxLayer.getHeight());
+                   
+            // apply mask to graphics layer
+            gfxLayer = ImageUtils.drawMaskedImage(gfxLayer, maskLayer);
+            
+            // draw component image to graphics layer
+            gfxLayer.getGraphics().drawRGB(
+                    sourceTile.getRGB(),        // rgb data
+                    0,                          // offset
+                    sourceTile.getWidth(),      // scanlength
+                    0,                          // x
+                    0,                          // y
+                    sourceTile.getWidth(),      // width
+                    sourceTile.getHeight(),     // height
+                    true);                      // do process alpha
+                     
+            b.images[i] = com.sun.lwuit.Image.createImage(gfxLayer);  
         }
     }
     /**
