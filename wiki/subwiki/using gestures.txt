@@ -1,0 +1,71 @@
+= Using gestures =
+Some sequences of touch input are interpreted as gestures. You can use the LWUIT GestureHandler API to listen to the gestures supported by your target platform and add functionality to them.
+
+The gestures supported by S40 full touch devices are:
+
+|| [[Image(wiki:UsingGestures:tap.png)]] || [[Image(wiki:UsingGestures:longpress.png)]] || [[Image(wiki:UsingGestures:longpress.png)]] ||
+|| '''Tap''' (press and release) || '''Long press''' (press, hold and release) || '''Long press repeated''' (repeated long press) ||
+|| [[Image(wiki:UsingGestures:drag.png)]] || [[Image(wiki:UsingGestures:flick.png)]] || [[Image(wiki:UsingGestures:pinch.png)]] ||
+|| '''Drag''' (press and move) || '''Flick''' (press and move followed by release) || '''Pinch''' (use two fingers to press, move fingers closer or further from each other) ||
+
+To listen to the gesture events extend the LWUIT GestureHandler class. Override the gestureAction method to add functionality to different types of gesture events.
+
+{{{#!java
+public class MyOwnGestureHandler extends GestureHandler {
+
+    public void gestureAction(GestureEvent ge) {
+        switch (ge.getType()) {
+            case GestureInteractiveZone.GESTURE_RECOGNITION_START:
+                // Add functionality here for the beginning of a gesture
+                break;
+            case GestureInteractiveZone.GESTURE_RECOGNITION_END:
+                // Add functionality here for the end of a gesture
+                break;
+            case GestureInteractiveZone.GESTURE_TAP:
+                // Add functionality here for tap gestures
+                break;
+            case GestureInteractiveZone.GESTURE_LONG_PRESS:
+                // Add functionality here for long press gestures
+                break;
+            case GestureInteractiveZone.GESTURE_LONG_PRESS_REPEATED:
+                // Add functionality here for repeated long press gestures
+                break;
+            case GestureInteractiveZone.GESTURE_DRAG:
+                // Add functionality here for drag gestures
+                break;
+            case GestureInteractiveZone.GESTURE_FLICK:
+                // Add functionality here for flick gestures
+                break;
+            case GestureInteractiveZone.GESTURE_PINCH:
+                // Add functionality here for pinch gestures
+                break;
+            default:
+                break;
+        }
+    }
+}
+}}}
+
+You can listen to gestures either globally, or only when a specific form is visible. Use static methods GestureHandler.setGlobalGestureHandler or GestureHandler.setFormGestureHandler to register your GestureHandler and set its scope. There can be only one global gesture handler at once.
+
+{{{#!java
+public class GestureAwareForm extends Form {
+    
+    public GestureAwareForm() {
+        MyOwnGestureHandler gestureHandler = new MyOwnGestureHandler();
+        GestureHandler.setFormGestureHandler(this, gestureHandler);
+    }
+    
+}
+}}}
+
+GestureHandler handler will also support listening of a single gestureEvent by giving the desired gesture as a constructor parameter to GestureHandler.
+{{{#!java
+GestureHandler myhandler = new GestureHandler(GestureHandler.GESTURE_FLICK) {
+ ...
+}
+
+}}}
+This will cause the GestureHandler to only receive FLICK events.
+
+Refer to [https://projects.developer.nokia.com/LWUIT_GesturesDemo LWUIT Gestures Demo] for more implementation details.

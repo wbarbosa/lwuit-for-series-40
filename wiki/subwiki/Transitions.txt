@@ -1,0 +1,10 @@
+= Transitions =
+Transitions use the animation framework. The following animations between views are supported:
+
+ * Sliding from or to top/bottom, left/right.
+ * Fade in/out.
+ * Timeline, which uses an image as an alpha mask between the start and the end states of the transition.
+ * Simultaneous slide & fade.
+ * Pulsate (available for dialogs only)
+
+[http://projects.developer.nokia.com/LWUIT_for_Series_40/files Install and try out the LWUITDemo] to see how the transitions look and feel on a phone.

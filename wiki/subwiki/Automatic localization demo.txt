@@ -1,0 +1,16 @@
+= Automatic Localization =
+
+A new feature called "automatic localization" has been introduced in the v0.8.3 release. If you want to create a localization and want it to be automatically loaded based on device locale then you can use this convention to achieve that.
+
+== The Convention ==
+To have LWUIT automatically load you localization you must create a '''locale.res''' Resourcefile and put it to the "locale" named folder inside your app. When you create the localization in !ResourceEditor give it a name "locale". When LWUIT is initialized it will try to load this file automatically and queries device locale and tries to set the current localization based on that.[[BR]][[BR]]
+
+Here's how the project structure looks like when locale.res is added with the correct locale folder.
+
+[[Image(auto-loc-project-struct.png)]][[BR]]
+[[BR]]
+Here's an image of how the locale.res file looks in !ResourceEditor.[[BR]]
+[[Image(auto-loc-RE.png)]]
+
+
+[attachment:AutoLocalizationExample.zip Here] is an example project that has a simple localization file added to demonstrate the feature.

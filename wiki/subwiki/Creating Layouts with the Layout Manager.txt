@@ -1,0 +1,10 @@
+= Creating layouts with the Layout Manager =
+LWUIT supports much more freedom in layout creation than LCDUI does. The following layout managers are supported for Series 40 apps.
+
+|| '''!BorderLayout''' || - Allows positioning the UI components based on Top,   Bottom, Center, Left, and Right attributes. || [[Image(Border_layouts.png)]] ||
+|| '''!BoxLayout''' || - Allows placing the UI elements on top of each other   or in a row. || [[Image(Box_layouts.png)]] ||
+|| '''!FlowLayout''' || - Default layout   manager.[[BR]]- Places components   in a row.[[BR]]- Components are   sized in the preferred size.[[BR]]- Can use multiple   rows if components do not fit on one row.[[BR]]- Elements can be   aligned to left, center, or right. || [[Image(Flow_layouts.png)]] ||
+|| '''!GridLayout''' || - Places components in a grid of cells   where each component takes all the available space within its cell, and all   cells are of exactly the same size. || [[Image(Grid_layouts.png)]] ||
+|| '''!GroupLayout''' || - For complex   layouts.[[BR]]- Components can be grouped and positioned in sequential   or parallel arrangement.'''      '''[[BR]]'''- '''Sequential group: positions child   elements one after another.[[BR]]'''- '''Parallel group: positions child   elements in the same space on top of each other. Elements can be aligned   horizontally or vertically. || [[Image(Group_layouts.png)]] ||
+|| '''!CoordinateLayout''' || - Assigns a component   an absolute position in relation to the space available within the UI.''''''[[BR]]'''''-  Components can be positioned within an X/Y   location but the positions are relative. The position is calculated based on the   available space.' || [[Image(Coordinate_layouts.png)]] ||
+|| '''!TableLayout''' || - Components are   automatically sized to the largest preferred size until you run out of space.[[BR]]- If the table is not   horizontally scrollable, this happens when the edge of the parent container   is reached (near the edge of the screen), and additional components are "crammed   together".''''''[[BR]]'''''- Cells are always   sized to fit the entire cell. || [[Image(Table_layouts.png)]] ||

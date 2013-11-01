@@ -1,0 +1,322 @@
+= Creating a !ContactBookDemo =
+
+In Part 1 we showed how to set up tools and create a LWUIT project for [wiki:GettingStartedWithLwuitUsingEclipse Eclipse] and [wiki:GettingStartedWithLwuit NetBeans]. Now let's continue with the project to create a simple application that displays names from the Phonebook using the JSR-75 PIM API. The application UI is built using the following LWUIT UI components and features: 
+* Form
+* List 
+* Layout 
+* !TextArea (using Nokia !TextEditor)
+
+The application defines a minimal set of softkeys to ensure that the application is easy to use: the Exit and Clear commands are mapped to the right softkey and the Options menu to the left softkey.
+
+The application uses the !BoxLayout.Y_AXIS layout from the LWUIT layout manager.
+
+
+----
+
+
+This is where we were with the source code:
+
+{{{
+#!java
+
+import javax.microedition.midlet.MIDlet;
+import com.sun.lwuit.Command;
+import com.sun.lwuit.Display;
+import com.sun.lwuit.Form;
+
+public class Midlet extends MIDlet {
+
+public void startApp() {
+
+    Display.init(this);
+    Form form = new Form("Hello World");
+    form.show();
+
+}
+    
+public void pauseApp() {
+}
+    
+public void destroyApp(boolean unconditional) {
+}
+}
+
+}}}
+
+
+'Display.init' is a static method that creates a device-specific implementation class instance behind the scenes, and sets some parameters based on, for example, the number of softkeys and whether or not the device has a touch screen. 'Form's in LWUIT are analogous to LCDUI's forms and represent different screens in the app.
+
+
+== Add the Exit command ==
+
+Let's start adding functionality to the app. First, add the Exit softkey command:
+
+{{{
+#!java
+...
+import com.sun.lwuit.events.ActionEvent;
+
+        public void startApp() {
+        
+        Display.init(this);
+        Form form = new Form("Hello World");
+        form.show();
+        //add exit command
+        Command exitCommand = new Command("Exit") {
+            public void actionPerformed(ActionEvent e) {
+                notifyDestroyed();
+            }
+        };
+        form.addCommand(exitCommand);
+        form.setBackCommand(exitCommand);
+    }
+}}}
+Again, the 'Command' class is analogous to the LCDUI class with the same name. By default, LWUIT uses a full-screen canvas and draws its own softkey area. Setting the Command as the Form's back command ensures that it is displayed in the correct place, that is, the right softkey (RSK). Forms also have a default command (set using 'setDefaultCommand') that gets assigned to the middle softkey (MSK). Other commands are assigned to the Options menu.
+
+When run, the app should now look like this:
+
+[[Image(emulator-helloworld-2.jpg)]]
+
+== Add !ContactList ==
+
+Let's add some real functionality to the application. We're going to use the [http://developers.sun.com/mobility/apis/articles/pim/index.html PIM API from JSR-75] to access and display contacts from the device. Add a List and a PIM to the MIDlet's member variables:
+
+{{{
+#!java
+...
+import com.sun.lwuit.List;
+import javax.microedition.pim.PIM;
+
+public class Midlet extends MIDlet {
+    
+    private List contactList = null;
+    private PIM pim = null;
+    ...
+}}}
+Next, add code to 'startApp()' to initialise the GUI and populate the contact list:
+
+{{{
+#!java
+import com.sun.lwuit.TextArea;
+import com.sun.lwuit.TextField;
+import com.sun.lwuit.events.ActionListener;
+import com.sun.lwuit.layouts.BoxLayout;
+import.com.sun.lwuit.Button;
+...
+
+    public void startApp() {
+        ...
+        form.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        contactList = new List();
+        form.addComponent(contactList);
+
+        pim = PIM.getInstance();
+        
+        final TextArea searchField = TextField.create();
+        form.addComponent(searchField);
+        Button searchButton = new Button("Search");
+        form.addComponent(searchButton);
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                populateContactList(searchField.getText());
+            }
+        });
+        populateContactList(searchField.getText());
+        form.show();
+        ...
+    }
+}}}
+We add two more UI components here: a search field and a button. Note that the !TextArea is marked 'final' because we want to use it in the Button's event handler. We use the contents of the '!TextArea' as input to the 'populateContactList()' method, which will filter the contacts by that string. The button gets an '!ActionListener' instance to handle clicks, but we could also assign a 'Command' to the button to take care of the events.
+
+Here is the code for 'populateContactList()':
+
+{{{
+#!java
+import com.sun.lwuit.list.DefaultListModel;
+import java.util.Enumeration;
+import javax.microedition.pim.Contact;
+import javax.microedition.pim.ContactList;
+import javax.microedition.pim.PIM;
+import javax.microedition.pim.PIMException;
+...
+
+    public void startApp() {
+        ...
+    }
+
+    private void populateContactList(String searchTerm) {
+        contactList.setModel(new DefaultListModel());
+        try {
+            String[] pimListNames = pim.listPIMLists(PIM.CONTACT_LIST);
+            for (int i = 0; i < pimListNames.length; ++i) {
+                ContactList cl = (ContactList) pim.openPIMList(
+                        PIM.CONTACT_LIST, PIM.READ_ONLY, pimListNames[i]);
+                Enumeration items = cl.items(searchTerm);
+                while (items.hasMoreElements()) {
+                    Contact c = (Contact) items.nextElement();
+                    contactList.addItem(c.getString(Contact.FORMATTED_NAME, 0));
+                }
+            }
+        } catch (PIMException ex) {
+            ex.printStackTrace();
+        }
+        if (contactList.getModel().getSize() == 0) {
+            contactList.addItem("No matches");
+        }
+    }
+}}}
+Whenever we repopulate the contact list, the first thing to do is to clear the list. This is done by setting an empty model. Next, we access the contacts list, or lists -  phones often have more than one contacts list, for example one on the phone itself and one on the SIM card. That's why we get the names of all the contacts lists and then iterate over all the lists, adding each item's "formatted name" to our list widget.
+
+== Add the Clear command ==
+
+Finally, let's add the 'clear' command at the end of 'startApp()' so that we can return from search to the contact list. Let's create a new 'Command' instance and reset the search term.
+
+{{{
+#!java
+private Command clearCommand;
+
+    public void startApp() {
+
+        ...
+
+        populateContactList(searchField.getText());
+        clearCommand = new Command("Clear") {
+            public void actionPerformed(ActionEvent evt) {
+                searchField.setText("");
+                populateContactList("");
+            }
+        };
+        form.addCommand(clearCommand);
+   }
+
+}}}
+
+Because we just add the command to the form without setting it as the default, the Options menu will appear and the command will be placed in the Options menu.
+
+Done! Here's the app running and displaying a contact list:
+
+[[Image(emulator-contactlist-1.jpg)]]
+
+And here is the complete source code we created. Note that you can clean up most LWUIT imports using simply 'import com.sun.lwuit.*;'.
+
+{{{
+#!java
+
+import com.sun.lwuit.*;
+import com.sun.lwuit.events.ActionEvent;
+import com.sun.lwuit.events.ActionListener;
+import com.sun.lwuit.layouts.BoxLayout;
+import com.sun.lwuit.list.DefaultListModel;
+import java.util.Enumeration;
+import javax.microedition.midlet.MIDlet;
+import javax.microedition.pim.Contact;
+import javax.microedition.pim.ContactList;
+import javax.microedition.pim.PIM;
+import javax.microedition.pim.PIMException;
+
+public class Midlet extends MIDlet {
+
+    private List contactList = null;
+    private PIM pim = null;
+    private Command clearCommand;
+
+
+    public void startApp() {
+        Display.init(this);
+        
+        Form form = new Form("Hello World");
+        form.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        contactList = new List();
+        form.addComponent(contactList);
+        pim = PIM.getInstance();
+        
+        // add search field and search button
+        final TextArea searchField = TextField.create();
+        form.addComponent(searchField);
+        Button searchButton = new Button("Search");
+        form.addComponent(searchButton);
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                populateContactList(searchField.getText());
+            }
+        });
+        populateContactList(searchField.getText());
+
+        
+        //add exit command
+        Command exitCommand = new Command("Exit") {
+            public void actionPerformed(ActionEvent e) {
+                notifyDestroyed();
+            }
+        };
+        form.addCommand(exitCommand);
+        form.setBackCommand(exitCommand);
+
+       // add clear command
+        populateContactList(searchField.getText());
+        clearCommand = new Command("Clear") {
+            public void actionPerformed(ActionEvent evt) {
+                searchField.setText("");
+                populateContactList("");
+            }
+        };
+        form.addCommand(clearCommand);
+ 
+       form.show();
+    }
+
+    // populate contact list (names retrieved from the phonebook)
+    private void populateContactList(String searchTerm) {
+        contactList.setModel(new DefaultListModel());
+        try {
+            String[] pimListNames = pim.listPIMLists(PIM.CONTACT_LIST);
+            for (int i = 0; i < pimListNames.length; ++i) {
+                ContactList cl = (ContactList) pim.openPIMList(
+                        PIM.CONTACT_LIST, PIM.READ_ONLY, pimListNames[i]);
+                Enumeration items = cl.items(searchTerm);
+                while (items.hasMoreElements()) {
+                    Contact c = (Contact) items.nextElement();
+                    contactList.addItem(c.getString(Contact.FORMATTED_NAME, 0));
+                }
+            }
+        } catch (PIMException ex) {
+            ex.printStackTrace();
+        }
+        if (contactList.getModel().getSize() == 0) {
+            contactList.addItem("No matches");
+        }
+    }
+    
+       
+    public void pauseApp() {
+    }
+    
+    public void destroyApp(boolean unconditional) {
+    }
+}
+
+}}}
+
+== Security prompts and signing ==
+
+Note that when unsigned MIDlets access the contacts database, the system asks the user whether or not to allow the MIDlet access. This permission is not stored in any way, so the system will ask for permission every time the MIDlet tries to access the database. This means that in the emulator, with two default contacts on the SIM card, there will be five queries when the app starts, and more if the search functionality is used:
+
+ 1. Once for 'PIM.getInstance()'.
+ 1. Once for 'PIM.listPIMLists()'.
+ 1. Once for 'PIM.openPIMList()' on the SIM card contacts list.
+ 1. Once for 'Contact.getString()' on the first contact.
+ 1. Once for 'Contact.getString()' on the second contact.
+
+'''Removing prompts from the emulator'''
+
+When the emulator is running, open 'Tools' from the emulator program menu. Go to the 'MIDP' tab and check 'Disable user security prompts'.
+
+'''Removing prompts from the application on the phone'''
+
+There are two ways around this: one option is to sign your MIDlet JAR, but it would be overkill for testing. A better solution for development and testing purposes is to find the installed JAR in the Applications list on the phone and open its menu (open Options menu in non-touch devices, tap and hold to open an item-specific popup menu in touch devices). In the menu open the "Application settings" submenu and select "Application access". In the next screen select "Data access", then "Read user data", and set it to "Ask first time". This way you will only have to answer the authorisation question once. However, you will have to set this option again when you install a new version of the application.
+
+== Sources ==
+Here you can download a ZIP archive with full project sources: [http://projects.developer.nokia.com/LWUIT_for_Series_40/files/ContactBookDemo.zip]
+
+== More information on LWUIT ==
+[http://projects.developer.nokia.com/nokia_lwuit/files/LWUIT_Developer_Guide.pdf Here is the full LWUIT Developer's guide in PDF format.]

@@ -1,0 +1,58 @@
+= How to use the new !ContextMenu Component =
+
+In the 0.9.1 onwards the lwuit package contains a new component called !ContextMenu. The class is in com.nokia.lwuit.components package and has theme styling for full touch and touch & type devices. Using the class is simple, just give it an array of commands with the static show-method and it will show a menu. [[BR]]
+[[BR]]
+Here's a quick example on how to show the menu by using long press gesture:[[BR]]
+{{{
+#!java
+public class Midlet extends MIDlet{
+
+    public void startApp() {
+        Display.init(this);
+        Form f = new Form("context menu");
+        String[] items = new String[13];
+        for(int i = 1; i < items.length+1; i++) {
+            items[i-1] = "item" + (i);
+        }
+        DefaultListModel model = new DefaultListModel(items);
+        final List list = new List(model);
+        
+        
+        f.addComponent(list);
+        GestureHandler longtap = new GestureHandler(GestureHandler.GESTURE_LONG_PRESS) {
+
+            public void gestureAction(GestureEvent ge) {
+                int x = ge.getStartX();
+                int y = ge.getStartY();
+                if (list.contains(x, y)) {
+                    Display.getInstance().callSerially(new Runnable() {
+                        public void run() {
+                            int selected = list.getSelectedIndex();
+                            Command []cmds = new Command[selected+1];
+                            for(int i = 0; i < cmds.length; i++) {
+                                cmds[i] = new Command("item" + (i+1) +" " + (selected+1));
+                            }
+                            Command selectedContextCmd = ContextMenu.show(cmds, list);
+                            System.out.println("selected:" + selectedContextCmd);
+                        }
+                    });
+                }
+            }
+        };
+        GestureHandler.setFormGestureHandler(f, longtap);
+        f.show();
+    }
+    
+    public void pauseApp() {
+    }
+    
+    public void destroyApp(boolean unconditional) {
+    }
+}
+
+
+
+}}}
+
+Note that you can use any method you want to show the menu, but pay attention to the fact that the example code calls Display.callSerially for showing the contextmenu. This is because contextmenu is based on dialog and is a modal dialog which will cause the calling thread to freeze until dialog is dismissed. In the case of using gesture event the method is called from the platform eventhandler and we don't want to freeze that so you want to move the processing back to the LWUIT UI-thread.
+

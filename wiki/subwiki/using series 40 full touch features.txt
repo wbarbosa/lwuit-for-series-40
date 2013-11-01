@@ -1,0 +1,159 @@
+= Using Series 40 full touch features =
+
+== Category Bar ==
+
+[[Image(CategoryBar_image.png)]]
+
+The Category Bar is a Series 40 full touch UI element typically used for switching between different views within the same MIDlet. Each element may represent a view within the current application, although the application can use the elements for whatever purpose it desires.
+
+To use a Category Bar in your LWUIT application, add the following import statements:
+
+{{{
+#!java
+import com.nokia.mid.ui.IconCommand;
+import com.nokia.mid.ui.CategoryBar;
+import com.nokia.mid.ui.ElementListener;
+}}}
+
+'!IconCommand' is an LCDUI 'Command' subclass that allows icons to be specified, either with an image or by using one of a set of predefined IDs. 'ElementListener' is the interface that receives category selection events from the Category Bar.
+
+Here is an example that displays a Category Bar with two categories in a LWUIT application. It uses two of the predefined icon IDs for the 'IconCommands'.
+
+{{{
+#!java
+IconCommand cat1 = new IconCommand("One", javax.microedition.lcdui.Command.SCREEN, 1, IconCommand.ICON_ADD_CONTACT);
+IconCommand cat2 = new IconCommand("Two", javax.microedition.lcdui.Command.SCREEN, 1, IconCommand.ICON_SEND_SMS);
+IconCommand[] cmds = { cat1, cat2 };
+CategoryBar bar = new CategoryBar(cmds, true);
+bar.setElementListener(listener);
+bar.setVisibility(true);
+}}}
+
+The 'listener' object implements 'ElementListener' whose only method is 'notifyElementSelected()':
+
+{{{
+#!java
+public void notifyElementSelected(CategoryBar cb, int idx) {
+    switch (idx) {
+        case 0: System.out.println("Category one selected"); break;
+        case 1: System.out.println("Category two selected"); break;
+    }
+}
+}}}
+
+Note that the first category is selected by default, and that the Category Bar will always display a Back button even if you do not have a Back command defined for the Form.
+
+
+== Form headers ==
+
+LWUIT Form titles are mapped to show in the !HeaderBar. If a form does not have a title, the MIDlet's name is shown in the !HeaderBar. Note that the styling of the form headers is not possible in full touch. You can add LWUIT labels into the forms if styling/branding is needed.
+
+
+== Menu ordering and mapping commands to buttons ==
+
+[[Image(TA_details.png)]]
+
+In full touch devices, LWUIT uses the platform menu instead of LWUIT's own menu implementation. This is done because the menu system is dramatically different than in LWUIT. 
+
+=== Setting the back button ===
+If you want to set your command as the back button, just use Form's setBackCommand method.
+
+=== Setting the actionbutton1 - UPDATED ===
+
+To map a primary action to the actionbutton1, use setDefaultCommand(cmd). In earlier Series 40 versions the default command is mapped to the middle softkey.
+
+It is also possible to override the default tick icon in actionbutton1 with your own graphics. If you set an icon to a LWUIT command and that command will be set to the action button, it should show the command’s icon.
+
+== Orientation support ==
+
+!OrientationListener is used in the LWUIT for Series 40 implementation, so you only need to set the JAD and JAR manifest attribute '''Nokia-MIDlet-App-Orientation''' to '''manual'''. The LWUIT app then dynamically rotates when the device is rotated.
+
+To add support in Netbeans, go to Project Properties-->Application Descriptor-->Attributes tab-->Add... and write Nokia-MIDlet-App-Orientation as the name and value. 
+
+== Multipoint touch ==
+
+The !MultipointTouch API can be used directly in LWUIT. Since the events don't come through the standard MIDP API, it is fairly easy to add multipoint touch support to your application.
+
+Here is a short example:
+{{{
+
+import com.nokia.mid.ui.multipointtouch.MultipointTouch;
+import com.nokia.mid.ui.multipointtouch.MultipointTouchListener;
+import com.sun.lwuit.Button;
+import com.sun.lwuit.Display;
+import com.sun.lwuit.Form;
+import com.sun.lwuit.Label;
+import com.sun.lwuit.layouts.BoxLayout;
+import javax.microedition.midlet.MIDlet;
+
+public class MultiTouchTest extends MIDlet implements MultipointTouchListener{
+
+    private Label pointer1;
+    private Label pointer2;
+    
+    public void startApp() {
+        Display.init(this);
+        Form f = new Form("multitouch test");
+        f.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+        pointer1 = new Label("pointer 1:");
+        pointer2 = new Label("pointer 2:");
+        f.addComponent(pointer1);
+        f.addComponent(pointer2);
+        MultipointTouch mpt = MultipointTouch.getInstance();
+        mpt.addMultipointTouchListener(this);
+        f.show();
+    }
+    
+    public void pauseApp() {
+    }
+    
+    public void destroyApp(boolean unconditional) {
+    }
+
+    public void pointersChanged(int[] pointerIds) {
+        int pointerId;
+        int x;
+        int y;
+        int state;
+        // Loop through the changed touch points
+        for (int i = 0; i < pointerIds.length; i++) {
+            // Get the touch point ID
+            pointerId = pointerIds[i];
+
+            // Get the touch point state
+            state = MultipointTouch.getState(pointerId);
+
+            // Get the touch point x and y coordinates
+            x = MultipointTouch.getX(pointerId);
+            y = MultipointTouch.getY(pointerId);
+            if(pointerId == 0) {
+                pointer1.setText("pointer 1: x: " + x + " y:" + y);
+            }else if(pointerId == 1) {
+                pointer2.setText("pointer 2: x:" + x + " y:" +y);
+            }
+            
+            // Handle the UI update based on the touch point state,
+            // ID, and coordinates
+            switch (state) {
+                case MultipointTouch.POINTER_PRESSED:
+                    // A new finger was pressed against the screen
+                    break;
+                case MultipointTouch.POINTER_DRAGGED:
+                    // A pressed finger was dragged over the screen
+                    break;
+                case MultipointTouch.POINTER_RELEASED:
+                    // A pressed finger was lifted from the screen
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
+    
+}
+
+}}}
+
+This example simply just shows the coordinates of the two touch points. If you want to check if a coordinate is inside a component, use the contains method that every UI component has.

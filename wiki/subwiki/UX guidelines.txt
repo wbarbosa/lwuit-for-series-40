@@ -1,0 +1,25 @@
+= LWUIT for Series 40 UX Guidelines =
+LWUIT is the easy way to make sure your app has the Series 40 platform look and feel, no matter if you are designing for full touch, touch and type, or non-touch.  In most cases, creating a single app source and compiling it once is sufficient – your app runs on all Series 40 UI styles.
+
+'''Why choose LWUIT over LCDUI?'''
+
+ * Faster and more efficient development; more complete UI library.
+ * Support for cross-platform development; app logic is separated from the UI layer, so changing only the UI layer is often enough to hit a variety of platforms.
+ * Support for customisation; better support for different UI layouts, components, and transitions.
+
+LWUIT provides a counterpart for all Series 40 LCDUI elements, some with improved user experience. In addition, there is a wide range of other components you can use. All LWUIT components are also easy to customise. The full touch theme supports both portrait and landscape orientations.
+
+Note! LWUIT applications are drawn on Canvas. Therefore it is not possible to mix LWUIT and LCDUI components in a view. An exception is the Category bar for full touch; it’s possible to use Category bar also on Canvas-based screens.
+
+ * [wiki:UX_guidelines/Layouts_structure_navigation Layouts, structure and navigation]
+ * [wiki:UX_guidelines/Command_mapping_in_LWUIT Command mapping in LWUIT]
+ * [wiki:UX_guidelines/Components Components]
+ * [wiki:UX_guidelines/Layout_manager Creating layouts with Layout Manager]
+ * [wiki:UX_guidelines/Transitions Transitions]
+ * [wiki:UX_guidelines/Themes_Resource_Editor Using Series 40 themes and the Resource Editor]
+
+For more information about Series 40 UI styles refer to
+
+ * [http://www.developer.nokia.com/Resources/Library/Full_Touch/ Full touch design guidelines]
+ * [http://www.developer.nokia.com/info/sw.nokia.com/id/d7390258-7212-48ef-ae7b-54cbcc4ca2a1/Series_40_Touch_Type_UI_Style_Guide_v1_0_en.pdf.html Touch and Type UI Style Guide]
+ * [http://aux.developer.nokia.com/dp?uri=http%3A%2F%2Fsw.nokia.com%2Fid%2F1aca480a-b042-4042-9044-644d54587fe8%2FSeries_40_UI_Style_Guide_v5_0_en.pdf Non-touch UI Style Guide]

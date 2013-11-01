@@ -1,0 +1,34 @@
+
+== Best practices ==
+=== Always use system fonts in inputs ===
+The system text editor is only capable of showing text in system fonts. System fonts should therefore always be used in input to avoid unexpected behaviour.
+
+=== Always override all colours in a custom theme ===
+Default colours are taken from the system theme. Those colours may change between devices, and unless you override all colours in your custom theme, you may end up with, for example, black text on a black background.
+
+=== In case of a custom theme ===
+If you are planning to use a custom theme, make sure it is based on the Nokia theme unless you are going to override everything in your theme.
+
+=== Be careful with animations ===
+- Low-end devices are not very good at full-screen transitions because the transitions require several drawing cycles.
+- If you have a fast animation, it might skip animation steps in slower devices and only draw the beginning and the end of the animation.
+- Smaller UI components are faster to animate than larger ones. For example, animating a textfield is faster than animating a long list.
+- Using 3D transition is not recommended. It is labelled as experimental and requires quite a lot of resources.
+
+
+== Known issues ==
+=== Nokia-UI-Enhancement "!CanvasHasBackground" can't be used ===
+This manifest attribute makes the canvas background transparent so that the system background can be seen. However, it doesn't work with full-screen canvases, and LWUIT's canvas is always full screen.
+
+In full touch devices, the background colour is read at app startup. 
+
+=== Known bugs ===
+
+* The slider component is practically unusable. It works if min and max values are 0 and 100, respectively, or if you use it as a non-editable scrollbar.
+
+=== General considerations ===
+
+* The LWUIT library is added to every LWUIT application. The application needs to be obfuscated to keep the binary size moderate. The LWUIT UI framework takes 700-800 KB of space but with obfuscation it goes down to 350KB or even less, depending on the complexity of the application. 
+* LWUIT is not optimised for applications that require very high-speed graphics (full-blown games). LCDUI's Canvas and !GameCanvas are better choices there. However, LWUIT can be used in casual games such as [http://projects.developer.nokia.com/LWUIT_Puzzle puzzle game].
+* The Series 40 device portfolio ranges from very price-competitive entry devices with a 128*160 pixel display and keyboard input to capable touch UI phones with a QVGA display and many times more CPU and RAM. This means that you need to carefully select your application features for each target device as some animations and transitions may not run smoothly on lower-end devices. If those features are in use, scaling down the application for low-end devices is needed to ensure a good user experience on each device.
+

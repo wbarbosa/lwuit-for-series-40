@@ -1,0 +1,150 @@
+== Mobile Sensor API (JSR-256) ==
+
+While LWUIT doesn't have it's own sensor API, you can use The Mobile Sensor API (JSR-256) to access the sensor data.
+
+To find out what sensors the target device supports use SensorManager.findSensors() method. The method returns an array of SensorInfo objects that provide quantity, type, context and connection information of the sensors.
+
+{{{#!java
+// You can specify the quantity and context type of the sensors to be listed.
+// If quantity and contextType are null, information about every sensor in the device is returned.
+SensorInfo[] infos = SensorManager.findSensors(String quantity, String contextType);
+}}}
+
+To listen to a sensor create a SensorConnection.
+
+{{{#!java
+SensorConnection sensor = (SensorConnection) Connector.open(sensorInfo.getUrl());
+}}}
+
+You can get the sensor data either directly from SensorConnection with getData() method, or by setting a DataListener. Some sensors output a lot of data so you can define a buffer size. The dataReceived callback gets called when the buffer is full.
+
+{{{#!java
+int bufferSize = 10;
+
+sensor.setDataListener(new DataListener() {
+    public void dataReceived(SensorConnection sensor, Data[] data, boolean isDataLost) {
+        SensorInfo info = sensor.getSensorInfo();
+        ChannelInfo channelInfo[] = info.getChannelInfos();
+        for (int i = 0; i < channelInfo.length; i++) {
+            if (channelInfo[i].getDataType() == ChannelInfo.TYPE_INT) {
+                // Do something with the values
+            } else if (channelInfo[i].getDataType() == ChannelInfo.TYPE_DOUBLE) {
+                // Do something with the values
+            }
+        }
+    }
+}, bufferSize);
+}}}
+
+== Example ==
+
+The example listed here fetches SensorInfo objects of every sensor available in the target device and displays a LWUIT Form with sensor descriptions and sliders displaying the sensor values. The sliders are updated in real time. You need LWUIT for Series 40 library to compile the example, or you can download the compiled example from the attachments section of this wiki page.
+
+[[Image(sensors.png)]]
+
+{{{#!java
+import com.sun.lwuit.*;
+import com.sun.lwuit.events.*;
+import com.sun.lwuit.layouts.BoxLayout;
+import java.io.IOException;
+import javax.microedition.io.Connector;
+import javax.microedition.midlet.MIDlet;
+import javax.microedition.sensor.*;
+
+public class SensorInfoMIDlet extends MIDlet {
+
+    private SensorInfo[] infos;
+    private Form form;
+    private Command exitCommand;
+
+    public SensorInfoMIDlet() {
+        Display.init(this);
+        // Build the UI in event dispatching thread
+        Display.getInstance().callSerially(new Runnable() {
+            public void run() {
+                form = new Form("Sensor Info");
+                exitCommand = new Command("Exit");
+                form.addCommand(exitCommand);
+                form.setBackCommand(exitCommand);
+                form.addCommandListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent ae) {
+                        notifyDestroyed();
+                    }
+                });
+                form.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+                listSensors();
+                form.show();
+            }
+        });
+    }
+
+    public void startApp() {
+    }
+
+    public void destroyApp(boolean unconditional) {
+    }
+
+    public void pauseApp() {
+    }
+
+    private void listSensors() {
+        infos = SensorManager.findSensors(null, null);
+        if (infos.length == 0) {
+            return;
+        }
+        int length = infos.length;
+        for (int i = 0; i < length; i++) {
+            TextArea textArea = new TextArea();
+            textArea.setUIID("Label");
+            textArea.setEditable(false);
+            textArea.setRows(2);
+            textArea.setGrowByContent(true);
+            textArea.setText(infos[i].getDescription());
+            form.addComponent(textArea);
+            ChannelInfo channelInfo[] = infos[i].getChannelInfos();
+            
+            // Create sliders for displaying the sensor value
+            final Slider[] sliders = new Slider[channelInfo.length];
+            for (int j = 0; j < sliders.length; j++) {
+                sliders[j] = new Slider();
+                sliders[j].setEditable(false);
+                sliders[j].setMinValue((int) channelInfo[j].getMeasurementRanges()[0].getSmallestValue());
+                sliders[j].setMaxValue((int) channelInfo[j].getMeasurementRanges()[0].getLargestValue());
+                sliders[j].setText(channelInfo[j].getName());
+                form.addComponent(sliders[j]);
+            }
+            try {
+                // Connect to a sensor
+                SensorConnection sensor = (SensorConnection) Connector.open(infos[i].getUrl());
+                int updateIntervalInSamples = 1;
+                if (infos[i].getUrl().startsWith("sensor:acceleration")) {
+                    updateIntervalInSamples = 10; // update accelerometer data on every 10 samples received
+                }
+                // Add data listener and update the slider on dataReceived events
+                final int si = i;
+                sensor.setDataListener(new DataListener() {
+                    public void dataReceived(SensorConnection sensor, Data[] data, boolean isDataLost) {
+                        SensorInfo info = sensor.getSensorInfo();
+                        ChannelInfo channelInfo[] = info.getChannelInfos();
+                        for (int i = 0; i < channelInfo.length; i++) {
+                            if (channelInfo[i].getDataType() == ChannelInfo.TYPE_INT) {
+                                int range = sliders[i].getMaxValue() - sliders[i].getMinValue();
+                                int value = (int) ((double) (data[i].getIntValues()[0] - sliders[i].getMinValue()) / range * 100);
+                                sliders[i].setProgress(value);
+                            } else if (channelInfo[i].getDataType() == ChannelInfo.TYPE_DOUBLE) {
+                                int range = sliders[i].getMaxValue() - sliders[i].getMinValue();
+                                int value = (int) ((double) (data[i].getDoubleValues()[0] - sliders[i].getMinValue()) / range * 100);
+                                sliders[i].setProgress(value);
+                            }
+                        }
+
+                    }
+                }, updateIntervalInSamples);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}
+}}}
+

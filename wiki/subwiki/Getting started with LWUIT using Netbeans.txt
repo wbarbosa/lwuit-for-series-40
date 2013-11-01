@@ -1,0 +1,102 @@
+= Getting started with LWUIT using !NetBeans=
+
+== System requirements ==
+Any relatively recent version of Windows should work. These instructions have been tested on 64-bit Windows 7 Enterprise.
+
+== Install and configure Java ME development tools ==
+
+The same prerequisites apply as with ordinary Java ME development for Nokia devices. You can use the !NetBeans IDE and Nokia Java SDKs as usual. 
+
+If you don't have a functional development environment, follow the instructions in this guide:
+[http://www.developer.nokia.com/Develop/Java/Getting_started/NetBeans/ Getting Started with NetBeans IDE].
+
+In LWUIT applications, obfuscation is needed to keep the application binary size reasonable. Taking obfuscation into use is  described later in this article, in the [wiki:GettingStartedWithLwuit#Creatingtheinstallationpackage Creating the installation package] section.
+
+== Download LWUIT for Series 40 ==
+
+The LWUIT for Series 40 library needs to be added to each LWUIT application separately. LWUIT is available in the Nokia SDK 2.0 for Java. Alternatively you can download the most recent LWUIT binary package from [http://projects.developer.nokia.com/LWUIT_for_Series_40#Downloads Downloads]. 
+
+Besides binary files, the package contains documentation, example applications, and the Resource Editor tool.
+ 
+
+== Create your application ==
+
+Let’s now create a simple LWUIT application.
+
+=== Create the LWUIT MIDlet project ===
+
+ * Create a new Java ME Mobile Application Project.
+ * Disable generating the "Hello MIDlet" on the second page of the project wizard.
+ * Choose the Nokia SDK as the platform, and leave device configuration and profile settings as they are.
+ * Add LWUIT Series 40 libraries to the project.
+   * Open the project's properties.
+   * In the "Build / Libraries & Resources" category click "Add !Jar/Zip..." and navigate to your Series 40 JAR file
+
+There are a number of different versions to choose from. If you develop with the Nokia SDK 2.0 for Java, choose a file from the sdk2.0 directory. Note that you can still run the application on devices based on older Series 40 releases. Under each directory, there are versions with or without theming. Here you can use the version S40-with-themes.jar that includes three themes (non-touch, touch and type, and full touch). For more information on different JAR files options, see the readme.txt file in the LWUIT binary package.
+
+   * Make sure the "Package" column is checked.
+[[Image(netbeans-add-lwuit-s40-jar-2.png)]]
+
+=== Create a new MIDlet ===
+
+Create a new MIDlet in your project by right-clicking the project in the Projects view and selecting "New" > "MIDlet...". 
+
+Expand your project and go to Source Packages | <default package>  and double-click  <yourMIDlet>.java file to open it in the code editor.
+
+In the source file, replace the "javax.microedition.midlet.*" wildcard import with "javax.microedition.midlet.MIDlet". This is necessary because there are some conflicting class names in LCDUI and LWUIT, such as 'Display'.
+
+=== Initialise LWUIT and create a Form ===
+
+Next, add the code to initialise LWUIT and create the first screen or "form":
+
+{{{
+#!java
+
+import javax.microedition.midlet.MIDlet;
+import com.sun.lwuit.Command;
+import com.sun.lwuit.Display;
+import com.sun.lwuit.Form;
+
+public class Midlet extends MIDlet {
+
+public void startApp() {
+
+    Display.init(this);
+    Form form = new Form("Hello World");
+    form.show();
+
+}
+    
+public void pauseApp() {
+}
+    
+public void destroyApp(boolean unconditional) {
+}
+}
+
+}}}
+
+
+'Display.init' is a static method that creates a device-specific implementation class instance behind the scenes, and sets some parameters based on, for example, the number of softkeys and whether or not the device has a touch screen. 'Form's in LWUIT are analogous to LCDUI's forms and represent different screens in the app.
+
+=== Run in the Series 40 emulator ===
+
+Select "Run" > "Run Main Project" or press F6 to launch the MIDlet in the Nokia Emulator. The emulator should open and display a screen with only a title bar:
+
+[[Image(emulator-helloworld-1.jpg)]]
+
+Quit by pressing the end call button.
+
+=== Creating the installation package ===
+
+When the !NetBeans IDE built your app, it created a MIDlet Suite consisting of the usual JAD and JAR files. These files, stored in the project's /dist folder, are used to install the app onto your Series 40 phone. Remember to use obfuscation -  using the LWUIT library without obfuscation makes the Series 40 MIDlets in practice too big to be installed on Series 40 phones (where the maximum JAR size limit is 2MB). Obfuscating decreases the library to contain only the classes that your application needs. Obfuscation can be set in your project's Properties and there under Build | Obfuscation. If you haven't set it up yet, there is a prompt to download and install ProGuard.
+
+You can deploy your application from the IDE (right-click on the project and select Deploy) or locate to the binary in Windows Explorer and send it to the device using Nokia Suite or via Bluetooth.
+
+Done! Now you have successfully set up the tools and created a LWUIT project.
+
+== Next steps ==
+
+You can now continue to [wiki:CreatingContactBookDemo Part 2] to add more functionality to the application.
+
+If you want to look at the existing LWUIT example applications instead, see [wiki:BuildingExampleApps instructions how to build example applications].

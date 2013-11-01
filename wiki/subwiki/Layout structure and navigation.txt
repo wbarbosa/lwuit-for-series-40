@@ -1,0 +1,41 @@
+= Layouts, structure, and navigation = 
+
+LWUIT Form contains !TitleBar, !MenuBar and !ContentPane. How contents defined in these elements are shown on the screen is actually transparent to the LWUIT application. This enables creation of binary compatible apps on various Series 40 devices. The following pictures and tables describe how these LWUIT concepts match to Series 40 platform concepts.
+
+Note that in LWUIT the concept !MenuBar contains both the menu commands and the softkeys: you define a set of commands that show in the Options menu and map selected commands to show also in the softkeys.
+
+== Full touch ==
+[[Image(S40_FT_UI.png, 200px)]]
+
+Image: Basic layout in full touch
+
+|| '''LWUIT''' || '''Series 40 platform concept''' || '''Notes about the LWUIT implementation''' ||
+|| || Status zone || - Platform Status zone shown also in LWUIT apps.[[BR]]- Provides access to the Notification bar. [[BR]] - Note that LWUIT application has no access to it. ||
+|| !TitleBar || Header Bar || - Form title in lower case or app title if Form title has not been   defined.[[BR]]- !TitleBar cannot be an image.[[BR]]- Action 1: Empty by default but can be activated by defining the defaultcommand.[[BR]]- Action 2: Always Options in Java apps. ||
+|| !ContentPane || Main zone || - App content area.[[BR]]- By default scrollable. ||
+|| !MenuBar || Bottom navigation   zone || - Empty by default (Note the difference: in LCDUI Forms Back button shows by default).[[BR]] - Back button displayed when using setBackCommand.[[BR]] - LWUIT Tabs component can be placed next to the !MenuBar.[[BR]]- !MenuBar can be “replaced” with the platform Category bar for FT. ||
+
+From Java ME framework point-of-view, LWUIT applications are run in a normal-size canvas in Series 40 full touch devices: Status zone, Header bar, and Back button come from the framework. LWUIT application or Form title and commands are just mapped to them.
+
+== Touch and type, non-touch ==
+[[Image(S40_T&T_UI.png, 200px)]]
+
+Image: Basic layouts in Touch and Type and non-touch
+
+|| '''LWUIT''' || '''Series 40 platform concept''' || '''Notes about LWUIT implementation''' ||
+|| !TitleBar || Status zone || -  Can be customized with colours and other branding elements[[BR]]- Optional; if not in use there is more real-estate for content[[BR]]- non-interactive[[BR]]- Global status indicators are not shown within LWUIT apps[[BR]]- Contains Form !TitleBar text or image ||
+|| !ContentPane || Main zone || - App content area.[[BR]]- By default scrollable ||
+|| !MenuBar || Softkey zone || - 3 softkey placeholders; if default command is not set, the MSK is empty [[BR]] - In non-touch devices, MSK is reserved for Select command [[BR]] - Access to Options menu in LSK ||
+
+From Java framework point-of-view, LWUIT applications are run in a full-screen canvas in touch and type and non-touch devices. The softkeys are created in LWUIT (mimicking the platform style). 
+
+== Key things to consider about application structure and navigation ==
+ * Application structure in all Series 40 applications follows drill-down.
+ * In full touch, tab navigation is introduced with the Category bar.
+   * Category bar disappears with drill down.
+ * Backstepping is hierarchical (not historical).
+   * In drill-down structure, Back takes the user one hierarchical level up.
+   * In tab navigation, Back also functions hierarchically; note that it does not backstep to the previously accessed category but always up in hierarchy levels.
+ * Back means Cancel.
+   * If the user has given input and leaves the screen with Back, the changes are not saved.
+   * Show a confirmation query to avoid losing any important data.

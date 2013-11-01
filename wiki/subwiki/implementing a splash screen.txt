@@ -1,0 +1,28 @@
+= Implementing a Splash Screen =
+
+It is common to display a splash screen on application startup to promote your brand and to indicate the user that the application is loading. LWUIT doesn't offer a specialized splash screen component, but it is easy to implement by creating and displaying a Form in the beginning of the MIDlet startApp method before constructing the rest of the application. To avoid extra wait times the main UI should be constructed in the background while the splash screen is being displayed.
+
+{{{#!java 
+public void startApp() {
+    Display.init(this); // initialize LWUIT Display
+
+    // SplashView is a Form that displays the splash screen
+    splashView = new SplashView(this);
+    splashView.show();
+
+    // Start initializing the main view in the background
+    long start = System.currentTimeMillis();
+    mainView = new MainView(this); // MainView extends Form
+
+    long difference = System.currentTimeMillis() - start;
+    try {
+        // Show splash view for at least a second
+        Thread.sleep(Math.max(0, 1000 - difference));
+    } catch (InterruptedException e) {
+    }
+
+    mainView.show();
+}
+}}}
+
+Refer to [http://projects.developer.nokia.com/LWUIT_Puzzle SlidePuzzle] and [http://projects.developer.nokia.com/LWUIT_TouristAttractions TouristAttractions] examples for more implementation details.

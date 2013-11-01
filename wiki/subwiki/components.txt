@@ -1,0 +1,89 @@
+= Components =
+
+== Form ==
+|| '''LWUIT''' || '''LCDUI''' ||
+|| - Root for the UI   library[[BR]]- Contains !TitleBar,   !MenuBar, and !ContentPane.[[BR]]- The correct layout   is automatically created when selecting the Series 40 theme. || - Screen type; root   for the UI library.[[BR]]- Contains Status   zone, Header bar (in FT), Main zone, and bottom navigation zone/Softkey zone.[[BR]]- Correct layout   automatically created when the target is selected. ||
+
+== Lists ==
+
+[[Image(LWUIT_default_list.png, border=1)]]  [[Image(LWUIT_default_list_TT.png, border=1)]]  [[Image(LWUIT_default_list_NT.png, border=1)]][[Br]]
+Image: Default LWUIT List in full touch, touch and type and non-touch.
+
+[[Image(ta_attractions.png, border=1)]]  [[Image(ta_attractions_tt.png, border=1)]]  [[Image(ta_attractions_nt.png, border=1)]]
+
+Image: Customised LWUIT List in non-touch, full touch, and touch and type.
+
+|| '''LWUIT''' || '''LCDUI''' ||
+|| - Content can be   extracted from any source.[[BR]]- Single column.[[BR]]- Supports Action 1   in FT when !TitleBar is used.[[BR]]- Supports Radio   buttons, Check boxes, and icons.[[BR]]- Supports long   press.[[BR]]- Multiline list   items possible, different fonts and sizes can be applied to different lines.[[BR]]- Supports customisation;   e.g. a carousel control, spinner, or separator can be added.[[BR]]- Can be used to   create a contextual menu by placing it inside a popup. || - Content can be   extracted from any source.[[BR]]- Single column.[[BR]]- No support for   Action 1 in FT or MSK in non-touch and touch and type.[[BR]]- Supports Radio   buttons, Check boxes, and icons.[[BR]]- Supports long   press.[[BR]]- Item editing   limited to text wrap and truncation.[[BR]]- Cannot be customised. ||
+
+
+== Labels ==
+|| '''LWUIT''' || '''LCDUI''' ||
+|| - A “title   component”.[[BR]]- Can be combined   with other UI components.[[BR]]- Acts as a List   items within LWUIT list components.[[BR]]- Supports marquee   scrolling. || - !StringItem within   Form can be used as a label but cannot be combined to other components.[[BR]]- In LCDUI, a label   is usually part of the component. ||
+
+== Button, Radio Button, Checkbox ==
+[[Image(LWUIT_Buttons_FT.png, border=1)]]  [[Image(LWUIT_Buttons_TT.png, border=1)]]  [[Image(LWUIT_Buttons_NT.png, border=1)]]
+
+Image: Button in full touch, touch and type, and non-touch. 
+
+[[Image(Radiobuttons_checkboxes_FT.png, border=1)]]  [[Image(Radiobuttons_checkboxes_TT.png, border=1)]]  [[Image(Radiobuttons_checkboxes_NT.png, border=1)]]  
+
+Image: !RadioButton and !CheckBox in full touch, touch and type, non-touch.
+
+
+|| '''LWUIT''' || '''LCDUI''' ||
+|| - Button is styled   like the LCDUI button.[[BR]]- Check box and Radio button controls are placed on the right side.[[BR]]- Radio buttons and   checkboxes can be freely used wherever needed.[[BR]]- Check box can be   used as a single setting item to switch something On/Off. || - Button is a   !StringItem with type BUTTON.[[BR]]- Check box and   Radio button controls are placed on the right side of the list item.[[BR]]- Radio buttons and   checkboxes are tied to list items either in List screen, choice group (Form),   or the Nokia UI pop-up list.[[BR]]- A single check box   for setting something on/off is not supported. ||
+
+== Tab ==
+[[Image(Tabs.png)]]
+
+Image: Tabs and Calendar in non-touch, full touch, and touch and type
+
+|| '''LWUIT''' || '''LCDUI''' ||
+|| - Full touch: bottom   part of display, T&T, and NT: top part of content pane.[[BR]]- Contains only   textual labels by default, can be modified to support icons.[[BR]]- Technically   unlimited number of tabs.[[BR]]- RECOMMENDATION: in   T&T max 4 tabs in , in FT max 4 tabs in portrait and 6 in landscape.[[BR]]- RECOMMENDATION: in   FT, use the Category bar instead.[[BR]]- RECOMMENDATION: Avoid   tabs in T&T because they take a lot of screen real-estate. || - Full touch:   Category bar at the Bottom navigation zone, T&T: not supported, NT: top   part of Main zone.[[BR]]- Icons only. Exception:   Category bar extension has both icon and text.[[BR]]- FT: max 15   Categories fit in the Extension.[[BR]]- RECOMMENDATION: In   FT, max 4 tabs in portrait and 6 in landscape. ||
+
+'''Examples:'''[[BR]]
+Category bar use is shown in the [http://projects.developer.nokia.com/LWUIT_CategoryBarDemo LWUIT Category Bar Demo].
+LWUIT Tabs are shown in the LWUIT Demo application (see \examples\LWUITDemo directory in the LWUIT package).
+
+
+== !TextArea, !TextField ==
+[[Image(Text_Field_and_Text_Area.png)]]
+
+Image: !TextAreas and !TextFields in non-touch, full touch, and touch and type
+
+|| '''LWUIT''' || '''LCDUI''' ||
+|| - The appearance differs   slightly from LCDUI.[[BR]]- When tapped   on/selected, changes the area/field into edit mode.[[BR]]- In FT, the virtual   keyboard provided by the Series 40 platform (instead of the LWUIT keyboard)   is used for text input.[[BR]]- In T&T and NT,   the physical keys are used for text input. [[BR]] - Additional features include, e.g., hint text support. || - When tapped   on/selected, changes the area/field into edit mode.[[BR]]- In FT, the virtual   keyboard provided by the Series 40 platform (instead of the LWUIT keyboard)   is used for text input.[[BR]]- In T&T and NT,   the physical keys are used for text input. ||
+
+== Dialog ==
+[[Image(Dialogs.png)]]
+
+Image: Dialog in non-touch, full touch, and touch and type
+
+|| '''LWUIT''' || '''LCDUI''' ||
+|| - Can be used with   or without a title.[[BR]]- Fixed size or   popup that scales according to the content size.[[BR]]- Button to   acknowledge or disappears with timeout. || - Title is optional   but the space will always be reserved.[[BR]]- Fixed size.[[BR]]- Button(s) to   acknowledge or disappears with timeout. ||
+
+== Additional components, not in LCDUI ==
+ * NOTE! The interaction logic may not be familiar to users-.
+
+!ComboBox:
+
+[[Image(ComboBox.png)]]
+
+Image: !ComboBox for non-touch, full touch, and touch and type
+
+ * Consists of two dependent selections of items.
+ * Can be used for multiple use cases, for example selecting month and year.
+ * Can contain both numbers and text.
+ * Opens a drop-down menu with selectable items.
+   * Works like Radio buttons; one item is selected at a time.
+
+Calendar:
+
+ * Predefined month and week view.
+ * When a day is selected, the day view opens.
+
+Tree:
+
+ * Same item sizes as the lists.
+ * Icons styled to match the overall platform style.

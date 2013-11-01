@@ -1,0 +1,81 @@
+= Building example apps =
+
+The original LWUIT example applications were hierarchical projects with a parent project and platform-specific child projects. We have now simplified the structure which makes importing projects easier. The example applications are located in the ...\examples directory of the LWUIT package.
+
+== LWUITDemo with !NetBeans ==
+
+1) In !NetBeans IDE, from the File menu, select Open Project and select an example application, for example, LWUITDemo project in ...\examples directory.[[BR]]
+[[Image(LWUITDemo_projects.png)]]
+
+2) Right-click on the LWUITDemo project and open Properties.
+
+3) Go to Build > Libraries & Resources. Add the S40-with-themes.jar file and ensure the Package checkbox is checked to include the library into your application binary.[[BR]]
+[[Image(LWUITDemo_Libraries.png, 930px)]][[BR]]
+
+4) Under Platform, select the SDK and check the following Optional Packages:[[BR]]
+-Nokia User Interface 1.6[[BR]]
+-Nokia touch UI - Gesture APIs 1.6[[BR]]
+-Scalable 2D Vector Graphics[[BR]]
+-Mobile Media API 1.0[[BR]]
+-Mobile 3D Graphics Optional Package 1.1[[BR]]
+
+[[Image(LWUITDemo_APIs.png, 930px)]][[BR]]
+
+'''Note:''' Other packages may also be selected but you do not have to uncheck them.
+
+5) Ensure LWUITDemo is set as the main project. Right-click on the project and select Clean & Build.
+
+6) Run the application on the emulator.[[BR]]
+[[Image(LWUITDemo_emulator.png)]][[BR]]
+
+7) To run the application on the device, use obfuscation: Select LWUITDemo, open Properties > Build > Obfuscation and drag the slider to the right most position (High). This makes the application size smaller so that it can be run on a real device.[[BR]]
+[[Image(LWUITDemo_Obfuscation.png, 930px)]]
+
+
+== LWUITDemo with Eclipse ==
+
+1) In Nokia IDE for Java ME (Eclipse), from the File menu, select Import.[[BR]]
+
+
+2) In the Import dialog, select Java ME > !NetBeans Project and click Next.
+
+[[Image(Import_project.png)]][[BR]]
+
+3) In the Import !NetBeans Projects dialog, click Browse to select the example application, for example, LWUITDemo project in the ...\ examples folder of the LWUIT package and then click Finish. The project is loaded into your Workspace.
+
+[[Image(select_project.png)]][[BR]]
+
+4) Right-click on the LWUITDemo project, select Properties > Java build path > Libraries tab, remove editor.jar. It is only needed when you run this application in Resource Editor.
+
+
+5) Add ...\bin\sdk2.0\s40-with-themes.jar by clicking on Add External JARs.
+
+[[Image(add_libraries.png)]][[BR]]
+
+'''Note:''' Also, ensure that you add ...\bin\IO\IO-MIDP.jar by clicking on Add External JARs, when you are running the following example applications:[[BR]]
+-!ContactBookDemo[[BR]]
+-Makeover[[BR]]
+-Tipster[[BR]]
+
+6) In the Order and export tab, ensure that S40-with-themes.jar and LWUITDemo are selected and click OK.
+
+[[Image(order_and_export.png)]][[BR]]
+
+'''Note:''' Also, ensure that you select IO-MIDP.jar when you are running the following example applications:
+-!ContactBookDemo
+-Makeover
+-Tipster
+
+7) Right-click on the LWUITDemo project and select Run As > Emulated Java ME MIDlet to run it on the emulator.
+
+[[Image(emulator.png)]][[BR]]
+
+'''Note:''' If you encounter problems with building and running the example applications, ensure that Nokia IDE for Java ME (Eclipse) uses JDK and not JRE. In some cases in Windows 7, even if you have installed JDK, Eclipse uses JRE. To change this:
+a.Go to Window > Preferences > Java > Installed JREs.
+b.In the Installed JREs section, if JRE is set, remove it.
+c.Browse for the JDK directory on your PC and select it.
+
+For more information about adding JDK, refer to Error while adding an external library in Nokia IDE for Java ME (Eclipse) v1 User Guide > Troubleshooting and support > Troubleshooting tips.
+
+8) To run the application on the device, use obfuscation. For more details, see instructions on the
+[http://projects.developer.nokia.com/LWUIT_for_Series_40/wiki/GettingStartedWithLwuitUsingEclipse#installandconfigureProGuard Getting Started Guide].

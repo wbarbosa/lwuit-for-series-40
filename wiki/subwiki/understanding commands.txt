@@ -1,0 +1,104 @@
+= Understanding Commands = 
+
+The LWUIT Commands are used to show some action in the Menu or can be added to a Button component. There are some differences between the platforms but the APIs for using Commands stay the same. 
+
+== Command APIs == 
+By default all commands go to the options menu that is the left softkey. Setting Commands to Menu is done by using Form's methods that are described next.
+=== Adding Commands ===
+
+'''!addCommand(Command cmd)[[BR]]
+
+addCommand(Command cmd, int offset)'''
+[[BR]][[BR]]
+
+These methods add the Command to the options menu that is shown on the left side of the MenuBar.
+
+=== !DefaultCommand ===
+
+'''setDefaultCommand(Command cmd)'''[[BR]][[BR]]
+
+This method sets the Command to the middle of the MenuBar. The default command can be described as a command that does a specific action for the whole Form. DefaultCommand is always shown unless there is a selectCommmand used. In this case the defaultCommand will go to the Options menu. When selectCommand is removed, defaultCommand will return to the middle.
+=== !SelectCommand ===
+'''!MenuBar.setSelectCommand(Command cmd)'''
+[[BR]]
+[[BR]]
+This also sets a command to the middle but the this should used when you have specific action that relates to the currently focused component ie. TextField shows a "edit" on the middle when it's focused and the edit is only shown when the component is focused. Note that this method is only available from the MenuBar class. Usually you might need this if you have a custom component. SelectCommand overrides defaultCommand in the middle of the MenuBar.
+=== !BackCommand ===
+'''setBackCommand(command cmd)'''[[BR]]
+[[BR]]
+This set's the Command to the right of the !MenuBar. BackCommand is never shown in in the Menu. If ClearCommand is set it will override the BackCommand. In this case the BackCommand will not be in menu and will appear back to right side of the menu when ClearCommand is removed. Note that the name BackCommand just means that this command will appear in a place that you usually would set a back action. Note: LWUIT doesn't have any automatic back Command so the developer is responsible for handling back navigation between views.
+
+=== !ClearCommand ===
+'''setClearCommand(Command cmd)'''
+
+This also set's the Command to the right of the !MenuBar. If there is a backCommand assigned it will override it. The back will appear when clearCommand is removed. A Command that is set as clearCommand should do something that is related to deleting or clearing out something in a component.
+
+== Non-touch ==
+[[Image(lwuit-commands-TT.png,align=right)]][[BR]]
+In non-touch the commands go to the !MenuBar that is visible at the bottom of the Form. The behavior of all the commands is as described in the previous section.
+
+== Touch & Type ==
+Touch & Type is very similar to except the !MenuBar is a bit bigger for easier touch usage.
+[[BR]]
+[[BR]]
+[[BR]]
+[[BR]]
+[[BR]]
+[[BR]]
+[[BR]]
+[[BR]]
+[[BR]]
+
+== Full Touch ==
+[[Image(lwuit-commands-FT.png, align=right)]]
+This platform is a bit different from the rest since it uses the platform menu instead of the LWUIT !MenuBar. The !MenuBar is never shown in Full Touch device.
+
+=== BackCommand ===
+When you call setBackCommand it will set the Command to the platform's Back-command. 
+
+=== DefaultCommand ===
+The defaultCommand will go to the top right corner of the Full Touch Menu.
+
+=== Basic Commands ===
+The addCommand-methods will add the command to the platform menu. 
+
+=== IconCommand ===
+The Full Touch platform has the new IconCommand API available. This API has been integrated to LWUIT so that when you add an icon to you LWUIT Command, it will be automatically converted to IconCommand and the icon will be shown in the platform menu.
+
+= Using Command class =
+
+Basically the usage of Command class is very simple. You give the name of the command in the constructor and add it to menu. There are couple of ways to handle the invoking of Command.[[BR]]
+[[BR]]
+Override the actionPerformed method in Command class.
+{{{#!java
+Command cmd = new Command("Hello") {
+
+            public void actionPerformed(ActionEvent evt) {
+
+                //do something
+            }
+            
+        };
+
+}}}
+
+Override the Form's actionPerformed method
+{{{#!java
+Form f = new Form("form") {
+protected void actionCommand(Command cmd) {
+        //handle all commands that are added to Form
+    }
+};
+}}}
+Add actionListener by using Form's addCommandListener-method. Main thing to note here is that if you have several commandlisteners you need to call ActionEvent.consume if you don't want the event to go to other commandlisteners.
+{{{#!java
+f.addCommandListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent ae) {
+                //use ae.getCommand() to get the command 
+            }
+        });
+
+}}}
+[[BR]]
+There aren't really that much difference between the solutions. The first one is useful if you want to transfer the same Command between Forms and don't want to create separate ActionListener or override the forms actionCommand method. The second one is generally useful when you want to handle all the commands in same place. The third solution is useful when want listen the Command with many listeners and want to limit which listeners get the event or you want get some extra information about the event like the x,y coordinate or keyevent.

@@ -1,0 +1,76 @@
+= LWUIT for Series 40 Developer Documentation =
+
+== Getting started ==
+
+=== Part 1 ===
+This section contains step-by-step instructions on how to install the needed development tools, configure them, and develop a simple LWUIT application for Series 40 using the !NetBeans or Eclipse IDE and the Nokia SDK.
+
+* [wiki:GettingStartedWithLwuit Getting started with LWUIT using Netbeans]
+* [wiki:GettingStartedWithLwuitUsingEclipse Getting started with LWUIT using Eclipse]
+
+=== Part 2 ===
+In this section we continue with the project we started in Part 1 by adding more LWUIT features such as Layout, List, !TextField, Button, and mapping Commands to softkeys. This section also explains how to use the JSR-75 PIM API in this context.
+
+* [wiki:CreatingContactBookDemo Creating a simple contact book demo]
+
+=== Part 3 ===
+In this section we show how to create a simple graphical user interface with Resource Editor, and how to add the design into an application project.
+
+[[Image(resourceeditor.png, 600px)]][[BR]]
+
+The LWUIT Resource Editor is a fairly new stand-alone program that enables creating user interfaces in a drag-and-drop manner. Also custom themes can be easily designed. We are planning to further improve the functionality of this tool.
+
+* [wiki:UsingTheResourceEditorToGenerateAproject Using Resource Editor for UI creation]
+* [wiki:IssuesWithResourceEditor Issues with ResourceEditor]
+* [wiki:NokiaCustomItemsInRE Nokia Additions to ResourceEditor]
+
+=== Part 4 ===
+In this section we describe how you can import and build example applications.
+
+* [wiki:BuildingExampleApps Building LWUIT example applications]
+
+== Developing with LWUIT for Series 40 ==
+
+This section describes the most notable differences that have been made for the LWUIT for Series 40 port. Most changes are transparent to developers so it is possible to use the familiar LWUIT APIs also in Series 40.
+
+* [wiki:ChangesToVanillaLwuit Changes made in the LWUIT for Series 40 port]
+* [wiki:UsingSeries40FullTouchFeatures Using Series 40 full touch features]
+* [wiki:UsingGestures Using gestures]
+* [wiki:UsingSensors Using sensors]
+* [wiki:ImplementingASplashScreen Implementing a splash screen]
+* [wiki:BestPracticesAndKnownIssues Best practices and known issues]
+* [wiki:Compatibility]
+* [wiki:UX_guidelines UX guidelines]
+* [wiki:SettingThemePerDevice Setting themes for different devices]
+* [wiki:UsingObjectTraitWithLWUIT Using ObjectTrait API with LWUIT]
+* [wiki:UnderstandingCommands Understanding Commands]
+* [wiki:AutoLocalization Automatic localization loading]
+* ''' NEW! ''' [wiki:DisplayingProgressBar Displaying Progress bar/Activity indicator]
+* ''' NEW! ''' [wiki:ShowContextMenu Display ContextMenu]
+
+For complete documentation on all LWUIT features, architecture, and APIs download the [http://projects.developer.nokia.com/LWUIT_for_Series_40/files/LWUIT_Developer_Guide.pdf LWUIT Developer Guide]. It is written by the original developers of LWUIT and currently only a few notes about the Series 40 implementation have been added to it.
+
+== Example applications ==
+
+[[Image(LWUIT_Apps.png, border=1)]][[BR]]
+
+This page lists all the new and modified LWUIT example applications that are optimised for Series 40 and use key mobile features and technologies. 
+
+See all [wiki:ExampleApplications LWUIT example apps].
+
+== LWUIT binary and source packages ==
+
+''' LWUIT for application developers: '''
+
+* LWUIT for Series 40 contains all you need for application development: compiled LWUIT libraries for different UI styles, Resource Editor, example applications, and documentation.
+* LWUIT for Series 40 v0.6 Beta is now available as a plugin in the Nokia SDK 2.0 for Java. While regular updates will be provided directly to the SDK, developers wanting immediate access to latest LWUIT binaries should still follow this project. The latest  version is available in [http://projects.developer.nokia.com/LWUIT_for_Series_40#Downloads Downloads].
+
+''' LWUIT for experienced developers: '''
+ * Want to further-develop LWUIT? Get the latest LWUIT source code package from the [http://projects.developer.nokia.com/LWUIT_for_Series_40/browser source section].
+ * [wiki:CompilingLWUITFromSource Instructions how to build LWUIT for Series 40 from source]
+ * [wiki:LWUITSeries40Architecture LWUIT for Series 40 architecture]
+ * [wiki:PerformanceTipsForLists Tips for improving list rendering speed]
+
+== All downloads ==
+
+[[ListDownloads()]]

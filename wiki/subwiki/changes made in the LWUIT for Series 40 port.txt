@@ -1,0 +1,92 @@
+== !TextArea and !TextField ==
+The !TextArea has been modified to support the native Nokia !TextEditor component ([http://www.developer.nokia.com/Resources/Library/Java/developers-guides/ui-and-graphics/lcdui/using-the-lcdui/texteditor.html TextEditor Javadoc]).
+
+The !TextEditor is shown when !TextArea gets focus and hidden when focus is lost. The text written to !TextEditor is synchronised to the TextArea and when there is no focus, the !TextArea draws the text. There is a small mismatch with the text position because !TextEditor always shows one empty line after the last line that is being edited. When focus is lost, the empty line disappears and the text is positioned correctly.
+
+If you don't want to use the native textEditor, you can disable it with the function setTextEditorEnabled in the !TextArea class.
+
+Here is a complete list of the modifications:
+
+
+ * !TextArea shows the Nokia !TextEditor when focused. In full touch devices, also the built-in virtual keyboard is shown then.
+ * The setTextEditorEnabled method has been added to !TextArea for enabling/disabling the native !TextEditor.
+ * The modified !TextArea does not support "growing", which means that it does not expand if you write a lot of text. It has always a fixed size.
+ * The !LwuitImplementation class has the method requestNewNativeTextEditor, so that the actual implementation class in the LWUIT MIDP project can return the actual !TextEditor class.
+ * In the LWUIT UI project there are two !TextEditor-related classes in the !com.nokia.lwuit package. These classes basically wrap the actual Nokia !TextEditor to a class, so  LWUIT can be used in phones that don't have the !TextEditor class.
+ * When !TextArea has focus, it adds the "Clear" command the menu bar so that the user can delete characters. The Clear button is set to the right softkey and removed when !TextArea loses focus.
+ * When !TextField is created, it is actually just a single-line !TextArea.
+
+== List ==
+The LWUIT List component has been modified to work correctly with padding. The original implementation doesn't respect the padding value at all, so when you add borders to a Spinner component (that extends from List), the list items are drawn over the border.
+
+== Button ==
+Vanilla LWUIT removes pressedStyle from the Button when drag is initiated. However, Series 40 touch phones usually get a couple of drag events immediately after the pressed event, so Button has a 10 px threshold to prevent accidental dragging from changing the style.
+
+== Form ==
+Form has been modified to check if drag events happen inside the !MenuBar. This prevents !MenuItems from getting stuck in the pressed state.
+
+== !MenuBar (softkeys) ==
+
+=== Full touch ===
+LWUIT apps run in a normal-sized canvas. Thus Series 40 full touch chrome, headerbar, actionbuttons, backbutton, and options menu are displayed in a LWUIT app. Even categorybar can be shown in the LWUIT app.
+
+You can force the LWUIT application to run in full-screen mode by using the Display.getInstance().setForceFullScreen(true) method;
+
+{{{
+#!java
+         import com.sun.lwuit.Display;
+         ...
+         public void startApp() {
+             Display.init(this);
+             Display.getInstance().setForceFullScreen(true);
+         ...
+         }
+}}}
+
+=== Touch and type, non-touch ===
+LWUIT apps run in a full-screen canvas. There is no statusbar displayed (instead of it you can show a customisable LWUIT Form header). When defining Menubar, the softkeys are shown. Softkey Command placement has been rewritten to match the behaviour of Back on RSK, Menu on LSK, and so on in both Series 40 non-touch and touch and type input styles. In vanilla LWUIT the Menu button is labeled "Menu" but this has been changed to "Options". The menu has always slots for 3 softkeys.
+
+== Gestures ==
+LWUIT does not support Series 40 gestures by default. Because of this, we have created a helper class '''!GestureHandler''' that you can use to add gestures to your LWUIT application.
+
+Using the class:
+{{{
+#!java
+
+         Form form = new Form();
+
+         GestureHandler handler = new GestureHandler() {
+            
+            public void gestureAction(GestureEvent e) {
+                String s = "Form gestures:";
+                switch(e.getType()) {
+                    case GestureInteractiveZone.GESTURE_TAP:
+                        //handle tap
+                        break;
+                    case GestureInteractiveZone.GESTURE_LONG_PRESS:
+                        //handle long press
+                        break;
+                    case GestureInteractiveZone.GESTURE_FLICK:
+                        //handle flick
+                        break;
+                    
+                }
+            }
+            
+        };
+
+        //set handler to receive gesture events only when the form is visible. Every form
+        //can have their own handler.
+        GestureHandler.setFormGestureHandler(form, handler);
+
+        //Creating another handler
+        GestureHandler g = new GestureHandler() {
+
+            public void gestureAction(GestureEvent e) {
+                  //handle event
+            }
+        };
+
+        //if you want to always catch gestures, set the handler as a global handler. There can be only one global handler.
+        GestureHandler.setGlobalGestureHandler(g);
+}}}

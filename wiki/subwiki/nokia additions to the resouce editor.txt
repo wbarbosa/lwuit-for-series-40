@@ -1,0 +1,6 @@
+= Nokia Additions to !ResourceEditor = 
+
+== Theme Constants ==
+
+=== !NokiaPlatformColors ===
+This constant is a boolean value that will cause the button and listRenderer style to have platform colors in border graphics. You can see this in action by using the Nokia Theme in full touch device.

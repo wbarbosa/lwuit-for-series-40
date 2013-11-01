@@ -1,0 +1,24 @@
+= Command mapping in LWUIT =
+== Primary action ==
+The most important function of each view can be set with the defaultcommand. There is a slight difference in what that function should be in non-touch compared to touch UIs; in non-touch the action is usually ‘Select’ for the focused item rather than a view-specific action, whereas for touch UIs it can be pretty much anything.
+
+|| '''Full touch''' || '''T&T''' || '''NT''' ||
+|| - Mapped to Action 1 button[[BR]]- Shows as an icon; default icon is “tick mark”[[BR]]- A custom icon can be attached to replace the tick mark[[BR]]- If defaultcommand not defined Action 1 is shown empty || - Mapped to Middle soft key (MSK)[[BR]]- Uses a text label[[BR]]- If not defined the label is  shown empty || - Mapped to Middle soft key [[BR]] - Uses a text label[[BR]]- MSK is   automatically filled with primary action (usually Select);[[BR]]This can be overridden by setting the defaultcommand for another [[BR]]command; this should be carefully considered due to basic interaction [[BR]]of ‘focus and select’.Read more from the UI style guide for non-touch phones. ||
+
+Examples apps:[[BR]][[BR]]
+[http://projects.developer.nokia.com/LWUIT_CategoryBarDemo Category Bar Demo]:
+- customised Action 1 button icon
+[http://projects.developer.nokia.com/LWUIT_TouristAttractions LWUIT Tourist Attractions]:
+- primary action shown in Action 1 button with customised icon in full touch, in the MSK in touch and type devices, and in the Options menu in non-touch devices.
+
+== Options menu: secondary actions ==
+The Options menu contains common actions for each view. Any commands that can be accessed directly from the content area should not be repeated in the menu.
+
+|| '''Full touch''' || '''Touch and type''' || '''Non-touch''' ||
+|| - Accessed through   Action button 2.[[BR]]- If no actions are   defined, the Menu icon is dimmed. || - Accessed through   the Left soft key (LSK).[[BR]]- If no actions are   defined, the LSK is left unlabeled. || - Accessed through the   Left soft key (LSK).[[BR]]- If no actions are   defined, the LSK is left unlabeled. ||
+
+== Context menu: item-specific actions ==
+The Context menu is considered to be a shortcut to item-specific actions. The same actions should be accessible also by other means; typically from the next hierarchy level down (that is, the  item detail view).
+
+|| '''Full touch''' || '''Touch and type''' || '''Non-touch''' ||
+|| - Not supported by   default; List in a popup will do the trick.[[BR]]- Accessed through   long press.[[BR]]- Opens as a   floating list next to the item it belongs to. || - Not supported by   default; List in a popup will do the trick.[[BR]]- Accessed through   long press.[[BR]]- Opens as a menu that   is similar to the Options menu. || - Not applicable.[[BR]]- Item-specific   options need to be included in the Options menu. ||

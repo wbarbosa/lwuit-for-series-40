@@ -1,0 +1,25 @@
+== Setting different theme for different devices ==
+In LWUIT for Series 40, we have added methods to help developers set different themes for non-touch, touch & type and full touch.
+{{{
+#!java
+    /**
+     * Loads a theme from resource and applies it for defined device type.
+     *
+     * @param resRef a local reference to a resource using the syntax of
+     * Class.getResourceAsStream(String)
+     * @param deviceType device type as defined in Display class
+     * @param themeId name of the theme resource
+     */
+    public void loadThemeForDeviceType(String resRef, int deviceType, String themeId)
+
+
+//example setting theme for full touch device
+UIManager.getInstance().loadThemeForDeviceType("/theme-file.res", Display.FULL_TOUCH_DEVICE, "NameOfTheme");
+
+//for the devices, we have flags in Display class
+Display.NON_TOUCH_DEVICE;
+Display.TOUCH_AND_TYPE_DEVICE;
+Display.FULL_TOUCH_DEVICE;
+
+
+}}}

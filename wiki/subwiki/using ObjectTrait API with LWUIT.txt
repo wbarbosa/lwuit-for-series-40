@@ -1,0 +1,28 @@
+== Using !ObjectTrait API with LWUIT ==
+
+Because LWUIT internally uses a Canvas to draw the UI, you can't directly use Nokia's LCDUtil class' setObjecTrait method. Instead you will have to use LWUIT API that we have added. Normally, if you want to use canvas trait you would set the target to be the canvas object but in LWUIT the canvas object can't be accessed easily so for that case you should set the target as the S40Implementation class. This can be acquired using the Display class' getImplementation method. 
+
+{{{
+#!java
+//excerpt from the Display class
+    /**
+     * Wrapper for the setObjectTrait method of the com.nokia.mid.ui.LCDUIUtil
+     * class. Sets the trait value of the target object as Object. Values in the
+     * given "value" Object are copied into the target's trait so subsequent
+     * changes to the "value" Object have no effect on the value of the target's
+     * trait. If the LCDUIUtil class is not present in the target configuration 
+     * the method returns false.
+     *
+     * @param target the target object to set the trait to
+     * @param trait the name of the trait to be set
+     * @param value the value of the trait to be set as String
+     * @return boolean
+     */
+    public static boolean setObjectTrait(Object target, String traitName, Object value) {
+    ...
+    }
+
+//example usage
+Display.getInstance().setObjectTrait(Display.getInstance().getImplementation(), "nokia.ui.canvas.status_zone", Boolean.TRUE); 
+
+}}}

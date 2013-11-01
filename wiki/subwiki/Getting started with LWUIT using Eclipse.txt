@@ -1,0 +1,144 @@
+= Getting started with LWUIT using Eclipse=
+== System requirements ==
+Any relatively recent version of Windows should work. These instructions have been tested on 64-bit Windows 7 Enterprise.
+
+== Install and configure Java ME development tools ==
+
+The same prerequisites apply as with ordinary Java ME development on Nokia devices. You can use Eclipse IDE (with Mobile Tools for Java) and Nokia Java SDKs as usual. 
+
+
+If you don't have a functional development environment, follow the instructions in this guide:
+[http://www.developer.nokia.com/Develop/Java/Getting_started/Eclipse/ Getting Started with Eclipse IDE]
+
+
+=== Install and configure !ProGuard ===
+
+To use !ProGuard for preverification and/or obfuscation, download a release from http://proguard.sourceforge.net/ and extract the package to a location of your choice. In Eclipse, Go to Preferences --> Java ME and configure the extracted package directory as the !ProGuard Root Directory:
+
+[[Image(eclipse_proguard_settings.jpg,40%)]]
+
+
+== Download LWUIT for Series 40 ==
+
+The LWUIT for Series 40 library needs to be added to each LWUIT application separately. LWUIT is available in the Nokia SDK 2.0 for Java. Alternatively you can download the most recent LWUIT binary package from [http://projects.developer.nokia.com/LWUIT_for_Series_40#Downloads Downloads]. 
+
+Besides binary files, the package contains documentation, example applications, and the Resource Editor tool.
+
+
+== Create your application ==
+
+Let’s now create a simple LWUIT application.
+
+=== Create the LWUIT MIDlet project ===
+
+
+In Eclipse, open File-->New-->MIDlet project [[BR]]
+[[Image(new-midlet-project.png, 50%)]][[BR]]
+
+Write the name of the project. In this example, LWUITApplication is the name.[[BR]]
+[[Image(new-midlet-project-window.png, 50%)]][[BR]]
+The default SDK configuration is selected in the Configurations window. You can change it from the Add button.[[BR]]
+[[BR]]
+Press Finish. The project is created and the Application Descriptor file is opened in the IDE.[[BR]]
+[[Image(created-project.png, 60%)]][[BR]][[BR]]
+Now we have to add the LWUIT for the Series 40 library package. Open Project Properties.[[BR]]
+[[Image(project-properties.png, 40%)]][[BR]]
+Select "Java Build Path" from the left and select the "Libraries" tab.[[BR]]
+[[Image(java-build-path.png, 50%)]][[BR]]
+
+Click "Add external JARs" and locate your Series 40 JAR file. 
+
+There are a number of different versions to choose from. If you develop with the Nokia SDK 2.0 for Java, choose a file from the sdk2.0 directory. Note that you can still run the application on devices based on older Series 40 releases. Under each directory, there are versions with or without theming. Here you can use the version S40-with-themes.jar that includes three themes (non-touch, touch and type, and full touch). For more information on different JAR files options, see the readme.txt file in the LWUIT binary package.
+
+After this, open the "Order and Export" tab. Make sure the Series 40 JAR file is selected. This means that it will be included in the resulting application JAR package.[[BR]]
+[[Image(order_and_export.png, 40%)]][[BR]]
+Click "OK" and now your project is ready for LWUIT development.
+
+
+=== Create a new MIDlet ===
+
+Create a new "Java ME Midlet" for your project.[[BR]]
+[[Image(new-midlet.png, 50%)]][[BR]]
+Set the package and the name for the class. In the example, "com.example" is the package and "Main" is the name.[[BR]]
+[[Image(new-midlet-dialog.png, 40%)]][[BR]]
+
+Expand your project and go to src | com.example | and double-click <yourMIDlet>.java file to open it in code editor. 
+
+In the source file, ensure that you use "javax.microedition.midlet.MIDlet" instead of the "javax.microedition.midlet.*" wildcard import. This is necessary because there are some conflicting class names in LCDUI and LWUIT, such as 'Display'. 
+
+
+=== Initialise LWUIT and create a Form ===
+
+Next, add the code to initialise LWUIT and create the first screen or "form":
+
+{{{
+#!java
+
+import javax.microedition.midlet.MIDlet;
+import com.sun.lwuit.Command;
+import com.sun.lwuit.Display;
+import com.sun.lwuit.Form;
+
+public class Midlet extends MIDlet {
+
+public void startApp() {
+
+    Display.init(this);
+    Form form = new Form("Hello World");
+    form.show();
+
+}
+    
+public void pauseApp() {
+}
+    
+public void destroyApp(boolean unconditional) {
+}
+}
+
+}}}
+
+
+'Display.init' is a static method that creates a device-specific implementation class instance behind the scenes, and sets some parameters based on, for example, the number of softkeys and whether or not the device has a touch screen. 'Form's in LWUIT are analogous to LCDUI's forms and represent different screens in the app.
+
+=== Run in the Series 40 emulator ===
+
+From the Eclipse menu, open Run-->Run. The emulator will start and run the application in the Nokia Emulator. The emulator should open and display a screen with only a title bar:
+
+[[Image(emulator-helloworld-1.jpg)]]
+
+Quit by pressing the end call button.
+
+
+=== Creating the installation package ===
+
+Open the Application Descriptor file. Under the "Packaging" header you can see "Create package". This opens a Dialog where you can choose where to save the package. Check the "Obfuscate the code" option since using the LWUIT library without obfuscation makes the Series 40 MIDlets in practice too big to be installed on Series 40 phones (maximum JAR size limit is 2MB). Obfuscating decreases it to contain only the classes that your application needs. After pressing Finish, a JAD and a JAR file that can be installed to the phone are created. You can deploy the application to the phone using Nokia Suite or via Bluetooth.
+
+Done! Now you have successfully set up the tools and created a LWUIT project.
+
+== Considerations when working with hierarchical projects in Eclipse ==
+
+Traditionally LWUIT development has taken place using !NetBeans. This is reflected, for example, by the resource editor generating !NetBeans projects from UIs created with the UI builder, where a hierarchical structure of parent projects and platform projects is generated. This structure does not work in Eclipse, because Eclipse project directories have to be first-level children of the workspace directory, and the workspace directory itself cannot be a project. Say we have a structure like this:
+
+{{{
+ProjectsDir
+|
++--- ParentProject
+       |
+       +--- PlatformProject1
+       |
+       +--- PlatformProject2
+}}}
+
+Now, to create an Eclipse project from the parent project, you have to set '!ProjectsDir' as the workspace. Then, to create Eclipse projects from the platform projects, you have to to set '!ParentProject' as the workspace. However, while '!ParentProject' is the workspace, '!ParentProject' cannot be imported as a project, and therefore cannot be set as a dependency of any platform project.
+
+The best solution to this is to either:
+
+  1. refrain from creating nested project structures (this approach used in the example project of this tutorial), or
+  2. create a single new Eclipse project and link *both* the parent and the platform-specific source directories to it.
+
+== Next steps ==
+
+You can now continue to [wiki:CreatingContactBookDemo Part 2] to add more functionality to the application.
+
+If you want to look at the existing LWUIT example applications instead, see [wiki:BuildingExampleApps  instructions how to build example applications].

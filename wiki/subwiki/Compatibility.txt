@@ -1,0 +1,52 @@
+LWUIT for Series 40 has been developed for the following UI styles:
+* Series 40 full touch
+* Series 40 touch and type
+* Series 40 non-touch
+
+== IDEs ==
+LWUIT applications can be developed with both the !NetBeans and Eclipse IDEs. 
+
+!NetBeans has better support for the hierarchical project model used in many LWUIT projects. The example applications of the LWUIT for Series 40 package have been simplified to make importing and development easier in Eclipse-based IDEs such as Nokia IDE for Java. 
+
+Note that the project creation wizard of the !ResourceEditor supports !NetBeans projects only. However, resource files created in !ResourceEditor can be imported into existing Eclipse projects relatively easily. Read more on the [wiki:UsingTheResourceEditorToGenerateAproject use of Resource Editor].
+
+== Series 40 platforms ==
+
+LWUIT for Series 40 has been developed and tested using:
+* Nokia SDK 1.1 for Java
+* Nokia SDK 2.0 for Java (LWUIT now available as an SDK plugin)
+
+During the development, the following devices have been used in testing:
+
+||= '''Device model''' =||= '''Platform version''' =||= '''full touch''' =||= '''touch and type''' =||= '''non-touch''' =||= '''Resolution''' =||= '''Notes''' =||
+|| Asha 311 || Series 40 DP 2.0 || x || || || 240x400 || ||
+|| Asha 308/309 || Series 40 DP 2.0 || x || || || 240x400 || ||
+|| Asha 305/306 || Series 40 DP 2.0 || x || || || 240x400 || ||
+|| Asha 303 || Series 40 DP 1.1 || || x || || 240x320 || ||
+|| Asha 302 || Series 40 DP 1.1 || || || x || 320x240 || ||
+|| Asha 300 || Series 40 6th ed, FP1 || || x || || 240x320 || ||
+|| Asha 202 || Series 40 DP 1.1 || || x || || 240x320 || ||
+|| Asha 200/201 || Series 40 DP 1.1 || || || x || 320x240 || memory limitations (browser css demos in LWUITDemo) ||
+|| C2-03 || Series 40 DP 1.0 || || x || || 240x320 || memory/performance limitations (browser css demos in LWUITDemo) ||
+|| C3-01 || Series 40 6th Ed, FP1 || || x || || 320x240 || ||
+|| X3-02 || Series 40 6th Ed, FP1 || || x || || 240x320 || ||
+|| C3-00 || Series 40 6th Ed || || || x || 320x240 || ||
+|| 6303 || Series 40 6th Ed || || || x || 240x320 || memory/performance limitations; calendar unusable with Series 40 theme; uses LWUIT text editor ||
+|| Nokia C1-01 || Series 40 6th Edition Lite || || || x || 128x160 || memory limitations (browser css demos in LWUITDemo); menu unusable with Series 40 theme; transitions should not be used (performance varies); calendar unusable with Series 40 theme ||
+|| Nokia 2690 || Series 40 6th Edition Lite || || || x || 128x160 || memory limitations (browser css demos in LWUITDemo); menu unusable with Series 40 theme; transitions should not be used (performance varies); calendar unusable with Series 40 theme ||
+|| Nokia 6212 || Series 40 5th Edition, FP1 || || || x || 240x320 || memory limitations (browser css demos in LWUITDemo) ||
+|| 2700/2730 classic || Series 40 5th Ed, FP1 || || || x || 240x320 || memory/performance limitations; transitions cannot be used; calendar unusable with Series 40 theme; uses LWUIT text editor ||
+
+=== General notes ===
+* Gestures are supported on all touch UI devices.
+* !TextArea and !TextField use Nokia !TextEditor if supported (devices based on the latest Series 40 6th Edition devices (e.g., Nokia C3-00) and newer devices). On devices without Nokia !TextEditor, TextField uses LWUIT's in-place editing and TextArea uses LCDUI TextBox.
+* The Series 40 device portfolio consists of devices with different hardware specifications and thus all LWUIT features cannot  be used in lower-end devices. This applies especially to using transitions and animations.
+
+=== Screen resolutions ===
+LWUIT scales to different resolutions in portrait and landscape. The Series 40 full touch style has been created for a 240x400 display. The Series 40 touch and type and non-touch styles for LWUIT UI components have been created for QVGA (240x320 and 320x240) and bigger resolutions. Even though simple LWUIT applications can be installed and run even on the low-end devices with a 128x160 display, many UI elements do not scale down to the small display without modifications (tested with the [http://projects.developer.nokia.com/nokia_lwuit/files/LWUITDemo.zip LWUIT demo] on the Nokia C1-01). This is also the case with some bigger UI components, such as Calendar on non-touch devices with a 240x320 resolution.
+
+=== Implementation notes ===
+For more information on the LWUIT for Series 40 implementation, read about:
+* [wiki:ChangesToVanillaLwuit Changes made in the LWUIT for Series 40 port]
+* [wiki:UsingSeries40FullTouchFeatures Using Series 40 full touch features]
+* [wiki:BestPracticesAndKnownIssues Best practices and known issues].

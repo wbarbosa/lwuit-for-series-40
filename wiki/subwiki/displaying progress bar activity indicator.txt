@@ -1,0 +1,66 @@
+== Displaying Progress Bar ==
+
+When a MIDLet has time consuming processing or IO to do, an application developer might want to make UI show to a user that she should be waiting for a while. A user friendly way to show the current state of a ongoing process in UI is a Progress Bar. In LWUIT a Slider component can be used as a Progress !Bar/Activity indicator.
+
+== Example application ==
+
+This example has two views: Main View and Progress View. When the example application is started, Main View is shown. Main View has two Spinners for parameterizing a background thread that simulates a progressing process. These parameters are Ticks Per Second and Increment by. Ticks Per Second controls how many times a second the simulated progress is updated. Increment By controls how much the simulated progress is advancing on each update. Clicking Show Progress Dialog button will show Progress View and start the progress simulation thread.
+
+Progress View has an Icon, a Label, a Slider, and a Button. The Icon and the Label are meant to give information to the user that there is some progress going underway. The Slider acts as a Progress Bar which visualizes real time progress information. User can leave this view by clicking Cancel button when the simulated progress is still advancing. When the simulated progress is completed, Progress View will automatically be hidden, and the user is returned back to Main View.
+
+When in Main View, a user can close the application by selecting the Exit option.
+
+|| [[Image(pb_form.png)]] || [[Image(pb_dialog.png)]] ||
+|| Main View || Progress View ||
+
+== Implementation details: Keeping Progress Bar in sync with the progress ==
+
+When a progress simulation thread is created, a !ProgressListener is registered to it (ProgressBarMIDLet.java):
+{{{#!java 
+private void startProgressThread(int ticks, int inc) {
+    ...
+    progressThread = new ProgressThread(this, ticks, inc);
+    ...
+}
+}}}
+
+(!ProgressThread.java):
+{{{#!java 
+public ProgressThread(ProgressListener listener, int ticks, int inc) {
+    this.progressListener = listener;
+    ...
+}
+}}}
+
+As the simulation thread is run(), the !ProgressListener gets called (!ProgressThread.java):
+{{{#!java
+public void run() {
+    while(!isQuit) {
+        // Notify our listener of a change in progress.
+        if(progressListener != null) {
+            progressListener.progressChanged(progressCounter);
+        }
+        ...   
+        progressCounter = progressCounter + incrementBy;
+        ...    
+    }
+}
+}}}
+
+When the registered !ProgressListener is called, it informs !ProgressView about a change in progress (ProgressBarMIDLet.java):
+{{{#!java 
+public void progressChanged(int progress) {
+    progressView.setProgress(progress);
+    ...
+}
+}}}
+
+!ProgressView delegates setProgress() call to its Slider component (!ProgressView.java):
+{{{#!java 
+public void setProgress(int progress) {
+    slider.setProgress(progress); // This is an EDT-safe operation.
+}
+}}}
+
+
+Refer to ?the attached example application for more implementation details. 

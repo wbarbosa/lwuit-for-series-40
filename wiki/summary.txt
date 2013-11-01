@@ -1,0 +1,94 @@
+
+== LWUIT for Series 40 v1.0 ==
+[[Image(LWUIT_apps.png, 600px)]][[BR]]
+LWUIT for Series 40 provides several style, theming, functional and performance improvements to [http://lwuit.java.net/ LWUIT]. It supports Nokia SDK 1.1 and 2.0 for Java to develop applications for Series 40 5th Edition and newer devices with both keyboard and touch user interface. Watch the [http://www.youtube.com/watch?v=xu0UNJJPdYU?rel=0 introduction video].
+
+To get the productised v1.0 package with new documentation into the [http://www.developer.nokia.com/Develop/Java/Tools/Series_40_platform_SDKs/ Nokia SDK 2.0 for Java], check for updates in the SDK Manager. Developers wanting immediate access to latest LWUIT binaries or source can still follow the upcoming updates in the project pages.
+
+To improve the library in the future, we encourage you to participate in  [http://projects.developer.nokia.com/LWUIT_for_Series_40/discussion the project discussion] or write a [http://projects.developer.nokia.com/LWUIT_for_Series_40/query?status=!closed&order=priority ticket] to report of any bugs or improvement ideas.
+
+== LWUIT for Nokia Asha ==
+
+[[Image(Asha_LWUIT_images.png, 600px)]][[BR]]
+
+[https://www.developer.nokia.com/Develop/asha/java/tools.xhtml Nokia Asha 1.0 SDK (beta)] features a further improved LWUIT package that adds Asha theme for the LWUIT UI components and a set of new Nokia Asha specific UI components.
+
+
+== Benefits ==
+
+{{{
+#!html  
+<!-- repeat the box below as many times as needed -->
+<div class="oneThirdWidth left" style="width: 284px;">
+<div class="signpost-wrapper">
+ <div class="signpost-box"> 
+    <div class="signpost-box-title">Comprehensive UI library</div>
+    <div class="signpost-box-text">Use the rich set of easily customisable UI components, such as Table, Calendar, and HTML.
+ </div></a>
+  </div>
+</div>
+
+<!-- repeat the box below as many times as needed -->
+<div class="oneThirdWidth left" style="width: 284px;">
+<div class="signpost-wrapper">
+ <div class="signpost-box"> 
+    <div class="signpost-box-title">Transitions  and animations</div>
+    <div class="signpost-box-text">Add animations to UI components and transitions between Forms using Animation Framework.</div></a>
+  </div>
+</div>
+
+<!-- repeat the box below as many times as needed -->
+<div class="oneThirdWidth left" style="width: 284px;">
+<div class="signpost-wrapper">
+ <div class="signpost-box"> 
+    <div class="signpost-box-title">UI and theme design</div>
+    <div class="signpost-box-text">Use Series 40 themes or create custom themes. Create UIs and themes with Resource Editor.</div></a>
+  </div>
+</div>
+
+<!-- repeat the box below as many times as needed -->
+<div class="oneThirdWidth left" style="width: 284px;">
+<div class="signpost-wrapper">
+ <div class="signpost-box"> 
+    <div class="signpost-box-title">Layout management</div>
+    <div class="signpost-box-text">Define Layouts, such as grid, table, and flow in code editor or using Resource Editor.</div></a>
+  </div>
+</div>
+
+<!-- repeat the box below as many times as needed -->
+<div class="oneThirdWidth left" style="width: 284px;">
+<div class="signpost-wrapper">
+ <div class="signpost-box"> 
+    <div class="signpost-box-title">Scalability and portability</div>
+    <div class="signpost-box-text">Port from other platforms. Develop for Series 40 phones with different UI styles and screen sizes. </div></a>
+  </div>
+</div>
+
+<!-- repeat the box below as many times as needed -->
+<div class="oneThirdWidth left" style="width: 284px;">
+<div class="signpost-wrapper">
+ <div class="signpost-box"> 
+    <div class="signpost-box-title">Faster time-to-market</div>
+    <div class="signpost-box-text">Develop compelling applications faster than with LCDUI Canvas - with easy learning curve.</div></a>
+  </div>
+</div>
+
+<div style="clear:left"></div>
+}}}
+
+== Get started ==
+
+
+Video: [http://www.youtube.com/watch?v=AqNhgNHZ2vc?rel=0 Getting started with LWUIT] (7 min)[[BR]]
+
+Recording from the Series 40 Webinar: [http://www.youtube.com/watch?annotation_id=annotation_295989&feature=iv&src_vid=0i_HKNdy0eU&v=SVfXrf16fpA LWUIT for Series 40 Java Development] (Sept 2012, 44 min)[[BR]]
+
+Watch these videos or visit the [http://www.developer.nokia.com/Resources/Library/LWUIT/#!developers-guide/getting-started.html the Getting Started section] in the LWUIT Developer's Library for step-by-step instructions on how to get ready with your development tools and create your first LWUIT application.
+
+== Documentation ==
+
+[http://www.developer.nokia.com/Resources/Library/LWUIT/ LWUIT Developer's Library] is a complete documentation package for developers and designers. It covers both Series 40 and Nokia Asha and contains Developer's Guide with, for example, gettings started and javadocs, and UX overview.
+
+== Downloads ==
+
+[[FeaturedDownloads]]

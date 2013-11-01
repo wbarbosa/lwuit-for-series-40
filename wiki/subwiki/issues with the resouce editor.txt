@@ -1,0 +1,3 @@
+= Issues with !ResourceEditor =
+
+* If you create borders using the borderwizard and later on decide not to use the border or regenerate a new border, make sure you run "Delete Unused Images" from the Images menu. Otherwise your theme might end up having unnecessary image files that will consume memory when the theme is loaded.
