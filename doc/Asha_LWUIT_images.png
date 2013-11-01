@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+  
+
+
+        <head>
+    <title>
+      Asha_LWUIT_images.png on SummaryPage – Attachment
+     - LWUIT for Series 40
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <link rel="search" href="/LWUIT_for_Series_40/search" />
+        <link rel="help" href="/LWUIT_for_Series_40/wiki/TracGuide" />
+        <link rel="alternate" href="/LWUIT_for_Series_40/raw-attachment/wiki/SummaryPage/Asha_LWUIT_images.png" type="image/png; charset=utf-8" title="Original Format" />
+        <link rel="up" href="/LWUIT_for_Series_40/wiki/SummaryPage" title="SummaryPage" />
+        <link rel="start" href="/LWUIT_for_Series_40/wiki" />
+        <link rel="stylesheet" href="/htdocs/trac/css/trac.css" type="text/css" /><link rel="stylesheet" href="/htdocs/trac/css/code.css" type="text/css" /><link rel="stylesheet" href="/htdocs/plugins/tracwysiwyg/wysiwyg.css" type="text/css" /><link rel="stylesheet" href="/htdocs/plugins/multiproject/css/multiproject.css" type="text/css" /><link rel="stylesheet" href="/LWUIT_for_Series_40/pygments/trac.css" type="text/css" />
+        <link rel="tracwysiwyg.stylesheet" href="/htdocs/trac/css/trac.css" /><link rel="tracwysiwyg.stylesheet" href="/LWUIT_for_Series_40/chrome/tracwysiwyg/editor.css" />
+        <link rel="tracwysiwyg.base" href="/LWUIT_for_Series_40" />
+        <link rel="shortcut icon" href="https://www.developer.nokia.com/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="https://www.developer.nokia.com/favicon.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/LWUIT_for_Series_40/search/opensearch" title="Search LWUIT for Series 40" />
+    <script type="text/javascript">
+      var sitecatalyst={"account":"nokiaforumprojectsfwg0prod","base_path":"/LWUIT_for_Series_40","channel":"nokia:forumprojects:fw","dc":"112","path_info":"/attachment/wiki/SummaryPage/Asha_LWUIT_images.png","report":"","track_server_http":"metrics.nokia.com","track_server_https":"smetrics.nokia.com","visitor_ns":"nokia"};
+      var _tracwysiwyg={"escapeNewlines":false};
+      var multiproject={"conf":{"announce_id":"multirepo","dateformat":"mm/dd/y"},"req":{"authname":"skalogir","base_path":"/LWUIT_for_Series_40"}};
+    </script>
+          <script type="text/javascript" src="/LWUIT_for_Series_40/chrome/multiproject/js/jquery.js"></script>
+          <script type="text/javascript" src="/htdocs/trac/js/babel.js"></script>
+          <script type="text/javascript" src="/htdocs/trac/js/trac.js"></script>
+          <script type="text/javascript" src="/htdocs/trac/js/search.js"></script>
+          <script type="text/javascript" src="/htdocs/plugins/tracwysiwyg/wysiwyg.js"></script>
+          <script type="text/javascript" src="/htdocs/plugins/tracwysiwyg/wysiwyg-load.js"></script>
+          <script type="text/javascript" src="/htdocs/plugins/nokia/js/sitecatalyst.js"></script>
+          <script type="text/javascript" src="/htdocs/plugins/multiproject/js/site_admin_box.js"></script>
+          <script type="text/javascript" src="/htdocs/plugins/multiproject/js/multiproject.js"></script>
+          <script type="text/javascript" src="/htdocs/plugins/multiproject/js/profile.js"></script>
+          <script type="text/javascript" src="/htdocs/plugins/multiproject/js/preference.js"></script>
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/ui.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/content.nokia.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/content.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/china.icp.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/nokia_theme_fix.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/core.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/timeline.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/components.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/myprojects.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/admin_usergroups.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/tickets.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/wikitoolbar.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="/htdocs/theme/css/dnc.css" />
+    <script type="text/javascript" src="/htdocs/theme/js/navigation.js"></script>
+    <script type="text/javascript" src="/htdocs/theme/js/jquery.easing-1.3.pack.js"></script>
+    <script type="text/javascript" src="/htdocs/theme/js/swfobject-2.2.js"></script>
+    <script type="text/javascript" src="/htdocs/theme/js/jquery.tooltip.min.js"></script>
+    <script type="text/javascript" src="/htdocs/theme/js/jquery.roundabout.min.js"></script>
+    <script type="text/javascript" src="/htdocs/theme/js/jquery.roundabout-shapes.min.js"></script>
+    <script type="text/javascript" src="/htdocs/theme/js/site.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/htdocs/trac/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+      <script type="text/javascript" src="/htdocs/trac/js/folding.js"></script>
+      <script type="text/javascript">
+        jQuery(document).ready(function($) {
+          $('#preview table.code').enableCollapsibleColumns($('#preview table.code thead th.content'));
+        });
+      </script>
+            <!-- Cache images so that IE 6 wont flicker them  -->
+            <!--[if IE 6]>
+            <script type="text/javascript">
+                try {
+                    document.execCommand("BackgroundImageCache", false, true);
+                } catch(err) {}
+            </script>
+            <![endif]-->
+        </head>
+        <body>
+    <div xmlns="http://www.w3.org/1999/xhtml" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fn="http://sw.nokia.com/FN-1/" xmlns:mars="http://sw.nokia.com/MARS-3/" xmlns:web="http://sw.nokia.com/WebArch-1/" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+    <div about="https://projects.developer.nokia.com/LWUIT_for_Series_40/attachment/wiki/SummaryPage/Asha_LWUIT_images.png">
+        <div rel="fn:type" href="http://sw.nokia.com/FN-1/Type/ProjectContent"></div>
+        <div property="fn:icon" content="https://projects.developer.nokia.com/LWUIT_for_Series_40/htdocs/icons/2167-3409468a7e553e7b8ba2c4ed695cb600.png"></div>
+        <div rel="web:homepage" href="https://projects.developer.nokia.com/LWUIT_for_Series_40/"></div>
+        <div property="mars:title" datatype="xsd:string" content="Asha_LWUIT_images.png on SummaryPage – Attachment
+     - LWUIT for Series 40"></div>
+        <div rel="fn:topic" href="http://sw.nokia.com/FN-1/Topic/j2me"></div>
+        <div rel="fn:topic" href="http://sw.nokia.com/FN-1/Topic/series_40"></div>
+        <div rel="fn:topic" href="http://sw.nokia.com/FN-1/Topic/ui"></div>
+        </div>
+</div>
+            <div id="theme_container">
+                <div id="fncontainer" class="">
+<?NOINDEX-START ?>
+<div id="fnheaderContainer">
+  <div id="fnheaderComponent">
+    <div id="nDevHeaderLogo"><a href="//www.developer.nokia.com/"><img src="/images/l/logo.png" width="164" height="19" alt="Logo" title="Home" /></a></div>
+    <div id="fnheader">
+    <div id="fnheadersearch">
+      <form action="//www.developer.nokia.com/search/simple/" method="get">
+        <fieldset>
+                <div id="fnselectSearch" style="display:none">
+                <select name="s" class="searchMenu" id="fnHeaderSearchMenu">
+                  <option value="x">Search whole site</option>
+                  <!-- <option value="dp" id="searchscope.Resources.Library">Developer Library</option> -->
+                  <option value="dpport" id="searchscope.Resources.Library.Porting_to_Qt">Porting to Qt Library</option>
+                  <option value="dpdux" id="searchscope.Resources.Library.Design_and_UX">Design and UX Library</option>
+                  <option value="dpsdg" id="searchscope.Resources.Library.Symbian_Design_Guidelines">Symbian Design Guide</option>
+                  <option value="dpweb" id="searchscope.Resources.Library.Web">Web Developer's Library</option>
+                  <option value="dpqtmobi" id="searchscope.Resources.Library.Qt_for_Mobile">Qt Developer's Library</option>
+                  <option value="dpflash" id="searchscope.Resources.Library.Flash_Lite">Flash Lite Developer's Library</option>
+                  <option value="d" id="searchscope.Devices">Devices</option>
+                  <option value="fw">Web Pages</option>
+                  <option value="ft" id="searchscope.Tools_Docs_and_Code">Tools &amp; SDKs</option>
+                  <option value="fd" id="searchscope.Tools_Docs_and_Code.Documentation">Documents</option>
+                  <option value="fe" id="searchscope.Tools_Docs_and_Code.Code_Examples">Examples</option>
+                  <option value="fk" id="searchscope.wiki.forum.nokia.com.index.php.KnowledgeBase">Knowledge Base</option>
+                  <option value="cd" id="searchscope.discussion.forum.nokia.com.forum">Discussion Boards  </option>
+                  <option value="cb" id="searchscope.blogs.forum.nokia.com.summary.php">Blogs</option>
+                  <option value="cw" id="searchscope.wiki.forum.nokia.com.index.php">Wiki</option>
+                  <option value="cp" id="searchscope.projects.forum.nokia.com">Projects</option>
+                  <!--option value="up" id="searchscope.General.User_Profile.xhtml">User Profiles</option-->
+                </select>
+                </div>
+        <input type="hidden" name="view" value="ebs" />
+        <input type="hidden" name="box" value="1" />
+        <div id="fnheadersearchArea"><input name="k" type="text" id="fnheadersearchInput" value="Search with Bing" /><button type="submit" id="fnheadersubmitSearch" title="Search"></button></div>
+        </fieldset>
+      </form>
+    </div><!-- end of search -->
+    <div id="regional">
+          <div id="fnselectLanguage" style="cursor: pointer; height:16px; position:relative; margin:1px; text-align:left; padding:0px; float:right; width:80px; top:18px; border-bottom: 1px solid #0aadfe;">
+            <ul class="clearfix">
+              <li id="fnLanguages"><span>English</span>
+                <ul id="fnLanguagesNav" class="subNav">
+                    <li><a href="//www.developer.nokia.com/">English</a></li>
+                    <li><a href="http://www.developer.nokia.com.cn/">中文</a></li>
+                    <li><a href="//www.developer.nokia.com/ru/">Русский</a></li>
+                    <li><a href="//www.developer.nokia.com/fr/">Français</a></li>
+                    <li><a href="//www.developer.nokia.com/es/">Español</a></li>
+                    <li><a href="//www.developer.nokia.com/pt/">Português</a></li>
+                    <li><a href="//www.developer.nokia.com/tr/">Türkiye</a></li>
+                    <li class="last"></li>
+                </ul>
+              </li>
+              <li class="ui-selectmenu-icon"></li>
+            </ul>
+          </div>
+    </div><!-- end of regional -->
+        <div id="nDevHeaderLoginLogout">
+        <div id="fnlogin">
+              <p>
+                <div id="login_link">
+                  <a href="http://www.developer.nokia.com/Profile/" class="author">skalogir</a><span class="sep">|</span><a class="site_admin" href="#">Site admin</a>
+                  <span class="sep">|</span>
+                  <a href="http://www.developer.nokia.com/Profile/Settings.xhtml">Settings</a>
+                  <span class="sep">|</span>
+                  <a id="signOut" href="/home/user?action=logout">Log out</a>
+                  <span class="sep">|</span>
+                </div>
+              </p>
+        </div>
+        </div>
+    </div><!-- end of fnheader -->
+    <div id="fnmainNavigation">
+    <ul id="fnnav" class="clearfix">
+      <li><a id="navFirst_link" href="//www.developer.nokia.com/Design/">Design</a>
+          <div id="navFirst_underLine" class="underLine"></div>
+        <ul class="subNav">
+            <li><a href="//www.developer.nokia.com/Design/">Overview</a></li>
+            <li><a href="//www.developer.nokia.com/Design/Design_gallery/">Design gallery</a></li>
+            <li><a href="//www.developer.nokia.com/Design/User_experience/">User experience</a></li>
+            <li class="last"></li>
+        </ul>
+      </li>
+      <li><a id="navSecond_link" href="//www.developer.nokia.com/Develop/">Develop</a>
+          <div id="navSecond_underLine" class="underLine"></div>
+        <ul class="subNav">
+            <li><a href="//www.developer.nokia.com/Develop/">Overview</a></li>
+            <li><a href="//www.developer.nokia.com/Develop/Windows_Phone/">Windows Phone</a></li>
+            <li><a href="//www.developer.nokia.com/Develop/asha/">Nokia Asha</a></li>
+            <li><a href="//www.developer.nokia.com/Develop/Web/">Web</a></li>
+            <li><a href="//www.developer.nokia.com/Develop/Porting/">Porting</a></li>
+            <li><a href="//www.developer.nokia.com/Develop/Featured_Technologies/">Featured Technologies</a></li>
+            <li class="last"></li>
+        </ul>
+      </li>
+      <li><a id="navThird_link" href="//www.developer.nokia.com/Distribute/">Distribute</a>
+          <div id="navThird_underLine" class="underLine"></div>
+        <ul class="subNav">
+            <li><a href="//www.developer.nokia.com/Distribute/">Overview</a></li>
+            <li><a href="//www.developer.nokia.com/Distribute/NAX/">Nokia Ad Exchange</a></li>
+            <li><a href="//www.developer.nokia.com/Distribute/Statistics.xhtml">Nokia Store statistics</a></li>
+            <li><a href="//www.developer.nokia.com/Distribute/Monetizing_your_app/">Monetizing your app</a></li>
+            <li><a href="//www.developer.nokia.com/Distribute/Promoting_your_app/">Promoting your app</a></li>
+            <li><a href="//www.developer.nokia.com/Distribute/Packaging_and_signing.xhtml">Packaging and signing</a></li>
+            <li><a href="//www.developer.nokia.com/Distribute/Nokia_Store_guidelines.xhtml">Publishing your app</a></li>
+            <li class="last"></li>
+        </ul>
+      </li>
+      <li><a id="navFourth_link" href="//www.developer.nokia.com/Devices/">Devices</a>
+          <div id="navFourth_underLine" class="underLine"></div>
+        <ul class="subNav">
+            <li><a href="//www.developer.nokia.com/Devices/">Overview</a></li>
+            <li><a href="//www.developer.nokia.com/Devices/Device_specifications/">Device specifications</a></li>
+            <li><a href="//www.developer.nokia.com/Devices/Remote_device_access/">Remote device access</a></li>
+            <li class="last"></li>
+        </ul>
+      </li>
+      <li><a id="navFifth_link" href="//www.developer.nokia.com/Resources/">Resources</a>
+          <div id="navFifth_underLine" class="underLine"></div>
+        <ul class="subNav">
+            <li><a href="//www.developer.nokia.com/Resources/">Overview</a></li>
+            <li><a href="//www.developer.nokia.com/Resources/Library/">Documentation</a></li>
+            <li><a href="//www.developer.nokia.com/Resources/Tools_and_downloads/">Tools and downloads</a></li>
+            <li><a href="//www.developer.nokia.com/Resources/Code_examples/">Code examples</a></li>
+            <li><a href="//www.developer.nokia.com/Developer_Programs/Premium_program.xhtml">Premium Developer Program</a></li>
+            <li><a href="//www.developer.nokia.com/Developer_Programs/">Developer Programs</a></li>
+            <li><a href="//www.developer.nokia.com/Resources/Learning/">Learning</a></li>
+            <li><a href="//www.developer.nokia.com/gen/videos_all.xhtml">Videos</a></li>
+            <li><a href="//www.developer.nokia.com/Resources/Multimedia/Webinars.xhtml">Webinars</a></li>
+            <li><a href="//www.developer.nokia.com/Resources/Support/">Technical support</a></li>
+            <li><a href="//www.developer.nokia.com/Resources/Support/Consultancy_and_training/">Consultancy Network</a></li>
+            <li class="last"></li>
+        </ul>
+      </li>
+      <li><a id="navSixth_link" href="//www.developer.nokia.com/Community/Discussion/content.php">Community</a>
+          <div id="navSixth_underLine" class="underLine"></div>
+        <ul class="subNav">
+            <li><a href="//www.developer.nokia.com/Community/Discussion/content.php">Overview</a></li>
+            <li><a href="//www.developer.nokia.com/Community/Discussion/">Discussion Boards</a></li>
+            <li><a href="//www.developer.nokia.com/Community/Wiki/">Wiki</a></li>
+            <li><a href="//www.developer.nokia.com/Blogs/News/aggregated/">Blogs</a></li>
+            <li><a href="https://projects.developer.nokia.com/">Projects</a></li>
+            <li><a href="//www.developer.nokia.com/Community/Champions/">Champions</a></li>
+            <li class="last"></li>
+        </ul>
+      </li>
+    </ul>
+    </div><!-- end of navigation -->
+  </div><!-- end of fnheaderComponent -->
+</div><!-- end of fnheaderContainer -->
+<?NOINDEX-END ?>
+                    <div id="fncontent" class="clearfix">
+<?NOINDEX-START ?>
+<div id="fnbreadCrumbs">
+  <div id="fntitleToggle">
+    <a href="#">Share</a>
+    <div id="fnbookMarks">
+      <img id="fnbookmarkBrowser" src="//www.developer.nokia.com/images/l/footericon_bookmark.gif" title="Bookmark This Page" alt="Bookmark" width="16" height="16" />
+      <img id="fnbookmarkDelicious" src="//www.developer.nokia.com/images/l/footericon_delicious.gif" title="Delicious" alt="Delicious" width="16" height="16" />
+      <img id="fnbookmarkDigg" src="//www.developer.nokia.com/images/l/footericon_digg.gif" title="Digg" alt="Digg" width="16" height="16" />
+      <img id="fnbookmarkFacebook" src="//www.developer.nokia.com/images/l/footericon_facebook.gif" title="Facebook" alt="Facebook" width="16" height="16" />
+      <img id="fnbookmarkGoogle" src="//www.developer.nokia.com/images/l/footericon_google.gif" title="Google" alt="Google" width="16" height="16" />
+      <img id="fnbookmarkYahoo" src="//www.developer.nokia.com/images/l/footericon_yahoo.gif" title="Yahoo" alt="Yahoo" width="16" height="16" />
+      <img id="fnbookmarkStumble" src="//www.developer.nokia.com/images/l/footericon_temp1.gif" title="StumbleUpon" alt="StumbleUpon" width="16" height="16" />
+      <img id="fnbookmarkReddit" src="//www.developer.nokia.com/images/l/footericon_reddit.gif" title="Reddit" alt="Reddit" width="16" height="16" />
+      <img id="fnbookmarkDiigo" src="//www.developer.nokia.com/images/l/footericon_diigo.GIF" title="Diigo" alt="Diigo" width="16" height="16" />
+      <img id="fnbookmarkTechnorati" src="//www.developer.nokia.com/images/l/footericon_technorati.gif" title="Technorati" alt="Technorati" width="16" height="16" />
+      <img id="fnbookmarkTwitter" src="//www.developer.nokia.com/images/l/footericon_twitter.gif" title="Twitter" alt="Twitter" width="16" height="16" />
+    </div>
+  </div>
+</div>
+<?NOINDEX-END ?>
+                        <div id="home-nav-wrap">
+                            <div id="home-nav">
+                                <a href="/home/" title="Projects home page">Projects Home</a> |
+                                <a href="/home/myprojects" title="Go to your projects">My Projects</a> |
+                                <a href="/home/project/explore" title="Explore projects">Explore Projects</a>
+                            </div>
+                        </div>
+    <h1 class="project_heading">
+        <a href="/LWUIT_for_Series_40">
+            <img src="/htdocs/icons/2167-3409468a7e553e7b8ba2c4ed695cb600.png" id="projecticon" alt="" height="64" width="64" />
+        </a>
+        <a href="/LWUIT_for_Series_40">LWUIT for Series 40</a>
+    </h1>
+    <div>
+        <div id="mainnav">
+        <ul id="tabbedNavigation" class="clearfix">
+            <li class="first"><a href="/LWUIT_for_Series_40">Summary</a></li><li class="active selected"><a href="/LWUIT_for_Series_40/wiki">Wiki</a></li><li><a href="/LWUIT_for_Series_40/timeline">Timeline</a></li><li><a href="/LWUIT_for_Series_40/roadmap">Roadmap</a></li><li><a href="/LWUIT_for_Series_40/browser">Source</a></li><li><a href="/LWUIT_for_Series_40/files">Files</a></li><li><a href="/LWUIT_for_Series_40/query">Tickets</a></li><li><a href="/LWUIT_for_Series_40/search">Search</a></li><li><a href="/LWUIT_for_Series_40/discussion">Discussion</a></li><li class="last"><a href="/LWUIT_for_Series_40/admin" title="Administration">Admin</a></li>
+        </ul>
+    </div>
+    </div>
+    <div id="main">
+      <div id="ctxtnav" class="nav" style="position:relative;">
+        <div class="module" id="ctxtnavitems">
+          <ul>
+              <li class="last first"><a href="/LWUIT_for_Series_40/wiki/SummaryPage">Back to SummaryPage</a></li>
+          </ul>
+        </div>
+      </div>
+<!--  warnings and notices -->
+<!--  actual content -->
+    <div id="content" class="attachment">
+        <h1><a href="/LWUIT_for_Series_40/wiki/SummaryPage">SummaryPage</a>: Asha_LWUIT_images.png</h1>
+        <table id="info" summary="Description">
+          <tbody>
+            <tr>
+              <th scope="col">File Asha_LWUIT_images.png,
+                <span title="184464 bytes">180.1 KB</span>
+                (added by
+            seppo_fn
+, <a class="timeline" href="/LWUIT_for_Series_40/timeline?from=2013-06-24T15%3A02%3A12%2B03%3A00&amp;precision=second" title="2013-06-24T15:02:12+03:00 in Timeline">4 months</a> ago)</th>
+            </tr>
+            <tr>
+              <td class="message searchable">
+                
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="preview" class="searchable">
+          
+  <div class="image-file"><img src="/LWUIT_for_Series_40/raw-attachment/wiki/SummaryPage/Asha_LWUIT_images.png" alt="Asha_LWUIT_images.png" /></div>
+
+        </div>
+          <div class="buttons">
+            <form method="get" action="">
+              <div id="delete">
+                <input type="hidden" name="action" value="delete" />
+                <input class="primaryInputBtn" type="submit" value="Delete attachment" />
+              </div>
+            </form>
+          </div>
+    </div>
+    <script type="text/javascript">
+    </script>
+    <div id="altlinks">
+      <h2 class="tableheader greentitle">Download in other formats:</h2>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/LWUIT_for_Series_40/raw-attachment/wiki/SummaryPage/Asha_LWUIT_images.png">Original Format</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+                     </div>
+                 </div>
+            </div>
+            
+  <?NOINDEX-START ?>
+<div id="fnfooter">
+  <div id="fnfooterComponent">
+    <div style="width:680px" class="left">
+      <div class="line">
+	<div class="row left">
+          <div class="item">
+  	    <img class="left" src="/images/c/footer/featuredLinks.png" alt="" />
+	    <div class="title">Featured links</div>
+	    <div><a href="//www.developer.nokia.com/News_and_events/">Event calendar</a></div>
+	    <div><a href="//www.developer.nokia.com/Contact_and_feedback/">Contact and feedback</a></div>
+	    <div><a href="//www.developer.nokia.com/Resources/Support/">Support</a></div>
+	  </div>
+          <div class="item">
+            <img class="left" src="/images/c/footer/developer.png" alt="" />
+            <div class="title">Develop</div>
+            <div><a href="//www.developer.nokia.com/Develop/Windows_Phone/">Windows Phone</a></div>
+            <div><a href="//www.developer.nokia.com/Develop/asha/">Nokia Asha</a></div>
+          </div>
+        </div>
+        <div class="row left">
+	  <div class="item">
+	    <img class="left" src="/images/c/footer/distribution.png" alt="" />
+	    <div class="title">Distribution</div>
+	    <div><a href="//www.developer.nokia.com/Distribute/Ovi_Store_statistics.xhtml">Store Statistics</a></div>
+	    <div><a href="//www.developer.nokia.com/Distribute/Ovi_Store_guidelines.xhtml">Publisher Guide</a></div>
+	  </div>
+          <div class="item">
+            <img class="left" src="/images/c/footer/blogs.png" alt="" />
+            <div class="title">Blogs</div>
+            <div><a href="//www.developer.nokia.com/Community/Blogs/blog/nokia-developer-news">Nokia Developer Blog</a></div>
+            <div><a href="//www.developer.nokia.com/Community/Blogs/blog/nokia-publisher-successes">Nokia Publisher Blog</a></div>
+          </div>
+        </div>
+        <div class="row left">
+	  <div class="item">
+	    <img class="left" src="/images/c/footer/community.png" alt="" />
+	    <div class="title">Community</div>
+	    <div><a href="//www.developer.nokia.com/Community/Discussion/">Discussions</a></div>
+	    <div><a href="//www.developer.nokia.com/Community/Wiki/">Wiki</a></div>
+	    <div><a href="//projects.developer.nokia.com/">Projects</a></div>
+	    <div><a href="//www.developer.nokia.com/Community/Champions/">Champions</a></div>
+	    <div><a href="//www.developer.nokia.com/Community/Wiki/KnowledgeBase">Knowledge base</a></div>
+	  </div>
+        </div>
+        <div class="row left">
+	  <div class="item left">
+	    <img class="left" src="/images/c/footer/resources.png" alt="" />
+  	    <div class="title">Resources</div>
+	    <div><a href="//www.developer.nokia.com/Resources/Library/">Documentation</a></div>
+	    <div><a href="//www.developer.nokia.com/Resources/Tools_and_downloads/">Tools</a></div>
+	    <div><a href="//www.developer.nokia.com/Resources/Code_examples/">Code examples</a></div>
+        <div><a href="//www.developer.nokia.com/Developer_Programs/">Developer Programs</a></div>
+	  </div>
+        </div>
+      </div>
+      <div class="line">
+	<div class="siteMap left">
+	  <a href="//www.developer.nokia.com/"><img class="left" src="/images/c/footer/featuredLinks.png" alt="" /></a>
+	</div>
+	<div class="siteMap left">
+	  <a href="//www.developer.nokia.com/Sitemap/" id="nDevFooterSiteMap">Site Map</a>
+	</div>
+	<div class="siteMap left">
+	  <a href="//www.developer.nokia.com/Terms_and_conditions/" id="fn_i18n_terms">Terms &amp; Conditions</a>
+	</div>
+	<div class="siteMap left">
+          <a href="/home/terms">Project hosting specific terms</a>
+	</div>
+	<div class="end siteMap left">
+	  <a href="//www.nokia.com/about-nokia/privacy/privacy-policy" rel="external" id="fn_i18n_privacy">Privacy Policy</a>
+	</div>
+      </div>
+    </div>
+    <div id="mission" class="right">
+      <div class="item">
+	<!--<a class="right" href="#"><img alt="" title="LinkedIn" src="//www.developer.nokia.com/images/c/footer/linkedIn.png" /></a>-->
+	<a class="right" href="//www.facebook.com/nokia"><img alt="" title="Facebook" src="/images/c/footer/facebook.png" /></a>
+	<a class="right" href="//twitter.com/#!/nokiadeveloper"><img alt="" title="Twitter" src="/images/c/footer/twitter.png" /></a>
+      </div>
+      <div class="item">
+	Nokia Developer aims to help you create apps and publish them so you can connect with users around the world.<br /><br />
+	<!--<a href="//www.developer.nokia.com/">Find more about what we can do together</a>-->
+      </div>
+      <div class="item">
+	<span id="nDevFooterCustomContent"></span>
+	<span id="china_icp"><a href="http://www.miibeian.gov.cn/" rel="external">京ICP备05048969号 </a></span>
+	<span id="fn_i18n_copyright">© Copyright Nokia 2012 All rights reserved</span>
+      </div>
+    </div>
+  </div>
+</div>
+<?NOINDEX-END ?>
+
+            <script type="text/javascript">
+                function wrap_wikitoolbars() {
+                    $('.wikitoolbar').wrap('<div class="wikitoolbar-wrapper"></div>');
+                    $('.wysiwyg-toolbar').wrap('<div class="wikitoolbar-wrapper"></div>');
+                }
+                $(document).ready(function () {
+                    setTimeout(wrap_wikitoolbars, 11);
+                });
+            </script>
+        </body>
+</html>
